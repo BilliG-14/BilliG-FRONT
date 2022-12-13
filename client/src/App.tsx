@@ -1,19 +1,15 @@
-import Button from 'components/Button';
 import React from 'react';
 import './App.css';
-import logo from './logo.svg';
-
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Main from 'pages/Main';
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>빌려줘14죠@@@!@!@!@@!</p>
-        <h1 className="text-3xl font-bold underline text-red-600">
-          Simple React Typescript Tailwind Sample!!!
-        </h1>
-        <Button />
-      </header>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Main />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
