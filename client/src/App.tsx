@@ -1,7 +1,6 @@
-import './App.css';
+import Category from 'components/category-submain/Category';
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
-import Category from 'components/category-submain/Category';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
