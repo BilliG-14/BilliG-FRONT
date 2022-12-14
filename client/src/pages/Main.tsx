@@ -26,7 +26,7 @@ function MainSecondSection() {
 }
 function MainStepSection() {
   return (
-    <section className="w-screen h-screen">
+    <section className="max-w-screen-lg h-screen text-center">
       <div className="text-4xl my-24">
         <span className=" text-amber-500 font-extrabold">빌리지</span>로 물품
         대여 시간과 비용을 절약하세요!{' '}
@@ -88,6 +88,6 @@ function StepDiscription(props: StepProps) {
 
 function StepImageDiv() {
   return (
-    <div className=" w-1/2 h-36 my-2 mx-auto rounded-3xl bg-slate-200"></div>
+    <div className=" w-full h-36 my-2 mx-auto rounded-3xl bg-slate-200"></div>
   );
 }
