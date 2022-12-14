@@ -4,7 +4,7 @@ import reset from 'styled-reset';
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Main from 'pages/Main';
-import Join from './pages/Join';
+import LoginJoin from './pages/LoginJoin';
 const GlobalStyle = createGlobalStyle`
   ${reset}
 `;
@@ -15,7 +15,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Main />} />
-          <Route path="/join" element={<Join />} />
+          <Route path="/login" element={<LoginJoin />} />
         </Routes>
       </BrowserRouter>
     </React.Fragment>
