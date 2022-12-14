@@ -61,7 +61,7 @@ export default function Main() {
       <MainFirstSection />
       <MainSecondSection />
       <MainStepSection />
-      <div>
+      <div className="my-16">
         <MainButton content="물품 빌리러 가기" />
         <MainButton content="물품 빌려주러 가기" />
         <ScrollTopButton />

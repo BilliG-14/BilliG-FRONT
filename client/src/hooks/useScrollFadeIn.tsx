@@ -9,7 +9,7 @@ export default function useScrollFadeIn() {
       current.style.transitionProperty = 'opacity transform';
       current.style.transitionDuration = '1s';
       current.style.transitionTimingFunction = 'cubic-bezier(0, 0, 0.2, 1)';
-      current.style.transitionDelay = '0s';
+      current.style.transitionDelay = '0.2s';
       current.style.opacity = '1';
       current.style.transform = 'translate3d(0, 0, 0)';
     }
