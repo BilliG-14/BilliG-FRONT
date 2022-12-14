@@ -1,10 +1,13 @@
-import React from 'react';
+import CategoryNav from './CategoryNav';
 import ItemCard from './ItemCard';
 
 export default function Category() {
   return (
-    <div>
-      <ItemCard />
+    <div className="">
+      <CategoryNav />
+      <div className="max-w-screen-lg ">
+        <ItemCard />
+      </div>
     </div>
   );
 }
