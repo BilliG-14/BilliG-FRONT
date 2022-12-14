@@ -1,11 +1,14 @@
+import useScrollFadeIn from '../hooks/useScrollFadeIn';
 export type SpeechBubbleProps = {
   content: string;
 };
 
 export function SpeechBubbleLeft({ content }: SpeechBubbleProps) {
+  const fadeInDiv = useScrollFadeIn();
   return (
     <div
-      className={`relative rounded-lg bg-amber-600 w-2/5 py-5 px-16 text-white font-bold text-xl ml-36 my-2
+      {...fadeInDiv}
+      className={`relative rounded-lg bg-amber-600 w-1/3 h-24 text-white font-bold text-xl ml-36 my-16 flex flex-col justify-center
       after:content-[''] after:absolute after:left-0 after:top-1/2 after:w-0 after:h-0
       after:border-[33px] after:border-solid after:border-transparent
       after:border-r-amber-600 after:border-l-0 after:border-b-0
@@ -16,9 +19,11 @@ export function SpeechBubbleLeft({ content }: SpeechBubbleProps) {
   );
 }
 export function SpeechBubbleRight({ content }: SpeechBubbleProps) {
+  const fadeInDiv = useScrollFadeIn();
   return (
     <div
-      className={`relative rounded-lg bg-amber-600 w-2/5 py-5 px-16 text-white font-bold text-xl ml-36 my-2
+      {...fadeInDiv}
+      className={`relative rounded-lg bg-amber-600 w-1/3 h-24 text-white font-bold text-xl ml-72 my-16 flex flex-col justify-center
       after:content-[''] after:absolute after:right-0 after:top-1/2 after:w-0 after:h-0
       after:border-[33px] after:border-solid after:border-transparent
       after:border-r-0 after:border-b-0
