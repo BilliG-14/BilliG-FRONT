@@ -62,8 +62,8 @@ export default function Main() {
       <MainSecondSection />
       <MainStepSection />
       <div className="mt-48">
-        <MainButton content="물품 빌리러 가기" />
-        <MainButton content="물품 빌려주러 가기" />
+        <MainButton content="물품 빌리러 가기" path="#" />
+        <MainButton content="물품 빌려주러 가기" path="#" />
       </div>
       <ScrollTopButton />
     </div>
