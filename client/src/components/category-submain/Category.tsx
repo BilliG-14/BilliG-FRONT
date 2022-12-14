@@ -1,6 +1,7 @@
 import CategoryNav from './CategoryNav';
 import ItemCard from './ItemCard';
 import React, { useState } from 'react';
+import CategorySection from './CategorySection';
 
 export type ItemType = {
   id: number;
@@ -55,11 +56,23 @@ export default function Category() {
   return (
     <div className="">
       <CategoryNav />
-      <section className="max-w-screen-lg flex content-center items-center">
-        {itemList.map((item) => (
-          <ItemCard key={item.id} item={item} />
-        ))}
-      </section>
+      {categoryList.map((category, idx) => (
+        <CategorySection
+          key={idx}
+          itemList={itemList}
+          category={category}
+          idx={idx}
+        />
+      ))}
     </div>
   );
 }
+
+const categoryList: string[] = [
+  'IT기기',
+  '생활가전',
+  '캠핑/여행',
+  '스포츠/레저',
+  '완구/취미',
+  '도서/음반',
+];

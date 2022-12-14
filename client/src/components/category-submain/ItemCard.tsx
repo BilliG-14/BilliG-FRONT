@@ -9,7 +9,7 @@ export default function ItemCard({ item }: ItemProps) {
   const { img, title, category, address, deal, price } = item;
 
   return (
-    <div className="w-1/5 inline-block my-5 px-2.5 border-b border-gray-300 border-solid mx-4">
+    <div className="w-1/5 inline-block my-5 px-2.5 border-b border-gray-300 border-solid mx-4 bg-white rounded-lg">
       <a href="#">
         <div className="pic mb-2">
           <img src={img} alt="m2 맥북" />

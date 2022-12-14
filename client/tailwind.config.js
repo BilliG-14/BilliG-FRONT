@@ -29,6 +29,12 @@ module.exports = {
         'b-tag-dir': '#19CE60',
         'b-tag-pack': '#BA55CE',
         'b-tag-done': '#FA466A',
+        'b-bg-sec0': '#7ca6a2',
+        'b-bg-sec1': '#cf9493',
+        'b-bg-sec2': '#6ECEDA',
+        'b-bg-sec3': '#D5CB8E',
+        'b-bg-sec4': '#909FA6',
+        'b-bg-sec5': '#857FB3',
       },
       keyframes: {
         fadeIn: {
