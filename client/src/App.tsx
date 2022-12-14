@@ -1,18 +1,27 @@
 import React from 'react';
+import { createGlobalStyle } from 'styled-components';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import reset from 'styled-reset';
 import './App.css';
-import logo from './logo.svg';
+import BorrowWriting from 'Page/BorrowWriting';
+import GiveWriting from 'Page/GiveWriting';
 
+const GlobalStyle = createGlobalStyle`
+  ${reset}
+`;
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>빌려줘14죠@@@!@!@!@@!</p>
-        <h1 className="text-3xl font-bold underline text-red-600">
-          Simple React Typescript Tailwind Sample!!!
-        </h1>
-      </header>
-    </div>
+    <React.Fragment>
+      <GlobalStyle />
+      <div className="App">
+        <BrowserRouter>
+          <Routes>
+            <Route path="/write/give" element={<GiveWriting />} />
+            <Route path="/write/borrow" element={<BorrowWriting />} />
+          </Routes>
+        </BrowserRouter>
+      </div>
+    </React.Fragment>
   );
 }
 
