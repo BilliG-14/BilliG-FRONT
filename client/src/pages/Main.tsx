@@ -5,18 +5,18 @@ import useScrollFadeIn from '../hooks/useScrollFadeIn';
 
 function MainFirstSection() {
   return (
-    <section className="w-screen h-screen font-semibold">
-      <div className="text-left p-32 pt-44 animate-fade-in">
+    <section className="max-w-screen-lg h-screen font-semibold">
+      <div className="text-left p-32 pt-44 animate-fade-in text-b-text-black">
         <p className="text-4xl">물건을 빌리는 가장 쉬운 방법</p>
-        <p className="text-7xl">초간편 물품 대여 중계 플랫폼</p>
-        <p className="text-7xl text-amber-500 font-extrabold">빌리지</p>
+        <p className="text-6xl">초간편 물품 대여 중계 플랫폼</p>
+        <p className="text-6xl text-b-yellow font-extrabold">빌리지</p>
       </div>
     </section>
   );
 }
 function MainSecondSection() {
   return (
-    <section className="w-screen h-screen">
+    <section className="max-w-screen-lg h-screen text-b-text-gray">
       <SpeechBubbleLeft content="너무 비싸서 사는 건 부담이에요" />
       <SpeechBubbleRight content="안쓰는 걸 빌려주고 돈을 벌어요!" />
       <SpeechBubbleLeft content="환경오염을 줄이고 싶어요" />
@@ -27,11 +27,11 @@ function MainSecondSection() {
 function MainStepSection() {
   return (
     <section className="w-screen h-screen">
-      <p className="text-4xl my-24">
+      <div className="text-4xl my-24">
         <span className=" text-amber-500 font-extrabold">빌리지</span>로 물품
         대여 시간과 비용을 절약하세요!{' '}
         <p className="text-5xl">최대 65% 절감 효과!</p>
-      </p>
+      </div>
       <div>
         <StepDiscription
           num={1}
@@ -57,16 +57,16 @@ function MainStepSection() {
 }
 export default function Main() {
   return (
-    <>
+    <div className="flex flex-col items-center">
       <MainFirstSection />
       <MainSecondSection />
       <MainStepSection />
-      <div className="my-16">
+      <div className="mt-48">
         <MainButton content="물품 빌리러 가기" />
         <MainButton content="물품 빌려주러 가기" />
-        <ScrollTopButton />
       </div>
-    </>
+      <ScrollTopButton />
+    </div>
   );
 }
 
