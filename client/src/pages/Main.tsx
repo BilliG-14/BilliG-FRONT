@@ -1,5 +1,6 @@
 import MainButton from 'components/MainButton';
 import ScrollTopButton from 'components/ScrollTopButton';
+import { SpeechBubbleLeft, SpeechBubbleRight } from 'components/SpeechBubble';
 import useScrollFadeIn from '../hooks/useScrollFadeIn';
 
 function MainFirstSection() {
@@ -13,8 +14,15 @@ function MainFirstSection() {
     </section>
   );
 }
-
 function MainSecondSection() {
+  return (
+    <section className="w-screen h-screen">
+      <SpeechBubbleLeft content="너무 비싸서 사는 건 부담이에요" />
+      <SpeechBubbleRight content="너무 좋아요" />
+    </section>
+  );
+}
+function MainStepSection() {
   return (
     <section className="w-screen h-screen">
       <p className="text-4xl my-24">
@@ -50,9 +58,10 @@ export default function Main() {
     <>
       <MainFirstSection />
       <MainSecondSection />
+      <MainStepSection />
       <div>
-        <MainButton content="물품 빌리러 가기!" />
-        <MainButton content="물품 빌려주러 가기!" />
+        <MainButton content="물품 빌리러 가기" />
+        <MainButton content="물품 빌려주러 가기" />
         <ScrollTopButton />
       </div>
     </>
