@@ -31,7 +31,7 @@ module.exports = {
         'b-tag-done': '#FA466A',
         'b-bg-sec0': '#7ca6a2',
         'b-bg-sec1': '#cf9493',
-        'b-bg-sec2': '#6ECEDA',
+        'b-bg-sec2': '#CE8467',
         'b-bg-sec3': '#D5CB8E',
         'b-bg-sec4': '#909FA6',
         'b-bg-sec5': '#857FB3',

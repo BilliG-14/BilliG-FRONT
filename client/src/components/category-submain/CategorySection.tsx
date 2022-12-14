@@ -16,11 +16,11 @@ export default function CategorySection({
   return (
     <section className={`${bg[idx]} max-w-screen-lg mt-4 p-9`}>
       <div>
-        <header className="flex justify-between px-12 ">
+        <header className="flex justify-between px-12">
           <h2 className="text-white text-4xl font-extrabold">{category}</h2>
           <a
             href="#"
-            className="flex justify-center items-center text-white text-lg font-extrabold"
+            className="flex justify-center items-center text-white text-lg font-extrabold hover:scale-125 ease-out duration-300"
           >
             <span className="mr-1">더보기</span>
             <span>

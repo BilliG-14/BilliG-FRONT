@@ -9,13 +9,13 @@ export default function CategoryNav() {
   ];
 
   return (
-    <nav className="flex bg-b-yellow w-100 h-16">
+    <nav className="flex w-100 h-16 border-y-2 border-solid border-gray-500">
       <ul className="flex space-x-10 text-center items-center m-auto text-xl font-extrabold ">
         {categoryList.map((category) => {
           return (
             <li
               key={category.id}
-              className="text-b-hash-text hover:scale-125 ease-out duration-300"
+              className="hover:text-b-yellow hover:scale-125 ease-out duration-300"
             >
               <a href="#">{category.title}</a>
             </li>

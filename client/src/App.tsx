@@ -9,6 +9,7 @@ const GlobalStyle = createGlobalStyle`
 function App() {
   return (
     <div className="App h-screen">
+      <h1 className="font-extrabold text-5xl mt-9">B illi G</h1>
       <GlobalStyle />
       <Category />
     </div>
