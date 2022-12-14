@@ -5,6 +5,7 @@ import reset from 'styled-reset';
 import './App.css';
 import BorrowWriting from 'Page/BorrowWriting';
 import GiveWriting from 'Page/GiveWriting';
+import MenuButton from 'Component/MenuButton';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -16,6 +17,7 @@ function App() {
       <div className="App">
         <BrowserRouter>
           <Routes>
+            <Route path="/" element={<MenuButton />} />
             <Route path="/write/give" element={<GiveWriting />} />
             <Route path="/write/borrow" element={<BorrowWriting />} />
           </Routes>
