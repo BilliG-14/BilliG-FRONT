@@ -1,18 +1,20 @@
 import React from 'react';
+import { createGlobalStyle } from 'styled-components';
+import reset from 'styled-reset';
 import './App.css';
-import logo from './logo.svg';
-
+const GlobalStyle = createGlobalStyle`
+  ${reset}
+`;
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>빌려줘14죠@@@!@!@!@@!</p>
-        <h1 className="text-3xl font-bold underline text-red-600">
-          Simple React Typescript Tailwind Sample!!!
-        </h1>
-      </header>
-    </div>
+    <React.Fragment>
+      <GlobalStyle />
+      <ul>
+        <li>나는 리스트다.</li>
+        <li>나는 리스트다.</li>
+        <li>나는 리스트다.</li>
+      </ul>
+    </React.Fragment>
   );
 }
 
