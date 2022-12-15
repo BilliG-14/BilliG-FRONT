@@ -56,14 +56,16 @@ export default function Category() {
   return (
     <div className="">
       <CategoryNav />
-      {categoryList.map((category, idx) => (
-        <CategorySection
-          key={idx}
-          itemList={itemList}
-          category={category}
-          idx={idx}
-        />
-      ))}
+      <div className="">
+        {categoryList.map((category, idx) => (
+          <CategorySection
+            key={idx}
+            itemList={itemList}
+            category={category}
+            idx={idx}
+          />
+        ))}
+      </div>
     </div>
   );
 }

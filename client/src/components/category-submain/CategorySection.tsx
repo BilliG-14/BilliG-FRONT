@@ -14,7 +14,7 @@ export default function CategorySection({
   idx,
 }: ItemListProps) {
   return (
-    <section className={`${bg[idx]} max-w-screen-lg mt-4 p-9`}>
+    <section className={`${bg[idx]} max-w-screen-lg mt-4 p-9 m-auto`}>
       <div>
         <header className="flex justify-between px-12">
           <h2 className="text-white text-4xl font-extrabold">{category}</h2>
