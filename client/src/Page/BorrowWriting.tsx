@@ -42,6 +42,31 @@ const BorrowWriting = () => {
             />
             <div>사진등록시 사진 추가될 영역</div>
           </section>
+
+          {/* 요금 section */}
+          <section className="mb-4">
+            <span className="mr-5">요금</span>
+            <input
+              type="number"
+              className="appearance: none p-3 mx-2 w-60 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
+              style={{ WebkitAppearance: 'none' }}
+            />
+            <span className="mr-5">원/시간</span>
+            <input
+              type="number"
+              className="p-3 mx-2 w-60 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
+            />
+            <span className="">원/일</span>
+          </section>
+
+          {/* 상품 상세내용 section */}
+          <section className="mb-4">
+            <textarea
+              placeholder="사이즈, 색상 등 상세정보를 입력하면 좋아요!"
+              className="p-3 w-full h-40 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
+              required
+            />
+          </section>
         </form>
       </div>
     </div>
