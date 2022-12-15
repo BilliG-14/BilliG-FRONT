@@ -1,7 +1,7 @@
-import { MouseEvent, useContext } from 'react';
+import { MouseEvent, MutableRefObject, useRef } from 'react';
 import create from 'zustand';
 import { ButtonProps } from 'components/MainButton';
-import useJoinStore, { JoinInfo } from '../store/JoinStore';
+
 interface LoginJoinState {
   selectedLogin: boolean;
   selectedJoin: boolean;
@@ -127,9 +127,12 @@ function LoginForm() {
   );
 }
 function JoinForm() {
-  const { setJoinInfo } = useJoinStore();
   return (
-    <form className="mt-12 my-24  animate-fade-in-150ms">
+    <form
+      className="mt-12 my-24  animate-fade-in-150ms"
+      action="http://www.foo.com"
+      method="POST"
+    >
       <LoginInputDiv type="text" label="닉네임" id="nickName" />
       <LoginInputDiv type="text" label="이름" id="name" />
       <LoginInputDiv type="email" label="이메일" id="email" />
@@ -162,7 +165,7 @@ function JoinForm() {
   );
 }
 export default function LoginJoin() {
-  const { selectedLogin, setSelectedJoin } = useLoginJoinStore();
+  const selectedLogin = useLoginJoinStore((state) => state.selectedLogin);
   return (
     <div className="max-w-screen-lg mx-auto">
       <div className="max-w-screen-sm mx-auto mt-48">
