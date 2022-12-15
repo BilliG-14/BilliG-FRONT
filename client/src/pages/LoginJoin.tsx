@@ -59,7 +59,10 @@ function LoginInputDiv({
 function LoginButton({ content }: ButtonProps) {
   return (
     <div className="w-full mb-5 flex justify-center">
-      <button className="bg-b-yellow text-b-chat-text w-48 h-12 rounded-3xl text-xl font-bold">
+      <button
+        className="bg-b-yellow text-b-chat-text w-48 h-12 rounded-3xl text-xl font-bold
+      hover:bg-amber-600 transition-all"
+      >
         {content}
       </button>
     </div>
@@ -109,7 +112,7 @@ function LoginJoinHeader() {
 
 function LoginForm() {
   return (
-    <form className="mt-24">
+    <form className="mt-24 animate-fade-in-150ms">
       <LoginInputDiv type="email" placeholder="Email" id="email" />
       <LoginInputDiv type="password" placeholder="Password" id="password" />
       <div className="w-full mb-5 flex justify-center">
@@ -126,7 +129,7 @@ function LoginForm() {
 }
 function JoinForm() {
   return (
-    <form className="mt-12 my-24">
+    <form className="mt-12 my-24  animate-fade-in-150ms">
       <LoginInputDiv type="text" label="닉네임" id="nickName" />
       <LoginInputDiv type="text" label="이름" id="name" />
       <LoginInputDiv type="email" label="이메일" id="email" />
