@@ -49,9 +49,9 @@ const GiveWriting = () => {
             <div>사진등록시 사진 추가될 영역</div>
           </section>
 
-          {/* 판매가격 section */}
+          {/* 요금 section */}
           <section className="mb-4">
-            <span className="mr-5">판매가격</span>
+            <span className="mr-5">요금</span>
             <input
               type="number"
               className="appearance: none p-3 mx-2 w-60 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
