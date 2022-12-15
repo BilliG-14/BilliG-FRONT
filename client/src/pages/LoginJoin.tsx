@@ -1,13 +1,14 @@
 import { MouseEvent } from 'react';
 import create from 'zustand';
 import { ButtonProps } from 'components/MainButton';
+import useJoinStore, { JoinInfo } from '../store/JoinStore';
 interface LoginJoinState {
   selectedLogin: boolean;
   selectedJoin: boolean;
   setSelectedLogin: () => void;
   setSelectedJoin: () => void;
 }
-const useStore = create<LoginJoinState>()((set) => ({
+const useLoginJoinStore = create<LoginJoinState>((set) => ({
   selectedLogin: true,
   selectedJoin: false,
   setSelectedLogin: () =>
@@ -70,7 +71,7 @@ function LoginButton({ content }: ButtonProps) {
 }
 function LoginJoinHeader() {
   const { selectedLogin, setSelectedLogin, selectedJoin, setSelectedJoin } =
-    useStore();
+    useLoginJoinStore();
   const handleLoginHeadClick = (e: MouseEvent) => {
     setSelectedLogin();
   };
@@ -137,22 +138,32 @@ function JoinForm() {
       <LoginInputDiv
         type="password"
         label="비밀번호 확인"
-        id="confirmpassword"
+        id="confirmPassword"
       />
       <LoginInputDiv type="tel" label="휴대폰 번호" id="phoneNumber" />
       <LoginInputDiv
         type="text"
+        label="우편번호"
+        id="postalCode"
+        placeholder="04799"
+      />
+      <LoginInputDiv
+        type="text"
         label="주소"
         id="address1"
-        placeholder="address"
+        placeholder="서울특별시 성동구 아차산로17길 48"
       />
-      <LoginInputDiv type="text" id="address2" placeholder="detailed address" />
+      <LoginInputDiv
+        type="text"
+        id="address2"
+        placeholder="성수낙낙 2층 앨리스랩"
+      />
       <LoginButton content="Join" />
     </form>
   );
 }
 export default function LoginJoin() {
-  const { selectedLogin, setSelectedJoin } = useStore();
+  const { selectedLogin, setSelectedJoin } = useLoginJoinStore();
   return (
     <div className="max-w-screen-lg mx-auto">
       <div className="max-w-screen-sm mx-auto mt-48">
