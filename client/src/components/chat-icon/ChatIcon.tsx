@@ -1,13 +1,17 @@
 import { BsFillChatFill } from 'react-icons/bs';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 function ChatIcon() {
+  const navigate = useNavigate();
+  const goChat = () => {
+    navigate('/chat');
+  };
   return (
-    <div className="flex justify-end">
-      <div className="w-14 h-14 rounded bg-b-yellow flex justify-center items-center">
-        <Link to="/chat">
+    <div className="w-full flex justify-end px-14">
+      <button onClick={goChat}>
+        <div className="fixed bottom-10  w-14 h-14 rounded bg-b-yellow flex justify-center items-center">
           <BsFillChatFill className="text-3xl text-white" />
-        </Link>
-      </div>
+        </div>
+      </button>
     </div>
   );
 }

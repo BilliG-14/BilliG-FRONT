@@ -6,7 +6,6 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Main from 'pages/Main';
 import LoginJoin from './pages/LoginJoin';
 import Submain from './pages/Submain';
-import ChatIcon from 'components/chat-icon/ChatIcon';
 const GlobalStyle = createGlobalStyle`
   ${reset}
 `;
