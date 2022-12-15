@@ -1,4 +1,4 @@
-import { MouseEvent } from 'react';
+import { MouseEvent, useContext } from 'react';
 import create from 'zustand';
 import { ButtonProps } from 'components/MainButton';
 import useJoinStore, { JoinInfo } from '../store/JoinStore';
@@ -11,10 +11,8 @@ interface LoginJoinState {
 const useLoginJoinStore = create<LoginJoinState>((set) => ({
   selectedLogin: true,
   selectedJoin: false,
-  setSelectedLogin: () =>
-    set((state) => ({ ...state, selectedLogin: true, selectedJoin: false })),
-  setSelectedJoin: () =>
-    set((state) => ({ ...state, selectedLogin: false, selectedJoin: true })),
+  setSelectedLogin: () => set({ selectedLogin: true, selectedJoin: false }),
+  setSelectedJoin: () => set({ selectedLogin: false, selectedJoin: true }),
 }));
 
 type InputProps = {
@@ -129,6 +127,7 @@ function LoginForm() {
   );
 }
 function JoinForm() {
+  const { setJoinInfo } = useJoinStore();
   return (
     <form className="mt-12 my-24  animate-fade-in-150ms">
       <LoginInputDiv type="text" label="닉네임" id="nickName" />
