@@ -10,7 +10,7 @@ const GiveWriting = () => {
     <div className="max-w-screen-lg mx-auto">
       <div className="w-5/6 flex flex-col justify-center mx-auto text-b-text-black">
         <div className="h-80">header</div>
-        <div className="mb-6 text-3xl">빌려드립니다</div>
+        <div className="mb-6 text-3xl">빌려주기</div>
         <form>
           {/* 상품명/카테고리 section */}
           <section className="flex mb-4">
@@ -50,8 +50,8 @@ const GiveWriting = () => {
           </section>
 
           {/* 요금 section */}
-          <section className="mb-4">
-            <span className="mr-5">요금</span>
+          <section className="flex items-center mb-4">
+            <span className="w-[100px] p-3 text-center">요금</span>
             <input
               type="number"
               className="appearance: none p-3 mx-2 w-60 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
@@ -76,7 +76,7 @@ const GiveWriting = () => {
 
           {/* 거래방법 section */}
           <section className="mb-4 h-10 flex items-center">
-            <span className="mr-5 ">거래방법</span>
+            <span className="w-[100px] p-3 text-center">거래방법</span>
             <input
               type="checkbox"
               className="mr-2 appearance-none h-4 w-4 border rounded-md border-gray-300  bg-white checked:bg-b-yellow checked:border-b-yellow focus:outline-none transition duration-100 align-top cursor-pointer"
@@ -91,7 +91,7 @@ const GiveWriting = () => {
 
           {/* 해시태그 section */}
           <section className="mb-4 h-10 flex items-center">
-            <span className="mr-5">해시태그</span>
+            <span className="w-[100px] p-3 text-center">해시태그</span>
             <div>
               <input
                 type="text"
