@@ -35,6 +35,7 @@ module.exports = {
         },
       },
       animation: {
+        'fade-in-150ms': 'fadeIn 150ms linear',
         'fade-in': 'fadeIn 1.5s linear',
       },
     },
