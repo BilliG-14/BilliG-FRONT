@@ -67,6 +67,21 @@ const BorrowWriting = () => {
               required
             />
           </section>
+
+          {/* 거래방법 section */}
+          <section className="mb-4 h-10 flex items-center">
+            <span className="mr-5 ">거래방법</span>
+            <input
+              type="checkbox"
+              className="mr-2 appearance-none h-4 w-4 border rounded-md border-gray-300  bg-white checked:bg-b-yellow checked:border-b-yellow focus:outline-none transition duration-100 align-top cursor-pointer"
+            />
+            <span className="mr-7">직거래</span>
+            <input
+              type="checkbox"
+              className="mr-2 appearance-none h-4 w-4 border rounded-md border-gray-300  bg-white checked:bg-b-yellow checked:border-b-yellow focus:outline-none transition duration-100 align-top cursor-pointer"
+            />
+            <span>택배거래</span>
+          </section>
         </form>
       </div>
     </div>
