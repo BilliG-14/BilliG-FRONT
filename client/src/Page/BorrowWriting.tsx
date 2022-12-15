@@ -82,6 +82,25 @@ const BorrowWriting = () => {
             />
             <span>택배거래</span>
           </section>
+
+          {/* 해시태그 section */}
+          <section className="mb-4 h-10 flex items-center">
+            <span className="mr-5">해시태그</span>
+            <div>
+              <input
+                type="text"
+                placeholder="태그를 입력해주세요"
+                className="p-3 mr-4 w-40 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
+              />
+            </div>
+            <div> 해시태그 생기는 부분 </div>
+          </section>
+
+          <section className="flex flex-col justify-center items-center">
+            <button className="w-1/6 h-10 hover:text-white border border-b-yellow hover:bg-b-yellow focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+              등록하기
+            </button>
+          </section>
         </form>
       </div>
     </div>
