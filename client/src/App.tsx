@@ -1,20 +1,18 @@
-import React from 'react';
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
-import './App.css';
+import Submain from './pages/Submain';
+
 const GlobalStyle = createGlobalStyle`
   ${reset}
 `;
+
 function App() {
   return (
-    <React.Fragment>
+    <div className="App h-screen">
+      <h1 className="font-extrabold text-5xl mt-9">B illi G</h1>
       <GlobalStyle />
-      <ul>
-        <li>나는 리스트다.</li>
-        <li>나는 리스트다.</li>
-        <li>나는 리스트다.</li>
-      </ul>
-    </React.Fragment>
+      <Submain />
+    </div>
   );
 }
 
