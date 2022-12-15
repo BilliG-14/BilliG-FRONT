@@ -35,7 +35,7 @@
   height: 110%;
   z-index: 2;
   position: absolute;
-  right: 4px;
+  right: 12px;
   transition: all 0.8s ease;
   transform: translateY(10px);
 }
