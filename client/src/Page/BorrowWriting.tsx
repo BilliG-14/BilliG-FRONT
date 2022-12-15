@@ -1,5 +1,10 @@
 const BorrowWriting = () => {
   // 빌립니다 글쓰기
+  const today: string = new Date()
+    .toLocaleDateString()
+    .replace(/\./g, '')
+    .replace(/\s/g, '-');
+
   return (
     <div className="max-w-screen-lg mx-auto">
       <div className="w-5/6 flex flex-col justify-center mx-auto text-b-text-black">
@@ -30,7 +35,6 @@ const BorrowWriting = () => {
               type="file"
               accept="image/jpeg,"
               multiple
-              required
               className="block w-full text-sm text-slate-500
               file:mr-4 file:py-2 file:px-4
               file:rounded-md file:border-0
@@ -44,12 +48,11 @@ const BorrowWriting = () => {
           </section>
 
           {/* 요금 section */}
-          <section className="mb-4">
-            <span className="mr-5">요금</span>
+          <section className="flex items-center mb-4">
+            <div className="w-[100px] p-3 text-center">요금</div>
             <input
               type="number"
               className="appearance: none p-3 mx-2 w-60 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
-              style={{ WebkitAppearance: 'none' }}
             />
             <span className="mr-5">원/시간</span>
             <input
@@ -57,6 +60,24 @@ const BorrowWriting = () => {
               className="p-3 mx-2 w-60 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
             />
             <span className="">원/일</span>
+          </section>
+
+          {/* 빌리는 기간 section */}
+          <section className="mb-4 flex items-center">
+            <div className="w-[100px] p-3 text-center">예약기간</div>
+            <input
+              type="date"
+              min={today}
+              max="2099-12-31"
+              className="p-3 mx-2 w-60 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
+            />
+            <div>~</div>
+            <input
+              type="date"
+              min={today}
+              max="2099-12-31"
+              className="p-3 mx-2 w-60 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
+            />
           </section>
 
           {/* 상품 상세내용 section */}
@@ -70,7 +91,7 @@ const BorrowWriting = () => {
 
           {/* 거래방법 section */}
           <section className="mb-4 h-10 flex items-center">
-            <span className="mr-5 ">거래방법</span>
+            <span className="w-[100px] p-3 text-center">거래방법</span>
             <input
               type="checkbox"
               className="mr-2 appearance-none h-4 w-4 border rounded-md border-gray-300  bg-white checked:bg-b-yellow checked:border-b-yellow focus:outline-none transition duration-100 align-top cursor-pointer"
@@ -85,7 +106,7 @@ const BorrowWriting = () => {
 
           {/* 해시태그 section */}
           <section className="mb-4 h-10 flex items-center">
-            <span className="mr-5">해시태그</span>
+            <span className="w-[100px] p-3 text-center">해시태그</span>
             <div>
               <input
                 type="text"
