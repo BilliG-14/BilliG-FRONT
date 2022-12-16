@@ -168,7 +168,7 @@ function JoinForm() {
 export default function LoginJoin() {
   const selectedLogin = useLoginJoinStore((state) => state.selectedLogin);
   return (
-    <div className="max-w-screen-lg mx-auto">
+    <div className="w-screen max-w-screen-lg mx-auto">
       <div className="max-w-screen-sm mx-auto mt-48">
         <LoginJoinHeader />
         <div className="w-full">
