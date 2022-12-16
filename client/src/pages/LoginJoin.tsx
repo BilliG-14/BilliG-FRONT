@@ -90,6 +90,7 @@ function LoginJoinHeader() {
         <a
           onClick={handleLoginHeadClick}
           className="p-4 cursor-pointer select-none"
+          href="#!"
         >
           Login
         </a>
@@ -101,6 +102,7 @@ function LoginJoinHeader() {
         <a
           onClick={handleJoinHeadClick}
           className="p-4 cursor-pointer select-none"
+          href="#!"
         >
           Join
         </a>
@@ -116,8 +118,8 @@ function LoginForm() {
       <LoginInputDiv type="password" placeholder="Password" id="password" />
       <div className="w-full mb-5 flex justify-center">
         <a
-          href="#"
           className="w-1/2 underline text-center font-bold text-b-chat-text italic"
+          href="#!"
         >
           Forgot password?
         </a>
