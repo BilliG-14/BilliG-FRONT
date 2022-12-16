@@ -1,4 +1,4 @@
-import { MouseEvent, MutableRefObject, useRef } from 'react';
+import { MouseEvent } from 'react';
 import create from 'zustand';
 import { ButtonProps } from 'components/MainButton';
 
@@ -90,6 +90,7 @@ function LoginJoinHeader() {
         <a
           onClick={handleLoginHeadClick}
           className="p-4 cursor-pointer select-none"
+          href="#!"
         >
           Login
         </a>
@@ -101,6 +102,7 @@ function LoginJoinHeader() {
         <a
           onClick={handleJoinHeadClick}
           className="p-4 cursor-pointer select-none"
+          href="#!"
         >
           Join
         </a>
@@ -116,8 +118,8 @@ function LoginForm() {
       <LoginInputDiv type="password" placeholder="Password" id="password" />
       <div className="w-full mb-5 flex justify-center">
         <a
-          href="#"
           className="w-1/2 underline text-center font-bold text-b-chat-text italic"
+          href="#!"
         >
           Forgot password?
         </a>
@@ -143,6 +145,7 @@ function JoinForm() {
         id="confirmPassword"
       />
       <LoginInputDiv type="tel" label="휴대폰 번호" id="phoneNumber" />
+      <button>주소 검색</button>
       <LoginInputDiv
         type="text"
         label="우편번호"
@@ -167,7 +170,7 @@ function JoinForm() {
 export default function LoginJoin() {
   const selectedLogin = useLoginJoinStore((state) => state.selectedLogin);
   return (
-    <div className="max-w-screen-lg mx-auto">
+    <div className="w-screen max-w-screen-lg mx-auto">
       <div className="max-w-screen-sm mx-auto mt-48">
         <LoginJoinHeader />
         <div className="w-full">

@@ -41,10 +41,16 @@ module.exports = {
           '0%': { opacity: 0 },
           '100%': { opacity: 1 },
         },
+        fadeInLater: {
+          '0%': { opacity: 0 },
+          '50%': { opacity: 0 },
+          '100%': { opacity: 1 },
+        },
       },
       animation: {
         'fade-in-150ms': 'fadeIn 150ms linear',
         'fade-in': 'fadeIn 1.5s linear',
+        'fade-in-later': 'fadeInLater 1.5s linear',
       },
     },
   },
