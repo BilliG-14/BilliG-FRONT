@@ -3,7 +3,7 @@ const GiveWriting = () => {
 
   return (
     <div className="max-w-screen-lg mx-auto">
-      <div className="w-full flex flex-col justify-center mx-auto text-b-text-black">
+      <div className="w-[800px] flex flex-col justify-center mx-auto text-b-text-black">
         <div className="h-80">header</div>
         <div className="mb-6 text-3xl">빌려주기</div>
         <form>
