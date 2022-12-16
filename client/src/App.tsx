@@ -9,6 +9,7 @@ import BorrowWriting from 'pages/BorrowWriting';
 import GiveWriting from 'pages/GiveWriting';
 import Submain from './pages/Submain';
 import GivePostDetail from './pages/GivePostDetail';
+import BorrowPostDetail from './pages/BorrowPostDetail';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -27,6 +28,7 @@ function App() {
             <Route path="/write/give" element={<GiveWriting />} />
             <Route path="/write/borrow" element={<BorrowWriting />} />
             <Route path="/read/give" element={<GivePostDetail />} />
+            <Route path="/read/borrow" element={<BorrowPostDetail />} />
           </Routes>
         </BrowserRouter>
       </div>

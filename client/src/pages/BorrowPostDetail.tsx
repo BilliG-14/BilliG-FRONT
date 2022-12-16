@@ -1,13 +1,13 @@
-const GivePostDetail = () => {
+const BorrowPostDetail = () => {
   return (
     <div className="max-w-screen-lg mx-auto">
       <div className="w-[800px] flex flex-col justify-center mx-auto text-b-text-black">
         <div className="h-80">header</div>
-        <div className="mb-6 text-3xl">빌려주기</div>
+        <div className="mb-6 text-3xl">빌리기</div>
         {/* 상단 정보(카테고리, 작성일) */}
         <section className="max-w-screen-lg flex justify-between mb-4">
           <div className="text-sm text-b-text-darkgray ml-4">
-            빌려주기 {'>'} 생활용품
+            빌리기 {'>'} 생활용품
           </div>
           <div className="text-xs text-b-text-darkgray mr-4">
             (작성일) 2022.12.16
@@ -15,19 +15,19 @@ const GivePostDetail = () => {
         </section>
 
         {/* 게시글 header - 기본 정보들 */}
-        <section className="flex justify-between mb-4 ">
+        <section className="flex justify-between mb-4">
           <div>
             <img
               src="#"
               className="w-[410px] h-[410px] border border-solid border-gray-300 rounded-lg"
-              alt="제품 사진"
+              alt="원하는 제품 사진"
             />
           </div>
 
           {/* 상품 기본정보 */}
           <div className="flex flex-col justify-between w-[350px] h-[410px] pt-3 mr-4">
             <div className="text-right">
-              <div className="text-3xl">갤럭시 ZZZ 플립플립플립</div>
+              <div className="text-3xl">갤럭시 S2 공기계</div>
               <div className="text-sm mt-1">해시태그</div>
             </div>
 
@@ -39,6 +39,16 @@ const GivePostDetail = () => {
                 <div>
                   <div className="mb-2">1,000원/시간</div>
                   <div>5,000원/일</div>
+                </div>
+              </div>
+              <hr className="hr-1 my-4"></hr>
+              <div className="flex justify-between mb-2">
+                <div className="text-sm text-b-text-darkgray w-24 mb-2 text-left">
+                  원하는 대여시간
+                </div>
+
+                <div>
+                  <div>2022-12-20 ~ 2022-12-30</div>
                 </div>
               </div>
 
@@ -77,7 +87,7 @@ const GivePostDetail = () => {
         <section>
           <div>상세정보</div>
           <div className="w-full h-40 mt-3 p-3 rounded-lg">
-            갤럭시 제트제트제트 플립플립플립입니다.
+            갤럭시 S2 공기계 빌리고 싶어요.....
           </div>
           <br />
           <br />
@@ -134,4 +144,4 @@ const GivePostDetail = () => {
   );
 };
 
-export default GivePostDetail;
+export default BorrowPostDetail;
