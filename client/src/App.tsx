@@ -1,23 +1,29 @@
 import React from 'react';
-import { createGlobalStyle } from 'styled-components';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Main from 'pages/Main';
+import LoginJoin from './pages/LoginJoin';
+import AdminMain from './pages/AdminMain';
+import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 import './App.css';
 import BorrowWriting from 'pages/BorrowWriting';
 import GiveWriting from 'pages/GiveWriting';
-import MenuButton from 'components/MenuButton';
+import Submain from './pages/Submain';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
 `;
+
 function App() {
   return (
     <React.Fragment>
       <GlobalStyle />
-      <div className="App">
+      <div className="App h-screen">
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<MenuButton />} />
+            <Route path="/" element={<Main />} />
+            <Route path="/login" element={<LoginJoin />} />
+            <Route path="/admin" element={<AdminMain />} />
             <Route path="/write/give" element={<GiveWriting />} />
             <Route path="/write/borrow" element={<BorrowWriting />} />
           </Routes>
