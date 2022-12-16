@@ -8,7 +8,6 @@ import reset from 'styled-reset';
 import BorrowWriting from 'pages/BorrowWriting';
 import GiveWriting from 'pages/GiveWriting';
 import Submain from './pages/Submain';
-
 const GlobalStyle = createGlobalStyle`
   ${reset}
 `;
