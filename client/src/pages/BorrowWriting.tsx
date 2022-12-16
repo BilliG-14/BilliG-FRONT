@@ -1,6 +1,6 @@
 import { useRef, useState, MouseEvent } from 'react';
 
-const BorrowWriting = () => {
+export default function BorrowWriting() {
   // 빌립니다 글쓰기
   const today: string = new Date()
     .toLocaleDateString()
@@ -15,14 +15,14 @@ const BorrowWriting = () => {
   const picture = useRef<HTMLInputElement>(null);
 
   // 버튼 클릭 시
-  const handleButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
+  function handleButtonClick(e: MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
     // console.log(productNameRef.current?.value);
     // console.log(priceDay.current?.value);
     // console.log(priceTime.current?.value);
     // console.log(typeof period.current?.value);
     console.log(typeof file);
-  };
+  }
 
   // 업로드할 파일들을 담을 State!
   const [file, setFile] = useState<File>();
@@ -33,7 +33,7 @@ const BorrowWriting = () => {
    * file state에 값을 할당한다
    */
 
-  const fileUploadValidHandler = (e: React.MouseEvent<HTMLInputElement>) => {
+  function fileUploadValidHandler(e: React.MouseEvent<HTMLInputElement>) {
     const target = e.currentTarget;
     const files = (target.files as FileList)[0];
 
@@ -44,7 +44,7 @@ const BorrowWriting = () => {
     // validation을 정상적으로 통과한 File
     setFile(files);
     console.log(target.files as FileList);
-  };
+  }
 
   return (
     <div className="max-w-screen-lg mx-auto">
@@ -175,5 +175,4 @@ const BorrowWriting = () => {
       </div>
     </div>
   );
-};
-export default BorrowWriting;
+}
