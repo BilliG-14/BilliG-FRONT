@@ -9,6 +9,7 @@ import BorrowWriting from 'pages/BorrowWriting';
 import GiveWriting from 'pages/GiveWriting';
 import Submain from './pages/Submain';
 import Search from './pages/Search';
+import MyInfo from './pages/MyInfo';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -18,7 +19,7 @@ function App() {
   return (
     <React.Fragment>
       <GlobalStyle />
-      <div className="App h-screen">
+      <div className="App h-screen w-screen">
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Main />} />
@@ -28,6 +29,7 @@ function App() {
             <Route path="/write/borrow" element={<BorrowWriting />} />
             <Route path="/submain" element={<Submain />} />
             <Route path="/search" element={<Search />} />
+            <Route path="/myinfo" element={<MyInfo />} />
           </Routes>
         </BrowserRouter>
       </div>
