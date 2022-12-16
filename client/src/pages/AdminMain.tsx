@@ -1,40 +1,75 @@
-function AdminHeader() {
+import AdminHeader from 'components/admin/AdminHeader';
+import AdminMainSection from 'components/admin/AdminMainSection';
+import create from 'zustand/react';
+
+// interface adminPageState {
+
+// }
+// const useAdminStore = create<adminPageState>((set) => { });
+import React from 'react';
+
+export default function AdminManageUserSection() {
   return (
-    <>
-      {' '}
-      <p className="max-w-screen-lg mx-auto p-6 text-3xl font-extrabold">
-        Admin Page
-      </p>
-      <hr className="border-2 border-b-text-black max-w-screen-lg mx-auto"></hr>
-    </>
+    <div className="h-full w-screen max-w-screen-lg m-auto">
+      <AdminHeader />
+      <section className="max-w-screen-lg h-full">
+        {/* <div className="h-14 border-b-4 border-b-text-black border-solid text-xl font-semibold text-b-text-black py-1 px-4 flex items-center">
+          <i className="fa-solid fa-user p-1 mr-2" />
+          <span className="block">회원 관리</span>
+        </div> */}
+        <div className="flex h-full">
+          <AdminSideBar />
+          <div>메인영역</div>
+        </div>
+      </section>
+    </div>
   );
 }
-export default function AdminMain() {
+
+function AdminSideBar() {
   return (
-    <>
-      <AdminHeader />
-      <div className="w-screen max-w-screen-lg mx-auto mt-36">
-        <div className="flex w-full">
-          <button className=" bg-b-bg-gray h-96 w-full mx-9 rounded-2xl group hover:bg-b-yellow  hover:text-white transition-colors shadow-lg">
-            <i className="fa-solid fa-user text-9xl group-hover:scale-110 transition-transform duration-700"></i>
-            <p className="text-2xl mt-6 font-semibold group-hover:font-extrabold">
-              회원 관리
-            </p>
-          </button>
-          <button className=" bg-b-bg-gray h-96 w-full mx-9 rounded-2xl group hover:bg-b-yellow  hover:text-white transition-colors shadow-lg">
-            <i className="fa-solid fa-file-pen text-9xl group-hover:scale-110 transition-transform duration-700"></i>
-            <p className="text-2xl mt-6 font-semibold group-hover:font-extrabold">
-              게시글 관리
-            </p>
-          </button>
-          <button className=" bg-b-bg-gray h-96 w-full mx-9 rounded-2xl group hover:bg-b-yellow  hover:text-white transition-colors shadow-lg">
-            <i className="fa-solid fa-handshake-angle text-9xl group-hover:scale-110 transition-transform duration-700"></i>
-            <p className="text-2xl mt-6 font-semibold group-hover:font-extrabold">
-              대여 관리
-            </p>
-          </button>
-        </div>
+    <div className="w-1/5 h-full p-4 bg-b-bg-gray">
+      <div className="menu_box mb-7">
+        <p className="items-center justify-center text-xl font-extrabold mb-1">
+          회원 관리
+        </p>
+        <ul className="text-center text-lg font-semibold">
+          <li className="h-10 flex items-center justify-start">
+            <a href="#!">
+              <p className="items-center justify-center">회원 목록 조회</p>
+            </a>
+          </li>
+          <li className="h-10 flex items-center justify-start">
+            <a href="#!">
+              <p className="items-center justify-center">회원 상세 관리</p>
+            </a>
+          </li>
+        </ul>
       </div>
-    </>
+      <div className="menu_box mb-7">
+        <p className="items-center justify-center text-xl font-extrabold mb-1">
+          게시물 관리
+        </p>
+        <ul className="text-center text-lg font-semibold">
+          <li className="h-10 flex items-center justify-start">
+            <a href="#!">
+              <p className="items-center justify-center">게시물 조회</p>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div className="menu_box mb-5">
+        <p className="items-center justify-center text-xl font-extrabold mb-1">
+          대여 관리
+        </p>
+        <ul className="text-center text-lg font-semibold">
+          <li className="h-10 flex items-center justify-start">
+            <a href="#!">
+              <p className="items-center justify-center">대여 현황 조회</p>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
   );
 }
