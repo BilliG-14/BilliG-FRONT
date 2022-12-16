@@ -2,7 +2,7 @@ import MyInfoHeader from 'components/myinfo/MyInfoHeader';
 import Nav from '../components/nav/Nav';
 import MyInfoSideBar from '../components/myinfo/MyinfoSideBar';
 
-export default function MyInfo() {
+export default function MyPage() {
   return (
     <div className="h-full w-screen max-w-screen-lg m-auto">
       <Nav />

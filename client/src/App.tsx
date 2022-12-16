@@ -11,7 +11,7 @@ import Submain from './pages/Submain';
 import GivePostDetail from './pages/GivePostDetail';
 import BorrowPostDetail from './pages/BorrowPostDetail';
 import Search from './pages/Search';
-import MyInfo from './pages/MyInfo';
+import MyPage from './pages/MyPage';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -31,7 +31,7 @@ function App() {
             <Route path="/write/borrow" element={<BorrowWriting />} />
             <Route path="/submain" element={<Submain />} />
             <Route path="/search" element={<Search />} />
-            <Route path="/myinfo" element={<MyInfo />} />
+            <Route path="/mypage" element={<MyPage />} />
             <Route path="/read/give" element={<GivePostDetail />} />
             <Route path="/read/borrow" element={<BorrowPostDetail />} />
           </Routes>
