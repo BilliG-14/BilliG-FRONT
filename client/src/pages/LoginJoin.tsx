@@ -1,4 +1,4 @@
-import { MouseEvent, MutableRefObject, useRef } from 'react';
+import { MouseEvent } from 'react';
 import create from 'zustand';
 import { ButtonProps } from 'components/MainButton';
 
@@ -143,6 +143,7 @@ function JoinForm() {
         id="confirmPassword"
       />
       <LoginInputDiv type="tel" label="휴대폰 번호" id="phoneNumber" />
+      <button>주소 검색</button>
       <LoginInputDiv
         type="text"
         label="우편번호"
