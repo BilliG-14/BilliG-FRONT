@@ -8,6 +8,7 @@ import reset from 'styled-reset';
 import BorrowWriting from 'pages/BorrowWriting';
 import GiveWriting from 'pages/GiveWriting';
 import Submain from './pages/Submain';
+import GivePostDetail from './pages/GivePostDetail';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -25,6 +26,7 @@ function App() {
             <Route path="/admin" element={<AdminMain />} />
             <Route path="/write/give" element={<GiveWriting />} />
             <Route path="/write/borrow" element={<BorrowWriting />} />
+            <Route path="/read/give" element={<GivePostDetail />} />
           </Routes>
         </BrowserRouter>
       </div>
