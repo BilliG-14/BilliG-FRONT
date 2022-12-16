@@ -1,3 +1,5 @@
+import { useRef, useState, MouseEvent } from 'react';
+
 const BorrowWriting = () => {
   // 빌립니다 글쓰기
   const today: string = new Date()
@@ -5,11 +7,50 @@ const BorrowWriting = () => {
     .replace(/\./g, '')
     .replace(/\s/g, '-');
 
+  // Ref
+  const productNameRef = useRef<HTMLInputElement>(null);
+  const priceDay = useRef<HTMLInputElement>(null);
+  const priceTime = useRef<HTMLInputElement>(null);
+  const period = useRef<HTMLInputElement>(null);
+  const picture = useRef<HTMLInputElement>(null);
+
+  // 버튼 클릭 시
+  const handleButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    // console.log(productNameRef.current?.value);
+    // console.log(priceDay.current?.value);
+    // console.log(priceTime.current?.value);
+    // console.log(typeof period.current?.value);
+    console.log(typeof file);
+  };
+
+  // 업로드할 파일들을 담을 State!
+  const [file, setFile] = useState<File>();
+
+  /**
+   * 파일 선택 onChangeHandler
+   * 해당 method에서는 업로드할 파일에대해서 validaion을 하고
+   * file state에 값을 할당한다
+   */
+
+  const fileUploadValidHandler = (e: React.MouseEvent<HTMLInputElement>) => {
+    const target = e.currentTarget;
+    const files = (target.files as FileList)[0];
+
+    if (files === undefined) {
+      return;
+    }
+
+    // validation을 정상적으로 통과한 File
+    setFile(files);
+    console.log(target.files as FileList);
+  };
+
   return (
     <div className="max-w-screen-lg mx-auto">
       <div className="w-5/6 flex flex-col justify-center mx-auto text-b-text-black">
         <div className="h-80">header</div>
-        <div className="mb-6 text-3xl">빌립니다</div>
+        <div className="mb-6 text-3xl">빌리기</div>
         <form>
           {/* 상품명/카테고리 section */}
           <section className="flex mb-4">
@@ -22,16 +63,19 @@ const BorrowWriting = () => {
               <option>도서/음반</option>
             </select>
             <input
+              ref={productNameRef}
+              id="productName"
               className="grow p-3 ml-2 w-9/12 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
               type="text"
               placeholder="상품명"
-              required
             />
           </section>
 
           {/* 사진 등록 section */}
           <section className="mb-4">
             <input
+              onClick={fileUploadValidHandler}
+              ref={picture}
               type="file"
               accept="image/jpeg,"
               multiple
@@ -51,11 +95,13 @@ const BorrowWriting = () => {
           <section className="flex items-center mb-4">
             <div className="w-[100px] p-3 text-center">요금</div>
             <input
+              ref={priceTime}
               type="number"
               className="appearance: none p-3 mx-2 w-60 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
             />
-            <span className="mr-5">원/시간</span>
+            <div className="mr-5">원/시간</div>
             <input
+              ref={priceDay}
               type="number"
               className="p-3 mx-2 w-60 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
             />
@@ -66,6 +112,7 @@ const BorrowWriting = () => {
           <section className="mb-4 flex items-center">
             <div className="w-[100px] p-3 text-center">예약기간</div>
             <input
+              ref={period}
               type="date"
               min={today}
               max="2099-12-31"
@@ -85,7 +132,6 @@ const BorrowWriting = () => {
             <textarea
               placeholder="사이즈, 색상 등 상세정보를 입력하면 좋아요!"
               className="p-3 w-full h-40 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
-              required
             />
           </section>
 
@@ -118,7 +164,10 @@ const BorrowWriting = () => {
           </section>
 
           <section className="flex flex-col justify-center items-center">
-            <button className="w-1/6 h-10 hover:text-white border border-b-yellow hover:bg-b-yellow focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+            <button
+              onClick={handleButtonClick}
+              className="w-1/6 h-10 hover:text-white border border-b-yellow hover:bg-b-yellow focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+            >
               등록하기
             </button>
           </section>

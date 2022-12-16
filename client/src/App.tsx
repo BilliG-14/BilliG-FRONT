@@ -3,9 +3,9 @@ import { createGlobalStyle } from 'styled-components';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import reset from 'styled-reset';
 import './App.css';
-import BorrowWriting from 'Page/BorrowWriting';
-import GiveWriting from 'Page/GiveWriting';
-import MenuButton from 'Component/MenuButton';
+import BorrowWriting from 'pages/BorrowWriting';
+import GiveWriting from 'pages/GiveWriting';
+import MenuButton from 'components/MenuButton';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
