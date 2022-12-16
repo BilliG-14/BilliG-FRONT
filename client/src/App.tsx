@@ -5,7 +5,6 @@ import LoginJoin from './pages/LoginJoin';
 import AdminMain from './pages/AdminMain';
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
-import './App.css';
 import BorrowWriting from 'pages/BorrowWriting';
 import GiveWriting from 'pages/GiveWriting';
 import Submain from './pages/Submain';
