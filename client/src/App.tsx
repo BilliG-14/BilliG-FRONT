@@ -1,6 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 import Submain from './pages/Submain';
+import Search from './pages/Search';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
