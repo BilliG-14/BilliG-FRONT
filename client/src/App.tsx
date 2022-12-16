@@ -26,6 +26,8 @@ function App() {
             <Route path="/admin" element={<AdminMain />} />
             <Route path="/write/give" element={<GiveWriting />} />
             <Route path="/write/borrow" element={<BorrowWriting />} />
+            <Route path="/submain" element={<Submain />} />
+            <Route path="/search" element={<Search />} />
           </Routes>
         </BrowserRouter>
       </div>

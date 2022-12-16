@@ -3,8 +3,8 @@ import DealTag from 'components/tag/DealTag';
 
 export default function SearchItemCard() {
   return (
-    <div>
-      <li className="flex w-full justify-center">
+    <div className="h-36">
+      <li className="flex w-full h-full justify-center py-3">
         <div className="item_info flex w-3/5 border-b-2 border-solid border-b-yellow">
           <a href="#">
             <img
@@ -15,16 +15,12 @@ export default function SearchItemCard() {
           </a>
           <div className="w-4/5 p-3 pl-10">
             <a href="#">
-              <p className="text-lg font-semibold">
+              <p className="text-lg font-semibold mt-1">
                 Apple 2022 맥북 프로 13 M2 대여해드려요
               </p>
             </a>
             <ul>
-              <li className="font-semibold mb-2">
-                <span>작성자 : </span>
-                <span>명륜진사갈비</span>
-              </li>
-              <li className="text-b-text-darkgray">
+              <li className="text-b-text-darkgray mt-3">
                 <span>거래지역 : </span>
                 <span>📍 서울시 중랑구</span>
               </li>
@@ -33,7 +29,7 @@ export default function SearchItemCard() {
         </div>
         <div className="item_deal_price border-b-2 border-solid border-b-yellow">
           <DealTag deal="직거래" />
-          <div className="price text-right">
+          <div className="price text-right mt-1">
             <p className="per_time mb-2">
               <span className="font-semibold"> {`5,000 원`}</span>
               <span className="text-xs"> / 시간</span>
