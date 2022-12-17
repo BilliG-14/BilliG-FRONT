@@ -6,7 +6,7 @@ import Footer from '../components/footer/Footer';
 
 export default function Search() {
   return (
-    <div className="w-screen max-w-screen-lg relative">
+    <div className="w-screen max-w-screen-lg relative m-auto">
       <Nav />
       <SearchBar />
       <div>

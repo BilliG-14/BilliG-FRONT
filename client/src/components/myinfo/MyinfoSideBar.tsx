@@ -3,7 +3,7 @@ export default function MyInfoSideBar() {
     <div className="w-1/5 h-full p-4 bg-b-bg-gray">
       <div className="menu_box mb-7">
         <p className="items-center justify-center text-xl font-extrabold mb-1">
-          냐 정보
+          내 정보
         </p>
         <ul className="text-center text-lg font-semibold">
           <li className="h-10 flex items-center justify-start">
