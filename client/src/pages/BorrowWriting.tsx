@@ -1,6 +1,7 @@
-import { useRef } from 'react';
-import HashTagSection from '../components/postWrite/HashTagWrite';
+import { useRef, useState } from 'react';
 import { imageUploadStore, hashTagStore } from './../store/PostStore';
+
+import HashTagSection from '../components/postWrite/HashTagWrite';
 import ImageUpload from '../components/postWrite/ImageUpload';
 
 export default function BorrowWriting() {
@@ -34,24 +35,37 @@ export default function BorrowWriting() {
     console.log(hashTags);
 
     console.log('file', imgFiles);
+    console.log(tradeWay);
   }
 
-  // 업로드할 파일들을 담을 State!
-  // const [file, setFile] = useState<FileList>();
+  type TradeWayType = {
+    direct: boolean;
+    delivery: boolean;
+  };
 
-  /**
-   * 파일 선택 onChangeHandler
-   * 해당 method에서는 업로드할 파일에대해서 validaion을 하고
-   * file state에 값을 할당한다
-   */
+  const [direct, setDirect] = useState(true);
+  const [delivery, setDelivery] = useState(true);
 
-  // function fileUploadHandler(e: React.ChangeEvent<HTMLInputElement>): void {
-  //   const target = e.currentTarget;
-  //   const files = target.files as FileList;
+  const [tradeWay, setTradeWay] = useState<TradeWayType>({
+    direct: false,
+    delivery: false,
+  });
 
-  //   // validation을 정상적으로 통과한 File
-  //   setFile(files);
-  // }
+  function directCheckBoxClick(e: React.MouseEvent<HTMLInputElement>) {
+    console.log(e.currentTarget.checked);
+    setDirect(e.currentTarget.checked);
+    setTradeWay((state) => {
+      return { ...state, direct };
+    });
+  }
+
+  function deliveryCheckBoxClick(e: React.MouseEvent<HTMLInputElement>) {
+    console.log(e.currentTarget.checked);
+    setDelivery(e.currentTarget.checked);
+    setTradeWay((state) => {
+      return { ...state, delivery };
+    });
+  }
 
   return (
     <div className="max-w-screen-lg mx-auto">
@@ -80,29 +94,9 @@ export default function BorrowWriting() {
               placeholder="상품명"
             />
           </section>
-          <ImageUpload />
 
-          {/* 사진 등록 section
-          <section className="mb-4">
-            <input
-              onChange={fileUploadHandler}
-              type="file"
-              accept="image/jpeg,"
-              multiple
-              className="block w-full text-sm text-slate-500
-              file:mr-4 file:py-2 file:px-4
-              file:rounded-md file:border-0
-              file:text-sm file:font-semibold
-              cursor-pointer
-              file:bg-b-bg-gray file:text-b-text-black
-              hover:file:bg-gray-200
-              file:cursor-pointer"
-            />
-            <div>
-              사진등록시 사진 추가될 영역
-              <img alt="이미지" />
-            </div>
-          </section> */}
+          {/* 사진 업로드 component */}
+          <ImageUpload />
 
           {/* 요금 section */}
           <section className="flex items-center mb-4">
@@ -152,29 +146,20 @@ export default function BorrowWriting() {
           <section className="mb-4 h-10 flex items-center">
             <span className="w-[100px] p-3 text-center">거래방법</span>
             <input
+              onClick={directCheckBoxClick}
               type="checkbox"
               className="mr-2 appearance-none h-4 w-4 border rounded-md border-gray-300  bg-white checked:bg-b-yellow checked:border-b-yellow focus:outline-none transition duration-100 align-top cursor-pointer"
             />
             <span className="mr-7">직거래</span>
             <input
+              onClick={deliveryCheckBoxClick}
               type="checkbox"
               className="mr-2 appearance-none h-4 w-4 border rounded-md border-gray-300  bg-white checked:bg-b-yellow checked:border-b-yellow focus:outline-none transition duration-100 align-top cursor-pointer"
             />
             <span>택배거래</span>
           </section>
 
-          {/* 해시태그 section */}
-          {/* <section className="mb-4 h-10 flex items-center">
-            <span className="w-[100px] p-3 text-center">해시태그</span>
-            <div>
-              <input
-                type="text"
-                placeholder="태그를 입력해주세요"
-                className="p-3 mr-4 w-40 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
-              />
-            </div>
-            <div> 해시태그 생기는 부분 </div>
-          </section> */}
+          {/* 해시태그 component */}
           <HashTagSection />
 
           <section className="flex flex-col justify-center items-center">

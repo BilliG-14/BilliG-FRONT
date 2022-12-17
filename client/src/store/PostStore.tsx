@@ -11,6 +11,8 @@ export const imageUploadStore = create<ImageUploadState>((set) => ({
   setimgFile: (imgFileList) => set(() => ({ imgFiles: imgFileList })),
 }));
 
+// 거래방법 store
+
 // 해시태그 store
 interface HashTagState {
   hashTagInputText: string;
