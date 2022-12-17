@@ -1,8 +1,14 @@
-import { useRef, useState, MouseEvent } from 'react';
+import ImageUpload from '../components/postWrite/ImageUpload';
+import { useRef, useState } from 'react';
+import HashTagSection from '../components/postWrite/HashTagWrite';
+import PostStore from './../store/PostStore';
 
-const BorrowWriting = () => {
+export default function BorrowWriting() {
+  // store에서 가져오는 state들
+  const { hashTags } = PostStore();
+
   // 빌립니다 글쓰기
-  const today: string = new Date()
+  const today = new Date()
     .toLocaleDateString()
     .replace(/\./g, '')
     .replace(/\s/g, '-');
@@ -12,20 +18,25 @@ const BorrowWriting = () => {
   const priceDay = useRef<HTMLInputElement>(null);
   const priceTime = useRef<HTMLInputElement>(null);
   const period = useRef<HTMLInputElement>(null);
-  const picture = useRef<HTMLInputElement>(null);
+  const category = useRef<HTMLSelectElement>(null);
 
-  // 버튼 클릭 시
-  const handleButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
+  // 등록하기 클릭 시
+  function handleButtonClick(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    // console.log(productNameRef.current?.value);
-    // console.log(priceDay.current?.value);
-    // console.log(priceTime.current?.value);
-    // console.log(typeof period.current?.value);
-    console.log(typeof file);
-  };
+    console.log(productNameRef.current?.value);
+    console.log(priceDay.current?.value);
+    console.log(priceTime.current?.value);
+    console.log(period.current?.value);
+    console.log(
+      category.current?.options[category.current?.selectedIndex].innerText,
+    );
+    console.log(hashTags);
+
+    console.log('file', file);
+  }
 
   // 업로드할 파일들을 담을 State!
-  const [file, setFile] = useState<File>();
+  const [file, setFile] = useState<FileList>();
 
   /**
    * 파일 선택 onChangeHandler
@@ -33,9 +44,9 @@ const BorrowWriting = () => {
    * file state에 값을 할당한다
    */
 
-  const fileUploadValidHandler = (e: React.MouseEvent<HTMLInputElement>) => {
+  function fileUploadHandler(e: React.ChangeEvent<HTMLInputElement>) {
     const target = e.currentTarget;
-    const files = (target.files as FileList)[0];
+    const files = target.files as FileList;
 
     if (files === undefined) {
       return;
@@ -43,8 +54,7 @@ const BorrowWriting = () => {
 
     // validation을 정상적으로 통과한 File
     setFile(files);
-    console.log(target.files as FileList);
-  };
+  }
 
   return (
     <div className="max-w-screen-lg mx-auto">
@@ -54,13 +64,16 @@ const BorrowWriting = () => {
         <form>
           {/* 상품명/카테고리 section */}
           <section className="flex mb-4">
-            <select className="flex-none pl-3 w-1/6 h-10 border-solid border  border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2">
-              <option>카테고리</option>
-              <option>IT/가전</option>
-              <option>의류</option>
-              <option>캠핑/레저</option>
-              <option>완구/취미</option>
-              <option>도서/음반</option>
+            <select
+              ref={category}
+              className="flex-none pl-3 w-1/6 h-10 border-solid border  border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2"
+            >
+              <option value="1">카테고리</option>
+              <option value="2">IT/가전</option>
+              <option value="3">의류</option>
+              <option value="4">캠핑/레저</option>
+              <option value="5">완구/취미</option>
+              <option value="6">도서/음반</option>
             </select>
             <input
               ref={productNameRef}
@@ -70,12 +83,12 @@ const BorrowWriting = () => {
               placeholder="상품명"
             />
           </section>
+          {/* <ImageUpload /> */}
 
-          {/* 사진 등록 section */}
+          {/* 사진 등록 section
           <section className="mb-4">
             <input
-              onClick={fileUploadValidHandler}
-              ref={picture}
+              onChange={fileUploadHandler}
               type="file"
               accept="image/jpeg,"
               multiple
@@ -88,8 +101,11 @@ const BorrowWriting = () => {
               hover:file:bg-gray-200
               file:cursor-pointer"
             />
-            <div>사진등록시 사진 추가될 영역</div>
-          </section>
+            <div>
+              사진등록시 사진 추가될 영역
+              <img alt="이미지" />
+            </div>
+          </section> */}
 
           {/* 요금 section */}
           <section className="flex items-center mb-4">
@@ -151,7 +167,7 @@ const BorrowWriting = () => {
           </section>
 
           {/* 해시태그 section */}
-          <section className="mb-4 h-10 flex items-center">
+          {/* <section className="mb-4 h-10 flex items-center">
             <span className="w-[100px] p-3 text-center">해시태그</span>
             <div>
               <input
@@ -161,7 +177,8 @@ const BorrowWriting = () => {
               />
             </div>
             <div> 해시태그 생기는 부분 </div>
-          </section>
+          </section> */}
+          <HashTagSection />
 
           <section className="flex flex-col justify-center items-center">
             <button
@@ -175,5 +192,4 @@ const BorrowWriting = () => {
       </div>
     </div>
   );
-};
-export default BorrowWriting;
+}
