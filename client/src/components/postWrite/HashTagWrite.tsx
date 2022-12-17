@@ -1,6 +1,7 @@
 import PostStore from './../../store/PostStore';
 
 export default function HashTagSection() {
+  // store에서 불러오기
   const {
     hashTagInputText,
     hashTags,
@@ -10,12 +11,12 @@ export default function HashTagSection() {
   } = PostStore();
 
   // input에 태그 입력 시 tages 배열로 저장
-  function valueChange(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleTextChange(e: React.ChangeEvent<HTMLInputElement>) {
     const tagInput = e.target.value;
     setHashTagInputText(tagInput);
   }
 
-  function valueKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+  function handleTagSpaceBar(e: React.KeyboardEvent<HTMLInputElement>) {
     // 스페이스로 해시태그 등록 시 input이 초기화가 되지 않고 스페이스가 남는 이슈 있음
     if (e.key === ' ') {
       setHashTagInputText('');
@@ -40,8 +41,8 @@ export default function HashTagSection() {
           <div>
             <input
               value={hashTagInputText}
-              onChange={valueChange}
-              onKeyDown={valueKeyDown}
+              onChange={handleTextChange}
+              onKeyDown={handleTagSpaceBar}
               type="text"
               placeholder="태그를 입력해주세요"
               className="p-3 mr-4 w-40 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"

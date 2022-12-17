@@ -1,4 +1,5 @@
-import { useRef, useState, MouseEvent } from 'react';
+import ImageUpload from 'components/postWrite/ImageUpload';
+import { useRef, useState } from 'react';
 import HashTagSection from '../components/postWrite/HashTagWrite';
 import PostStore from './../store/PostStore';
 
@@ -7,7 +8,7 @@ export default function BorrowWriting() {
   const { hashTags } = PostStore();
 
   // 빌립니다 글쓰기
-  const today: string = new Date()
+  const today = new Date()
     .toLocaleDateString()
     .replace(/\./g, '')
     .replace(/\s/g, '-');
@@ -17,11 +18,10 @@ export default function BorrowWriting() {
   const priceDay = useRef<HTMLInputElement>(null);
   const priceTime = useRef<HTMLInputElement>(null);
   const period = useRef<HTMLInputElement>(null);
-  const picture = useRef<HTMLInputElement>(null);
   const category = useRef<HTMLSelectElement>(null);
 
-  // 버튼 클릭 시
-  function handleButtonClick(e: MouseEvent<HTMLButtonElement>) {
+  // 등록하기 클릭 시
+  function handleButtonClick(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
     console.log(productNameRef.current?.value);
     console.log(priceDay.current?.value);
@@ -30,12 +30,13 @@ export default function BorrowWriting() {
     console.log(
       category.current?.options[category.current?.selectedIndex].innerText,
     );
-    console.log('file', file);
     console.log(hashTags);
+
+    console.log('file', file);
   }
 
   // 업로드할 파일들을 담을 State!
-  const [file, setFile] = useState<File>();
+  const [file, setFile] = useState<FileList>();
 
   /**
    * 파일 선택 onChangeHandler
@@ -43,9 +44,9 @@ export default function BorrowWriting() {
    * file state에 값을 할당한다
    */
 
-  function fileUploadValidHandler(e: React.MouseEvent<HTMLInputElement>) {
+  function fileUploadHandler(e: React.ChangeEvent<HTMLInputElement>) {
     const target = e.currentTarget;
-    const files = (target.files as FileList)[0];
+    const files = target.files as FileList;
 
     if (files === undefined) {
       return;
@@ -53,7 +54,6 @@ export default function BorrowWriting() {
 
     // validation을 정상적으로 통과한 File
     setFile(files);
-    console.log(target.files as FileList);
   }
 
   return (
@@ -83,12 +83,12 @@ export default function BorrowWriting() {
               placeholder="상품명"
             />
           </section>
+          <ImageUpload fileUploadHandler={fileUploadHandler} />
 
-          {/* 사진 등록 section */}
+          {/* 사진 등록 section
           <section className="mb-4">
             <input
-              onClick={fileUploadValidHandler}
-              ref={picture}
+              onChange={fileUploadHandler}
               type="file"
               accept="image/jpeg,"
               multiple
@@ -101,8 +101,11 @@ export default function BorrowWriting() {
               hover:file:bg-gray-200
               file:cursor-pointer"
             />
-            <div>사진등록시 사진 추가될 영역</div>
-          </section>
+            <div>
+              사진등록시 사진 추가될 영역
+              <img alt="이미지" />
+            </div>
+          </section> */}
 
           {/* 요금 section */}
           <section className="flex items-center mb-4">
