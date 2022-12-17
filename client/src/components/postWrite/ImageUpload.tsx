@@ -10,7 +10,7 @@ export default function ImageUpload({
   return (
     <section className="mb-4">
       <input
-        onChange={fileUploadHandler}
+        // onChange={fileUploadHandler}
         type="file"
         accept="image/jpeg,"
         multiple

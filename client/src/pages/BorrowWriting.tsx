@@ -1,4 +1,4 @@
-import ImageUpload from 'components/postWrite/ImageUpload';
+import ImageUpload from '../components/postWrite/ImageUpload';
 import { useRef, useState } from 'react';
 import HashTagSection from '../components/postWrite/HashTagWrite';
 import PostStore from './../store/PostStore';
@@ -83,7 +83,7 @@ export default function BorrowWriting() {
               placeholder="상품명"
             />
           </section>
-          <ImageUpload fileUploadHandler={fileUploadHandler} />
+          {/* <ImageUpload /> */}
 
           {/* 사진 등록 section
           <section className="mb-4">
