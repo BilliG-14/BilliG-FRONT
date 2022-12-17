@@ -22,7 +22,7 @@ export default function ImageUpload() {
       <input
         onChange={fileUploadHandler}
         type="file"
-        accept="image/jpeg,"
+        accept="image/jpeg, image/png"
         multiple
         className="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold cursor-pointer file:bg-b-bg-gray file:text-b-text-black  hover:file:bg-gray-200 file:cursor-pointer"
       />

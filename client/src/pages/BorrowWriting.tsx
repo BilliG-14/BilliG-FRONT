@@ -1,13 +1,19 @@
 import { useRef, useState } from 'react';
-import { imageUploadStore, hashTagStore } from './../store/PostStore';
+import {
+  imageUploadStore,
+  tradeWayStore,
+  hashTagStore,
+} from './../store/PostStore';
 
 import HashTagSection from '../components/postWrite/HashTagWrite';
 import ImageUpload from '../components/postWrite/ImageUpload';
+import TradeWay from '../components/postWrite/TradeWay';
 
 export default function BorrowWriting() {
   // store에서 가져오는 state들
   const { hashTags } = hashTagStore();
   const { imgFiles } = imageUploadStore();
+  const { tradeWay } = tradeWayStore();
 
   // 빌립니다 글쓰기
   const today = new Date()
@@ -38,34 +44,34 @@ export default function BorrowWriting() {
     console.log(tradeWay);
   }
 
-  type TradeWayType = {
-    direct: boolean;
-    delivery: boolean;
-  };
+  // type TradeWayType = {
+  //   direct: boolean;
+  //   delivery: boolean;
+  // };
 
-  const [direct, setDirect] = useState(true);
-  const [delivery, setDelivery] = useState(true);
+  // const [direct, setDirect] = useState(true);
+  // const [delivery, setDelivery] = useState(true);
 
-  const [tradeWay, setTradeWay] = useState<TradeWayType>({
-    direct: false,
-    delivery: false,
-  });
+  // const [tradeWay, setTradeWay] = useState<TradeWayType>({
+  //   direct: false,
+  //   delivery: false,
+  // });
 
-  function directCheckBoxClick(e: React.MouseEvent<HTMLInputElement>) {
-    console.log(e.currentTarget.checked);
-    setDirect(e.currentTarget.checked);
-    setTradeWay((state) => {
-      return { ...state, direct };
-    });
-  }
+  // function directCheckBoxClick(e: React.MouseEvent<HTMLInputElement>) {
+  //   console.log(e.currentTarget.checked);
+  //   setDirect(e.currentTarget.checked);
+  //   setTradeWay((state) => {
+  //     return { ...state, direct };
+  //   });
+  // }
 
-  function deliveryCheckBoxClick(e: React.MouseEvent<HTMLInputElement>) {
-    console.log(e.currentTarget.checked);
-    setDelivery(e.currentTarget.checked);
-    setTradeWay((state) => {
-      return { ...state, delivery };
-    });
-  }
+  // function deliveryCheckBoxClick(e: React.MouseEvent<HTMLInputElement>) {
+  //   console.log(e.currentTarget.checked);
+  //   setDelivery(e.currentTarget.checked);
+  //   setTradeWay((state) => {
+  //     return { ...state, delivery };
+  //   });
+  // }
 
   return (
     <div className="max-w-screen-lg mx-auto">
@@ -143,7 +149,8 @@ export default function BorrowWriting() {
           </section>
 
           {/* 거래방법 section */}
-          <section className="mb-4 h-10 flex items-center">
+          <TradeWay />
+          {/* <section className="mb-4 h-10 flex items-center">
             <span className="w-[100px] p-3 text-center">거래방법</span>
             <input
               onClick={directCheckBoxClick}
@@ -157,7 +164,7 @@ export default function BorrowWriting() {
               className="mr-2 appearance-none h-4 w-4 border rounded-md border-gray-300  bg-white checked:bg-b-yellow checked:border-b-yellow focus:outline-none transition duration-100 align-top cursor-pointer"
             />
             <span>택배거래</span>
-          </section>
+          </section> */}
 
           {/* 해시태그 component */}
           <HashTagSection />

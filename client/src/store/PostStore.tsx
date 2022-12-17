@@ -12,6 +12,29 @@ export const imageUploadStore = create<ImageUploadState>((set) => ({
 }));
 
 // 거래방법 store
+interface TradeWayState {
+  direct: boolean;
+  delivery: boolean;
+  tradeWay: object;
+  setDirect: (checked: boolean) => void;
+  setDelivery: (checked: boolean) => void;
+  setTradeWay: (direct: boolean, delivery: boolean) => void;
+}
+
+export const tradeWayStore = create<TradeWayState>((set) => ({
+  direct: false,
+  delivery: false,
+  tradeWay: {
+    direct: false,
+    delivery: false,
+  },
+  setDirect: (checked) => set(() => ({ direct: checked })),
+  setDelivery: (checked) => set(() => ({ delivery: checked })),
+  setTradeWay: (direct, delivery) =>
+    set((state) => ({
+      tradeWay: { direct, delivery },
+    })),
+}));
 
 // 해시태그 store
 interface HashTagState {
