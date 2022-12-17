@@ -4,22 +4,14 @@ export default function TradeWay() {
   const { direct, delivery, setDirect, setDelivery, setTradeWay } =
     tradeWayStore();
 
-  // const [direct, setDirect] = useState(true);
-  // const [delivery, setDelivery] = useState(true);
-
-  // const [tradeWay, setTradeWay] = useState<TradeWayType>({
-  //   direct: false,
-  //   delivery: false,
-  // });
-
   function directCheckBoxClick(e: React.MouseEvent<HTMLInputElement>) {
     setDirect(e.currentTarget.checked);
-    setTradeWay(direct, delivery);
+    setTradeWay(e.currentTarget.checked, delivery);
   }
 
   function deliveryCheckBoxClick(e: React.MouseEvent<HTMLInputElement>) {
     setDelivery(e.currentTarget.checked);
-    setTradeWay(direct, delivery);
+    setTradeWay(direct, e.currentTarget.checked);
   }
 
   return (

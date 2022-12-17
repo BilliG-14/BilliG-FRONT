@@ -32,7 +32,7 @@ export const tradeWayStore = create<TradeWayState>((set) => ({
   setDelivery: (checked) => set(() => ({ delivery: checked })),
   setTradeWay: (direct, delivery) =>
     set((state) => ({
-      tradeWay: { direct, delivery },
+      tradeWay: { ...state.tradeWay, direct, delivery },
     })),
 }));
 
