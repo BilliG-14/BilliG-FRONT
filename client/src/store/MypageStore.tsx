@@ -1,13 +1,13 @@
 import create from 'zustand';
 
 interface MyIntroEditState {
-  isIntro: boolean;
+  isMyinfo: boolean;
   toggleIntro: () => void;
 }
 
 export const useMyIntroEditStore = create<MyIntroEditState>((set) => ({
-  isIntro: false,
-  toggleIntro: () => set((state) => ({ isIntro: !state.isIntro })),
+  isMyinfo: false,
+  toggleIntro: () => set((state) => ({ isMyinfo: !state.isMyinfo })),
 }));
 
 type User = {
