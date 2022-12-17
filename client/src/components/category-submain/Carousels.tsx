@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function Carousels() {
   return (
-    <div className="carousel max-w-screen-2xl h-2/5">
+    <div className="carousel max-w-screen-2xl h-2/5 m-auto">
       <div id="slide1" className="carousel-item relative w-full">
         <img
           src="https://kream-phinf.pstatic.net/MjAyMjEyMTJfOSAg/MDAxNjcwODIxOTU5ODM3.WbF3eBZoSpLDsbM98NPl9FNSlwOWaNMhFLYN4BToXfUg.xjuwkzJokEo-f1cvqHQWISjdqOi0aiQ9bceoTIBoVnAg.JPEG/a_d1c39c70d89f426da4506a3f77af84d3.jpg?type=m_2560"

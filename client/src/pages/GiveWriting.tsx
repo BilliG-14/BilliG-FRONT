@@ -1,4 +1,4 @@
-const GiveWriting = () => {
+export default function GiveWriting() {
   // 빌려드립니다 글쓰기
 
   return (
@@ -105,5 +105,4 @@ const GiveWriting = () => {
       </div>
     </div>
   );
-};
-export default GiveWriting;
+}

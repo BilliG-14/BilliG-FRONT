@@ -6,12 +6,14 @@ import ChatIcon from '../components/chat-icon/ChatIcon';
 import Footer from '../components/footer/Footer';
 export default function Submain() {
   return (
-    <>
-      <Nav />
+    <div>
+      <div className="w-screen max-w-screen-lg m-auto">
+        <Nav />
+      </div>
       <Carousels />
       <Category />
       <ChatIcon />
       <Footer />
-    </>
+    </div>
   );
 }

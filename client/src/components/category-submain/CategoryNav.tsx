@@ -14,7 +14,7 @@ export default function CategoryNav() {
     console.log(e);
   };
   return (
-    <nav className="flex w-100 h-16 border-b-2 border-solid border-gray-500">
+    <nav className="flex max-w-screen-lg h-16 border-b-2 border-solid border-gray-500 m-auto">
       <ul
         className="flex space-x-10 text-center items-center m-auto text-xl font-extrabold"
         onClick={handleClick}
