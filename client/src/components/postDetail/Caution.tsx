@@ -1,4 +1,4 @@
-const Caution = () => {
+export default function Caution() {
   return (
     <>
       <div>사용시 주의사항</div>
@@ -29,6 +29,4 @@ const Caution = () => {
       </div>
     </>
   );
-};
-
-export default Caution;
+}

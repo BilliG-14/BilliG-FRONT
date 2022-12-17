@@ -1,6 +1,6 @@
 import Caution from './../components/postDetail/Caution';
 
-const BorrowPostDetail = () => {
+export default function BorrowPostDetail() {
   return (
     <div className="max-w-screen-lg mx-auto">
       <div className="w-[800px] flex flex-col justify-center mx-auto text-b-text-black">
@@ -119,6 +119,4 @@ const BorrowPostDetail = () => {
       </div>
     </div>
   );
-};
-
-export default BorrowPostDetail;
+}
