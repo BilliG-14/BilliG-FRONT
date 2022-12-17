@@ -1,4 +1,4 @@
-import PostStore from './../../store/PostStore';
+import { hashTagStore } from './../../store/PostStore';
 
 export default function HashTagSection() {
   // store에서 불러오기
@@ -8,7 +8,7 @@ export default function HashTagSection() {
     setHashTag,
     setHashTagInputText,
     deleteHashTags,
-  } = PostStore();
+  } = hashTagStore();
 
   // input에 태그 입력 시 tages 배열로 저장
   function handleTextChange(e: React.ChangeEvent<HTMLInputElement>) {

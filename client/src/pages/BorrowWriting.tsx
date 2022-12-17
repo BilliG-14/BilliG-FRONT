@@ -1,11 +1,12 @@
-import ImageUpload from '../components/postWrite/ImageUpload';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import HashTagSection from '../components/postWrite/HashTagWrite';
-import PostStore from './../store/PostStore';
+import { imageUploadStore, hashTagStore } from './../store/PostStore';
+import ImageUpload from '../components/postWrite/ImageUpload';
 
 export default function BorrowWriting() {
   // store에서 가져오는 state들
-  const { hashTags } = PostStore();
+  const { hashTags } = hashTagStore();
+  const { imgFiles } = imageUploadStore();
 
   // 빌립니다 글쓰기
   const today = new Date()
@@ -32,11 +33,11 @@ export default function BorrowWriting() {
     );
     console.log(hashTags);
 
-    console.log('file', file);
+    console.log('file', imgFiles);
   }
 
   // 업로드할 파일들을 담을 State!
-  const [file, setFile] = useState<FileList>();
+  // const [file, setFile] = useState<FileList>();
 
   /**
    * 파일 선택 onChangeHandler
@@ -44,17 +45,13 @@ export default function BorrowWriting() {
    * file state에 값을 할당한다
    */
 
-  function fileUploadHandler(e: React.ChangeEvent<HTMLInputElement>) {
-    const target = e.currentTarget;
-    const files = target.files as FileList;
+  // function fileUploadHandler(e: React.ChangeEvent<HTMLInputElement>): void {
+  //   const target = e.currentTarget;
+  //   const files = target.files as FileList;
 
-    if (files === undefined) {
-      return;
-    }
-
-    // validation을 정상적으로 통과한 File
-    setFile(files);
-  }
+  //   // validation을 정상적으로 통과한 File
+  //   setFile(files);
+  // }
 
   return (
     <div className="max-w-screen-lg mx-auto">
@@ -83,7 +80,7 @@ export default function BorrowWriting() {
               placeholder="상품명"
             />
           </section>
-          {/* <ImageUpload /> */}
+          <ImageUpload />
 
           {/* 사진 등록 section
           <section className="mb-4">

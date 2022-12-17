@@ -6,7 +6,7 @@ interface ImageUploadState {
   setimgFile: (imgFileList: FileList) => void;
 }
 
-const imageUploadStore = create<ImageUploadState>((set) => ({
+export const imageUploadStore = create<ImageUploadState>((set) => ({
   imgFiles: undefined,
   setimgFile: (imgFileList) => set(() => ({ imgFiles: imgFileList })),
 }));
@@ -20,7 +20,7 @@ interface HashTagState {
   deleteHashTags: (newTags: string[]) => void;
 }
 
-const hashTagStore = create<HashTagState>((set) => ({
+export const hashTagStore = create<HashTagState>((set) => ({
   hashTagInputText: '',
   hashTags: [],
   setHashTagInputText: (text) => set(() => ({ hashTagInputText: text })),
@@ -33,5 +33,3 @@ const hashTagStore = create<HashTagState>((set) => ({
       hashTags: newTags,
     })),
 }));
-
-export default hashTagStore;
