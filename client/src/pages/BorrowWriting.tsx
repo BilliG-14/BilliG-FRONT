@@ -1,7 +1,11 @@
 import { useRef, useState, MouseEvent } from 'react';
 import HashTagSection from '../components/postWrite/HashTagWrite';
+import PostStore from './../store/PostStore';
 
 export default function BorrowWriting() {
+  // store에서 가져오는 state들
+  const { hashTags } = PostStore();
+
   // 빌립니다 글쓰기
   const today: string = new Date()
     .toLocaleDateString()
@@ -27,6 +31,7 @@ export default function BorrowWriting() {
       category.current?.options[category.current?.selectedIndex].innerText,
     );
     console.log('file', file);
+    console.log(hashTags);
   }
 
   // 업로드할 파일들을 담을 State!

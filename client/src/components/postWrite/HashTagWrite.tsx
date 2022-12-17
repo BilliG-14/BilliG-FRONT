@@ -1,30 +1,37 @@
-import { useState } from 'react';
+import PostStore from './../../store/PostStore';
 
 export default function HashTagSection() {
-  const [text, setText] = useState('');
-  const [tags, setTags] = useState<string[]>([]);
+  const {
+    hashTagInputText,
+    hashTags,
+    setHashTag,
+    setHashTagInputText,
+    deleteHashTags,
+  } = PostStore();
 
   // input에 태그 입력 시 tages 배열로 저장
   function valueChange(e: React.ChangeEvent<HTMLInputElement>) {
     const tagInput = e.target.value;
-    setText(tagInput);
+    setHashTagInputText(tagInput);
   }
 
   function valueKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
     // 스페이스로 해시태그 등록 시 input이 초기화가 되지 않고 스페이스가 남는 이슈 있음
     if (e.key === ' ') {
-      setText('');
-      setTags((cur) => [...cur, text.trim()]);
+      setHashTagInputText('');
+      setHashTag(hashTagInputText);
     }
   }
 
   // 해시태그 클릭 시 삭제
   function deleteHashTag(e: React.MouseEvent<HTMLDivElement>) {
-    const newTages = tags.filter((tag) => tag !== e.currentTarget.innerText);
-    setTags(newTages);
+    const newTages = hashTags.filter(
+      (tag) => tag !== e.currentTarget.innerText,
+    );
+    deleteHashTags(newTages);
   }
 
-  // 해시태그 갯수 제한 필요
+  // 해시태그 갯수 제한 필요, 해시태그 중복 등록 막아야 함
   return (
     <section className="flex flex-col mb-4 h-[70px]">
       <div className="flex flex-row">
@@ -32,7 +39,7 @@ export default function HashTagSection() {
         <div className="">
           <div>
             <input
-              value={text}
+              value={hashTagInputText}
               onChange={valueChange}
               onKeyDown={valueKeyDown}
               type="text"
@@ -42,7 +49,7 @@ export default function HashTagSection() {
           </div>
         </div>
         <div className="flex flex-wrap">
-          {tags.map((tag) => (
+          {hashTags.map((tag) => (
             <div
               onClick={deleteHashTag}
               key={tag}
