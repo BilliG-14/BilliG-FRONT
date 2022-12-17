@@ -1,4 +1,5 @@
 import { useRef, useState, MouseEvent } from 'react';
+import HashTagSection from '../components/postWrite/HashTagWrite';
 
 export default function BorrowWriting() {
   // 빌립니다 글쓰기
@@ -13,15 +14,19 @@ export default function BorrowWriting() {
   const priceTime = useRef<HTMLInputElement>(null);
   const period = useRef<HTMLInputElement>(null);
   const picture = useRef<HTMLInputElement>(null);
+  const category = useRef<HTMLSelectElement>(null);
 
   // 버튼 클릭 시
   function handleButtonClick(e: MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    // console.log(productNameRef.current?.value);
-    // console.log(priceDay.current?.value);
-    // console.log(priceTime.current?.value);
-    // console.log(typeof period.current?.value);
-    console.log(typeof file);
+    console.log(productNameRef.current?.value);
+    console.log(priceDay.current?.value);
+    console.log(priceTime.current?.value);
+    console.log(period.current?.value);
+    console.log(
+      category.current?.options[category.current?.selectedIndex].innerText,
+    );
+    console.log('file', file);
   }
 
   // 업로드할 파일들을 담을 State!
@@ -54,13 +59,16 @@ export default function BorrowWriting() {
         <form>
           {/* 상품명/카테고리 section */}
           <section className="flex mb-4">
-            <select className="flex-none pl-3 w-1/6 h-10 border-solid border  border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2">
-              <option>카테고리</option>
-              <option>IT/가전</option>
-              <option>의류</option>
-              <option>캠핑/레저</option>
-              <option>완구/취미</option>
-              <option>도서/음반</option>
+            <select
+              ref={category}
+              className="flex-none pl-3 w-1/6 h-10 border-solid border  border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2"
+            >
+              <option value="1">카테고리</option>
+              <option value="2">IT/가전</option>
+              <option value="3">의류</option>
+              <option value="4">캠핑/레저</option>
+              <option value="5">완구/취미</option>
+              <option value="6">도서/음반</option>
             </select>
             <input
               ref={productNameRef}
@@ -151,7 +159,7 @@ export default function BorrowWriting() {
           </section>
 
           {/* 해시태그 section */}
-          <section className="mb-4 h-10 flex items-center">
+          {/* <section className="mb-4 h-10 flex items-center">
             <span className="w-[100px] p-3 text-center">해시태그</span>
             <div>
               <input
@@ -161,7 +169,8 @@ export default function BorrowWriting() {
               />
             </div>
             <div> 해시태그 생기는 부분 </div>
-          </section>
+          </section> */}
+          <HashTagSection />
 
           <section className="flex flex-col justify-center items-center">
             <button
