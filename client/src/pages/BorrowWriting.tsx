@@ -41,10 +41,29 @@ export default function BorrowWriting() {
     // console.log(hashTags);
     console.log(tradeWay);
     // console.log('file', imgFiles);
+    console.log(tradeDate);
   }
 
+  const [tradeDate, setTradeDate] = useState({
+    start: '',
+    end: '',
+  });
+
   function startDate(e: React.ChangeEvent<HTMLInputElement>) {
+    const newTradeDate = {
+      ...tradeDate,
+      start: e.currentTarget.value,
+    };
+    setTradeDate(newTradeDate);
     console.log(e.currentTarget.value);
+  }
+
+  function endDate(e: React.ChangeEvent<HTMLInputElement>) {
+    const newTradeDate = {
+      ...tradeDate,
+      end: e.currentTarget.value,
+    };
+    setTradeDate(newTradeDate);
   }
 
   return (
@@ -108,6 +127,7 @@ export default function BorrowWriting() {
             />
             <div>~</div>
             <input
+              onChange={endDate}
               type="date"
               min={today}
               max="2099-12-31"
