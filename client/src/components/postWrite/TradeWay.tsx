@@ -4,11 +4,13 @@ export default function TradeWay() {
   const { direct, delivery, setDirect, setDelivery, setTradeWay } =
     tradeWayStore();
 
+  // 직거래 체크박스 클릭 시 이벤트 (direct 상태 바꾸고, 거래방법 상태 변경)
   function directCheckBoxClick(e: React.MouseEvent<HTMLInputElement>) {
     setDirect(e.currentTarget.checked);
     setTradeWay(e.currentTarget.checked, delivery);
   }
 
+  // 택배 체크박스 클릭 시 이벤트 (direct 상태 바꾸고, 거래방법 상태 변경)
   function deliveryCheckBoxClick(e: React.MouseEvent<HTMLInputElement>) {
     setDelivery(e.currentTarget.checked);
     setTradeWay(direct, e.currentTarget.checked);
