@@ -46,11 +46,22 @@ module.exports = {
           '50%': { opacity: 0 },
           '100%': { opacity: 1 },
         },
+        popOut: {
+          '0%': {
+            opacity: 0,
+            transform: 'translateY(50%)',
+          },
+          '100%': {
+            opacity: 1,
+            transform: 'translateY(0%)',
+          },
+        }
       },
       animation: {
         'fade-in-150ms': 'fadeIn 150ms linear',
         'fade-in': 'fadeIn 1.5s linear',
         'fade-in-later': 'fadeInLater 1.5s linear',
+        'pop-out': 'popOut 0.5s ease-in-out 1s backwards',
       },
     },
   },

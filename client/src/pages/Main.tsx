@@ -12,7 +12,7 @@ function MainFirstSection() {
         <p className="text-6xl">초간편 물품 대여 중계 플랫폼</p>
         <p className="text-6xl text-b-yellow font-extrabold">빌리지</p>
       </div>
-      <div className="px-32 pt-16 animate-fade-in-later">
+      <div className="px-32 pt-16 animate-pop-out">
         <i className={`fa-solid fa-shirt ${iconClassName}`}></i>
         <i
           className={`fa-solid fa-camera-retro ${iconClassName}`}
