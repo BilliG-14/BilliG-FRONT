@@ -1,22 +1,12 @@
 import { imageUploadStore } from './../../store/PostStore';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 
 export default function ImageUpload() {
-  // const imgPreview = useRef<HTMLImageElement>(null);
-
-  const { setimgFile } = imageUploadStore();
-
-  /**
-   * 파일 선택 onChangeHandler
-   * 해당 method에서는 업로드할 파일에대해서 validaion을 하고
-   * file state에 값을 할당한다
-   */
-
+  const { setImgFile } = imageUploadStore();
   const [fileImage, setFileImage] = useState<string[]>([]);
 
   // 이미지 갯수 제한(가장 우선), 이미지 크기 제한 구현해야 함
-  // 메인 이미지를 어떻게 구현하나?
-
+  // 게시글을 볼 때 메인 이미지를 어떻게 정할것인지?
   function imagePreview(e: React.ChangeEvent<HTMLInputElement>): void {
     const target = e.currentTarget;
     const files = target.files as FileList;
@@ -28,8 +18,11 @@ export default function ImageUpload() {
       setFileImage((cur) => [...cur, URL.createObjectURL(files[i])]);
     }
 
-    setimgFile(files);
+    setImgFile(files);
   }
+
+  // 미리보기 이미지 클릭 시 해당 이미지 삭제
+  function deleteImagehandler(e: React.MouseEvent<HTMLImageElement>) {}
 
   return (
     <section className="mb-4">
@@ -44,6 +37,7 @@ export default function ImageUpload() {
         {fileImage.map((fileUrl) => {
           return (
             <img
+              onClick={deleteImagehandler}
               key={fileUrl}
               alt="이미지"
               src={fileUrl}

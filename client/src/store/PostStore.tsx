@@ -3,12 +3,12 @@ import create from 'zustand';
 // 사진 업로드 store
 interface ImageUploadState {
   imgFiles: FileList | undefined;
-  setimgFile: (imgFileList: FileList) => void;
+  setImgFile: (imgFileList: FileList) => void;
 }
 
 export const imageUploadStore = create<ImageUploadState>((set) => ({
   imgFiles: undefined,
-  setimgFile: (imgFileList) => set(() => ({ imgFiles: imgFileList })),
+  setImgFile: (imgFileList) => set(() => ({ imgFiles: imgFileList })),
 }));
 
 // 거래방법 store
