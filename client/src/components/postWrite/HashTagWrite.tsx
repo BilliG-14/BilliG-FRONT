@@ -1,37 +1,35 @@
-import { hashTagStore } from './../../store/PostStore';
+import { useState } from 'react';
 
 export default function HashTagSection() {
-  // store에서 불러오기
-  const {
-    hashTagInputText,
-    hashTags,
-    setHashTag,
-    setHashTagInputText,
-    deleteHashTags,
-  } = hashTagStore();
+  const [hashTags, setHashTags] = useState<(string | undefined)[]>([]);
+  const [hashTagInputText, setHashTagInputText] = useState<string>('');
 
   // input에 태그 입력 시 tages 배열로 저장
   function handleTextChange(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.value === ' ') {
+      alert('space금지');
+      return;
+    }
     const tagInput = e.target.value;
     setHashTagInputText(tagInput);
   }
 
   function handleTagSpaceBar(e: React.KeyboardEvent<HTMLInputElement>) {
-    // 스페이스로 해시태그 등록 시 input이 초기화가 되지 않고 스페이스가 남는 이슈 있음
-    if (e.key === ' ') {
+    if (e.key === 'Enter') {
+      setHashTags((cur) => [...cur, hashTagInputText.trim()]);
       setHashTagInputText('');
-      setHashTag(hashTagInputText);
     }
   }
 
   // 해시태그 클릭 시 삭제
   function deleteHashTag(e: React.MouseEvent<HTMLDivElement>) {
+    console.log(e.currentTarget.innerText);
     const newTages = hashTags.filter(
       (tag) => tag !== e.currentTarget.innerText,
     );
-    deleteHashTags(newTages);
+    setHashTags(newTages);
   }
-
+  console.log('hashTags', hashTags);
   // 해시태그 갯수 제한 필요, 해시태그 중복 등록 막아야 함
   return (
     <section className="flex flex-col mb-4 h-[70px]">
@@ -62,7 +60,7 @@ export default function HashTagSection() {
         </div>
       </div>
       <div className="mt-1 ml-24 text-[6px] text-b-text-darkgray leading-4">
-        <p>스페이스바를 입력하면 태그를 등록 할 수 있습니다.</p>
+        <p>엔터를 입력하면 태그를 등록 할 수 있습니다.</p>
         <p>등록된 태그를 클릭하면 삭제됩니다.</p>
       </div>
     </section>
