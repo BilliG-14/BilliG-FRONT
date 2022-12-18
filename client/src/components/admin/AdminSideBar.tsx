@@ -56,7 +56,7 @@ export default function AdminSideBar() {
         </p>
         <ul className="text-center text-lg font-semibold">
           <li className="h-10 flex items-center justify-start">
-            <a href="#!" onClick={() => showRental}>
+            <a href="#!" onClick={() => showRental()}>
               <p className="items-center justify-center">대여 현황 조회</p>
             </a>
           </li>

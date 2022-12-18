@@ -4,6 +4,7 @@ import {
   AdminReportSection,
   AdminNoticeSection,
   AdminPostSection,
+  AdminRentalSection,
 } from 'components/admin';
 import useAdminPageStore, { AdminSection } from 'store/AdminPageStore';
 
@@ -22,7 +23,7 @@ export default function AdminMainSection() {
       case AdminSection.POST:
         return <AdminPostSection />;
       case AdminSection.RENTAL:
-        return;
+        return <AdminRentalSection />;
       default:
         return <section></section>;
     }
