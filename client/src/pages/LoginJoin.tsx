@@ -1,19 +1,6 @@
 import { JoinForm, LoginForm } from 'components/login-join/Form';
 import { MouseEvent } from 'react';
-import create from 'zustand';
-
-interface LoginJoinState {
-  selectedLogin: boolean;
-  selectedJoin: boolean;
-  setSelectedLogin: () => void;
-  setSelectedJoin: () => void;
-}
-const useLoginJoinStore = create<LoginJoinState>((set) => ({
-  selectedLogin: true,
-  selectedJoin: false,
-  setSelectedLogin: () => set({ selectedLogin: true, selectedJoin: false }),
-  setSelectedJoin: () => set({ selectedLogin: false, selectedJoin: true }),
-}));
+import useLoginJoinStore from 'store/LoginJoinStore';
 
 function LoginJoinHeader() {
   const { selectedLogin, setSelectedLogin, selectedJoin, setSelectedJoin } =
