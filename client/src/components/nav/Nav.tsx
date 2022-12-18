@@ -4,12 +4,16 @@ import { FiSearch } from 'react-icons/fi';
 import useLoginJoinStore from 'store/LoginJoinStore';
 
 function Nav() {
-  const setSelectedJoin = useLoginJoinStore((state) => state.setSelectedJoin);
+  const [setSelectedJoin, setSelectedLogin] = useLoginJoinStore((state) => [
+    state.setSelectedJoin,
+    state.setSelectedLogin,
+  ]);
   const navigate = useNavigate();
   const goHome = () => {
     navigate('/');
   };
   const goLogin = () => {
+    setSelectedLogin();
     navigate('/login');
   };
   const goJoin = () => {
