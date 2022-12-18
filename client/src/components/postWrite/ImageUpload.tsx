@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, ChangeEvent } from 'react';
 
 export default function ImageUpload() {
   const [imgFiles, setImgFile] = useState<FileList>();
@@ -12,7 +12,7 @@ export default function ImageUpload() {
 
   // 이미지 갯수 제한(가장 우선), 이미지 크기 제한, 첨부파일 삭제 구현
   // 게시글을 볼 때 메인 이미지를 어떻게 정할것인지?
-  function imagePreview(e: React.ChangeEvent<HTMLInputElement>): void {
+  function imagePreview(e: ChangeEvent<HTMLInputElement>): void {
     const target = e.currentTarget;
     const files = target.files as FileList;
 

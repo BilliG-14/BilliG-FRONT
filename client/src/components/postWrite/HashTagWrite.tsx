@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState, ChangeEvent, KeyboardEvent, MouseEvent } from 'react';
 
 export default function HashTagSection() {
   const [hashTags, setHashTags] = useState<(string | undefined)[]>([]);
   const [hashTagInputText, setHashTagInputText] = useState<string>('');
 
   // input에 태그 입력 시 tages 배열로 저장
-  function handleTextChange(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleTextChange(e: ChangeEvent<HTMLInputElement>) {
     if (e.target.value === ' ') {
       alert('space금지');
       return;
@@ -14,7 +14,7 @@ export default function HashTagSection() {
     setHashTagInputText(tagInput);
   }
 
-  function handleTagSpaceBar(e: React.KeyboardEvent<HTMLInputElement>) {
+  function handleTagSpaceBar(e: KeyboardEvent<HTMLInputElement>) {
     if (e.key === 'Enter') {
       setHashTags((cur) => [...cur, hashTagInputText.trim()]);
       setHashTagInputText('');
@@ -22,7 +22,7 @@ export default function HashTagSection() {
   }
 
   // 해시태그 클릭 시 삭제
-  function deleteHashTag(e: React.MouseEvent<HTMLDivElement>) {
+  function deleteHashTag(e: MouseEvent<HTMLDivElement>) {
     console.log(e.currentTarget.innerText);
     const newTages = hashTags.filter(
       (tag) => tag !== e.currentTarget.innerText,
