@@ -1,10 +1,10 @@
-import useScrollFadeIn from '../hooks/useScrollFadeIn';
+import useScrollPop from 'hooks/useScrollPop';
 export type SpeechBubbleProps = {
   content: string;
 };
 
 export function SpeechBubbleLeft({ content }: SpeechBubbleProps) {
-  const fadeInDiv = useScrollFadeIn();
+  const fadeInDiv = useScrollPop('right');
   return (
     <div
       {...fadeInDiv}
@@ -19,7 +19,7 @@ export function SpeechBubbleLeft({ content }: SpeechBubbleProps) {
   );
 }
 export function SpeechBubbleRight({ content }: SpeechBubbleProps) {
-  const fadeInDiv = useScrollFadeIn();
+  const fadeInDiv = useScrollPop('left');
   return (
     <div
       {...fadeInDiv}
