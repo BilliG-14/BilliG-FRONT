@@ -16,6 +16,11 @@ export default function AdminSideBar() {
               <p className="items-center justify-center">회원 상세 관리</p>
             </a>
           </li>
+          <li className="h-10 flex items-center justify-start">
+            <a href="#!">
+              <p className="items-center justify-center">신고 내역 관리</p>
+            </a>
+          </li>
         </ul>
       </div>
       <div className="menu_box mb-7">

@@ -2,6 +2,8 @@ import AdminHeader from 'components/admin/AdminHeader';
 import create from 'zustand/react';
 import AdminSideBar from 'components/admin/AdminSideBar';
 import AdminUserListSection from 'components/admin/AdminUserListSection';
+import AdminUserDetailSection from 'components/admin/AdminUserDetailSection';
+import AdminReportSection from 'components/admin/AdminReportSection';
 // interface adminPageState {
 
 // }
@@ -14,7 +16,9 @@ export default function AdminMain() {
       <section className="max-w-screen-lg h-full">
         <div className="flex h-full">
           <AdminSideBar />
-          <AdminUserListSection />
+          {/* <AdminUserListSection /> */}
+          {/* <AdminUserDetailSection /> */}
+          <AdminReportSection />
         </div>
       </section>
     </div>
