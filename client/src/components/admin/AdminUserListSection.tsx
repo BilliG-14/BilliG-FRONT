@@ -42,7 +42,9 @@ export default function AdminUserListSection() {
               <td>{user.nickName}</td>
               <td>{user.auth}</td>
               <td className="w-14">
-                <button className="mx-aut hover:text-b-yellow">조회</button>
+                <button className="border-b-yellow border-solid border-2 w-12 rounded-lg h-7 leading-7 text-b-yellow shadow-lg hover:bg-b-yellow hover:text-white">
+                  조회
+                </button>
               </td>
             </tr>
           ))}

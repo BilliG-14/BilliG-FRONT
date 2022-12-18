@@ -32,7 +32,7 @@ export default function AdminReportSection() {
               <td className="text-red-500">{report.target}</td>
               <td>{report.details}</td>
               <td className="w-14">
-                <button className=" bg-orange-400 w-12 rounded-lg h-7 group text-white font-bold after:content-['삭제'] shadow-lg hover:bg-red-400"></button>
+                <button className="border-red-400 border-solid border-2 w-12 rounded-lg h-7 leading-7 text-red-400 after:content-['삭제'] shadow-lg hover:bg-red-400 hover:text-white"></button>
               </td>
             </tr>
           ))}

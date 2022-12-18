@@ -15,9 +15,10 @@ interface AdminPageState {
   showReport: () => void;
   showNotice: () => void;
   showPost: () => void;
+  showRental: () => void;
 }
 const useAdminPageStore = create<AdminPageState>((set) => ({
-  section: AdminSection.NOTICE,
+  section: AdminSection.USERLIST,
   showUserList: () => set({ section: AdminSection.USERLIST }),
   showUserDetail: () => set({ section: AdminSection.USERDETAIL }),
   showReport: () => set({ section: AdminSection.REPORT }),
@@ -25,4 +26,16 @@ const useAdminPageStore = create<AdminPageState>((set) => ({
   showPost: () => set({ section: AdminSection.POST }),
   showRental: () => set({ section: AdminSection.RENTAL }),
 }));
+
+interface NoticePageState {
+  isWriting: boolean;
+  onIsWriting: () => void;
+  offIsWriting: () => void;
+}
+export const useNoticePageStore = create<NoticePageState>((set) => ({
+  isWriting: true,
+  onIsWriting: () => set({ isWriting: true }),
+  offIsWriting: () => set({ isWriting: false }),
+}));
+
 export default useAdminPageStore;

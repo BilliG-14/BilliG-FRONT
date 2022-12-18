@@ -24,6 +24,10 @@ export default function AdminMain() {
         return <AdminUserDetailSection />;
       case AdminSection.NOTICE:
         return <AdminNoticeSection />;
+      case AdminSection.POST:
+        return;
+      case AdminSection.RENTAL:
+        return;
       default:
         return <section></section>;
     }
