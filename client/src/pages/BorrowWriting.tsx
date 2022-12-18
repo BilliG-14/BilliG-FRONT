@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, MouseEvent, ChangeEvent } from 'react';
 import {
   imageUploadStore,
   tradeWayStore,
@@ -49,16 +49,15 @@ export default function BorrowWriting() {
     end: '',
   });
 
-  function startDate(e: React.ChangeEvent<HTMLInputElement>) {
+  function startDate(e: ChangeEvent<HTMLInputElement>) {
     const newTradeDate = {
       ...tradeDate,
       start: e.currentTarget.value,
     };
     setTradeDate(newTradeDate);
-    console.log(e.currentTarget.value);
   }
 
-  function endDate(e: React.ChangeEvent<HTMLInputElement>) {
+  function endDate(e: ChangeEvent<HTMLInputElement>) {
     const newTradeDate = {
       ...tradeDate,
       end: e.currentTarget.value,
