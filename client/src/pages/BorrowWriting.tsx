@@ -39,7 +39,7 @@ export default function BorrowWriting() {
     //   category.current?.options[category.current?.selectedIndex].innerText,
     // );
     // console.log(hashTags);
-    console.log(tradeWay);
+    // console.log(tradeWay);
     // console.log('file', imgFiles);
     console.log(tradeDate);
   }

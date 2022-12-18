@@ -23,13 +23,11 @@ export default function HashTagSection() {
 
   // 해시태그 클릭 시 삭제
   function deleteHashTag(e: MouseEvent<HTMLDivElement>) {
-    console.log(e.currentTarget.innerText);
     const newTages = hashTags.filter(
       (tag) => tag !== e.currentTarget.innerText,
     );
     setHashTags(newTages);
   }
-  console.log('hashTags', hashTags);
   // 해시태그 갯수 제한 필요, 해시태그 중복 등록 막아야 함
   return (
     <section className="flex flex-col mb-4 h-[70px]">
