@@ -6,7 +6,6 @@ const Postcode = () => {
   const [address, setAddress] = useState(
     '서울시 도봉구 도봉산로 22길 월드컵아파트 201동 1101호',
   );
-  console.log(address);
   const handleComplete = (data: any) => {
     let fullAddress = data.address;
     let extraAddress = '';
@@ -21,7 +20,6 @@ const Postcode = () => {
       }
       fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
     }
-    console.log(data);
     setAddress(fullAddress);
   };
 
