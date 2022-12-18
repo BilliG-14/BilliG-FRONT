@@ -4,6 +4,7 @@ import {
   AdminUserListSection,
   AdminUserDetailSection,
   AdminReportSection,
+  AdminNoticeSection,
 } from 'components/admin';
 import useAdminPageStore, { AdminSection } from 'store/AdminPageStore';
 // interface adminPageState {
@@ -21,6 +22,8 @@ export default function AdminMain() {
         return <AdminReportSection />;
       case AdminSection.USERDETAIL:
         return <AdminUserDetailSection />;
+      case AdminSection.NOTICE:
+        return <AdminNoticeSection />;
       default:
         return <section></section>;
     }
