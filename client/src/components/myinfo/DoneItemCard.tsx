@@ -4,7 +4,7 @@ import DoneTag from 'components/tag/DoneTag';
 
 export default function DoneItemCard() {
   return (
-    <div className="h-36">
+    <div className="h-36 opacity-70 hover:opacity-100 hover:bg-b-bg-gray">
       <li className="flex w-full h-full justify-center py-3">
         <div className="item_info flex w-4/5 border-b-2 border-solid border-gray-300">
           <a href="#">

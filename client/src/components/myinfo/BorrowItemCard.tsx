@@ -3,7 +3,7 @@ import DealTag from 'components/tag/DealTag';
 
 export default function BorrowItemCard() {
   return (
-    <div className="h-36">
+    <div className="h-36 cursor-pointer hover:opacity-70">
       <li className="flex w-full h-full justify-center py-3">
         <div className="item_info flex w-4/5 border-b-2 border-solid border-gray-300">
           <a href="#">
