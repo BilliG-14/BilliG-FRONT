@@ -1,4 +1,7 @@
+import useAdminPageStore from 'store/AdminPageStore';
+
 export default function AdminSideBar() {
+  const { showUserList, showReport, showUserDetail } = useAdminPageStore();
   return (
     <div className="w-1/5 h-full p-4 bg-b-bg-gray">
       <div className="menu_box mb-7">
@@ -7,17 +10,17 @@ export default function AdminSideBar() {
         </p>
         <ul className="text-center text-lg font-semibold">
           <li className="h-10 flex items-center justify-start">
-            <a href="#!">
+            <a href="#!" onClick={() => showUserList()}>
               <p className="items-center justify-center">회원 목록 조회</p>
             </a>
           </li>
           <li className="h-10 flex items-center justify-start">
-            <a href="#!">
+            <a href="#!" onClick={() => showUserDetail()}>
               <p className="items-center justify-center">회원 상세 관리</p>
             </a>
           </li>
           <li className="h-10 flex items-center justify-start">
-            <a href="#!">
+            <a href="#!" onClick={() => showReport()}>
               <p className="items-center justify-center">신고 내역 관리</p>
             </a>
           </li>
@@ -31,6 +34,11 @@ export default function AdminSideBar() {
           <li className="h-10 flex items-center justify-start">
             <a href="#!">
               <p className="items-center justify-center">게시물 조회</p>
+            </a>
+          </li>
+          <li className="h-10 flex items-center justify-start">
+            <a href="#!">
+              <p className="items-center justify-center">공지 사항</p>
             </a>
           </li>
         </ul>
