@@ -4,6 +4,7 @@ import AdminSideBar from './AdminSideBar';
 import AdminUserDetailSection from './AdminUserDetailSection';
 import AdminUserListSection from './AdminUserListSection';
 import AdminNoticeSection from './AdminNoticeSection';
+import AdminPostSection from './AdminPostSection';
 export {
   AdminHeader,
   AdminReportSection,
@@ -11,4 +12,5 @@ export {
   AdminUserDetailSection,
   AdminUserListSection,
   AdminNoticeSection,
+  AdminPostSection,
 };
