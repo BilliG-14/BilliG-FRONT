@@ -6,7 +6,7 @@ import ScrollTopButton from 'components/ScrollTopButton';
 
 export default function Main() {
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center select-none">
       <MainFirstSection />
       <MainSecondSection />
       <MainStepSection />
