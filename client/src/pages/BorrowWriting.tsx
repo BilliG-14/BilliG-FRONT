@@ -30,30 +30,6 @@ export default function BorrowWriting() {
   const categoryRef = useRef<HTMLSelectElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
 
-  // let title = productNameRef.current?.value;
-  // const priceDay = priceDayRef.current?.value;
-  // const priceTime = priceTimeRef.current?.value;
-  // let category = categoryRef.current?.value;
-
-  // // 등록하기 클릭 시
-  // function handleButtonClick(e: React.MouseEvent<HTMLButtonElement>) {
-  //   e.preventDefault();
-  //   // console.log(productNameRef.current?.value);
-  //   // console.log(priceDay.current?.value);
-  //   // console.log(priceTime.current?.value);
-  //   // console.log(period.current?.value);
-  //   // console.log(
-  //   //   category.current?.options[category.current?.selectedIndex].innerText,
-  //   // );
-  //   console.log(hashTags);
-  //   console.log(tradeWay);
-  //   console.log('file', imgFiles);
-  //   console.log(reservationDate);
-
-  //   const formData = new FormData();
-  //   formData.append('category', writeData.category);
-  // }
-
   const [reservationDate, setReservationDate] = useState({
     start: '',
     end: '',
@@ -75,11 +51,17 @@ export default function BorrowWriting() {
     setReservationDate(newReservationDate);
   }
 
+  // 등록하기 클릭 시 event
   async function handleButtonClick(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
 
+    // formData 에 넣기
     const formData = new FormData();
+
+    // 업로드된 이미지 파일 넣기
     imgFiles.forEach((imgFile) => formData.append('productImg', imgFile));
+
+    // 이미지 파일 제외한 나머지 data json 형식으로 넣기
     const writeData = {
       category:
         categoryRef.current?.options[categoryRef.current?.selectedIndex]
@@ -93,20 +75,7 @@ export default function BorrowWriting() {
       tradeWay: tradeWay,
       hashTags: hashTags,
     };
-
     formData.append('data', JSON.stringify(writeData));
-
-    console.log(productNameRef.current?.value);
-    // console.log(priceDay.current?.value);
-    // console.log(priceTime.current?.value);
-    // console.log(period.current?.value);
-    // console.log(
-    //   category.current?.options[category.current?.selectedIndex].innerText,
-    // );
-    // console.log(hashTags);
-    // console.log(tradeWay);
-    // console.log('file', imgFiles);
-    // console.log(reservationDate);
 
     // const submitPost = await axios({
     //   method: 'POST',
@@ -117,66 +86,19 @@ export default function BorrowWriting() {
     //   data: formData,
     // });
     // console.log(submitPost);
+
+    /* key 확인하기 */
+    console.log(formData.keys());
+
+    for (const key of formData.keys()) {
+      console.log(key);
+    }
+
+    /* value 확인하기 */
+    for (const value of formData.values()) {
+      console.log(value);
+    }
   }
-
-  // type WriteDataType = {
-  //   // category: string;
-  //   // title: string;
-  //   // imgFiles: FileList | undefined;
-  //   // priceDay: number | undefined;
-  //   // priceTime: number | undefined;
-  //   // reservationDate: object;
-  //   // description: string | undefined;
-  //   // tradeWay: object;
-  //   hashTags: string[];
-  // };
-  // const addPost = async () => {
-  //   const writeData = {
-  //     category:
-  //       categoryRef.current?.options[categoryRef.current?.selectedIndex]
-  //         .innerText,
-  //     title: productNameRef.current?.value,
-  //     // imgFiles,
-  //     priceDay: priceDayRef.current?.value,
-  //     priceTime: priceTimeRef.current?.value,
-  //     reservationDate: reservationDate,
-  //     description: descriptionRef.current?.value,
-  //     tradeWay: tradeWay,
-  //     hashTags: hashTags,
-  //   };
-  //   console.log(writeData);
-  //   // const a = await onSubmit(writeData);
-  // };
-
-  // const onSubmit = async (data: WriteDataType) => {
-  //   http.defaults.headers['Content-Type'] = 'multipart/form-data';
-
-  // formData.append('category', data.category);
-  // formData.append('priceDay', data.priceDay);
-  // formData.append('imgFiles', data.imgFiles);
-  // formData.append('title', data.title);
-  // formData.append('imgFiles', writeData.imgFiles);
-
-  // data.imgFiles.forEach((imgFile) => formData.append('productImg', imgFile));
-  // formData.append('priceDay', data.priceDay);
-  // formData.append('priceTime', data.priceTime);
-  // formData.append('reservationDate', data.reservationDate);
-  // formData.append('description', data.description);
-  // formData.append('hashTags', data.hashTags);
-  // data.hashTags.forEach((hashTag) => formData.append('hashTag', hashTag));
-
-  // };
-  // const formData = new FormData();
-  // formData.append('category', writeData.category);
-  // formData.append('priceDay', writeData.priceDay);
-  // formData.append('imgFiles', writeData.imgFiles);
-  // formData.append('title', writeData.title);
-  // formData.append('imgFiles', writeData.imgFiles);
-  // formData.append('priceDay', writeData.priceDay);
-  // formData.append('priceTime', writeData.priceTime);
-  // formData.append('reservationDate', writeData.reservationDate);
-  // formData.append('description', writeData.description);
-  // formData.append('hashTags', writeData.hashTags);
 
   return (
     <div className="max-w-screen-lg mx-auto">
