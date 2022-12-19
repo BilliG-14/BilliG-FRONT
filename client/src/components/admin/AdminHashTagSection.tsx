@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 export default function AdminHashTagSection() {
   const initialTags = [
     { _id: '001', content: '애플' },
@@ -46,6 +45,15 @@ export default function AdminHashTagSection() {
                 className="bg-b-yellow h-6 text-b-hash-text px-3 py-1 rounded-lg my-2 mx-1 shadow-lg"
               >
                 {tag.content}
+                <a
+                  onClick={() => {
+                    setTags((current) =>
+                      current.filter((item) => item._id !== tag._id),
+                    );
+                  }}
+                >
+                  <i className="fa-solid fa-xmark ml-1"></i>
+                </a>
               </li>
             ))}
           </ul>
