@@ -6,9 +6,9 @@ import AdminMain from './pages/AdminMain';
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 import BorrowWriting from './pages/BorrowWriting';
-import GiveWriting from './pages/GiveWriting';
+import LendWriting from './pages/LendWriting';
 import Submain from './pages/Submain';
-import GivePostDetail from './pages/GivePostDetail';
+import LendPostDetail from './pages/LendPostDetail';
 import BorrowPostDetail from './pages/BorrowPostDetail';
 import Search from './pages/Search';
 import MyPage from './pages/MyPage';
@@ -33,11 +33,11 @@ function App() {
             <Route path="/" element={<Main />} />
             <Route path="/login" element={<LoginJoin />} />
             <Route path="/admin" element={<AdminMain />} />
-            <Route path="/write/give" element={<GiveWriting />} />
+            <Route path="/write/lend" element={<LendWriting />} />
             <Route path="/write/borrow" element={<BorrowWriting />} />
             <Route path="/submain" element={<Submain />} />
             <Route path="/search" element={<Search />} />
-            <Route path="/read/give" element={<GivePostDetail />} />
+            <Route path="/read/lend" element={<LendPostDetail />} />
             <Route path="/read/borrow" element={<BorrowPostDetail />} />
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/mypage/givelist" element={<MyGivePostListPage />} />

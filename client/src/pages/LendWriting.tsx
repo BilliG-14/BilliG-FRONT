@@ -1,4 +1,4 @@
-export default function GiveWriting() {
+export default function LendWriting() {
   // 빌려드립니다 글쓰기
 
   return (
