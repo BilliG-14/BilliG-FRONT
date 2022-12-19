@@ -10,7 +10,7 @@ export default function Main() {
       <MainFirstSection />
       <MainSecondSection />
       <MainStepSection />
-      <div className="mt-56 mb-12">
+      <div className="mt-36 mb-12">
         <MainButton content="물품 빌리러 가기" path="/submain" />
         <MainButton content="물품 빌려주러 가기" path="/submain" />
       </div>
