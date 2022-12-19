@@ -74,40 +74,12 @@ export default function BorrowWriting() {
     };
     setReservationDate(newReservationDate);
   }
-  console.log(imgFiles);
-  function handleButtonClick(e: React.MouseEvent<HTMLButtonElement>) {
+
+  async function handleButtonClick(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
 
     const formData = new FormData();
-    // const upLoadImg = Array.from(imgFiles);
-    // imgFiles.forEach((imgFile) => formData.append('productImg', imgFile));
-
-    console.log(productNameRef.current?.value);
-    // console.log(priceDay.current?.value);
-    // console.log(priceTime.current?.value);
-    // console.log(period.current?.value);
-    // console.log(
-    //   category.current?.options[category.current?.selectedIndex].innerText,
-    // );
-    // console.log(hashTags);
-    // console.log(tradeWay);
-    // console.log('file', imgFiles);
-    // console.log(reservationDate);
-    addPost();
-  }
-
-  type WriteDataType = {
-    // category: string;
-    // title: string;
-    // imgFiles: FileList | undefined;
-    // priceDay: number | undefined;
-    // priceTime: number | undefined;
-    // reservationDate: object;
-    // description: string | undefined;
-    // tradeWay: object;
-    hashTags: string[];
-  };
-  const addPost = async () => {
+    imgFiles.forEach((imgFile) => formData.append('productImg', imgFile));
     const writeData = {
       category:
         categoryRef.current?.options[categoryRef.current?.selectedIndex]
@@ -121,9 +93,60 @@ export default function BorrowWriting() {
       tradeWay: tradeWay,
       hashTags: hashTags,
     };
-    console.log(writeData);
-    // const a = await onSubmit(writeData);
-  };
+
+    formData.append('data', JSON.stringify(writeData));
+
+    console.log(productNameRef.current?.value);
+    // console.log(priceDay.current?.value);
+    // console.log(priceTime.current?.value);
+    // console.log(period.current?.value);
+    // console.log(
+    //   category.current?.options[category.current?.selectedIndex].innerText,
+    // );
+    // console.log(hashTags);
+    // console.log(tradeWay);
+    // console.log('file', imgFiles);
+    // console.log(reservationDate);
+
+    // const submitPost = await axios({
+    //   method: 'POST',
+    //   url: ``,
+    //   headers: {
+    //     'Content-Type': 'multipart/form-data',
+    //   },
+    //   data: formData,
+    // });
+    // console.log(submitPost);
+  }
+
+  // type WriteDataType = {
+  //   // category: string;
+  //   // title: string;
+  //   // imgFiles: FileList | undefined;
+  //   // priceDay: number | undefined;
+  //   // priceTime: number | undefined;
+  //   // reservationDate: object;
+  //   // description: string | undefined;
+  //   // tradeWay: object;
+  //   hashTags: string[];
+  // };
+  // const addPost = async () => {
+  //   const writeData = {
+  //     category:
+  //       categoryRef.current?.options[categoryRef.current?.selectedIndex]
+  //         .innerText,
+  //     title: productNameRef.current?.value,
+  //     // imgFiles,
+  //     priceDay: priceDayRef.current?.value,
+  //     priceTime: priceTimeRef.current?.value,
+  //     reservationDate: reservationDate,
+  //     description: descriptionRef.current?.value,
+  //     tradeWay: tradeWay,
+  //     hashTags: hashTags,
+  //   };
+  //   console.log(writeData);
+  //   // const a = await onSubmit(writeData);
+  // };
 
   // const onSubmit = async (data: WriteDataType) => {
   //   http.defaults.headers['Content-Type'] = 'multipart/form-data';
