@@ -12,6 +12,7 @@ import GivePostDetail from './pages/GivePostDetail';
 import BorrowPostDetail from './pages/BorrowPostDetail';
 import Search from './pages/Search';
 import MyPage from './pages/MyPage';
+import ScrollToTop from 'components/ScrollToTop';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -23,6 +24,8 @@ function App() {
       <GlobalStyle />
       <div className="App h-screen w-screen">
         <BrowserRouter>
+          {/* ScrollToTop : navigate했을 때, 스크롤 위치가 그대로 적용되는 문제 방지*/}
+          <ScrollToTop />
           <Routes>
             <Route path="/" element={<Main />} />
             <Route path="/login" element={<LoginJoin />} />
