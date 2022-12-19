@@ -1,4 +1,3 @@
-import { useRef } from 'react';
 import { useMyIntroEditStore } from '../../store/MypageStore';
 import ChangePassword from './ChangePassword';
 import DeleteUser from './DeleteUser';
@@ -6,43 +5,15 @@ import DeleteUser from './DeleteUser';
 export default function MyinfoPage() {
   const { toggleIntro } = useMyIntroEditStore();
 
-  const imgInputRef = useRef<HTMLInputElement | null>(null);
-
-  const onUploadImg = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) return;
-
-    const formData = new FormData();
-    formData.append('imgFile', e.target.files[0]);
-  };
-  const onUploadImgBtnClick = () => {
-    imgInputRef.current?.click();
-  };
   return (
     <div className="w-4/5 p-12">
       <section className="img_nick_intro flex mb-4">
-        <div className="flex flex-col w-32">
+        <div className="flex flex-col w-40">
           <img
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0AqtMahULe4ViGKzXbAr4C4hel5SGwfl7Pg&usqp=CAU"
             alt="조이현"
             className="rounded-full h-32 w-32 object-cover mb-5"
           />
-          <input
-            id="profileImg"
-            type="file"
-            accept="image/*"
-            ref={imgInputRef}
-            onChange={onUploadImg}
-            className="hidden"
-          />
-          <button
-            className="bg-b-yellow hover:opacity-80 text-white rounded-md font-bold w-32 h-8"
-            onClick={onUploadImgBtnClick}
-          >
-            이미지 업로드
-          </button>
-          <button className="text-b-yellow hover:bg-b-bg-gray rounded-md font-bold w-32 h-8 mt-2">
-            이미지 제거
-          </button>
         </div>
         <div className="nick_intro pl-7 w-full">
           <div>

@@ -4,9 +4,6 @@ import MyInfoSideBar from '../components/myinfo/MyinfoSideBar';
 import { useMyIntroEditStore } from '../store/MypageStore';
 import MyinfoPage from 'components/myinfo/MyinfoPage';
 import EditMyinfoPage from '../components/myinfo/EditMyinfoPage';
-import MyGivePostList from '../components/myinfo/MyGivePostList';
-import MyBorrowPostList from 'components/myinfo/MyBorrowPostList';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 export default function MyPage() {
   const { isMyinfo } = useMyIntroEditStore();

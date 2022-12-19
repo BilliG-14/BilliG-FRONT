@@ -1,20 +1,31 @@
 import Postcode from 'components/PostCode';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useMyIntroEditStore } from '../../store/MypageStore';
 
 export default function EditMyinfoPage() {
   const { toggleIntro } = useMyIntroEditStore();
+  const [imgSrc, setImgSrc] = useState(
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSs2dFXG-9DwOgl5jfEdXE7Y3bZsHBUBcBrw&usqp=CAU',
+  );
+  const imgRef = useRef<HTMLInputElement | null>(null);
 
-  const imgInputRef = useRef<HTMLInputElement | null>(null);
-
+  // img 미리보기
   const onUploadImg = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
-
-    const formData = new FormData();
-    formData.append('imgFile', e.target.files[0]);
+    // console.log(URL.createObjectURL(e.target.files[0]));
+    setImgSrc(URL.createObjectURL(e.target.files[0]));
   };
+
+  //  img 제거
+  const onDeleteImg = () => {
+    URL.revokeObjectURL(imgSrc);
+    setImgSrc(
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSs2dFXG-9DwOgl5jfEdXE7Y3bZsHBUBcBrw&usqp=CAU',
+    );
+  };
+
   const onUploadImgBtnClick = () => {
-    imgInputRef.current?.click();
+    imgRef.current?.click();
   };
 
   const handleChange = () => {
@@ -25,16 +36,18 @@ export default function EditMyinfoPage() {
     <div className="w-4/5 p-12">
       <section className="img_nick_intro flex mb-4">
         <div className="flex flex-col w-32">
-          <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0AqtMahULe4ViGKzXbAr4C4hel5SGwfl7Pg&usqp=CAU"
-            alt="조이현"
-            className="rounded-full h-32 w-32 object-cover mb-5"
-          />
+          {imgSrc && (
+            <img
+              src={imgSrc}
+              alt="조이현"
+              className="rounded-full h-32 w-32 object-cover mb-5"
+            />
+          )}
           <input
             id="profileImg"
             type="file"
             accept="image/*"
-            ref={imgInputRef}
+            ref={imgRef}
             onChange={onUploadImg}
             className="hidden"
           />
@@ -44,7 +57,10 @@ export default function EditMyinfoPage() {
           >
             이미지 업로드
           </button>
-          <button className="text-b-yellow hover:bg-b-bg-gray rounded-md font-bold w-32 h-8 mt-2">
+          <button
+            className="text-b-yellow hover:bg-b-bg-gray rounded-md font-bold w-32 h-8 mt-2"
+            onClick={onDeleteImg}
+          >
             이미지 제거
           </button>
         </div>
