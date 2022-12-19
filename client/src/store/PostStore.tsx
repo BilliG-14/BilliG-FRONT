@@ -2,20 +2,22 @@ import create from 'zustand';
 
 // 사진 업로드 store
 interface ImageUploadState {
-  imgFiles: FileList | undefined;
-  setImgFile: (imgFileList: FileList) => void;
+  imgFiles: File[];
+  setImgFile: (imgFileList: File[]) => void;
 }
 
 export const imageUploadStore = create<ImageUploadState>((set) => ({
-  imgFiles: undefined,
-  setImgFile: (imgFileList) => set(() => ({ imgFiles: imgFileList })),
+  imgFiles: [],
+  setImgFile: (imgFileList) => set((state) => ({ imgFiles: imgFileList })),
 }));
 
 // 거래방법 store
 interface TradeWayState {
   tradeWay: object;
-  setDirect: (checked: boolean) => void;
-  setDelivery: (checked: boolean) => void;
+  setTradeWay: (
+    direct: boolean | undefined,
+    delivery: boolean | undefined,
+  ) => void;
 }
 
 export const tradeWayStore = create<TradeWayState>((set) => ({
@@ -23,13 +25,9 @@ export const tradeWayStore = create<TradeWayState>((set) => ({
     direct: false,
     delivery: false,
   },
-  setDirect: (checked) =>
+  setTradeWay: (direct, delivery) =>
     set((state) => ({
-      tradeWay: { ...state.tradeWay, direct: checked },
-    })),
-  setDelivery: (checked) =>
-    set((state) => ({
-      tradeWay: { ...state.tradeWay, delivery: checked },
+      tradeWay: { ...state.tradeWay, direct, delivery },
     })),
 }));
 

@@ -8,6 +8,7 @@ import {
 import HashTagSection from '../components/postWrite/HashTagWrite';
 import ImageUpload from '../components/postWrite/ImageUpload';
 import TradeWay from '../components/postWrite/TradeWay';
+import axios from 'axios';
 
 export default function BorrowWriting() {
   // store에서 가져오는 state들
@@ -23,47 +24,136 @@ export default function BorrowWriting() {
 
   // Ref
   const productNameRef = useRef<HTMLInputElement>(null);
-  const priceDay = useRef<HTMLInputElement>(null);
-  const priceTime = useRef<HTMLInputElement>(null);
-  const period = useRef<HTMLInputElement>(null);
-  const category = useRef<HTMLSelectElement>(null);
+  const priceDayRef = useRef<HTMLInputElement>(null);
+  const priceTimeRef = useRef<HTMLInputElement>(null);
+  const periodRef = useRef<HTMLInputElement>(null);
+  const categoryRef = useRef<HTMLSelectElement>(null);
+  const descriptionRef = useRef<HTMLTextAreaElement>(null);
 
-  // 등록하기 클릭 시
+  // let title = productNameRef.current?.value;
+  // const priceDay = priceDayRef.current?.value;
+  // const priceTime = priceTimeRef.current?.value;
+  // let category = categoryRef.current?.value;
+
+  // // 등록하기 클릭 시
+  // function handleButtonClick(e: React.MouseEvent<HTMLButtonElement>) {
+  //   e.preventDefault();
+  //   // console.log(productNameRef.current?.value);
+  //   // console.log(priceDay.current?.value);
+  //   // console.log(priceTime.current?.value);
+  //   // console.log(period.current?.value);
+  //   // console.log(
+  //   //   category.current?.options[category.current?.selectedIndex].innerText,
+  //   // );
+  //   console.log(hashTags);
+  //   console.log(tradeWay);
+  //   console.log('file', imgFiles);
+  //   console.log(reservationDate);
+
+  //   const formData = new FormData();
+  //   formData.append('category', writeData.category);
+  // }
+
+  const [reservationDate, setReservationDate] = useState({
+    start: '',
+    end: '',
+  });
+
+  function startDate(e: ChangeEvent<HTMLInputElement>) {
+    const newReservationDate = {
+      ...reservationDate,
+      start: e.currentTarget.value,
+    };
+    setReservationDate(newReservationDate);
+  }
+
+  function endDate(e: ChangeEvent<HTMLInputElement>) {
+    const newReservationDate = {
+      ...reservationDate,
+      end: e.currentTarget.value,
+    };
+    setReservationDate(newReservationDate);
+  }
+  console.log(imgFiles);
   function handleButtonClick(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    // console.log(productNameRef.current?.value);
+
+    const formData = new FormData();
+    // const upLoadImg = Array.from(imgFiles);
+    // imgFiles.forEach((imgFile) => formData.append('productImg', imgFile));
+
+    console.log(productNameRef.current?.value);
     // console.log(priceDay.current?.value);
     // console.log(priceTime.current?.value);
     // console.log(period.current?.value);
     // console.log(
     //   category.current?.options[category.current?.selectedIndex].innerText,
     // );
-    console.log(hashTags);
-    console.log(tradeWay);
-    console.log('file', imgFiles);
-    console.log(tradeDate);
+    // console.log(hashTags);
+    // console.log(tradeWay);
+    // console.log('file', imgFiles);
+    // console.log(reservationDate);
+    addPost();
   }
 
-  const [tradeDate, setTradeDate] = useState({
-    start: '',
-    end: '',
-  });
-
-  function startDate(e: ChangeEvent<HTMLInputElement>) {
-    const newTradeDate = {
-      ...tradeDate,
-      start: e.currentTarget.value,
+  type WriteDataType = {
+    // category: string;
+    // title: string;
+    // imgFiles: FileList | undefined;
+    // priceDay: number | undefined;
+    // priceTime: number | undefined;
+    // reservationDate: object;
+    // description: string | undefined;
+    // tradeWay: object;
+    hashTags: string[];
+  };
+  const addPost = async () => {
+    const writeData = {
+      category:
+        categoryRef.current?.options[categoryRef.current?.selectedIndex]
+          .innerText,
+      title: productNameRef.current?.value,
+      // imgFiles,
+      priceDay: priceDayRef.current?.value,
+      priceTime: priceTimeRef.current?.value,
+      reservationDate: reservationDate,
+      description: descriptionRef.current?.value,
+      tradeWay: tradeWay,
+      hashTags: hashTags,
     };
-    setTradeDate(newTradeDate);
-  }
+    console.log(writeData);
+    // const a = await onSubmit(writeData);
+  };
 
-  function endDate(e: ChangeEvent<HTMLInputElement>) {
-    const newTradeDate = {
-      ...tradeDate,
-      end: e.currentTarget.value,
-    };
-    setTradeDate(newTradeDate);
-  }
+  // const onSubmit = async (data: WriteDataType) => {
+  //   http.defaults.headers['Content-Type'] = 'multipart/form-data';
+
+  // formData.append('category', data.category);
+  // formData.append('priceDay', data.priceDay);
+  // formData.append('imgFiles', data.imgFiles);
+  // formData.append('title', data.title);
+  // formData.append('imgFiles', writeData.imgFiles);
+
+  // data.imgFiles.forEach((imgFile) => formData.append('productImg', imgFile));
+  // formData.append('priceDay', data.priceDay);
+  // formData.append('priceTime', data.priceTime);
+  // formData.append('reservationDate', data.reservationDate);
+  // formData.append('description', data.description);
+  // formData.append('hashTags', data.hashTags);
+  // data.hashTags.forEach((hashTag) => formData.append('hashTag', hashTag));
+
+  // };
+  // const formData = new FormData();
+  // formData.append('category', writeData.category);
+  // formData.append('priceDay', writeData.priceDay);
+  // formData.append('imgFiles', writeData.imgFiles);
+  // formData.append('title', writeData.title);
+  // formData.append('imgFiles', writeData.imgFiles);
+  // formData.append('priceDay', writeData.priceDay);
+  // formData.append('priceTime', writeData.priceTime);
+  // formData.append('reservationDate', writeData.reservationDate);
+  // formData.append('description', writeData.description);
+  // formData.append('hashTags', writeData.hashTags);
 
   return (
     <div className="max-w-screen-lg mx-auto">
@@ -74,7 +164,7 @@ export default function BorrowWriting() {
           {/* 상품명/카테고리 section */}
           <section className="flex mb-4">
             <select
-              ref={category}
+              ref={categoryRef}
               className="flex-none pl-3 w-1/6 h-10 border-solid border  border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2"
             >
               <option value="1">카테고리</option>
@@ -100,13 +190,13 @@ export default function BorrowWriting() {
           <section className="flex items-center mb-4">
             <div className="w-[100px] p-3 text-center">요금</div>
             <input
-              ref={priceTime}
+              ref={priceTimeRef}
               type="number"
               className="appearance: none p-3 mx-2 w-60 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
             />
             <div className="mr-5">원/시간</div>
             <input
-              ref={priceDay}
+              ref={priceDayRef}
               type="number"
               className="p-3 mx-2 w-60 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
             />
@@ -118,7 +208,7 @@ export default function BorrowWriting() {
             <div className="w-[100px] p-3 text-center">예약기간</div>
             <input
               onChange={startDate}
-              ref={period}
+              ref={periodRef}
               type="date"
               min={today}
               max="2099-12-31"
@@ -137,6 +227,7 @@ export default function BorrowWriting() {
           {/* 상품 상세내용 section */}
           <section className="mb-4">
             <textarea
+              ref={descriptionRef}
               placeholder="사이즈, 색상 등 상세정보를 입력하면 좋아요!"
               className="p-3 w-full h-40 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
             />

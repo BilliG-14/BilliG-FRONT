@@ -9,7 +9,7 @@ export default function ImageUpload() {
   // 게시글을 볼 때 메인 이미지를 어떻게 정할것인지?
   function imagePreview(e: React.ChangeEvent<HTMLInputElement>): void {
     const target = e.currentTarget;
-    const files = target.files as FileList;
+    const files = Array.from(target.files as FileList);
 
     // 파일 재선택시 초기화
     setFileImage([]);
