@@ -21,6 +21,7 @@ type User = {
   address1: string;
   address2: string;
   createdAt: string;
+  reportNumber: number;
   suspension: boolean;
 };
 
@@ -42,6 +43,7 @@ export const useUserInfoState = create<UserInfoState>((set) => ({
     address1: '서울시 도봉구 도봉산로 22길',
     address2: '월드컵아파트 201동 1101호',
     createdAt: '2022-12-18',
+    reportNumber: 1,
     suspension: false,
   },
 

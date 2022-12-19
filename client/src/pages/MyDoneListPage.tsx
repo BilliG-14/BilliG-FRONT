@@ -3,7 +3,7 @@ import MyInfoHeader from 'components/myinfo/MyInfoHeader';
 import MyInfoSideBar from '../components/myinfo/MyinfoSideBar';
 import MyDoneList from '../components/myinfo/MyDoneList';
 
-export default function MyDoneGiveListPage() {
+export default function MyDoneListPage() {
   return (
     <div className="h-full w-screen max-w-screen-lg m-auto">
       <Nav />
