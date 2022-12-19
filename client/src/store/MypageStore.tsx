@@ -1,17 +1,31 @@
 import create from 'zustand';
 
-interface MyIntroEditState {
+// 수정하기 toggle
+interface MyinpoEditState {
   isMyinfo: boolean;
   toggleIntro: () => void;
 }
 
-export const useMyIntroEditStore = create<MyIntroEditState>((set) => ({
+export const useMyinfoEditStore = create<MyinpoEditState>((set) => ({
   isMyinfo: false,
   toggleIntro: () => set((state) => ({ isMyinfo: !state.isMyinfo })),
 }));
 
+// 비밀번호 변경 toggle
+interface PasswordEditState {
+  isPW: boolean;
+  togglePw: () => void;
+  togglePwfalse: () => void;
+}
+
+export const usePasswordEditStore = create<PasswordEditState>((set) => ({
+  isPW: false,
+  togglePw: () => set((state) => ({ isPW: !state.isPW })),
+  togglePwfalse: () => set(() => ({ isPW: false })),
+}));
+
 type User = {
-  nickname: string;
+  username: string;
   intro: string;
   name: string;
   email: string;
@@ -20,9 +34,9 @@ type User = {
   postalCode: string;
   address1: string;
   address2: string;
-  createdAt: string;
-  reportNumber: number;
+  report: any[];
   suspension: boolean;
+  createdAt: string;
 };
 
 interface UserInfoState {
@@ -32,7 +46,7 @@ interface UserInfoState {
 
 export const useUserInfoState = create<UserInfoState>((set) => ({
   user: {
-    nickname: 'yihyun',
+    username: 'yihyun',
     intro: 'IT기기 (맥북, 아이패드...등) 대여해드립니다',
     name: '조이현',
     email: 'jyh@gmail.com',
@@ -42,9 +56,12 @@ export const useUserInfoState = create<UserInfoState>((set) => ({
     postalCode: '01425',
     address1: '서울시 도봉구 도봉산로 22길',
     address2: '월드컵아파트 201동 1101호',
-    createdAt: '2022-12-18',
-    reportNumber: 1,
+    report: [
+      { id: 1, title: '사기꾼임' },
+      { id: 2, title: '사기꾼임' },
+    ],
     suspension: false,
+    createdAt: '2022-12-18',
   },
 
   setUserInfo: () => set((state) => ({})),

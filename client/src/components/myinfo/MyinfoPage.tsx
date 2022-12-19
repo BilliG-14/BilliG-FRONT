@@ -1,10 +1,14 @@
-import { useMyIntroEditStore } from '../../store/MypageStore';
+import {
+  useMyinfoEditStore,
+  usePasswordEditStore,
+} from '../../store/MypageStore';
 import ChangePassword from './ChangePassword';
+import ChangePawsswordForm from './ChangePawsswordForm';
 import DeleteUser from './DeleteUser';
 
 export default function MyinfoPage() {
-  const { toggleIntro } = useMyIntroEditStore();
-
+  const { toggleIntro } = useMyinfoEditStore();
+  const { isPW } = usePasswordEditStore();
   return (
     <div className="w-4/5 p-12">
       <section className="img_nick_intro flex mb-4">
@@ -66,7 +70,7 @@ export default function MyinfoPage() {
           </div>
         </div>
       </section>
-      <ChangePassword />
+      {isPW ? <ChangePawsswordForm /> : <ChangePassword />}
       <DeleteUser />
       <div className="edit_btn flex justify-center mt-8">
         <button

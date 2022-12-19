@@ -1,13 +1,24 @@
 import Postcode from 'components/PostCode';
 import { useRef, useState } from 'react';
-import { useMyIntroEditStore } from '../../store/MypageStore';
+import {
+  useMyinfoEditStore,
+  usePasswordEditStore,
+} from '../../store/MypageStore';
 
 export default function EditMyinfoPage() {
-  const { toggleIntro } = useMyIntroEditStore();
+  const { toggleIntro } = useMyinfoEditStore();
+  const { togglePwfalse } = usePasswordEditStore();
   const [imgSrc, setImgSrc] = useState(
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSs2dFXG-9DwOgl5jfEdXE7Y3bZsHBUBcBrw&usqp=CAU',
   );
+
   const imgRef = useRef<HTMLInputElement | null>(null);
+  const usernameRef = useRef<HTMLInputElement | null>(null);
+  const introRef = useRef<HTMLInputElement | null>(null);
+  const phoneRef = useRef<HTMLInputElement | null>(null);
+  const addressRef = useRef<HTMLInputElement | null>(null);
+  const pwRef = useRef<HTMLInputElement | null>(null);
+  const confirmPwRef = useRef<HTMLInputElement | null>(null);
 
   // img 미리보기
   const onUploadImg = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,7 +80,8 @@ export default function EditMyinfoPage() {
             <input
               type="text"
               placeholder="닉네임"
-              name="nickname"
+              name="username"
+              ref={usernameRef}
               onChange={handleChange}
               className="w-3/5 text-2xl font-medium border border-solid border-gray-300 py-2 px-2 mb-2 rounded-lg focus:border-b-yellow focus:outline-none"
             />
@@ -77,6 +89,7 @@ export default function EditMyinfoPage() {
               type="text"
               placeholder="소개글을 적어보세요."
               name="intro"
+              ref={introRef}
               onChange={handleChange}
               className="w-3/5 font-medium border border-solid border-gray-300 py-2 px-2 rounded-lg focus:border-b-yellow focus:outline-none"
             />
@@ -112,12 +125,13 @@ export default function EditMyinfoPage() {
               type="text"
               placeholder="연락처를 입력하세요. ex) 010-1234-5678"
               name="phone"
+              ref={phoneRef}
               onChange={handleChange}
               className="w-3/5 font-medium border border-solid border-gray-300 py-2 px-2 rounded-lg focus:border-b-yellow focus:outline-none"
             />
           </form>
         </div>
-        <div className="user_phone flex items-center h-18 py-4 border-b border-solid border-gray-200">
+        <div className="user_address flex items-center h-18 py-4 border-b border-solid border-gray-200">
           <div className="w-40 text-lg leading-normal font-bold">
             <h3>주소</h3>
           </div>
@@ -130,12 +144,13 @@ export default function EditMyinfoPage() {
               type="text"
               placeholder="상세주소"
               name="password"
+              ref={addressRef}
               onChange={handleChange}
               className="w-3/5 font-medium border border-solid border-gray-300 py-2 px-2 rounded-lg focus:border-b-yellow focus:outline-none mt-1"
             />
           </form>
         </div>
-        <div className="user_phone flex items-center h-18 py-4 border-b border-solid border-gray-200">
+        <div className="user_pw flex items-center h-18 py-4 border-b border-solid border-gray-200">
           <div className="w-40 text-lg leading-normal font-bold">
             <h3>비밀번호</h3>
           </div>
@@ -147,12 +162,13 @@ export default function EditMyinfoPage() {
               type="text"
               placeholder="비밀번호를 입력하세요."
               name="password"
+              ref={pwRef}
               onChange={handleChange}
               className="w-3/5 font-medium border border-solid border-gray-300 py-2 px-2 rounded-lg focus:border-b-yellow focus:outline-none"
             />
           </form>
         </div>
-        <div className="user_phone flex items-center h-18 py-4 border-b border-solid border-gray-200">
+        <div className="user_confirmPW flex items-center h-18 py-4 border-b border-solid border-gray-200">
           <div className="w-40 text-lg leading-normal font-bold">
             <h3>비밀번호 확인</h3>
           </div>
@@ -164,6 +180,7 @@ export default function EditMyinfoPage() {
               type="text"
               placeholder="비밀번호를 입력하세요."
               name="confrim-password"
+              ref={confirmPwRef}
               onChange={handleChange}
               className="w-3/5 font-medium border border-solid border-gray-300 py-2 px-2 rounded-lg focus:border-b-yellow focus:outline-none"
             />
@@ -173,7 +190,10 @@ export default function EditMyinfoPage() {
       <div className="edit_btn flex justify-center mt-8">
         <button
           className="w-2/6 h-12 hover:text-white border border-b-yellow hover:bg-b-yellow focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
-          onClick={toggleIntro}
+          onClick={() => {
+            toggleIntro();
+            togglePwfalse();
+          }}
         >
           저장하기
         </button>
