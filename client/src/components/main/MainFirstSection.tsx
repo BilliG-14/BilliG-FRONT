@@ -2,7 +2,7 @@ export default function MainFirstSection() {
   const iconClassName =
     'text-6xl animate-bounce px-4 text-transparent bg-clip-text bg-gradient-to-r from-b-yellow to-[#ff834e]';
   return (
-    <section className="max-w-screen-lg h-screen font-semibold">
+    <section className="max-w-screen-lg mb-80 font-semibold">
       <div className="text-left p-32 pt-44 animate-fade-in text-b-text-black">
         <p className="text-4xl">물건을 빌리는 가장 쉬운 방법</p>
         <p className="text-6xl">초간편 물품 대여 중계 플랫폼</p>
