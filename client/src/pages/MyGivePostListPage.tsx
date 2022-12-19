@@ -1,8 +1,9 @@
-import MyInfoHeader from 'components/myinfo/MyInfoHeader';
 import Nav from '../components/nav/Nav';
+import MyInfoHeader from 'components/myinfo/MyInfoHeader';
 import MyInfoSideBar from '../components/myinfo/MyinfoSideBar';
+import MyGivePostList from '../components/myinfo/MyGivePostList';
 
-export default function MyInfo() {
+export default function MyGivePostListPage() {
   return (
     <div className="h-full w-screen max-w-screen-lg m-auto">
       <Nav />
@@ -10,7 +11,7 @@ export default function MyInfo() {
       <section className="max-w-screen-lg h-full">
         <div className="flex h-full">
           <MyInfoSideBar />
-          <div className="w-4/5">메인</div>
+          <MyGivePostList />
         </div>
       </section>
     </div>
