@@ -1,13 +1,9 @@
 import Nav from '../components/nav/Nav';
 import MyInfoHeader from 'components/myinfo/MyInfoHeader';
 import MyInfoSideBar from '../components/myinfo/MyinfoSideBar';
-import { useMyinfoEditStore } from '../store/MypageStore';
-import MyinfoPage from 'components/myinfo/MyinfoPage';
-import EditMyinfoPage from '../components/myinfo/EditMyinfoPage';
+import MyDoneList from '../components/myinfo/MyDoneList';
 
-export default function MyPage() {
-  const { isMyinfo } = useMyinfoEditStore();
-
+export default function MyDoneListPage() {
   return (
     <div className="h-full w-screen max-w-screen-lg m-auto">
       <Nav />
@@ -15,7 +11,7 @@ export default function MyPage() {
       <section className="max-w-screen-lg h-full">
         <div className="flex h-full">
           <MyInfoSideBar />
-          {isMyinfo ? <EditMyinfoPage /> : <MyinfoPage />}
+          <MyDoneList />
         </div>
       </section>
     </div>

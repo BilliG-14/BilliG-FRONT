@@ -1,13 +1,9 @@
 import Nav from '../components/nav/Nav';
 import MyInfoHeader from 'components/myinfo/MyInfoHeader';
 import MyInfoSideBar from '../components/myinfo/MyinfoSideBar';
-import { useMyinfoEditStore } from '../store/MypageStore';
-import MyinfoPage from 'components/myinfo/MyinfoPage';
-import EditMyinfoPage from '../components/myinfo/EditMyinfoPage';
+import MyBorrowPostList from 'components/myinfo/MyBorrowPostList';
 
-export default function MyPage() {
-  const { isMyinfo } = useMyinfoEditStore();
-
+export default function MyBorrowPostListPage() {
   return (
     <div className="h-full w-screen max-w-screen-lg m-auto">
       <Nav />
@@ -15,7 +11,7 @@ export default function MyPage() {
       <section className="max-w-screen-lg h-full">
         <div className="flex h-full">
           <MyInfoSideBar />
-          {isMyinfo ? <EditMyinfoPage /> : <MyinfoPage />}
+          <MyBorrowPostList />
         </div>
       </section>
     </div>

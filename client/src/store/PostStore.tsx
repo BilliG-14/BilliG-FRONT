@@ -3,12 +3,37 @@ import create from 'zustand';
 // 사진 업로드 store
 interface ImageUploadState {
   imgFiles: FileList | undefined;
-  setimgFile: (imgFileList: FileList) => void;
+  setImgFile: (imgFileList: FileList) => void;
 }
 
-const imageUploadStore = create<ImageUploadState>((set) => ({
+export const imageUploadStore = create<ImageUploadState>((set) => ({
   imgFiles: undefined,
-  setimgFile: (imgFileList) => set(() => ({ imgFiles: imgFileList })),
+  setImgFile: (imgFileList) => set(() => ({ imgFiles: imgFileList })),
+}));
+
+// 거래방법 store
+interface TradeWayState {
+  direct: boolean;
+  delivery: boolean;
+  tradeWay: object;
+  setDirect: (checked: boolean) => void;
+  setDelivery: (checked: boolean) => void;
+  setTradeWay: (direct: boolean, delivery: boolean) => void;
+}
+
+export const tradeWayStore = create<TradeWayState>((set) => ({
+  direct: false,
+  delivery: false,
+  tradeWay: {
+    direct: false,
+    delivery: false,
+  },
+  setDirect: (checked) => set(() => ({ direct: checked })),
+  setDelivery: (checked) => set(() => ({ delivery: checked })),
+  setTradeWay: (direct, delivery) =>
+    set((state) => ({
+      tradeWay: { ...state.tradeWay, direct, delivery },
+    })),
 }));
 
 // 해시태그 store
@@ -20,7 +45,7 @@ interface HashTagState {
   deleteHashTags: (newTags: string[]) => void;
 }
 
-const hashTagStore = create<HashTagState>((set) => ({
+export const hashTagStore = create<HashTagState>((set) => ({
   hashTagInputText: '',
   hashTags: [],
   setHashTagInputText: (text) => set(() => ({ hashTagInputText: text })),
@@ -33,5 +58,3 @@ const hashTagStore = create<HashTagState>((set) => ({
       hashTags: newTags,
     })),
 }));
-
-export default hashTagStore;

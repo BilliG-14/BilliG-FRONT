@@ -1,11 +1,11 @@
 import React from 'react';
 import DealTag from 'components/tag/DealTag';
 
-export default function SearchItemCard() {
+export default function GiveItemCard() {
   return (
-    <div className="h-36">
+    <div className="h-36 cursor-pointer hover:opacity-70">
       <li className="flex w-full h-full justify-center py-3">
-        <div className="item_info flex w-2/3 border-b-2 border-solid border-b-yellow">
+        <div className="item_info flex w-4/5 border-b-2 border-solid border-gray-300">
           <a href="#">
             <img
               src="https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/macbook-air-midnight-select-20220606?wid=904&hei=840&fmt=jpeg&qlt=90&.v=1653084303665"
@@ -27,7 +27,7 @@ export default function SearchItemCard() {
             </ul>
           </div>
         </div>
-        <div className="item_deal_price border-b-2 border-solid border-b-yellow">
+        <div className="item_deal_price border-b-2 border-solid border-gray-300">
           <DealTag deal="직거래" />
           <div className="price text-right mt-1">
             <p className="per_time mb-2">
