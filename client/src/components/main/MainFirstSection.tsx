@@ -1,5 +1,6 @@
 export default function MainFirstSection() {
-  const iconClassName = 'text-6xl animate-bounce text-b-yellow px-4';
+  const iconClassName =
+    'text-6xl animate-bounce px-4 text-transparent bg-clip-text bg-gradient-to-r from-b-yellow to-[#ff834e]';
   return (
     <section className="max-w-screen-lg h-screen font-semibold">
       <div className="text-left p-32 pt-44 animate-fade-in text-b-text-black">
