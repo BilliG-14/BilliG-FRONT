@@ -3,7 +3,7 @@ export default function AdminHeader() {
     <>
       {' '}
       <a href="/admin">
-        <p className="max-w-screen-lg mx-auto p-6 text-3xl font-extrabold select-none">
+        <p className="max-w-screen-lg mx-auto p-6 text-3xl font-extrabold">
           Admin Page
         </p>
       </a>

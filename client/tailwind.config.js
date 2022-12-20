@@ -46,37 +46,11 @@ module.exports = {
           '50%': { opacity: 0 },
           '100%': { opacity: 1 },
         },
-        popOut: {
-          '0%': {
-            opacity: 0,
-            transform: 'translateY(0%)',
-          },
-          '50%': {
-            opacity: 0.8,
-            transform: 'translateY(-30%)',
-          },
-          '100%': {
-            opacity: 1,
-            transform: 'translateY(0%)',
-          },
-        },
-        popToRight: {
-          '0%': {
-            opacity: 0,
-            transform: 'translateX(-100%)',
-          },
-          '100%': {
-            opacity: 1,
-            transform: 'translateY(0%)',
-          },
-        }
       },
       animation: {
         'fade-in-150ms': 'fadeIn 150ms linear',
         'fade-in': 'fadeIn 1.5s linear',
         'fade-in-later': 'fadeInLater 1.5s linear',
-        'pop-out': 'popOut 1000ms ease-in-out 700ms both',
-        'pop-to-right': 'popToRight 1000ms ease-in-out 1s both'
       },
     },
   },

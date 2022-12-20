@@ -5,7 +5,7 @@ export default function SearchItemCard() {
   return (
     <div className="h-36">
       <li className="flex w-full h-full justify-center py-3">
-        <div className="item_info flex w-2/3 border-b-2 border-solid border-b-yellow">
+        <div className="item_info flex w-3/5 border-b-2 border-solid border-b-yellow">
           <a href="#">
             <img
               src="https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/macbook-air-midnight-select-20220606?wid=904&hei=840&fmt=jpeg&qlt=90&.v=1653084303665"
