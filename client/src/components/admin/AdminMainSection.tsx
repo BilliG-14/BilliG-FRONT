@@ -5,6 +5,7 @@ import {
   AdminNoticeSection,
   AdminPostSection,
   AdminRentalSection,
+  AdminHashTagSection,
 } from 'components/admin';
 import useAdminPageStore, { AdminSection } from 'store/AdminPageStore';
 
@@ -24,6 +25,8 @@ export default function AdminMainSection() {
         return <AdminPostSection />;
       case AdminSection.RENTAL:
         return <AdminRentalSection />;
+      case AdminSection.HASHTAG:
+        return <AdminHashTagSection />;
       default:
         return <section></section>;
     }

@@ -8,6 +8,7 @@ export default function AdminSideBar() {
     showNotice,
     showPost,
     showRental,
+    showHashTag,
   } = useAdminPageStore();
   return (
     <div className="w-1/5 h-full p-4 bg-b-bg-gray select-none">
@@ -46,6 +47,11 @@ export default function AdminSideBar() {
           <li className="h-10 flex items-center justify-start">
             <a href="#!" onClick={() => showNotice()}>
               <p className="items-center justify-center">공지 사항</p>
+            </a>
+          </li>
+          <li className="h-10 flex items-center justify-start">
+            <a href="#!" onClick={() => showHashTag()}>
+              <p className="items-center justify-center">추천 태그</p>
             </a>
           </li>
         </ul>
