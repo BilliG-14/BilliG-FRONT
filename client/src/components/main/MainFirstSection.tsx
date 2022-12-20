@@ -1,6 +1,33 @@
-export default function MainFirstSection() {
+type IconProps = {
+  feature: string;
+  delay: string;
+};
+function Icon({ feature, delay }: IconProps) {
   const iconClassName =
     'text-6xl animate-bounce px-4 text-transparent bg-clip-text bg-gradient-to-r from-b-yellow to-[#ff834e]';
+  return (
+    <i
+      className={`fa-solid ${feature} ${iconClassName}`}
+      style={{ animationDelay: delay }}
+    ></i>
+  );
+}
+
+function Icons() {
+  return (
+    <div className="px-32 pt-16 animate-pop-out">
+      <Icon feature="fa-shirt" delay="0" />
+      <Icon feature="fa-camera-retro" delay="100ms" />
+      <Icon feature="fa-laptop" delay="200ms" />
+      <Icon feature="fa-headphones" delay="300ms" />
+      <Icon feature="fa-bag-shopping" delay="400ms" />
+      <Icon feature="fa-bicycle" delay="500ms" />
+      <Icon feature="fa-gamepad" delay="600ms" />
+    </div>
+  );
+}
+
+export default function MainFirstSection() {
   return (
     <section className="max-w-screen-lg mb-80 font-semibold">
       <div className="text-left p-32 pt-44 animate-fade-in text-b-text-black">
@@ -15,33 +42,7 @@ export default function MainFirstSection() {
           </p>
         </a>
       </div>
-      <div className="px-32 pt-16 animate-pop-out">
-        <i className={`fa-solid fa-shirt ${iconClassName}`}></i>
-        <i
-          className={`fa-solid fa-camera-retro ${iconClassName}`}
-          style={{ animationDelay: '100ms' }}
-        ></i>
-        <i
-          className={`fa-solid fa-laptop ${iconClassName}`}
-          style={{ animationDelay: '200ms' }}
-        ></i>
-        <i
-          className={`fa-solid fa-headphones ${iconClassName}`}
-          style={{ animationDelay: '300ms' }}
-        ></i>
-        <i
-          className={`fa-solid  fa-bag-shopping ${iconClassName}`}
-          style={{ animationDelay: '400ms' }}
-        ></i>
-        <i
-          className={`fa-solid  fa-bicycle ${iconClassName}`}
-          style={{ animationDelay: '500ms' }}
-        ></i>
-        <i
-          className={`fa-solid  fa-gamepad ${iconClassName}`}
-          style={{ animationDelay: '600ms' }}
-        ></i>
-      </div>
+      <Icons />
     </section>
   );
 }
