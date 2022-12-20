@@ -1,5 +1,5 @@
 import create from 'zustand';
-
+import { devtools, persist } from 'zustand/middleware';
 export enum AdminSection {
   USERLIST,
   USERDETAIL,
@@ -7,6 +7,7 @@ export enum AdminSection {
   POST,
   NOTICE,
   RENTAL,
+  HASHTAG,
 }
 interface AdminPageState {
   section: AdminSection;
@@ -16,16 +17,23 @@ interface AdminPageState {
   showNotice: () => void;
   showPost: () => void;
   showRental: () => void;
+  showHashTag: () => void;
 }
-const useAdminPageStore = create<AdminPageState>((set) => ({
-  section: AdminSection.USERLIST,
-  showUserList: () => set({ section: AdminSection.USERLIST }),
-  showUserDetail: () => set({ section: AdminSection.USERDETAIL }),
-  showReport: () => set({ section: AdminSection.REPORT }),
-  showNotice: () => set({ section: AdminSection.NOTICE }),
-  showPost: () => set({ section: AdminSection.POST }),
-  showRental: () => set({ section: AdminSection.RENTAL }),
-}));
+/*devtools, persist 새로고침으로 상태 초기화 방지 */
+const useAdminPageStore = create<AdminPageState>()(
+  devtools(
+    persist((set) => ({
+      section: AdminSection.USERLIST,
+      showUserList: () => set({ section: AdminSection.USERLIST }),
+      showUserDetail: () => set({ section: AdminSection.USERDETAIL }),
+      showReport: () => set({ section: AdminSection.REPORT }),
+      showNotice: () => set({ section: AdminSection.NOTICE }),
+      showPost: () => set({ section: AdminSection.POST }),
+      showRental: () => set({ section: AdminSection.RENTAL }),
+      showHashTag: () => set({ section: AdminSection.HASHTAG }),
+    })),
+  ),
+);
 
 interface NoticePageState {
   isWriting: boolean;
