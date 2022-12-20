@@ -1,6 +1,6 @@
 import { imageUploadStore } from './../../store/PostStore';
 import { useState } from 'react';
-import { AiFillCamera, AiFillCloseCircle } from 'react-icons/ai';
+import { AiFillCamera } from 'react-icons/ai';
 
 type PreviewImg = {
   pictureName: string;
@@ -10,7 +10,7 @@ export default function ImageUpload() {
   const { imgFiles, setImgFile } = imageUploadStore();
   const [priviewImages, setPriviewFileImages] = useState<PreviewImg[]>([]);
 
-  // 이미지 갯수 제한(가장 우선), 이미지 크기 제한 구현해야 함
+  // 이미지 갯수 제한(가장 우선)(구현완료), 이미지 크기 제한 구현해야 함
   // 게시글을 볼 때 메인 이미지를 어떻게 정할것인지?
   function imagePreview(e: React.ChangeEvent<HTMLInputElement>): void {
     const target = e.currentTarget;
@@ -24,14 +24,6 @@ export default function ImageUpload() {
       return;
     } else {
       for (let i = 0; i < files.length; i++) {
-        // const newPriviewFileImages = [
-        //   ...priviewImages,
-        // {
-        //   pictureName: files[i].name,
-        //   URL: URL.createObjectURL(files[i]),
-        // },
-        // ];
-        // console.log('newPriviewFileImages', newPriviewFileImages);
         setPriviewFileImages((state) => [
           ...state,
           { pictureName: files[i].name, URL: URL.createObjectURL(files[i]) },
@@ -51,12 +43,6 @@ export default function ImageUpload() {
     const newPreviewFiles = priviewImages.filter(
       (imgfile) => imgfile.pictureName !== previewImgId,
     );
-
-    // const previewId = Number(e.currentTarget.id);
-    // const newFiles = imgFiles.filter((imgfile, idx) => idx !== previewId);
-    // const newPreviewFiles = priviewImages.filter(
-    //   (imgfile, idx) => idx !== previewId,
-    // );
 
     setImgFile(newFiles);
     setPriviewFileImages(newPreviewFiles);
@@ -80,7 +66,6 @@ export default function ImageUpload() {
         accept="image/*"
         multiple
         className="w-0 h-0 p-0 overflow-visible"
-        // className="block w-[500px] text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold cursor-pointer file:bg-b-bg-gray file:text-b-text-black  hover:file:bg-gray-200 file:cursor-pointer"
       />
       <div className="flex">
         {priviewImages.map((fileUrl, idx) => {
