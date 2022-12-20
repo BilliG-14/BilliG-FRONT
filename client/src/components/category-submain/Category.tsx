@@ -1,6 +1,5 @@
 import CategoryNav from './CategoryNav';
-import ItemCard from './ItemCard';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import CategorySection from './CategorySection';
 
 export type ItemType = {
