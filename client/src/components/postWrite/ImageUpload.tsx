@@ -1,6 +1,6 @@
 import { imageUploadStore } from './../../store/PostStore';
 import { useState } from 'react';
-import { AiFillCamera } from 'react-icons/ai';
+import { AiFillCamera, AiFillCloseCircle } from 'react-icons/ai';
 
 export default function ImageUpload() {
   const { imgFiles, setImgFile } = imageUploadStore();
@@ -13,21 +13,20 @@ export default function ImageUpload() {
     // 유사배열 객체를 Array로 변환
     const files = Array.from(target.files as FileList);
 
-    if (files.length > 3) {
+    if (imgFiles.length > 3) {
       alert('이미지는 최대 3개까지만 등록 가능합니다. ');
-      setImgFile([]);
       return;
-    }
+    } else {
+      for (let i = 0; i < files.length; i++) {
+        setPriviewFileImages((cur) => [...cur, URL.createObjectURL(files[i])]);
+      }
 
-    for (let i = 0; i < files.length; i++) {
-      setPriviewFileImages((cur) => [...cur, URL.createObjectURL(files[i])]);
+      setImgFile(files);
     }
-
-    setImgFile(files);
   }
 
   // 미리보기 이미지 클릭 시 해당 이미지 삭제
-  function deleteImagehandler(e: React.MouseEvent<HTMLImageElement>) {
+  function deleteImagehandler(e: React.MouseEvent<HTMLDivElement>) {
     const previewId = Number(e.currentTarget.id);
     const newFiles = imgFiles.filter((imgfile, idx) => idx !== previewId);
     const newPreviewFiles = priviewImages.filter(
@@ -37,10 +36,11 @@ export default function ImageUpload() {
     setImgFile(newFiles);
     setPriviewFileImages(newPreviewFiles);
   }
+
   console.log(imgFiles);
   console.log(priviewImages);
   return (
-    <section className="mb-4 flex flex-row">
+    <section className="mb-4 flex flex-row ">
       <label
         htmlFor="fileUpload"
         className="inline-block w-[70px] h-[70px] mr-3 text-center text-xs border-solid border border-gray-300 hover:border-gray-400 cursor-pointer rounded-lg"
@@ -57,17 +57,25 @@ export default function ImageUpload() {
         className="w-0 h-0 p-0 overflow-visible"
         // className="block w-[500px] text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold cursor-pointer file:bg-b-bg-gray file:text-b-text-black  hover:file:bg-gray-200 file:cursor-pointer"
       />
-      <div className="flex flex-row">
+      <div className="flex">
         {priviewImages.map((fileUrl, idx) => {
           return (
-            <img
-              onClick={deleteImagehandler}
-              id={idx.toString()}
-              key={fileUrl}
-              alt="이미지"
-              src={fileUrl}
-              className="w-[70px] h-[70px] mr-2 border-solid border border-gray-300 rounded-lg"
-            />
+            <>
+              <img
+                id={idx.toString()}
+                key={fileUrl}
+                alt="이미지"
+                src={fileUrl}
+                className="w-[70px] h-[70px] mr-2 border-solid border border-gray-300 rounded-lg"
+              />
+              <div
+                key={idx}
+                onClick={deleteImagehandler}
+                className="relative w-5 h-5 bg-b-text-black rounded-full right-6 text-white text-center text-sm cursor-pointer"
+              >
+                x{/* <AiFillCloseCircle className="relative right-5 " /> */}
+              </div>
+            </>
           );
         })}
       </div>
