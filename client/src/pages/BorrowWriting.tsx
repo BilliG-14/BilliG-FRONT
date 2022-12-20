@@ -33,51 +33,54 @@ export default function BorrowWriting() {
   const navigate = useNavigate();
 
   // useMutate 정의
-  // const postData = useMutation(
-  //   (data: FormData) =>
-  //     axios({
-  //       method: 'POST',
-  //       url: 'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/product/',
-  //       headers: {
-  //         'Content-Type': 'multipart/form-data',
-  //       },
-  //       data: data,
-  //     }),
-  //   {
-  //     onSuccess: (data) => {
-  //       // 요청이 성공한 경우
-  //       console.log(data);
-  //     },
-  //     onError: (error) => {
-  //       // 요청에 에러가 발생된 경우
-  //       console.log('onError');
-  //     },
-  //   },
-  // );
+  const postData = useMutation(
+    (data: FormData) =>
+      axios({
+        method: 'POST',
+        url: 'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/product/',
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        data: data,
+      }),
+    {
+      onSuccess: (data) => {
+        // 요청이 성공한 경우
+        navigate(`/read/borrow/${data.data._id}`);
+      },
+      onError: (error) => {
+        // 요청에 에러가 발생된 경우
+        console.log(error);
+      },
+    },
+  );
 
-  // const onSavePerson = () => {
-  //   savePerson.mutate(person); // 데이터 저장
-  // };
-
-  // formData 에 넣기
+  // formData 넣기
   const formData = new FormData();
 
   // 업로드된 이미지 파일 넣기
-  imgFiles.forEach((imgFile) => formData.append('productImg', imgFile));
+  imgFiles.forEach((imgFile) => formData.append('images', imgFile));
 
   // 이미지 파일 제외한 나머지 data json 형식으로 넣기
   const writeData = {
+    postType: 'lend',
     category:
       categoryRef.current?.options[categoryRef.current?.selectedIndex]
         .innerText,
+    author: '임시작성자',
     title: productNameRef.current?.value,
-    // imgFiles,
-    priceDay: priceDayRef.current?.value,
-    priceTime: priceTimeRef.current?.value,
-    reservationDate: reservationDate,
     description: descriptionRef.current?.value,
+    lender: '빌려간사람=작성자',
+    stateOfTransaction: 0,
+    address: '임시주소',
+    // imgFiles,
+    price: {
+      priceDay: Number(priceDayRef.current?.value),
+      priceTime: Number(priceTimeRef.current?.value),
+    },
+    period: reservationDate,
     tradeWay: tradeWay,
-    hashTags: hashTags,
+    hashtag: hashTags,
   };
   formData.append('data', JSON.stringify(writeData));
 
@@ -86,7 +89,7 @@ export default function BorrowWriting() {
     e.preventDefault();
 
     // 서버에 데이터 저장
-    // postData.mutate(formData);
+    postData.mutate(formData);
 
     // const submitPost = await axios({
     //   method: 'POST',
@@ -115,27 +118,27 @@ export default function BorrowWriting() {
     //   .then((result) => console.log(result))
     //   .catch((err) => console.log(err));
 
-    const postSurvey = await axios({
-      method: 'GET',
-      url: 'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/product/',
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    })
-      .then((result) => navigate(`/read/borrow/${result.data[0]._id}`))
-      .catch((err) => console.log(err));
-    // navigate('/read/borrow');
-    console.log('postSurvey', postSurvey);
+    // const postSurvey = await axios({
+    //   method: 'GET',
+    //   url: 'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/product/',
+    //   headers: {
+    //     'Content-Type': 'multipart/form-data',
+    //   },
+    // })
+    //   .then((result) => navigate(`/read/borrow/${result.data[0]._id}`))
+    //   .catch((err) => console.log(err));
+    // // navigate('/read/borrow');
+    // console.log('postSurvey', postSurvey);
 
-    // /* key 확인하기 */
-    // for (const key of formData.keys()) {
-    //   console.log(key);
-    // }
+    /* key 확인하기 */
+    for (const key of formData.keys()) {
+      console.log(key);
+    }
 
-    // /* value 확인하기 */
-    // for (const value of formData.values()) {
-    //   console.log(value);
-    // }
+    /* value 확인하기 */
+    for (const value of formData.values()) {
+      console.log(value);
+    }
   }
 
   return (
