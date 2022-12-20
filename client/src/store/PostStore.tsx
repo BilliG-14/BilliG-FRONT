@@ -12,7 +12,7 @@ interface ReservationState {
   ) => void;
 }
 
-export const reservetionStore = create<ReservationState>((set) => ({
+export const reservationStore = create<ReservationState>((set) => ({
   reservationDate: {
     start: '',
     end: '',

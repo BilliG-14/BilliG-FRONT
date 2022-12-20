@@ -1,8 +1,9 @@
-import { useRef, useState, MouseEvent, ChangeEvent } from 'react';
+import { useRef } from 'react';
 import {
   imageUploadStore,
   tradeWayStore,
   hashTagStore,
+  reservationStore,
 } from './../store/PostStore';
 
 import HashTagSection from '../components/postWrite/HashTagWrite';
@@ -11,47 +12,22 @@ import TradeWay from '../components/postWrite/TradeWay';
 import ReservationDate from './../components/postWrite/ReservationDate';
 
 import axios from 'axios';
+import { useMutation } from 'react-query/types/react';
 
 export default function BorrowWriting() {
+  // 빌립니다 글쓰기
   // store에서 가져오는 state들
   const { hashTags } = hashTagStore();
   const { imgFiles } = imageUploadStore();
   const { tradeWay } = tradeWayStore();
-
-  // 빌립니다 글쓰기
-  const today = new Date()
-    .toLocaleDateString()
-    .replace(/\./g, '')
-    .replace(/\s/g, '-');
+  const { reservationDate } = reservationStore();
 
   // Ref
   const productNameRef = useRef<HTMLInputElement>(null);
   const priceDayRef = useRef<HTMLInputElement>(null);
   const priceTimeRef = useRef<HTMLInputElement>(null);
-  const periodRef = useRef<HTMLInputElement>(null);
   const categoryRef = useRef<HTMLSelectElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
-
-  const [reservationDate, setReservationDate] = useState({
-    start: '',
-    end: '',
-  });
-
-  function startDate(e: ChangeEvent<HTMLInputElement>) {
-    const newReservationDate = {
-      ...reservationDate,
-      start: e.currentTarget.value,
-    };
-    setReservationDate(newReservationDate);
-  }
-
-  function endDate(e: ChangeEvent<HTMLInputElement>) {
-    const newReservationDate = {
-      ...reservationDate,
-      end: e.currentTarget.value,
-    };
-    setReservationDate(newReservationDate);
-  }
 
   // 등록하기 클릭 시 event
   async function handleButtonClick(e: React.MouseEvent<HTMLButtonElement>) {
@@ -152,25 +128,6 @@ export default function BorrowWriting() {
 
           {/* 빌리는 기간 section */}
           <ReservationDate />
-          {/* <section className="mb-4 flex items-center">
-            <div className="w-[100px] p-3 text-center">예약기간</div>
-            <input
-              onChange={startDate}
-              ref={periodRef}
-              type="date"
-              min={today}
-              max="2099-12-31"
-              className="p-3 mx-2 w-60 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
-            />
-            <div>~</div>
-            <input
-              onChange={endDate}
-              type="date"
-              min={today}
-              max="2099-12-31"
-              className="p-3 mx-2 w-60 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
-            />
-          </section> */}
 
           {/* 상품 상세내용 section */}
           <section className="mb-4">

@@ -1,8 +1,8 @@
 import { ChangeEvent, useRef } from 'react';
-import { reservetionStore } from './../../store/PostStore';
+import { reservationStore } from './../../store/PostStore';
 
 export default function ReservationDate() {
-  const { reservationDate, setReservationDate } = reservetionStore();
+  const { reservationDate, setReservationDate } = reservationStore();
 
   const startRef = useRef<HTMLInputElement>(null);
   const endRef = useRef<HTMLInputElement>(null);
