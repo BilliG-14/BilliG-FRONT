@@ -1,19 +1,11 @@
-import { useRef, useState, MouseEvent, ChangeEvent } from 'react';
-import {
-  imageUploadStore,
-  tradeWayStore,
-  hashTagStore,
-} from './../store/PostStore';
-
-import HashTagSection from '../components/postWrite/HashTagWrite';
 import ImageUpload from '../components/postWrite/ImageUpload';
-import TradeWay from '../components/postWrite/TradeWay';
+import { useRef, useState } from 'react';
+import HashTagSection from '../components/postWrite/HashTagWrite';
+import PostStore from './../store/PostStore';
 
 export default function BorrowWriting() {
   // store에서 가져오는 state들
-  const { hashTags } = hashTagStore();
-  const { imgFiles } = imageUploadStore();
-  const { tradeWay } = tradeWayStore();
+  const { hashTags } = PostStore();
 
   // 빌립니다 글쓰기
   const today = new Date()
@@ -31,38 +23,37 @@ export default function BorrowWriting() {
   // 등록하기 클릭 시
   function handleButtonClick(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    // console.log(productNameRef.current?.value);
-    // console.log(priceDay.current?.value);
-    // console.log(priceTime.current?.value);
-    // console.log(period.current?.value);
-    // console.log(
-    //   category.current?.options[category.current?.selectedIndex].innerText,
-    // );
-    // console.log(hashTags);
-    // console.log(tradeWay);
-    // console.log('file', imgFiles);
-    console.log(tradeDate);
+    console.log(productNameRef.current?.value);
+    console.log(priceDay.current?.value);
+    console.log(priceTime.current?.value);
+    console.log(period.current?.value);
+    console.log(
+      category.current?.options[category.current?.selectedIndex].innerText,
+    );
+    console.log(hashTags);
+
+    console.log('file', file);
   }
 
-  const [tradeDate, setTradeDate] = useState({
-    start: '',
-    end: '',
-  });
+  // 업로드할 파일들을 담을 State!
+  const [file, setFile] = useState<FileList>();
 
-  function startDate(e: ChangeEvent<HTMLInputElement>) {
-    const newTradeDate = {
-      ...tradeDate,
-      start: e.currentTarget.value,
-    };
-    setTradeDate(newTradeDate);
-  }
+  /**
+   * 파일 선택 onChangeHandler
+   * 해당 method에서는 업로드할 파일에대해서 validaion을 하고
+   * file state에 값을 할당한다
+   */
 
-  function endDate(e: ChangeEvent<HTMLInputElement>) {
-    const newTradeDate = {
-      ...tradeDate,
-      end: e.currentTarget.value,
-    };
-    setTradeDate(newTradeDate);
+  function fileUploadHandler(e: React.ChangeEvent<HTMLInputElement>) {
+    const target = e.currentTarget;
+    const files = target.files as FileList;
+
+    if (files === undefined) {
+      return;
+    }
+
+    // validation을 정상적으로 통과한 File
+    setFile(files);
   }
 
   return (
@@ -92,9 +83,29 @@ export default function BorrowWriting() {
               placeholder="상품명"
             />
           </section>
+          {/* <ImageUpload /> */}
 
-          {/* 사진 업로드 component */}
-          <ImageUpload />
+          {/* 사진 등록 section
+          <section className="mb-4">
+            <input
+              onChange={fileUploadHandler}
+              type="file"
+              accept="image/jpeg,"
+              multiple
+              className="block w-full text-sm text-slate-500
+              file:mr-4 file:py-2 file:px-4
+              file:rounded-md file:border-0
+              file:text-sm file:font-semibold
+              cursor-pointer
+              file:bg-b-bg-gray file:text-b-text-black
+              hover:file:bg-gray-200
+              file:cursor-pointer"
+            />
+            <div>
+              사진등록시 사진 추가될 영역
+              <img alt="이미지" />
+            </div>
+          </section> */}
 
           {/* 요금 section */}
           <section className="flex items-center mb-4">
@@ -117,7 +128,6 @@ export default function BorrowWriting() {
           <section className="mb-4 flex items-center">
             <div className="w-[100px] p-3 text-center">예약기간</div>
             <input
-              onChange={startDate}
               ref={period}
               type="date"
               min={today}
@@ -126,7 +136,6 @@ export default function BorrowWriting() {
             />
             <div>~</div>
             <input
-              onChange={endDate}
               type="date"
               min={today}
               max="2099-12-31"
@@ -143,14 +152,36 @@ export default function BorrowWriting() {
           </section>
 
           {/* 거래방법 section */}
-          <TradeWay />
+          <section className="mb-4 h-10 flex items-center">
+            <span className="w-[100px] p-3 text-center">거래방법</span>
+            <input
+              type="checkbox"
+              className="mr-2 appearance-none h-4 w-4 border rounded-md border-gray-300  bg-white checked:bg-b-yellow checked:border-b-yellow focus:outline-none transition duration-100 align-top cursor-pointer"
+            />
+            <span className="mr-7">직거래</span>
+            <input
+              type="checkbox"
+              className="mr-2 appearance-none h-4 w-4 border rounded-md border-gray-300  bg-white checked:bg-b-yellow checked:border-b-yellow focus:outline-none transition duration-100 align-top cursor-pointer"
+            />
+            <span>택배거래</span>
+          </section>
 
-          {/* 해시태그 component */}
+          {/* 해시태그 section */}
+          {/* <section className="mb-4 h-10 flex items-center">
+            <span className="w-[100px] p-3 text-center">해시태그</span>
+            <div>
+              <input
+                type="text"
+                placeholder="태그를 입력해주세요"
+                className="p-3 mr-4 w-40 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
+              />
+            </div>
+            <div> 해시태그 생기는 부분 </div>
+          </section> */}
           <HashTagSection />
 
           <section className="flex flex-col justify-center items-center">
             <button
-              type="button"
               onClick={handleButtonClick}
               className="w-1/6 h-10 hover:text-white border border-b-yellow hover:bg-b-yellow focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
             >

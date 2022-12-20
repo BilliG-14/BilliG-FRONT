@@ -1,24 +1,17 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FiSearch } from 'react-icons/fi';
-import useLoginJoinStore from 'store/LoginJoinStore';
 
 function Nav() {
-  const [setSelectedJoin, setSelectedLogin] = useLoginJoinStore((state) => [
-    state.setSelectedJoin,
-    state.setSelectedLogin,
-  ]);
   const navigate = useNavigate();
   const goHome = () => {
     navigate('/');
   };
   const goLogin = () => {
-    setSelectedLogin();
     navigate('/login');
   };
   const goJoin = () => {
-    setSelectedJoin();
-    navigate('/login');
+    navigate('/join');
   };
   const goMyPage = () => {
     navigate('/mypage');

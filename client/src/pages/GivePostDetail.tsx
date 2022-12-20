@@ -1,6 +1,6 @@
-import Caution from '../components/postDetail/Caution';
+import Caution from './../components/postDetail/Caution';
 
-export default function LendPostDetail() {
+export default function GivePostDetail() {
   return (
     <div className="max-w-screen-lg mx-auto">
       <div className="w-[800px] flex flex-col justify-center mx-auto text-b-text-black">

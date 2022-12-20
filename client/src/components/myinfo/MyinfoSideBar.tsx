@@ -1,5 +1,3 @@
-import { Link } from 'react-router-dom';
-
 export default function MyInfoSideBar() {
   return (
     <div className="w-1/5 h-full p-4 bg-b-bg-gray">
@@ -9,10 +7,9 @@ export default function MyInfoSideBar() {
         </p>
         <ul className="text-center text-lg font-semibold">
           <li className="h-10 flex items-center justify-start">
-            <Link to="/mypage">개인정보확인/수정</Link>
-            {/* <a href="#!">
+            <a href="#!">
               <p className="items-center justify-center">개인정보확인/수정</p>
-            </a> */}
+            </a>
           </li>
         </ul>
       </div>
@@ -22,18 +19,16 @@ export default function MyInfoSideBar() {
         </p>
         <ul className="text-center text-lg font-semibold">
           <li className="h-10 flex items-center justify-start">
-            <Link to="/mypage/givelist">빌려주기 게시물 조회</Link>
-            {/* <a href="/mypage/givelist">
+            <a href="#!">
               <p className="items-center justify-center">
                 빌려주기 게시물 조회
               </p>
-            </a> */}
+            </a>
           </li>
           <li className="h-10 flex items-center justify-start">
-            <Link to="/mypage/borrowlist">빌리기 게시물 조회</Link>
-            {/* <a href="#!">
+            <a href="#!">
               <p className="items-center justify-center">빌리기 게시물 조회</p>
-            </a> */}
+            </a>
           </li>
         </ul>
       </div>
@@ -43,18 +38,16 @@ export default function MyInfoSideBar() {
         </p>
         <ul className="text-center text-lg font-semibold">
           <li className="h-10 flex items-center justify-start">
-            <Link to="/mypage/donegivelist">내가 빌려준 물품 조회</Link>
-            {/* <a href="#!">
+            <a href="#!">
               <p className="items-center justify-center">
                 내가 빌려준 물품 조회
               </p>
-            </a> */}
+            </a>
           </li>
           <li className="h-10 flex items-center justify-start">
-            <Link to="/mypage/doneborrowlist">내가 빌린 물품 조회</Link>
-            {/* <a href="#!">
-              <p className="items-center justify-center">내가 빌린 거래 조회</p>
-            </a> */}
+            <a href="#!">
+              <p className="items-center justify-center">내가 빌린 물품 조회</p>
+            </a>
           </li>
           <li className="h-10 flex items-center justify-start">
             <a href="#!">
