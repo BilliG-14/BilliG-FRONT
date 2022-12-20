@@ -1,6 +1,33 @@
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+
 import Caution from './../components/postDetail/Caution';
 
 export default function BorrowPostDetail() {
+  const [data, setData] = useState();
+
+  // url id 받기
+  const { id } = useParams();
+
+  // 딱 한번만.. 서버에서... get 하기...
+  useEffect(() => {
+    axios
+      .get(
+        `https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/product/${id}`,
+      )
+      .then((result) => setData(result.data[0]))
+      .catch((err) => console.log('ERR', err));
+  }, []);
+
+  // axios
+  //   .get(
+  //     `https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/product/${id}`,
+  //   )
+  //   .then((result) => setData(result.data[0]))
+  //   .catch((err) => console.log('ERR', err));
+  console.log('data', data);
+  // console.log(result.data[0])
   return (
     <div className="max-w-screen-lg mx-auto">
       <div className="w-[800px] flex flex-col justify-center mx-auto text-b-text-black">

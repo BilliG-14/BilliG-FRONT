@@ -43,7 +43,7 @@ function App() {
               <Route path="/submain" element={<Submain />} />
               <Route path="/search" element={<Search />} />
               <Route path="/read/lend" element={<LendPostDetail />} />
-              <Route path="/read/borrow" element={<BorrowPostDetail />} />
+              <Route path="/read/borrow/:id" element={<BorrowPostDetail />} />
               <Route path="/mypage" element={<MyPage />} />
               <Route path="/mypage/givelist" element={<MyGivePostListPage />} />
               <Route
