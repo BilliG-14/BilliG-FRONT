@@ -4,20 +4,25 @@ import ItemCard from './ItemCard';
 import { HiArrowRight } from 'react-icons/hi';
 type ItemListProps = {
   itemList: ItemType[];
-  category: string;
+  category: { _id: string; name: string };
   idx: number;
+  sectionRef: React.ForwardedRef<HTMLElement[]>;
 };
 
 export default function CategorySection({
   itemList,
   category,
   idx,
+  sectionRef,
 }: ItemListProps) {
+  console.log(sectionRef);
   return (
     <section className={`${bg[idx]} max-w-screen-lg mt-4 p-9 m-auto`}>
       <div>
         <header className="flex justify-between px-12">
-          <h2 className="text-white text-4xl font-extrabold">{category}</h2>
+          <h2 className="text-white text-4xl font-extrabold">
+            {category.name}
+          </h2>
           <a
             href="#"
             className="flex justify-center items-center text-white text-lg font-extrabold hover:scale-125 ease-out duration-300"
