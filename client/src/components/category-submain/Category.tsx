@@ -1,10 +1,11 @@
 import CategoryNav from './CategoryNav';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import CategorySection from './CategorySection';
 import ItemCard from './ItemCard';
 import { HiArrowRight } from 'react-icons/hi';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import './category.css';
 
 export type ItemType = {
   id: number;
@@ -17,6 +18,28 @@ export type ItemType = {
 };
 
 export default function Category() {
+  const [scrollEvent, setScrollEvent] = useState(false);
+  const navRef = useRef<HTMLElement | null>(null);
+  const sectionRef = useRef<HTMLElement[] | null[]>([]);
+  const handleScroll = () => {
+    if (window.scrollY > 600) {
+      setScrollEvent(true);
+      navRef.current?.classList.add('nav');
+      navRef.current?.classList.remove('border-b-2');
+    } else {
+      setScrollEvent(false);
+      navRef.current?.classList.add('border-b-2');
+      navRef.current?.classList.remove('nav');
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   const { isLoading, data: categories } = useQuery(
     ['categories'],
     async () => {
@@ -27,13 +50,6 @@ export default function Category() {
     },
     { refetchOnWindowFocus: false, staleTime: 60 * 1000 * 60 },
   );
-
-  const sectionRef = useRef<HTMLElement[] | null[]>([]);
-
-  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    // console.log(e);
-    // sectionRef.current[idx];
-  };
 
   const [itemList, setItemList] = useState<ItemType[]>([
     {
@@ -75,11 +91,12 @@ export default function Category() {
   ]);
 
   if (isLoading) return <p>Loading..</p>;
-  console.log(sectionRef);
-  console.log(sectionRef.current[0]);
   return (
-    <div className="">
-      <nav className="flex max-w-screen-lg h-16 border-b-2 border-solid border-gray-500 m-auto">
+    <div className="relative">
+      <nav
+        className="flex max-w-screen-lg h-16 border-b-2 border-solid border-gray-500 m-auto"
+        ref={navRef}
+      >
         <ul className="flex space-x-10 text-center items-center m-auto text-xl font-extrabold">
           {/* category nav */}
           {categories?.data.map(
@@ -92,7 +109,6 @@ export default function Category() {
                   <p
                     className="cursor-pointer"
                     onClick={() => {
-                      console.log(sectionRef.current[idx]);
                       sectionRef.current[idx]?.scrollIntoView({
                         behavior: 'smooth',
                         block: 'center',
