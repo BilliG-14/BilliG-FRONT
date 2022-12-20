@@ -1,5 +1,28 @@
 import create from 'zustand';
 
+// 예약일 store
+interface ReservationState {
+  reservationDate: {
+    start: string | undefined;
+    end: string | undefined;
+  };
+  setReservationDate: (
+    start: string | undefined,
+    end: string | undefined,
+  ) => void;
+}
+
+export const reservetionStore = create<ReservationState>((set) => ({
+  reservationDate: {
+    start: '',
+    end: '',
+  },
+  setReservationDate: (start, end) =>
+    set((state) => ({
+      reservationDate: { ...state.reservationDate, start, end },
+    })),
+}));
+
 // 사진 업로드 store
 interface ImageUploadState {
   imgFiles: File[];

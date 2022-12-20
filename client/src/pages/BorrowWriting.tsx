@@ -8,6 +8,8 @@ import {
 import HashTagSection from '../components/postWrite/HashTagWrite';
 import ImageUpload from '../components/postWrite/ImageUpload';
 import TradeWay from '../components/postWrite/TradeWay';
+import ReservationDate from './../components/postWrite/ReservationDate';
+
 import axios from 'axios';
 
 export default function BorrowWriting() {
@@ -149,7 +151,8 @@ export default function BorrowWriting() {
           </section>
 
           {/* 빌리는 기간 section */}
-          <section className="mb-4 flex items-center">
+          <ReservationDate />
+          {/* <section className="mb-4 flex items-center">
             <div className="w-[100px] p-3 text-center">예약기간</div>
             <input
               onChange={startDate}
@@ -167,7 +170,7 @@ export default function BorrowWriting() {
               max="2099-12-31"
               className="p-3 mx-2 w-60 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
             />
-          </section>
+          </section> */}
 
           {/* 상품 상세내용 section */}
           <section className="mb-4">
