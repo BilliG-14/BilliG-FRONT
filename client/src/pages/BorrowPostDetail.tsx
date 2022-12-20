@@ -1,33 +1,46 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { useQuery } from 'react-query';
 
 import Caution from './../components/postDetail/Caution';
 
 export default function BorrowPostDetail() {
-  const [data, setData] = useState();
+  const [borrowData, setBorrowData] = useState();
 
   // url id 받기
   const { id } = useParams();
 
-  // 딱 한번만.. 서버에서... get 하기...
-  useEffect(() => {
-    axios
-      .get(
+  const { data } = useQuery(
+    'borrowPostData',
+    () =>
+      axios.get(
         `https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/product/${id}`,
-      )
-      .then((result) => setData(result.data[0]))
-      .catch((err) => console.log('ERR', err));
-  }, []);
+      ),
+    {
+      onSuccess: () => console.log('성공'),
+      onError: () => console.log('error'),
+    },
+  );
 
+  // useQuery에서 받아오는 데이터가 있다면 해주기. data가 변할 때만!
+  useEffect(() => {
+    if (data) {
+      setBorrowData(data?.data[0]);
+    }
+  }, [data]);
+
+  console.log('borrowData', borrowData);
+
+  // borrowData(borrowPostData.data.data);
   // axios
   //   .get(
   //     `https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/product/${id}`,
   //   )
   //   .then((result) => setData(result.data[0]))
   //   .catch((err) => console.log('ERR', err));
-  console.log('data', data);
-  // console.log(result.data[0])
+
+  // console.log('data', data);
   return (
     <div className="max-w-screen-lg mx-auto">
       <div className="w-[800px] flex flex-col justify-center mx-auto text-b-text-black">
@@ -56,7 +69,7 @@ export default function BorrowPostDetail() {
           {/* 상품 기본정보 */}
           <div className="flex flex-col justify-between w-[350px] h-[410px] pt-3 mr-4">
             <div className="text-right">
-              <div className="text-3xl">갤럭시 S2 공기계</div>
+              <div className="text-3xl">{borrowData?.title}</div>
               <div className="text-sm mt-1">해시태그</div>
             </div>
 
