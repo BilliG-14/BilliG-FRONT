@@ -24,7 +24,7 @@ function StepImageDiv() {
 
 export default function MainStepSection() {
   return (
-    <section className="max-w-screen-lg h-screen text-center mb-24">
+    <section className="max-w-screen-lg text-center mb-16">
       <div className="text-4xl my-24">
         <span className=" text-amber-500 font-extrabold">빌리지</span>로 물품
         대여 시간과 비용을 절약하세요!{' '}

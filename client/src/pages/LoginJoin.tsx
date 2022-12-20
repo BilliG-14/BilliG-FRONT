@@ -1,4 +1,5 @@
-import { JoinForm, LoginForm } from 'components/login-join/Form';
+import { JoinForm } from 'components/login-join/JoinForm';
+import { LoginForm } from 'components/login-join/LoginForm';
 import { MouseEvent } from 'react';
 import useLoginJoinStore from 'store/LoginJoinStore';
 

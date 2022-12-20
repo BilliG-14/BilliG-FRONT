@@ -1,15 +1,12 @@
 import Nav from '../components/nav/Nav';
 import MyInfoHeader from 'components/myinfo/MyInfoHeader';
 import MyInfoSideBar from '../components/myinfo/MyinfoSideBar';
-import { useMyIntroEditStore } from '../store/MypageStore';
+import { useMyinfoEditStore } from '../store/MypageStore';
 import MyinfoPage from 'components/myinfo/MyinfoPage';
 import EditMyinfoPage from '../components/myinfo/EditMyinfoPage';
-import MyGivePostList from '../components/myinfo/MyGivePostList';
-import MyBorrowPostList from 'components/myinfo/MyBorrowPostList';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 export default function MyPage() {
-  const { isMyinfo } = useMyIntroEditStore();
+  const { isMyinfo } = useMyinfoEditStore();
 
   return (
     <div className="h-full w-screen max-w-screen-lg m-auto">
