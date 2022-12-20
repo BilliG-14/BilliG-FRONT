@@ -90,55 +90,6 @@ export default function BorrowWriting() {
 
     // 서버에 데이터 저장
     postData.mutate(formData);
-
-    // const submitPost = await axios({
-    //   method: 'POST',
-    //   url: ``,
-    //   headers: {
-    //     'Content-Type': 'multipart/form-data',
-    //   },
-    //   data: formData,
-    // });
-    // console.log(submitPost);
-    // axios
-    //   .post(
-    //     'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/product',
-    //     formData,
-    //   )
-    //   .then((result) => console.log(result))
-    //   .catch((err) => console.log(err));
-
-    // const postSurvey = await axios({
-    //   method: 'POST',
-    //   url: 'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/product/',
-    //   headers: {
-    //     'Content-Type': 'multipart/form-data',
-    //   },
-    // })
-    //   .then((result) => console.log(result))
-    //   .catch((err) => console.log(err));
-
-    // const postSurvey = await axios({
-    //   method: 'GET',
-    //   url: 'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/product/',
-    //   headers: {
-    //     'Content-Type': 'multipart/form-data',
-    //   },
-    // })
-    //   .then((result) => navigate(`/read/borrow/${result.data[0]._id}`))
-    //   .catch((err) => console.log(err));
-    // // navigate('/read/borrow');
-    // console.log('postSurvey', postSurvey);
-
-    /* key 확인하기 */
-    for (const key of formData.keys()) {
-      console.log(key);
-    }
-
-    /* value 확인하기 */
-    for (const value of formData.values()) {
-      console.log(value);
-    }
   }
 
   return (
