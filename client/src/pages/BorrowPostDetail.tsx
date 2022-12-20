@@ -69,7 +69,7 @@ export default function BorrowPostDetail() {
           {/* 상품 기본정보 */}
           <div className="flex flex-col justify-between w-[350px] h-[410px] pt-3 mr-4">
             <div className="text-right">
-              <div className="text-3xl">{borrowData?.title}</div>
+              <div className="text-3xl">갤럭시 S2 공기계</div>
               <div className="text-sm mt-1">해시태그</div>
             </div>
 
