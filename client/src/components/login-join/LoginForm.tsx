@@ -1,29 +1,32 @@
 import axios from 'axios';
 import { FormEvent, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export function LoginForm() {
+  const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement[] | null[]>([]);
   const inputClassName =
     'block w-full h-10 text-xl border-b-yellow border-solid border-2 rounded-xl px-4 text-yellow-900 font-bold focus:outline-none focus:ring-2 focus:ring-amber-500 mb-7';
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const login = {
       email: inputRef.current[0]?.value,
       password: inputRef.current[1]?.value,
     };
-    axios
-      .post(
+    try {
+      const result = await axios.post(
         'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/login',
         JSON.stringify(login),
-        {
-          headers: { 'Content-Type': `application/json` },
-        },
-      )
-      .then((response) => {
-        console.log(response);
-        alert('로그인 성공');
-      })
-      .catch((error) => alert(error));
+        { headers: { 'Content-Type': `application/json` } },
+      );
+      const token = result.data.token;
+      localStorage.setItem('token', token);
+      alert('로그인에 성공하였습니다.');
+      navigate('/submain');
+    } catch (error) {
+      console.error(error);
+      alert(error);
+    }
   };
   return (
     <form
