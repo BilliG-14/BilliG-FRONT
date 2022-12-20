@@ -2,9 +2,13 @@ import { imageUploadStore } from './../../store/PostStore';
 import { useState } from 'react';
 import { AiFillCamera, AiFillCloseCircle } from 'react-icons/ai';
 
+type PreviewImg = {
+  pictureName: string;
+  URL: string;
+};
 export default function ImageUpload() {
   const { imgFiles, setImgFile } = imageUploadStore();
-  const [priviewImages, setPriviewFileImages] = useState<string[]>([]);
+  const [priviewImages, setPriviewFileImages] = useState<PreviewImg[]>([]);
 
   // 이미지 갯수 제한(가장 우선), 이미지 크기 제한 구현해야 함
   // 게시글을 볼 때 메인 이미지를 어떻게 정할것인지?
@@ -20,7 +24,18 @@ export default function ImageUpload() {
       return;
     } else {
       for (let i = 0; i < files.length; i++) {
-        setPriviewFileImages((cur) => [...cur, URL.createObjectURL(files[i])]);
+        // const newPriviewFileImages = [
+        //   ...priviewImages,
+        // {
+        //   pictureName: files[i].name,
+        //   URL: URL.createObjectURL(files[i]),
+        // },
+        // ];
+        // console.log('newPriviewFileImages', newPriviewFileImages);
+        setPriviewFileImages((state) => [
+          ...state,
+          { pictureName: files[i].name, URL: URL.createObjectURL(files[i]) },
+        ]);
       }
 
       setImgFile(files);
@@ -29,11 +44,19 @@ export default function ImageUpload() {
 
   // 미리보기 이미지 클릭 시 해당 이미지 삭제
   function deleteImagehandler(e: React.MouseEvent<HTMLDivElement>) {
-    const previewId = Number(e.currentTarget.id);
-    const newFiles = imgFiles.filter((imgfile, idx) => idx !== previewId);
-    const newPreviewFiles = priviewImages.filter(
-      (imgfile, idx) => idx !== previewId,
+    const previewImgId = e.currentTarget.id;
+    const newFiles = imgFiles.filter(
+      (imgfile) => imgfile.name !== previewImgId,
     );
+    const newPreviewFiles = priviewImages.filter(
+      (imgfile) => imgfile.pictureName !== previewImgId,
+    );
+
+    // const previewId = Number(e.currentTarget.id);
+    // const newFiles = imgFiles.filter((imgfile, idx) => idx !== previewId);
+    // const newPreviewFiles = priviewImages.filter(
+    //   (imgfile, idx) => idx !== previewId,
+    // );
 
     setImgFile(newFiles);
     setPriviewFileImages(newPreviewFiles);
@@ -48,7 +71,7 @@ export default function ImageUpload() {
         className="inline-block w-[70px] h-[70px] mr-5 text-center text-xs border-solid border border-gray-300 hover:border-gray-400 cursor-pointer rounded-lg"
       >
         <AiFillCamera className="w-6 h-6 mx-auto mt-3.5 mb-[2px]" />
-        <div className="text-gray-400">{priviewImages.length} / 3</div>
+        <div className="text-gray-400">{imgFiles.length} / 3</div>
       </label>
       <input
         onChange={imagePreview}
@@ -64,14 +87,14 @@ export default function ImageUpload() {
           return (
             <>
               <img
-                id={idx.toString()}
-                key={fileUrl}
+                key={fileUrl.URL}
                 alt="이미지"
-                src={fileUrl}
+                src={fileUrl.URL}
                 className="w-[70px] h-[70px] border-solid border border-gray-300 rounded-lg"
               />
               <div
-                key={idx + 1}
+                id={fileUrl.pictureName}
+                key={fileUrl.pictureName}
                 onClick={deleteImagehandler}
                 className="relative w-5 h-5 bg-b-text-black rounded-full right-3 text-white text-center text-sm cursor-pointer"
               >
