@@ -20,19 +20,23 @@ interface JoinFormState {
   setPostalCode: (value: string) => void;
   setAddress1: (value: string) => void;
   setAddress2: (value: string) => void;
+  initialize: () => void;
 }
+const initialState = {
+  name: '',
+  nickName: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+  phoneNumber: '',
+  postalCode: '',
+  address1: '',
+  address2: '',
+};
 const useJoinFormStore = create<JoinFormState>()(
   devtools(
     persist((set) => ({
-      name: '',
-      nickName: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-      phoneNumber: '',
-      postalCode: '',
-      address1: '',
-      address2: '',
+      ...initialState,
       setName: (value) => set({ name: value }),
       setNickName: (value) => set({ nickName: value }),
       setEmail: (value) => set({ email: value }),
@@ -42,6 +46,7 @@ const useJoinFormStore = create<JoinFormState>()(
       setPostalCode: (value) => set({ postalCode: value }),
       setAddress1: (value) => set({ address1: value }),
       setAddress2: (value) => set({ address2: value }),
+      initialize: () => set(initialState),
     })),
   ),
 );

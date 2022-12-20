@@ -19,7 +19,7 @@ export function JoinForm() {
   const labelClassName =
     'block text-b-yellow font-bold text-lg w-full my-auto text-left mt-1 ';
   const inputClassName =
-    'block w-full h-10 text-xl border-b-yellow border-solid border-2 rounded-xl px-4 text-yellow-900 font-bold focus:outline-none focus:border-4';
+    'block w-full h-10 text-xl border-b-yellow border-solid border-2 rounded-xl px-4 text-yellow-900 font-bold focus:outline-none focus:border-4 mb-1';
   const confirmRef = useRef<HTMLParagraphElement>(null);
   return (
     <form className={formClassName} action="" method="POST">
@@ -93,7 +93,7 @@ export function JoinForm() {
         ></input>
         <p
           ref={confirmRef}
-          className="hidden text-red-400 text-right w-full mt-1 font-medium"
+          className="hidden text-red-400 text-left w-full mt-1 font-medium"
         >
           비밀번호가 같지 않습니다.
         </p>
@@ -139,7 +139,6 @@ function JoinButton() {
       address1: joinFormState.address1,
       address2: joinFormState.address2,
     };
-    console.log(join);
     axios
       .post(
         'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/register',
@@ -148,10 +147,14 @@ function JoinButton() {
           headers: { 'Content-Type': `application/json` },
         },
       )
-      .then((response) => console.log(response.data));
+      .then((response) => {
+        alert('회원가입 성공');
+        joinFormState.initialize();
+      })
+      .catch((error) => alert(error));
   };
   return (
-    <div className="w-full mb-5 flex justify-center">
+    <div className="w-full mt-4 h-32 flex justify-center">
       <button
         className="bg-b-yellow text-b-chat-text w-48 h-12 rounded-3xl text-xl font-bold
       transition-all hover:text-white hover:font-extrabold hover:bg-gradient-to-r from-[#e65c00] to-b-yellow"

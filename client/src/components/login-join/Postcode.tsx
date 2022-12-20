@@ -3,6 +3,11 @@ import { useDaumPostcodePopup, Address } from 'react-daum-postcode';
 import useJoinFormStore from 'store/JoinFormStore';
 
 export default function Postcode() {
+  const labelClassName =
+    'block text-b-yellow font-bold text-lg w-full my-auto text-left mt-1 ';
+  const inputClassName =
+    'block w-full h-10 text-xl border-b-yellow border-solid border-2 rounded-xl px-4 text-yellow-900 font-bold focus:outline-none focus:border-4 mb-2';
+
   const joinFormState = useJoinFormStore();
   const open = useDaumPostcodePopup();
   const [address, setAddress] = useState({
@@ -42,30 +47,24 @@ export default function Postcode() {
       >
         주소 검색
       </button>
-      <label
-        htmlFor="postalCode"
-        className="block text-b-yellow font-bold text-lg w-full my-auto text-left"
-      >
+      <label htmlFor="postalCode" className={labelClassName}>
         우편번호
       </label>
       <input
         id="postalCode"
         name="postalCode"
-        className="block w-full h-10 text-xl border-b-yellow border-solid border-2 rounded-xl px-4 text-yellow-900 font-bold bg-gray-300 focus:outline-none"
+        className={inputClassName}
         readOnly
         value={address.postCode}
       />
 
-      <label
-        htmlFor="address1"
-        className="block text-b-yellow font-bold text-lg w-full my-auto text-left"
-      >
+      <label htmlFor="address1" className={labelClassName}>
         주소
       </label>
       <input
         id="address1"
         name="address1"
-        className="block w-full h-10 text-xl border-b-yellow border-solid border-2 rounded-xl px-4 text-yellow-900 font-bold bg-gray-300 focus:outline-none"
+        className={inputClassName}
         readOnly
         value={address.address1}
       />
