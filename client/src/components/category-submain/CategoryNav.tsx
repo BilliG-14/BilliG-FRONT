@@ -1,14 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import axios from 'axios';
-import { useEffect } from 'react';
 
 export default function CategoryNav() {
-  const {
-    isLoading,
-    error,
-    data: categories,
-  } = useQuery(
+  const { isLoading, data: categories } = useQuery(
     ['categories'],
     async () => {
       console.log('fetching...');
