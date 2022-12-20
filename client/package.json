@@ -2,6 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
+  "proxy": "https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/",
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
@@ -16,6 +17,7 @@
     "@types/react-dom": "^18.0.0",
     "@types/react-router-dom": "^5.3.3",
     "@types/styled-components": "^5.1.26",
+    "axios": "^1.2.1",
     "daisyui": "^2.43.2",
     "postcss-loader": "^7.0.2",
     "react": "^18.2.0",

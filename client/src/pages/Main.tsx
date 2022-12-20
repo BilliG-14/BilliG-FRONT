@@ -3,6 +3,7 @@ import MainSecondSection from 'components/main/MainSecondSection';
 import MainStepSection from 'components/main/MainStepSection';
 import MainButton from 'components/main/MainButton';
 import ScrollTopButton from 'components/ScrollTopButton';
+import Nav from 'components/nav/Nav';
 
 export default function Main() {
   return (
