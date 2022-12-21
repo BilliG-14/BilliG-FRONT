@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from 'react-query';
-
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import Main from 'pages/Main';
 import LoginJoin from './pages/LoginJoin';
 import AdminMain from './pages/AdminMain';
@@ -27,9 +27,9 @@ const queryClient = new QueryClient();
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <React.Fragment>
-        <GlobalStyle />
+    <React.Fragment>
+      <GlobalStyle />
+      <QueryClientProvider client={queryClient}>
         <div className="App h-screen w-screen">
           <BrowserRouter>
             {/* ScrollToTop : navigate했을 때, 스크롤 위치가 그대로 적용되는 문제 방지*/}
@@ -58,8 +58,9 @@ function App() {
             </Routes>
           </BrowserRouter>
         </div>
-      </React.Fragment>
-    </QueryClientProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </React.Fragment>
   );
 }
 
