@@ -1,0 +1,12 @@
+.nav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 15px;
+  width: 100vw;
+  background-color: black;
+  color: white;
+  display: flex;
+  align-items: center;
+  border: transparent;
+}

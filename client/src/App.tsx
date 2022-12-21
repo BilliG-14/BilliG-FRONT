@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import Main from 'pages/Main';
 import LoginJoin from './pages/LoginJoin';
 import AdminMain from './pages/AdminMain';
@@ -26,8 +27,8 @@ const queryClient = new QueryClient();
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <React.Fragment>
+    <React.Fragment>
+      <QueryClientProvider client={queryClient}>
         <GlobalStyle />
         <div className="App h-screen w-screen">
           <BrowserRouter>
@@ -42,7 +43,7 @@ function App() {
               <Route path="/submain" element={<Submain />} />
               <Route path="/search" element={<Search />} />
               <Route path="/read/lend" element={<LendPostDetail />} />
-              <Route path="/read/borrow" element={<BorrowPostDetail />} />
+              <Route path="/read/borrow/:id" element={<BorrowPostDetail />} />
               <Route path="/mypage" element={<MyPage />} />
               <Route path="/mypage/givelist" element={<MyGivePostListPage />} />
               <Route
@@ -57,8 +58,9 @@ function App() {
             </Routes>
           </BrowserRouter>
         </div>
-      </React.Fragment>
-    </QueryClientProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </React.Fragment>
   );
 }
 
