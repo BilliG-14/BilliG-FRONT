@@ -1,15 +1,53 @@
+import { useState } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+
+import Nav from '../components/nav/Nav';
+import Footer from '../components/footer/Footer';
 import Caution from './../components/postDetail/Caution';
+import { PostDataType } from '../store/PostReadStore';
+// import TradeWayTag from '../components/tag/TradeWayTag';
+import { FaPeopleArrows } from 'react-icons/fa';
+import { GoPackage } from 'react-icons/go';
 
 export default function BorrowPostDetail() {
+  // 서버에서 get 하는 data state
+  const [borrowData, setBorrowData] = useState<PostDataType>();
+
+  // url id 받기
+  const { id } = useParams();
+
+  useQuery(
+    ['borrowPostData'],
+    () =>
+      axios.get(
+        `https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/product/${id}`,
+      ),
+    {
+      refetchOnWindowFocus: false,
+      staleTime: 60 * 1000 * 60, // 1시간
+      onSuccess: (res) => setBorrowData(res?.data[0]),
+      onError: () => console.log('error'),
+    },
+  );
+
+  // 서브 사진 클릭하면 메인으로 올리기
+  const [mainImgUrl, setMainImgUrl] = useState('');
+
+  function changeMainImg(e: React.MouseEvent<HTMLImageElement>) {
+    setMainImgUrl(e.currentTarget.src);
+  }
+
   return (
     <div className="max-w-screen-lg mx-auto">
       <div className="w-[800px] flex flex-col justify-center mx-auto text-b-text-black">
-        <div className="h-80">header</div>
+        <Nav />
         <div className="mb-6 text-3xl">빌리기</div>
         {/* 상단 정보(카테고리, 작성일) */}
         <section className="max-w-screen-lg flex justify-between mb-4">
           <div className="text-sm text-b-text-darkgray ml-4">
-            빌리기 {'>'} 생활용품
+            빌리기 {'>'} {borrowData?.category.name}
           </div>
           <div className="text-xs text-b-text-darkgray mr-4">
             (작성일) 2022.12.16
@@ -20,17 +58,39 @@ export default function BorrowPostDetail() {
         <section className="flex justify-between mb-4">
           <div>
             <img
-              src="#"
-              className="w-[410px] h-[410px] border border-solid border-gray-300 rounded-lg"
-              alt="원하는 제품 사진"
+              src={mainImgUrl === '' ? borrowData?.imgUrl[0] : mainImgUrl}
+              className="w-[380px] h-[380px]"
+              alt="메인 사진"
             />
+            <div className="flex justify-center gap-1">
+              {borrowData?.imgUrl.map((url, idx) => (
+                <img
+                  onMouseOver={changeMainImg}
+                  key={idx}
+                  src={url}
+                  className="w-16 h-16 mt-2 border border-solid border-gray-300"
+                  alt="원하는 제품 사진"
+                />
+              ))}
+            </div>
           </div>
 
           {/* 상품 기본정보 */}
           <div className="flex flex-col justify-between w-[350px] h-[410px] pt-3 mr-4">
             <div className="text-right">
-              <div className="text-3xl">갤럭시 S2 공기계</div>
-              <div className="text-sm mt-1">해시태그</div>
+              <div className="text-3xl">{borrowData?.title}</div>
+              <div className="flex justify-end">
+                {borrowData?.hashtag.map((tag, idx) => {
+                  return (
+                    <div
+                      key={idx}
+                      className="text-[10px] mt-2 mr-1 p-1.5 bg-gray-200 rounded-lg"
+                    >
+                      {tag}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
 
             <div className="text-right">
@@ -39,18 +99,61 @@ export default function BorrowPostDetail() {
                   요금
                 </div>
                 <div>
-                  <div className="mb-2">1,000원/시간</div>
-                  <div>5,000원/일</div>
+                  <div className="mb-2">
+                    {borrowData?.price.priceTime}원/시간
+                  </div>
+                  <div>{borrowData?.price.priceDay}/일</div>
                 </div>
               </div>
               <hr className="hr-1 my-4"></hr>
               <div className="flex justify-between mb-2">
-                <div className="text-sm text-b-text-darkgray w-24 mb-2 text-left">
-                  원하는 대여시간
+                <div className="text-sm text-b-text-darkgray w-24 mb-2 text-left my-auto">
+                  대여시간
                 </div>
-
                 <div>
-                  <div>2022-12-20 ~ 2022-12-30</div>
+                  <div>
+                    {borrowData?.period?.start} ~ {borrowData?.period?.end}
+                  </div>
+                </div>
+              </div>
+
+              {/* 대여방법 */}
+              <div className="flex justify-between mb-2">
+                <div className="text-sm text-b-text-darkgray w-24 mb-2 text-left my-auto">
+                  대여방법
+                </div>
+                <div>
+                  {/* <TradeWayTag tradeWay={borrowData?.tradeWay} /> */}
+                  <div
+                    className={`${
+                      borrowData?.tradeWay.direct ? 'bg-b-tag-dir' : ''
+                    } item_tag inline-flex text-b-hash-text p-[5px] rounded-lg font-extrabold my-auto mr-2`}
+                  >
+                    {borrowData?.tradeWay.direct ? (
+                      <FaPeopleArrows className="mr-1 text-sm" />
+                    ) : (
+                      ''
+                    )}
+
+                    <span className="text-xs">
+                      {borrowData?.tradeWay.direct ? '직거래' : ''}
+                    </span>
+                  </div>
+                  <div
+                    className={`${
+                      borrowData?.tradeWay.delivery ? 'bg-b-tag-pack' : ''
+                    } item_tag inline-flex text-b-hash-text p-[5px] rounded-lg font-extrabold my-auto`}
+                  >
+                    {borrowData?.tradeWay.delivery ? (
+                      <GoPackage className="mr-1 text-sm" />
+                    ) : (
+                      ''
+                    )}
+
+                    <span className="text-xs">
+                      {borrowData?.tradeWay.delivery ? '택배거래' : ''}
+                    </span>
+                  </div>
                 </div>
               </div>
 
@@ -60,16 +163,16 @@ export default function BorrowPostDetail() {
                   <div className="flex items-center">
                     <img
                       className="h-8 w-8 mr-2 rounded-full"
-                      src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1361&q=80"
+                      src={borrowData?.lender.image}
                       alt="사용자 이미지"
                     />
 
                     <div className="flex-1 min-w-0">
                       <p className="text-[12px] font-medium text-gray-900 mb-1">
-                        닉네임
+                        {borrowData?.lender.nickName}
                       </p>
                       <p className="text-[8px] font-medium text-gray-400 ">
-                        서울시 엘리스구
+                        {borrowData?.lender.address1}
                       </p>
                     </div>
                   </div>
@@ -89,7 +192,7 @@ export default function BorrowPostDetail() {
         <section>
           <div>상세정보</div>
           <div className="w-full h-40 mt-3 p-3 rounded-lg">
-            갤럭시 S2 공기계 빌리고 싶어요.....
+            {borrowData?.description}
           </div>
           <br />
           <br />
@@ -116,6 +219,7 @@ export default function BorrowPostDetail() {
             </button>
           </div>
         </section>
+        <Footer />
       </div>
     </div>
   );
