@@ -32,6 +32,24 @@ export default function LendWriting() {
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
 
   const navigate = useNavigate();
+  // 사용자 가져오기 : 임시 사용자 지우
+  // useQuery(
+  //   'userData',
+  //   () =>
+  //     axios.get(
+  //       'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/user/63a009de47318b0a880801c4',
+  //     ),
+  //   // 로그인된 상태에서 유저 고유 아이디를 받아온다면 아래 axios로 get 해올 예정
+  //   //       axios.get(
+  //   //   `https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/user/${id}`,
+  //   // ),
+  //   {
+  //     refetchOnWindowFocus: false,
+  //     staleTime: 60 * 1000 * 60, // 1시간
+  //     onSuccess: (res) => console.log(res),
+  //     onError: (err) => console.log(err),
+  //   },
+  // );
 
   type CategoryType = {
     _id: string;

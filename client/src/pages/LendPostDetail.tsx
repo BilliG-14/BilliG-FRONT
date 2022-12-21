@@ -150,16 +150,16 @@ export default function LendPostDetail() {
                   <div className="flex items-center">
                     <img
                       className="h-8 w-8 mr-2 rounded-full"
-                      src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1361&q=80"
+                      src={lendData?.lender.image}
                       alt="사용자 이미지"
                     />
 
                     <div className="flex-1 min-w-0">
                       <p className="text-[12px] font-medium text-gray-900 mb-1">
-                        닉네임
+                        {lendData?.lender.nickName}
                       </p>
                       <p className="text-[8px] font-medium text-gray-400 ">
-                        서울시 엘리스구
+                        {lendData?.lender.address1}
                       </p>
                     </div>
                   </div>
@@ -179,7 +179,7 @@ export default function LendPostDetail() {
         <section>
           <div>상세정보</div>
           <div className="w-full h-40 mt-3 p-3 rounded-lg">
-            갤럭시 제트제트제트 플립플립플립입니다.
+            {lendData?.description}
           </div>
           <br />
           <br />
