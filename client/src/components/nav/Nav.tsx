@@ -10,9 +10,6 @@ function Nav() {
     state.setSelectedLogin,
   ]);
   const navigate = useNavigate();
-  const goHome = () => {
-    navigate('/');
-  };
   const goLogin = () => {
     setSelectedLogin();
     navigate('/login');

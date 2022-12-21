@@ -66,6 +66,7 @@ export default function BorrowWriting() {
         'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/category',
       ),
     {
+      refetchOnMount: 'always',
       refetchOnWindowFocus: false,
       staleTime: 60 * 1000 * 60, // 1시간
       onSuccess: (res) => setCategorys(res.data),
@@ -73,6 +74,7 @@ export default function BorrowWriting() {
     },
   );
 
+  // 사용자가 선택한 카테고리만 필터
   const fileredCategory = categorys.filter(
     (category) =>
       category.name ===
@@ -93,12 +95,9 @@ export default function BorrowWriting() {
       }),
     {
       onSuccess: (data) => {
-        // 요청이 성공한 경우
         navigate(`/read/borrow/${data.data._id}`);
-        // console.log(data);
       },
       onError: (error) => {
-        // 요청에 에러가 발생된 경우
         console.log(error);
       },
     },
@@ -148,7 +147,6 @@ export default function BorrowWriting() {
     },
     stateOfTransaction: 0,
     address: '광주시 강남구 강남동 101',
-    // imgFiles,
     price: {
       priceDay: Number(priceDayRef.current?.value),
       priceTime: Number(priceTimeRef.current?.value),

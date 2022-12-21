@@ -51,6 +51,7 @@ export default function LendWriting() {
   //   },
   // );
 
+  // 카테고리 가져오기
   type CategoryType = {
     _id: string;
     name: string;
@@ -65,6 +66,7 @@ export default function LendWriting() {
         'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/category',
       ),
     {
+      refetchOnMount: 'always',
       refetchOnWindowFocus: false,
       staleTime: 60 * 1000 * 60, // 1시간
       onSuccess: (res) => setCategorys(res.data),
@@ -72,6 +74,7 @@ export default function LendWriting() {
     },
   );
 
+  // 사용자가 선택한 카테고리만 필터
   const fileredCategory = categorys.filter(
     (category) =>
       category.name ===
@@ -92,12 +95,9 @@ export default function LendWriting() {
       }),
     {
       onSuccess: (data) => {
-        // 요청이 성공한 경우
         navigate(`/read/lend/${data.data._id}`);
-        // console.log(data);
       },
       onError: (error) => {
-        // 요청에 에러가 발생된 경우
         console.log(error);
       },
     },
@@ -152,12 +152,12 @@ export default function LendWriting() {
       priceDay: Number(priceDayRef.current?.value),
       priceTime: Number(priceTimeRef.current?.value),
     },
-    period: {
-      start: '시작날 필수?',
-      end: '시작날 필수?',
-    },
     tradeWay: tradeWay,
     hashtag: hashTags,
+    period: {
+      start: '서버 반영아 ~ 되거라~ ',
+      end: '서버 반영아 ~ 되거라~ ',
+    },
   };
   formData.append('data', JSON.stringify(writeData));
 
