@@ -31,24 +31,24 @@ export default function BorrowWriting() {
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
 
   const navigate = useNavigate();
-  // 사용자 가져오기
-  useQuery(
-    'borrowPostData',
-    () =>
-      axios.get(
-        'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/user',
-      ),
-    // 로그인된 상태에서 유저 고유 아이디를 받아온다면 아래 axios로 get 해올 예정
-    //       axios.get(
-    //   `https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/user/${id}`,
-    // ),
-    {
-      refetchOnWindowFocus: false,
-      staleTime: 60 * 1000 * 60, // 1시간
-      onSuccess: (res) => console.log(res),
-      onError: (err) => console.log(err),
-    },
-  );
+  // 사용자 가져오기 : 임시 사용자 지우
+  // useQuery(
+  //   'userData',
+  //   () =>
+  //     axios.get(
+  //       'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/user/63a009de47318b0a880801c4',
+  //     ),
+  //   // 로그인된 상태에서 유저 고유 아이디를 받아온다면 아래 axios로 get 해올 예정
+  //   //       axios.get(
+  //   //   `https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/user/${id}`,
+  //   // ),
+  //   {
+  //     refetchOnWindowFocus: false,
+  //     staleTime: 60 * 1000 * 60, // 1시간
+  //     onSuccess: (res) => console.log(res),
+  //     onError: (err) => console.log(err),
+  //   },
+  // );
 
   // 카테고리 가져오기
   type CategoryType = {
@@ -59,7 +59,7 @@ export default function BorrowWriting() {
 
   const [categorys, setCategorys] = useState<CategoryType[]>([]);
   useQuery(
-    'borrowPostData',
+    'category',
     () =>
       axios.get(
         'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/category',
@@ -113,12 +113,40 @@ export default function BorrowWriting() {
   const writeData = {
     postType: 'lend',
     category: fileredCategory[0],
-    author: '임시작성자',
+    author: {
+      image: '',
+      suspension: false,
+      _id: '63a009de47318b0a880801c4',
+      email: 'asdf@test.com',
+      nickName: 'ppikka',
+      name: '지우',
+      phoneNumber: '01012341234',
+      postalCode: '01234',
+      address1: '광주시 강남구 강남동 101',
+      address2: '12층',
+      createdAt: '2022-12-19T06:51:10.420Z',
+      updatedAt: '2022-12-19T06:51:10.420Z',
+      __v: 0,
+    },
     title: productNameRef.current?.value,
     description: descriptionRef.current?.value,
-    lender: '빌려간사람=작성자',
+    lender: {
+      image: '',
+      suspension: false,
+      _id: '63a009de47318b0a880801c4',
+      email: 'asdf@test.com',
+      nickName: 'ppikka',
+      name: '지우',
+      phoneNumber: '01012341234',
+      postalCode: '01234',
+      address1: '광주시 강남구 강남동 101',
+      address2: '12층',
+      createdAt: '2022-12-19T06:51:10.420Z',
+      updatedAt: '2022-12-19T06:51:10.420Z',
+      __v: 0,
+    },
     stateOfTransaction: 0,
-    address: '임시주소',
+    address: '광주시 강남구 강남동 101',
     // imgFiles,
     price: {
       priceDay: Number(priceDayRef.current?.value),

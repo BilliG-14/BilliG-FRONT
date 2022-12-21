@@ -5,42 +5,42 @@ import { useQuery } from 'react-query';
 
 import Caution from './../components/postDetail/Caution';
 
+type PostDataType = {
+  imgUrl: string[];
+  postType: string;
+  category: object;
+  author: object;
+  title: string;
+  description: string;
+  lender: object;
+  stateOfTransaction: number;
+  address: string;
+  price: object;
+  period: object;
+  tradeWay: object;
+  hashtag: string[];
+};
+
 export default function BorrowPostDetail() {
-  const [borrowData, setBorrowData] = useState();
+  const [borrowData, setBorrowData] = useState<PostDataType>();
 
   // url id 받기
   const { id } = useParams();
 
-  const { data } = useQuery(
+  useQuery(
     'borrowPostData',
     () =>
       axios.get(
         `https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/product/${id}`,
       ),
     {
-      onSuccess: () => console.log('성공'),
+      refetchOnWindowFocus: false,
+      staleTime: 60 * 1000 * 60, // 1시간
+      onSuccess: (res) => setBorrowData(res?.data[0]),
       onError: () => console.log('error'),
     },
   );
 
-  // useQuery에서 받아오는 데이터가 있다면 해주기. data가 변할 때만!
-  useEffect(() => {
-    if (data) {
-      setBorrowData(data?.data[0]);
-    }
-  }, [data]);
-
-  console.log('borrowData', borrowData);
-
-  // borrowData(borrowPostData.data.data);
-  // axios
-  //   .get(
-  //     `https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/product/${id}`,
-  //   )
-  //   .then((result) => setData(result.data[0]))
-  //   .catch((err) => console.log('ERR', err));
-
-  // console.log('data', data);
   return (
     <div className="max-w-screen-lg mx-auto">
       <div className="w-[800px] flex flex-col justify-center mx-auto text-b-text-black">
@@ -59,18 +59,27 @@ export default function BorrowPostDetail() {
         {/* 게시글 header - 기본 정보들 */}
         <section className="flex justify-between mb-4">
           <div>
-            <img
-              src="#"
-              className="w-[410px] h-[410px] border border-solid border-gray-300 rounded-lg"
-              alt="원하는 제품 사진"
-            />
+            {borrowData?.imgUrl.map((url, idx) => (
+              <img
+                key={idx}
+                src={url}
+                className="w-[410px] h-[410px] border border-solid border-gray-300 rounded-lg"
+                alt="원하는 제품 사진"
+              />
+            ))}
           </div>
 
           {/* 상품 기본정보 */}
           <div className="flex flex-col justify-between w-[350px] h-[410px] pt-3 mr-4">
             <div className="text-right">
-              <div className="text-3xl">갤럭시 S2 공기계</div>
-              <div className="text-sm mt-1">해시태그</div>
+              <div className="text-3xl">{borrowData?.title}</div>
+              {borrowData?.hashtag.map((tag, idx) => {
+                return (
+                  <div key={idx} className="text-sm mt-1">
+                    {tag}
+                  </div>
+                );
+              })}
             </div>
 
             <div className="text-right">
