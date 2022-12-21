@@ -8,6 +8,7 @@ export enum AdminSection {
   NOTICE,
   RENTAL,
   HASHTAG,
+  CATEGORY,
 }
 interface AdminPageState {
   section: AdminSection;
@@ -18,6 +19,7 @@ interface AdminPageState {
   showPost: () => void;
   showRental: () => void;
   showHashTag: () => void;
+  showCategory: () => void;
 }
 /*devtools, persist 새로고침으로 상태 초기화 방지 */
 const useAdminPageStore = create<AdminPageState>()(
@@ -31,6 +33,7 @@ const useAdminPageStore = create<AdminPageState>()(
       showPost: () => set({ section: AdminSection.POST }),
       showRental: () => set({ section: AdminSection.RENTAL }),
       showHashTag: () => set({ section: AdminSection.HASHTAG }),
+      showCategory: () => set({ section: AdminSection.CATEGORY }),
     })),
   ),
 );

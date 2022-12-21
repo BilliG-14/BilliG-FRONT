@@ -1,26 +1,16 @@
 type User = {
   _id: string;
-  joinDate: string;
   email: string;
   nickName: string;
-  auth: string;
+  name: string;
+  phoneNumber: string;
+  postalCode: string;
+  address1: string;
+  address2: string;
+  createdAt: string;
+  updatedAt: string;
 };
-const userData: User[] = [
-  {
-    _id: 'auth_1234',
-    joinDate: '2022-12-12',
-    email: 'billig@gmail.com',
-    nickName: '빌리지관리자',
-    auth: '관리자',
-  },
-  {
-    _id: 'user_1234',
-    joinDate: '2022-12-13',
-    email: 'sysy@gmail.com',
-    nickName: '명륜진사갈비',
-    auth: '일반 유저',
-  },
-];
+
 export default function AdminUserListSection() {
   return (
     <section className="w-full text-b-text-black p-2">
@@ -35,7 +25,7 @@ export default function AdminUserListSection() {
           </tr>
         </thead>
         <tbody className="font-semibold">
-          {userData.map((user) => (
+          {/* {userData.map((user) => (
             <tr key={user.email} className="text-center">
               <td>{user.joinDate}</td>
               <td>{user.email}</td>
@@ -47,7 +37,7 @@ export default function AdminUserListSection() {
                 </button>
               </td>
             </tr>
-          ))}
+          ))} */}
         </tbody>
       </table>
     </section>
