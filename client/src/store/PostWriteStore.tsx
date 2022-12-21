@@ -36,7 +36,10 @@ export const imageUploadStore = create<ImageUploadState>((set) => ({
 
 // 거래방법 store
 interface TradeWayState {
-  tradeWay: object;
+  tradeWay: {
+    direct: boolean | undefined;
+    delivery: boolean | undefined;
+  };
   setTradeWay: (
     direct: boolean | undefined,
     delivery: boolean | undefined,

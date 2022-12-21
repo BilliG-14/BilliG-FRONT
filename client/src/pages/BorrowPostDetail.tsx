@@ -7,6 +7,9 @@ import Nav from '../components/nav/Nav';
 import Footer from '../components/footer/Footer';
 import Caution from './../components/postDetail/Caution';
 import { PostDataType } from '../store/PostReadStore';
+// import TradeWayTag from '../components/tag/TradeWayTag';
+import { FaPeopleArrows } from 'react-icons/fa';
+import { GoPackage } from 'react-icons/go';
 
 export default function BorrowPostDetail() {
   const [borrowData, setBorrowData] = useState<PostDataType>();
@@ -55,7 +58,7 @@ export default function BorrowPostDetail() {
           <div>
             <img
               src={mainImgUrl === '' ? borrowData?.imgUrl[0] : mainImgUrl}
-              className="w-[380px] h-[380px] border border-solid border-gray-300"
+              className="w-[380px] h-[380px]"
               alt="메인 사진"
             />
             <div className="flex justify-center gap-1">
@@ -103,7 +106,7 @@ export default function BorrowPostDetail() {
               </div>
               <hr className="hr-1 my-4"></hr>
               <div className="flex justify-between mb-2">
-                <div className="text-sm text-b-text-darkgray w-24 mb-2 text-left">
+                <div className="text-sm text-b-text-darkgray w-24 mb-2 text-left my-auto">
                   대여시간
                 </div>
                 <div>
@@ -113,11 +116,41 @@ export default function BorrowPostDetail() {
                 </div>
               </div>
               <div className="flex justify-between mb-2">
-                <div className="text-sm text-b-text-darkgray w-24 mb-2 text-left">
+                <div className="text-sm text-b-text-darkgray w-24 mb-2 text-left my-auto">
                   대여방법
                 </div>
                 <div>
-                  <div>직거래? 택배거래?</div>
+                  {/* <TradeWayTag tradeWay={borrowData?.tradeWay} /> */}
+                  <div
+                    className={`${
+                      borrowData?.tradeWay.direct ? 'bg-b-tag-dir' : ''
+                    } item_tag inline-flex text-b-hash-text p-[5px] rounded-lg font-extrabold my-auto mr-2`}
+                  >
+                    {borrowData?.tradeWay.direct ? (
+                      <FaPeopleArrows className="mr-1 text-sm" />
+                    ) : (
+                      ''
+                    )}
+
+                    <span className="text-xs">
+                      {borrowData?.tradeWay.direct ? '직거래' : ''}
+                    </span>
+                  </div>
+                  <div
+                    className={`${
+                      borrowData?.tradeWay.delivery ? 'bg-b-tag-pack' : ''
+                    } item_tag inline-flex text-b-hash-text p-[5px] rounded-lg font-extrabold my-auto`}
+                  >
+                    {borrowData?.tradeWay.delivery ? (
+                      <GoPackage className="mr-1 text-sm" />
+                    ) : (
+                      ''
+                    )}
+
+                    <span className="text-xs">
+                      {borrowData?.tradeWay.delivery ? '택배거래' : ''}
+                    </span>
+                  </div>
                 </div>
               </div>
 
