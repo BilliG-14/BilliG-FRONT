@@ -31,58 +31,24 @@ export default function BorrowWriting() {
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
 
   const navigate = useNavigate();
-
-  // useMutate 정의
-  const postData = useMutation(
-    (data: FormData) =>
-      axios({
-        method: 'POST',
-        url: 'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/product/',
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-        data: data,
-      }),
+  // 사용자 가져오기
+  useQuery(
+    'borrowPostData',
+    () =>
+      axios.get(
+        'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/user',
+      ),
+    // 로그인된 상태에서 유저 고유 아이디를 받아온다면 아래 axios로 get 해올 예정
+    //       axios.get(
+    //   `https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/user/${id}`,
+    // ),
     {
-      onSuccess: (data) => {
-        // 요청이 성공한 경우
-        navigate(`/read/borrow/${data.data._id}`);
-      },
-      onError: (error) => {
-        // 요청에 에러가 발생된 경우
-        console.log(error);
-      },
+      refetchOnWindowFocus: false,
+      staleTime: 60 * 1000 * 60, // 1시간
+      onSuccess: (res) => console.log(res),
+      onError: (err) => console.log(err),
     },
   );
-
-  // formData 넣기
-  const formData = new FormData();
-
-  // 업로드된 이미지 파일 넣기
-  imgFiles.forEach((imgFile) => formData.append('images', imgFile));
-
-  // 이미지 파일 제외한 나머지 data json 형식으로 넣기
-  const writeData = {
-    postType: 'lend',
-    // category:
-    //   categoryRef.current?.options[categoryRef.current?.selectedIndex]
-    //     .innerText,
-    author: '임시작성자',
-    title: productNameRef.current?.value,
-    description: descriptionRef.current?.value,
-    lender: '빌려간사람=작성자',
-    stateOfTransaction: 0,
-    address: '임시주소',
-    // imgFiles,
-    price: {
-      priceDay: Number(priceDayRef.current?.value),
-      priceTime: Number(priceTimeRef.current?.value),
-    },
-    period: reservationDate,
-    tradeWay: tradeWay,
-    hashtag: hashTags,
-  };
-  formData.append('data', JSON.stringify(writeData));
 
   // 카테고리 가져오기
   type CategoryType = {
@@ -100,19 +66,76 @@ export default function BorrowWriting() {
       ),
     {
       refetchOnWindowFocus: false,
-      refetchInterval: false,
       staleTime: 60 * 1000 * 60, // 1시간
       onSuccess: (res) => setCategorys(res.data),
       onError: (err) => console.log(err),
     },
   );
 
+  const fileredCategory = categorys.filter(
+    (category) =>
+      category.name ===
+      categoryRef.current?.options[categoryRef.current?.options.selectedIndex]
+        .innerText,
+  );
+
+  // useMutate 정의
+  const postData = useMutation(
+    (data: FormData) =>
+      axios({
+        method: 'POST',
+        url: 'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/product/',
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        data: data,
+      }),
+    {
+      onSuccess: (data) => {
+        // 요청이 성공한 경우
+        navigate(`/read/borrow/${data.data._id}`);
+        // console.log(data);
+      },
+      onError: (error) => {
+        // 요청에 에러가 발생된 경우
+        console.log(error);
+      },
+    },
+  );
+
+  // formData 넣기
+  const formData = new FormData();
+
+  // 업로드된 이미지 파일 넣기
+  imgFiles.forEach((imgFile) => formData.append('images', imgFile));
+
+  // 이미지 파일 제외한 나머지 data json 형식으로 넣기
+  const writeData = {
+    postType: 'lend',
+    category: fileredCategory[0],
+    author: '임시작성자',
+    title: productNameRef.current?.value,
+    description: descriptionRef.current?.value,
+    lender: '빌려간사람=작성자',
+    stateOfTransaction: 0,
+    address: '임시주소',
+    // imgFiles,
+    price: {
+      priceDay: Number(priceDayRef.current?.value),
+      priceTime: Number(priceTimeRef.current?.value),
+    },
+    period: reservationDate,
+    tradeWay: tradeWay,
+    hashtag: hashTags,
+  };
+  formData.append('data', JSON.stringify(writeData));
+
   // 등록하기 클릭 시 event
   async function handleButtonClick(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
 
     // 서버에 데이터 저장
-    // postData.mutate(formData);
+    postData.mutate(formData);
   }
 
   return (
