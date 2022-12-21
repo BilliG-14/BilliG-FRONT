@@ -1,18 +1,20 @@
 import { useRef, useState } from 'react';
+import axios from 'axios';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 import {
   imageUploadStore,
   tradeWayStore,
   hashTagStore,
   reservationStore,
 } from './../store/PostWriteStore';
+import Nav from '../components/nav/Nav';
+import Footer from '../components/footer/Footer';
 
 import HashTagSection from '../components/postWrite/HashTagWrite';
 import ImageUpload from '../components/postWrite/ImageUpload';
 import TradeWay from '../components/postWrite/TradeWay';
 import ReservationDate from './../components/postWrite/ReservationDate';
-import axios from 'axios';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
 
 export default function BorrowWriting() {
   // 빌립니다 글쓰기
@@ -168,7 +170,7 @@ export default function BorrowWriting() {
   return (
     <div className="max-w-screen-lg mx-auto">
       <div className="w-[800px] flex flex-col justify-center mx-auto text-b-text-black">
-        <div className="h-80">header</div>
+        <Nav />
         <div className="mb-6 text-3xl">빌리기</div>
         <form>
           {/* 상품명/카테고리 section */}
@@ -245,6 +247,7 @@ export default function BorrowWriting() {
             </button>
           </section>
         </form>
+        <Footer />
       </div>
     </div>
   );

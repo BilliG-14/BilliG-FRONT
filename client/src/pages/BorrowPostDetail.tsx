@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 
+import Nav from '../components/nav/Nav';
+import Footer from '../components/footer/Footer';
 import Caution from './../components/postDetail/Caution';
 import { PostDataType } from '../store/PostReadStore';
 
@@ -26,10 +28,17 @@ export default function BorrowPostDetail() {
     },
   );
 
+  // 서브 사진 클릭하면 메인으로 올리기
+  const [mainImgUrl, setMainImgUrl] = useState('');
+
+  function changeMainImg(e: React.MouseEvent<HTMLImageElement>) {
+    setMainImgUrl(e.currentTarget.src);
+  }
+
   return (
     <div className="max-w-screen-lg mx-auto">
       <div className="w-[800px] flex flex-col justify-center mx-auto text-b-text-black">
-        <div className="h-80">header</div>
+        <Nav />
         <div className="mb-6 text-3xl">빌리기</div>
         {/* 상단 정보(카테고리, 작성일) */}
         <section className="max-w-screen-lg flex justify-between mb-4">
@@ -44,14 +53,22 @@ export default function BorrowPostDetail() {
         {/* 게시글 header - 기본 정보들 */}
         <section className="flex justify-between mb-4">
           <div>
-            {borrowData?.imgUrl.map((url, idx) => (
-              <img
-                key={idx}
-                src={url}
-                className="w-[410px] h-[410px] border border-solid border-gray-300 rounded-lg"
-                alt="원하는 제품 사진"
-              />
-            ))}
+            <img
+              src={mainImgUrl === '' ? borrowData?.imgUrl[0] : mainImgUrl}
+              className="w-[380px] h-[380px] border border-solid border-gray-300"
+              alt="메인 사진"
+            />
+            <div className="flex justify-center gap-1">
+              {borrowData?.imgUrl.map((url, idx) => (
+                <img
+                  onMouseOver={changeMainImg}
+                  key={idx}
+                  src={url}
+                  className="w-16 h-16 mt-2 border border-solid border-gray-300"
+                  alt="원하는 제품 사진"
+                />
+              ))}
+            </div>
           </div>
 
           {/* 상품 기본정보 */}
@@ -166,6 +183,7 @@ export default function BorrowPostDetail() {
             </button>
           </div>
         </section>
+        <Footer />
       </div>
     </div>
   );
