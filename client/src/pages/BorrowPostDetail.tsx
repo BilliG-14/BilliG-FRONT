@@ -56,9 +56,38 @@ export default function BorrowPostDetail() {
 
         {/* 게시글 header - 기본 정보들 */}
         <section className="flex justify-between mb-4">
-          <div>
+          {/* {borrowData?.imgUrl[0] !== "" :           
+          (<div>
             <img
               src={mainImgUrl === '' ? borrowData?.imgUrl[0] : mainImgUrl}
+              className="w-[380px] h-[380px]"
+              alt="메인 사진"
+            />
+            <div className="flex justify-center gap-1">
+              {borrowData?.imgUrl.map((url, idx) => (
+                <img
+                  onMouseOver={changeMainImg}
+                  key={idx}
+                  src={url}
+                  className="w-16 h-16 mt-2 border border-solid border-gray-300"
+                  alt="원하는 제품 사진"
+                />
+              ))}
+            </div>
+          </div>): <img
+              src="../../product_default.png"
+              className="w-[380px] h-[380px]"
+              alt="메인 사진"
+            />} */}
+          <div>
+            <img
+              src={
+                !borrowData?.imgUrl[0]
+                  ? '../../product_default.png'
+                  : mainImgUrl === ''
+                  ? borrowData?.imgUrl[0]
+                  : mainImgUrl
+              }
               className="w-[380px] h-[380px]"
               alt="메인 사진"
             />
