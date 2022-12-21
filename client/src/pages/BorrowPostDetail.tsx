@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import Caution from './../components/postDetail/Caution';
 import { PostDataType } from '../store/PostReadStore';
@@ -13,7 +13,7 @@ export default function BorrowPostDetail() {
   const { id } = useParams();
 
   useQuery(
-    'borrowPostData',
+    ['borrowPostData'],
     () =>
       axios.get(
         `https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/product/${id}`,

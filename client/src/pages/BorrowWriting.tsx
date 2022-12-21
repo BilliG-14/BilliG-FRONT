@@ -10,9 +10,8 @@ import HashTagSection from '../components/postWrite/HashTagWrite';
 import ImageUpload from '../components/postWrite/ImageUpload';
 import TradeWay from '../components/postWrite/TradeWay';
 import ReservationDate from './../components/postWrite/ReservationDate';
-
 import axios from 'axios';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 export default function BorrowWriting() {
@@ -59,7 +58,7 @@ export default function BorrowWriting() {
 
   const [categorys, setCategorys] = useState<CategoryType[]>([]);
   useQuery(
-    'category',
+    ['categories'],
     () =>
       axios.get(
         'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/category',

@@ -28,8 +28,8 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <React.Fragment>
-      <GlobalStyle />
       <QueryClientProvider client={queryClient}>
+        <GlobalStyle />
         <div className="App h-screen w-screen">
           <BrowserRouter>
             {/* ScrollToTop : navigate했을 때, 스크롤 위치가 그대로 적용되는 문제 방지*/}
