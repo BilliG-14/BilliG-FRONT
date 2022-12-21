@@ -58,13 +58,18 @@ export default function BorrowPostDetail() {
           <div className="flex flex-col justify-between w-[350px] h-[410px] pt-3 mr-4">
             <div className="text-right">
               <div className="text-3xl">{borrowData?.title}</div>
-              {borrowData?.hashtag.map((tag, idx) => {
-                return (
-                  <div key={idx} className="text-sm mt-1">
-                    {tag}
-                  </div>
-                );
-              })}
+              <div className="flex justify-end">
+                {borrowData?.hashtag.map((tag, idx) => {
+                  return (
+                    <div
+                      key={idx}
+                      className="text-[10px] mt-2 mr-1 p-1.5 bg-gray-200 rounded-lg"
+                    >
+                      {tag}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
 
             <div className="text-right">
@@ -82,13 +87,20 @@ export default function BorrowPostDetail() {
               <hr className="hr-1 my-4"></hr>
               <div className="flex justify-between mb-2">
                 <div className="text-sm text-b-text-darkgray w-24 mb-2 text-left">
-                  원하는 대여시간
+                  대여시간
                 </div>
-
                 <div>
                   <div>
                     {borrowData?.period.start} ~ {borrowData?.period.end}
                   </div>
+                </div>
+              </div>
+              <div className="flex justify-between mb-2">
+                <div className="text-sm text-b-text-darkgray w-24 mb-2 text-left">
+                  대여방법
+                </div>
+                <div>
+                  <div>직거래? 택배거래?</div>
                 </div>
               </div>
 
