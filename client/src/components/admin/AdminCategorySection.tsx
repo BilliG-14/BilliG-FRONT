@@ -1,11 +1,7 @@
-import {
-  QueryClient,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
-import { useCallback, useRef } from 'react';
+import ConfirmModal from 'components/Modal';
+import { useCallback, useRef, useState } from 'react';
 
 type Category = {
   _id: string;
@@ -51,7 +47,10 @@ export default function AdminCategorySection() {
   const selectedDiv = useRef<HTMLDivElement>(null);
   const elemCreateInput = useRef<HTMLInputElement>(null);
   const elemUpdateInput = useRef<HTMLInputElement>(null);
-
+  const [isOpenModal, setOpenModal] = useState<boolean>(false);
+  const onClickToggleModal = useCallback(() => {
+    setOpenModal(!isOpenModal);
+  }, [isOpenModal]);
   /*get category */
   const { isLoading, data, isError } = useQuery<Category[], AxiosError>(
     ['categories'],
@@ -204,8 +203,7 @@ export default function AdminCategorySection() {
               className="w-full mt-4 h-8 rounded-lg bg-red-400 text-white hover:bg-gradient-to-r from-rose-700 to-red-300
             "
               onClick={() => {
-                handleDelete(selectedCategory.current._id);
-                alert('삭제되었습니다.');
+                setOpenModal(!isOpenModal);
               }}
             >
               삭제하기
@@ -213,6 +211,18 @@ export default function AdminCategorySection() {
           </div>
         </div>
       </div>
+      {isOpenModal && (
+        <ConfirmModal
+          title="정말 삭제하시겠습니까?"
+          content="한번 삭제한 카테고리는 되돌릴 수 없습니다"
+          yesColor="red-400"
+          yesText="삭제"
+          onClickToggleModal={onClickToggleModal}
+          onClickYes={() => {
+            handleDelete(selectedCategory.current._id);
+          }}
+        />
+      )}
     </section>
   );
 }
