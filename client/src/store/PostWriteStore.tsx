@@ -1,35 +1,56 @@
 import create from 'zustand';
 
+// 예약일 store
+interface ReservationState {
+  reservationDate: {
+    start: string | undefined;
+    end: string | undefined;
+  };
+  setReservationDate: (
+    start: string | undefined,
+    end: string | undefined,
+  ) => void;
+}
+
+export const reservationStore = create<ReservationState>((set) => ({
+  reservationDate: {
+    start: '',
+    end: '',
+  },
+  setReservationDate: (start, end) =>
+    set((state) => ({
+      reservationDate: { ...state.reservationDate, start, end },
+    })),
+}));
+
 // 사진 업로드 store
 interface ImageUploadState {
-  imgFiles: FileList | undefined;
-  setImgFile: (imgFileList: FileList) => void;
+  imgFiles: File[];
+  setImgFile: (imgFileList: File[]) => void;
 }
 
 export const imageUploadStore = create<ImageUploadState>((set) => ({
-  imgFiles: undefined,
-  setImgFile: (imgFileList) => set(() => ({ imgFiles: imgFileList })),
+  imgFiles: [],
+  setImgFile: (imgFileList) => set((state) => ({ imgFiles: imgFileList })),
 }));
 
 // 거래방법 store
 interface TradeWayState {
-  direct: boolean;
-  delivery: boolean;
-  tradeWay: object;
-  setDirect: (checked: boolean) => void;
-  setDelivery: (checked: boolean) => void;
-  setTradeWay: (direct: boolean, delivery: boolean) => void;
+  tradeWay: {
+    direct: boolean | undefined;
+    delivery: boolean | undefined;
+  };
+  setTradeWay: (
+    direct: boolean | undefined,
+    delivery: boolean | undefined,
+  ) => void;
 }
 
 export const tradeWayStore = create<TradeWayState>((set) => ({
-  direct: false,
-  delivery: false,
   tradeWay: {
     direct: false,
     delivery: false,
   },
-  setDirect: (checked) => set(() => ({ direct: checked })),
-  setDelivery: (checked) => set(() => ({ delivery: checked })),
   setTradeWay: (direct, delivery) =>
     set((state) => ({
       tradeWay: { ...state.tradeWay, direct, delivery },

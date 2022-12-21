@@ -1,66 +1,93 @@
-import { useState, ChangeEvent } from 'react';
+import { imageUploadStore } from './../../store/PostWriteStore';
+import { useState } from 'react';
+import { AiFillCamera } from 'react-icons/ai';
 
+type PreviewImg = {
+  pictureName: string;
+  URL: string;
+};
 export default function ImageUpload() {
-  const [imgFiles, setImgFile] = useState<FileList>();
+  const { imgFiles, setImgFile } = imageUploadStore();
+  const [priviewImages, setPriviewFileImages] = useState<PreviewImg[]>([]);
 
-  const [previewImages, setPreviewImages] = useState<
-    {
-      imgId: string;
-      imgUrl: string;
-    }[]
-  >([]);
-
-  // 이미지 갯수 제한(가장 우선), 이미지 크기 제한, 첨부파일 삭제 구현
+  // 이미지 갯수 제한(가장 우선)(구현완료), 이미지 크기 제한 구현해야 함
   // 게시글을 볼 때 메인 이미지를 어떻게 정할것인지?
-  function imagePreview(e: ChangeEvent<HTMLInputElement>): void {
+  function imagePreview(e: React.ChangeEvent<HTMLInputElement>): void {
     const target = e.currentTarget;
-    const files = target.files as FileList;
+    // 유사배열 객체를 Array로 변환
+    const files = Array.from(target.files as FileList);
 
-    // 파일 재선택시 초기화
-    setPreviewImages([]);
+    setPriviewFileImages([]);
 
-    for (let i = 0; i < files.length; i++) {
-      setPreviewImages((cur) => [
-        ...cur,
-        { imgId: files[i].name, imgUrl: URL.createObjectURL(files[i]) },
-      ]);
+    if (files.length > 3) {
+      alert('이미지는 최대 3개까지만 등록 가능합니다. ');
+      return;
+    } else {
+      for (let i = 0; i < files.length; i++) {
+        setPriviewFileImages((state) => [
+          ...state,
+          { pictureName: files[i].name, URL: URL.createObjectURL(files[i]) },
+        ]);
+      }
+
+      setImgFile(files);
     }
-
-    setImgFile(files);
   }
-  console.log(imgFiles);
 
   // 미리보기 이미지 클릭 시 해당 이미지 삭제
-  // function deleteImagehandler(e: React.MouseEvent<HTMLImageElement>) {
-  //   console.log(imgFiles);
-  // }
-  // setImgFile(null);
+  function deleteImagehandler(e: React.MouseEvent<HTMLDivElement>) {
+    const previewImgId = e.currentTarget.id;
+    const newFiles = imgFiles.filter(
+      (imgfile) => imgfile.name !== previewImgId,
+    );
+    const newPreviewFiles = priviewImages.filter(
+      (imgfile) => imgfile.pictureName !== previewImgId,
+    );
 
+    setImgFile(newFiles);
+    setPriviewFileImages(newPreviewFiles);
+  }
+
+  // console.log(imgFiles);
+  // console.log(priviewImages);
   return (
-    <section className="mb-4">
+    <section className="mb-4 flex flex-row ">
+      <label
+        htmlFor="fileUpload"
+        className="inline-block w-[70px] h-[70px] mr-5 text-center text-xs border-solid border border-gray-300 hover:border-gray-400 cursor-pointer rounded-lg"
+      >
+        <AiFillCamera className="w-6 h-6 mx-auto mt-3.5 mb-[2px]" />
+        <div className="text-gray-400">{imgFiles.length} / 3</div>
+      </label>
       <input
         onChange={imagePreview}
         type="file"
+        id="fileUpload"
         accept="image/*"
         multiple
-        className="block w-[500px] text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold cursor-pointer file:bg-b-bg-gray file:text-b-text-black  hover:file:bg-gray-200 file:cursor-pointer"
+        className="w-0 h-0 p-0 overflow-visible"
       />
-      <div className="flex flex-row mt-3 ml-24">
-        {previewImages.map((fileUrl, idx) => {
+      <div className="flex">
+        {priviewImages.map((fileUrl, idx) => {
           return (
-            <img
-              key={fileUrl.imgId}
-              alt="이미지"
-              src={fileUrl.imgUrl}
-              className="w-20 h-20 mr-2 border-solid border border-gray-300 cursor-pointer"
-            />
+            <>
+              <img
+                key={fileUrl.URL}
+                alt="이미지"
+                src={fileUrl.URL}
+                className="w-[70px] h-[70px] border-solid border border-gray-300 rounded-lg"
+              />
+              <div
+                id={fileUrl.pictureName}
+                key={fileUrl.pictureName}
+                onClick={deleteImagehandler}
+                className="relative w-5 h-5 bg-b-text-black rounded-full right-3 text-white text-center text-sm cursor-pointer"
+              >
+                x
+              </div>
+            </>
           );
         })}
-        {/* {imgFiles ? (
-          <div className="w-9 h-6 text-[8px] text-slate-500 text-center py-2 px-2 rounded-md border-0 font-semibold cursor-pointer bg-b-bg-gray">
-            삭제
-          </div>
-        ) : null} */}
       </div>
     </section>
   );
