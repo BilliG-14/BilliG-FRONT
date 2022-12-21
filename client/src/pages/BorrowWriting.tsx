@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import {
   imageUploadStore,
   tradeWayStore,
@@ -12,7 +12,7 @@ import TradeWay from '../components/postWrite/TradeWay';
 import ReservationDate from './../components/postWrite/ReservationDate';
 
 import axios from 'axios';
-import { useMutation } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 
 export default function BorrowWriting() {
@@ -64,9 +64,9 @@ export default function BorrowWriting() {
   // 이미지 파일 제외한 나머지 data json 형식으로 넣기
   const writeData = {
     postType: 'lend',
-    category:
-      categoryRef.current?.options[categoryRef.current?.selectedIndex]
-        .innerText,
+    // category:
+    //   categoryRef.current?.options[categoryRef.current?.selectedIndex]
+    //     .innerText,
     author: '임시작성자',
     title: productNameRef.current?.value,
     description: descriptionRef.current?.value,
@@ -84,12 +84,35 @@ export default function BorrowWriting() {
   };
   formData.append('data', JSON.stringify(writeData));
 
+  // 카테고리 가져오기
+  type CategoryType = {
+    _id: string;
+    name: string;
+    __v: number;
+  };
+
+  const [categorys, setCategorys] = useState<CategoryType[]>([]);
+  useQuery(
+    'borrowPostData',
+    () =>
+      axios.get(
+        'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/category',
+      ),
+    {
+      refetchOnWindowFocus: false,
+      refetchInterval: false,
+      staleTime: 60 * 1000 * 60, // 1시간
+      onSuccess: (res) => setCategorys(res.data),
+      onError: (err) => console.log(err),
+    },
+  );
+
   // 등록하기 클릭 시 event
   async function handleButtonClick(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
 
     // 서버에 데이터 저장
-    postData.mutate(formData);
+    // postData.mutate(formData);
   }
 
   return (
@@ -104,12 +127,16 @@ export default function BorrowWriting() {
               ref={categoryRef}
               className="flex-none pl-3 w-1/6 h-10 border-solid border  border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2"
             >
-              <option value="1">카테고리</option>
+              {/* <option value="1">카테고리</option>
               <option value="2">IT/가전</option>
               <option value="3">의류</option>
               <option value="4">캠핑/레저</option>
               <option value="5">완구/취미</option>
-              <option value="6">도서/음반</option>
+              <option value="6">도서/음반</option> */}
+              <option>카테고리 설정</option>
+              {categorys.map((category) => (
+                <option key={category._id}>{category.name}</option>
+              ))}
             </select>
             <input
               ref={productNameRef}
