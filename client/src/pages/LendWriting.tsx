@@ -1,23 +1,75 @@
+import { useState, useRef } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+
+import {
+  imageUploadStore,
+  tradeWayStore,
+  hashTagStore,
+} from './../store/PostWriteStore';
+
+import Nav from '../components/nav/Nav';
+import Footer from '../components/footer/Footer';
+
+import HashTagSection from '../components/postWrite/HashTagWrite';
+import ImageUpload from '../components/postWrite/ImageUpload';
+import TradeWay from '../components/postWrite/TradeWay';
+
 export default function LendWriting() {
   // 빌려드립니다 글쓰기
+
+  // store에서 가져오는 state들
+  const { hashTags } = hashTagStore();
+  const { imgFiles } = imageUploadStore();
+  const { tradeWay } = tradeWayStore();
+
+  // Ref
+  const productNameRef = useRef<HTMLInputElement>(null);
+  const priceDayRef = useRef<HTMLInputElement>(null);
+  const priceTimeRef = useRef<HTMLInputElement>(null);
+  const categoryRef = useRef<HTMLSelectElement>(null);
+  const descriptionRef = useRef<HTMLTextAreaElement>(null);
+
+  type CategoryType = {
+    _id: string;
+    name: string;
+    __v: number;
+  };
+
+  const [categorys, setCategorys] = useState<CategoryType[]>([]);
+  useQuery(
+    ['categories'],
+    () =>
+      axios.get(
+        'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/category',
+      ),
+    {
+      refetchOnWindowFocus: false,
+      staleTime: 60 * 1000 * 60, // 1시간
+      onSuccess: (res) => setCategorys(res.data),
+      onError: (err) => console.log(err),
+    },
+  );
 
   return (
     <div className="max-w-screen-lg mx-auto">
       <div className="w-[800px] flex flex-col justify-center mx-auto text-b-text-black">
-        <div className="h-80">header</div>
+        <Nav />
         <div className="mb-6 text-3xl">빌려주기</div>
         <form>
           {/* 상품명/카테고리 section */}
           <section className="flex mb-4">
-            <select className="flex-none pl-3 w-1/6 h-10 border-solid border  border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2">
-              <option>카테고리</option>
-              <option>IT/가전</option>
-              <option>의류</option>
-              <option>캠핑/레저</option>
-              <option>완구/취미</option>
-              <option>도서/음반</option>
+            <select
+              ref={categoryRef}
+              className="flex-none pl-3 w-1/6 h-10 border-solid border  border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2"
+            >
+              <option>카테고리 설정</option>
+              {categorys.map((category) => (
+                <option key={category._id}>{category.name}</option>
+              ))}
             </select>
             <input
+              ref={productNameRef}
               className="grow p-3 ml-2 w-9/12 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
               type="text"
               placeholder="상품명"
@@ -26,23 +78,7 @@ export default function LendWriting() {
           </section>
 
           {/* 사진 등록 section */}
-          <section className="mb-4">
-            <input
-              type="file"
-              accept="image/jpeg,"
-              multiple
-              required
-              className="block w-full text-sm text-slate-500
-              file:mr-4 file:py-2 file:px-4
-              file:rounded-md file:border-0
-              file:text-sm file:font-semibold
-              cursor-pointer
-              file:bg-b-bg-gray file:text-b-text-black
-              hover:file:bg-gray-200
-              file:cursor-pointer"
-            />
-            <div>사진등록시 사진 추가될 영역</div>
-          </section>
+          <ImageUpload />
 
           {/* 요금 section */}
           <section className="flex items-center mb-4">
@@ -102,6 +138,7 @@ export default function LendWriting() {
             </button>
           </section>
         </form>
+        <Footer />
       </div>
     </div>
   );

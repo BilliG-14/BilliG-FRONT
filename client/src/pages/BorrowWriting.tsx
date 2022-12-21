@@ -179,12 +179,6 @@ export default function BorrowWriting() {
               ref={categoryRef}
               className="flex-none pl-3 w-1/6 h-10 border-solid border  border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2"
             >
-              {/* <option value="1">카테고리</option>
-              <option value="2">IT/가전</option>
-              <option value="3">의류</option>
-              <option value="4">캠핑/레저</option>
-              <option value="5">완구/취미</option>
-              <option value="6">도서/음반</option> */}
               <option>카테고리 설정</option>
               {categorys.map((category) => (
                 <option key={category._id}>{category.name}</option>

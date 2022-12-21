@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
@@ -12,6 +12,7 @@ import { FaPeopleArrows } from 'react-icons/fa';
 import { GoPackage } from 'react-icons/go';
 
 export default function BorrowPostDetail() {
+  // 서버에서 get 하는 data state
   const [borrowData, setBorrowData] = useState<PostDataType>();
 
   // url id 받기
