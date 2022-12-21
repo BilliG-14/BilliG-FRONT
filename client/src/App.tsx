@@ -42,7 +42,7 @@ function App() {
               <Route path="/write/borrow" element={<BorrowWriting />} />
               <Route path="/submain" element={<Submain />} />
               <Route path="/search" element={<Search />} />
-              <Route path="/read/lend" element={<LendPostDetail />} />
+              <Route path="/read/lend/:id" element={<LendPostDetail />} />
               <Route path="/read/borrow/:id" element={<BorrowPostDetail />} />
               <Route path="/mypage" element={<MyPage />} />
               <Route path="/mypage/givelist" element={<MyGivePostListPage />} />

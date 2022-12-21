@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 
 import {
@@ -14,6 +14,7 @@ import Footer from '../components/footer/Footer';
 import HashTagSection from '../components/postWrite/HashTagWrite';
 import ImageUpload from '../components/postWrite/ImageUpload';
 import TradeWay from '../components/postWrite/TradeWay';
+import { useNavigate } from 'react-router-dom';
 
 export default function LendWriting() {
   // 빌려드립니다 글쓰기
@@ -29,6 +30,8 @@ export default function LendWriting() {
   const priceTimeRef = useRef<HTMLInputElement>(null);
   const categoryRef = useRef<HTMLSelectElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
+
+  const navigate = useNavigate();
 
   type CategoryType = {
     _id: string;
@@ -50,6 +53,103 @@ export default function LendWriting() {
       onError: (err) => console.log(err),
     },
   );
+
+  const fileredCategory = categorys.filter(
+    (category) =>
+      category.name ===
+      categoryRef.current?.options[categoryRef.current?.options.selectedIndex]
+        .innerText,
+  );
+
+  // useMutate 정의
+  const postData = useMutation(
+    (data: FormData) =>
+      axios({
+        method: 'POST',
+        url: 'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/product/',
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        data: data,
+      }),
+    {
+      onSuccess: (data) => {
+        // 요청이 성공한 경우
+        navigate(`/read/lend/${data.data._id}`);
+        // console.log(data);
+      },
+      onError: (error) => {
+        // 요청에 에러가 발생된 경우
+        console.log(error);
+      },
+    },
+  );
+
+  // formData 넣기
+  const formData = new FormData();
+
+  // 업로드된 이미지 파일 넣기
+  imgFiles.forEach((imgFile) => formData.append('images', imgFile));
+
+  // 이미지 파일 제외한 나머지 data json 형식으로 넣기
+  const writeData = {
+    postType: 'lend',
+    category: fileredCategory[0],
+    author: {
+      image: '',
+      suspension: false,
+      _id: '63a009de47318b0a880801c4',
+      email: 'asdf@test.com',
+      nickName: 'ppikka',
+      name: '지우',
+      phoneNumber: '01012341234',
+      postalCode: '01234',
+      address1: '광주시 강남구 강남동 101',
+      address2: '12층',
+      createdAt: '2022-12-19T06:51:10.420Z',
+      updatedAt: '2022-12-19T06:51:10.420Z',
+      __v: 0,
+    },
+    title: productNameRef.current?.value,
+    description: descriptionRef.current?.value,
+    lender: {
+      image: '',
+      suspension: false,
+      _id: '63a009de47318b0a880801c4',
+      email: 'asdf@test.com',
+      nickName: 'ppikka',
+      name: '지우',
+      phoneNumber: '01012341234',
+      postalCode: '01234',
+      address1: '광주시 강남구 강남동 101',
+      address2: '12층',
+      createdAt: '2022-12-19T06:51:10.420Z',
+      updatedAt: '2022-12-19T06:51:10.420Z',
+      __v: 0,
+    },
+    stateOfTransaction: 0,
+    address: '광주시 강남구 강남동 101',
+    // imgFiles,
+    price: {
+      priceDay: Number(priceDayRef.current?.value),
+      priceTime: Number(priceTimeRef.current?.value),
+    },
+    period: {
+      start: '시작날 필수?',
+      end: '시작날 필수?',
+    },
+    tradeWay: tradeWay,
+    hashtag: hashTags,
+  };
+  formData.append('data', JSON.stringify(writeData));
+
+  // 등록하기 클릭 시 event
+  async function handleButtonClick(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+
+    // 서버에 데이터 저장
+    postData.mutate(formData);
+  }
 
   return (
     <div className="max-w-screen-lg mx-auto">
@@ -82,14 +182,15 @@ export default function LendWriting() {
 
           {/* 요금 section */}
           <section className="flex items-center mb-4">
-            <span className="w-[100px] p-3 text-center">요금</span>
+            <div className="w-[100px] p-3 text-center">요금</div>
             <input
+              ref={priceTimeRef}
               type="number"
               className="appearance: none p-3 mx-2 w-60 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
-              style={{ WebkitAppearance: 'none' }}
             />
-            <span className="mr-5">원/시간</span>
+            <div className="mr-5">원/시간</div>
             <input
+              ref={priceDayRef}
               type="number"
               className="p-3 mx-2 w-60 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
             />
@@ -99,41 +200,24 @@ export default function LendWriting() {
           {/* 상품 상세내용 section */}
           <section className="mb-4">
             <textarea
+              ref={descriptionRef}
               placeholder="사이즈, 색상 등 상세정보를 입력하면 좋아요!"
               className="p-3 w-full h-40 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
-              required
             />
           </section>
 
           {/* 거래방법 section */}
-          <section className="mb-4 h-10 flex items-center">
-            <span className="w-[100px] p-3 text-center">거래방법</span>
-            <input
-              type="checkbox"
-              className="mr-2 appearance-none h-4 w-4 border rounded-md border-gray-300  bg-white checked:bg-b-yellow checked:border-b-yellow focus:outline-none transition duration-100 align-top cursor-pointer"
-            />
-            <span className="mr-7">직거래</span>
-            <input
-              type="checkbox"
-              className="mr-2 appearance-none h-4 w-4 border rounded-md border-gray-300  bg-white checked:bg-b-yellow checked:border-b-yellow focus:outline-none transition duration-100 align-top cursor-pointer"
-            />
-            <span>택배거래</span>
-          </section>
+          <TradeWay />
 
           {/* 해시태그 section */}
-          <section className="mb-4 h-10 flex items-center">
-            <span className="w-[100px] p-3 text-center">해시태그</span>
-            <div>
-              <input
-                type="text"
-                placeholder="태그를 입력해주세요"
-                className="p-3 mr-4 w-40 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
-              />
-            </div>
-            <div> 해시태그 생기는 부분 </div>
-          </section>
+          <HashTagSection />
+
           <section className="flex flex-col justify-center items-center">
-            <button className="w-1/6 h-10 hover:text-white border border-b-yellow hover:bg-b-yellow focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+            <button
+              type="button"
+              onClick={handleButtonClick}
+              className="w-1/6 h-10 hover:text-white border border-b-yellow hover:bg-b-yellow focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+            >
               등록하기
             </button>
           </section>

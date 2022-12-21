@@ -112,10 +112,12 @@ export default function BorrowPostDetail() {
                 </div>
                 <div>
                   <div>
-                    {borrowData?.period.start} ~ {borrowData?.period.end}
+                    {borrowData?.period?.start} ~ {borrowData?.period?.end}
                   </div>
                 </div>
               </div>
+
+              {/* 대여방법 */}
               <div className="flex justify-between mb-2">
                 <div className="text-sm text-b-text-darkgray w-24 mb-2 text-left my-auto">
                   대여방법

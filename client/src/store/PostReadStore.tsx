@@ -44,7 +44,7 @@ export type PostDataType = {
     priceDay: number;
     priceTime: number;
   };
-  period: {
+  period?: {
     start: string;
     end: string;
   };
