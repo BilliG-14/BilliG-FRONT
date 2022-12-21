@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import Main from 'pages/Main';
@@ -18,6 +18,10 @@ import MyGivePostListPage from './pages/MyGivePostListPage';
 import MyBorrowPostListPage from './pages/MyBorrowPostListPage';
 import MyDoneListPage from 'pages/MyDoneListPage';
 import ScrollToTop from 'components/ScrollToTop';
+import ChatPage from 'components/ChatPage/ChatPage';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser, clearUser } from './redux/actions/user_action';
 
 const queryClient = new QueryClient();
 const GlobalStyle = createGlobalStyle`
@@ -25,6 +29,26 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 function App() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const isLoading = useSelector((state) => state.user.isLoading);
+
+  useEffect(() => {
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      //onAuthStateChanged: 현재 로그인한 사용자 가져오기 --> 이 부분은 백엔드 server에 get요청 보내서 db에 user data가 존재하는지 판단하는것으로 변경해야함.
+      if (user) {
+        //로그인 된 상태
+        navigate('/');
+        dispatch(setUser(user));
+        const uid = user.uid;
+      } else {
+        //로그인 안 된 상태
+        navigate('/login');
+        dispatch(clearUser());
+      }
+    });
+  }, []);
   return (
     <React.Fragment>
       <GlobalStyle />
@@ -40,6 +64,12 @@ function App() {
               <Route path="/write/lend" element={<LendWriting />} />
               <Route path="/write/borrow" element={<BorrowWriting />} />
               <Route path="/submain" element={<Submain />} />
+              {isLoading ? (
+                <div>...loading</div>
+              ) : (
+                <Route path="/chat" element={<ChatPage />} />
+              )}
+
               <Route path="/search" element={<Search />} />
               <Route path="/read/lend/:id" element={<LendPostDetail />} />
               <Route path="/read/borrow/:id" element={<BorrowPostDetail />} />
