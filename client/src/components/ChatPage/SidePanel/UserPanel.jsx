@@ -115,20 +115,20 @@ function UserPanel() {
   return (
     <div>
       {/* Logo */}
-      <h3 style={{ color: 'white' }}>
+      <h3 className="text-white">
         <IoIosChatboxes /> Chat App
       </h3>
 
-      <div style={{ display: 'flex', marginBottom: '1rem' }}>
+      <div className="flex m-4">
         <Image
           src={user && user.photoURL}
-          style={{ width: '30p', height: '30px', marginTop: '3px' }}
+          className="w-30 h-30 mt-3"
           roundedCircle
         />
 
         <Dropdown>
           <Dropdown.Toggle
-            style={{ background: 'transparent', boder: '0px' }}
+            className="bg-transparent border-0"
             id="dropdown-basic"
           >
             {user && user.displayName}
@@ -147,7 +147,7 @@ function UserPanel() {
       <input
         onChange={handleUploadImage}
         accept="image/jpeg, image/png"
-        style={{ display: 'none' }}
+        className="hidden"
         ref={inputOpenImageRef}
         type="file"
       />

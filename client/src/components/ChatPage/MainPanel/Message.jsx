@@ -17,12 +17,11 @@ function Message({ message, user }) {
   };
 
   return (
-    <div style={{ marginBottom: '3px', display: 'flex' }}>
+    <div className="mb-3 flex">
       <img
-        style={{ borderRadius: '10px' }}
         width={48}
         height={48}
-        className="mr-3"
+        className="mr-3 rounded-lg"
         src={message.user.image} //message 테이블의 user 컬럼 데이터
         alt={message.user.name} //message 테이블의 user 컬럼 데이터
       />
@@ -33,12 +32,12 @@ function Message({ message, user }) {
       >
         <h6>
           {message.user.name}{' '}
-          <span style={{ fontSize: '10px', color: 'gray' }}>
+          <span className="text-xs text-slate-400">
             {timeFromNow(message.timestamp)}
           </span>
         </h6>
         {isImage(message) ? (
-          <img style={{ maxWidth: '300px' }} alt="이미지" src={message.image} />
+          <img className="max-w-xs" alt="이미지" src={message.image} />
         ) : (
           <p>{message.content}</p>
         )}

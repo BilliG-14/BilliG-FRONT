@@ -201,20 +201,10 @@ export class MainPanel extends Component {
       messagesLoading,
     } = this.state;
     return (
-      <div style={{ padding: '2rem 2rem 0 2rem' }}>
+      <div className="px-8 pt-8 p-0">
         <MessageHeader handleSearchChange={this.handleSearchChange} />
 
-        <div
-          style={{
-            width: '100%',
-            height: '450px',
-            border: '.2rem solid #ececec',
-            borderRadius: '4px',
-            padding: '1rem',
-            marginBottom: '1rem',
-            overflowY: 'auto',
-          }}
-        >
+        <div className="w-full h-450 border-solid outline-2 border-slate-200 rounded p-4 mb-4 overflow-auto">
           {this.renderMessageSkeleton(messagesLoading)}
 
           {searchTerm

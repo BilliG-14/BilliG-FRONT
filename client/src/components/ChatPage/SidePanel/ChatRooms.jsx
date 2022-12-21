@@ -1,15 +1,15 @@
-import React, { Component } from "react";
-import { FaRegSmileWink } from "react-icons/fa";
-import { FaPlus } from "react-icons/fa";
-import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Badge from "react-bootstrap/Badge";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { FaRegSmileWink } from 'react-icons/fa';
+import { FaPlus } from 'react-icons/fa';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Badge from 'react-bootstrap/Badge';
+import { connect } from 'react-redux';
 import {
   setCurrentChatRoom,
   setPrivateChatRoom,
-} from "../../../redux/actions/chatRoom_action";
+} from '../../../redux/actions/chatRoom_action';
 import {
   getDatabase,
   ref,
@@ -19,18 +19,18 @@ import {
   child,
   update,
   off,
-} from "firebase/database";
+} from 'firebase/database';
 
 export class ChatRooms extends Component {
   state = {
     show: false,
-    name: "",
-    description: "",
-    chatRoomsRef: ref(getDatabase(), "chatRooms"),
-    messagesRef: ref(getDatabase(), "messages"),
+    name: '',
+    description: '',
+    chatRoomsRef: ref(getDatabase(), 'chatRooms'),
+    messagesRef: ref(getDatabase(), 'messages'),
     chatRooms: [], //채팅방 목록 state 선언
     firstLoad: true,
-    activeChatRoomId: "",
+    activeChatRoomId: '',
     notifications: [],
   };
 
@@ -66,7 +66,7 @@ export class ChatRooms extends Component {
       // 채팅방 목록 을 push 한 배열로 setState
       this.setState({ chatRooms: chatRoomsArray }, () =>
         // 아무것도 선택하지 않았을 때, default값으로 0번째 인덱스에 저장된 채팅방이 보여지도록 채팅방 정보 불러옴
-        this.setFirstChatRoom()
+        this.setFirstChatRoom(),
       );
       // 채팅방 알림 기능
       this.addNotificationListener(DataSnapshot.key); // 채팅방 목록 을 push 한 배열로 setState
@@ -82,7 +82,7 @@ export class ChatRooms extends Component {
           chatRoomId,
           this.props.chatRoom.id,
           this.state.notifications,
-          DataSnapshot
+          DataSnapshot,
         );
       }
     });
@@ -97,14 +97,14 @@ export class ChatRooms extends Component {
     //알림 정보가 들어갈 배열
     notifications,
     // chatRoomId에 관한 정보
-    DataSnapshot
+    DataSnapshot,
   ) => {
     let lastTotal = 0;
 
     // 이미 notifications state 안에 알림 정보가 들어있는 채팅방과 그렇지 않은 채팅방을 나눠주기
     let index = notifications.findIndex(
       // findIndex: 배열에서 조건을 만족하는 첫번째 원소의 인덱스 값을 반환하며 만족하는 원소가 없을 경우 -1을 반환
-      (notification) => notification.id === chatRoomId
+      (notification) => notification.id === chatRoomId,
     );
 
     //notifications state 안에 해당 채팅방의 알림 정보가 없을 때
@@ -153,7 +153,7 @@ export class ChatRooms extends Component {
   //채팅방 클릭 시 알림 초기화
   clearNotificaions = () => {
     let index = this.state.notifications.findIndex(
-      (notification) => notification.id === this.chatRoom.id
+      (notification) => notification.id === this.chatRoom.id,
     );
     if (index !== -1) {
       let updatedNotifications = [...this.state.notifications];
@@ -195,8 +195,8 @@ export class ChatRooms extends Component {
       // 데이터베이스의 "chatRooms" 테이블에 key와 newChatRoom 객체 value를 추가한다.
       await update(child(this.state.chatRoomsRef, key), newChatRoom);
       this.setState({
-        name: "",
-        description: "",
+        name: '',
+        description: '',
         show: false,
       });
     } catch (error) {
@@ -222,12 +222,12 @@ export class ChatRooms extends Component {
         key={room.id}
         style={{
           backgroundColor:
-            room.id === this.state.activeChatRoomId && "#ffffff45",
+            room.id === this.state.activeChatRoomId && '#ffffff45',
         }}
         onClick={() => this.changeChatRoom(room)}
       >
         # {room.name}
-        <Badge style={{ float: "right", marginTop: "4px" }} variant="danger">
+        <Badge className="float-right mt-4 " variant="danger">
           {this.getNotificationCount(room)}
         </Badge>
       </li>
@@ -236,28 +236,17 @@ export class ChatRooms extends Component {
   render() {
     return (
       <div>
-        <div
-          style={{
-            position: "relative",
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <FaRegSmileWink style={{ marginRight: 3 }} />
+        <div className="relative w-full flex items-center">
+          <FaRegSmileWink className="mr-3" />
           CHAT ROOMS ({this.state.chatRooms.length})
           <FaPlus
             onClick={this.handleShow}
-            style={{
-              position: "absolute",
-              right: 0,
-              cursor: "pointer",
-            }}
+            className="absolute right-0 cursor-pointer"
           />
         </div>
 
         {/* 채팅방 목록 렌더링 */}
-        <ul style={{ listStyleType: "none", padding: 0 }}>
+        <ul className="list-none p-0">
           {this.renderChatRooms(this.state.chatRooms)}
         </ul>
 

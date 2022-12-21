@@ -203,7 +203,7 @@ function MessageForm() {
       )}
       <div>
         {errors.map((errorMsg) => (
-          <p style={{ color: 'red' }} key={errorMsg}>
+          <p className="text-red-600" key={errorMsg}>
             {errorMsg}
           </p>
         ))}
@@ -212,8 +212,7 @@ function MessageForm() {
         <Col>
           <button
             onClick={handleSubmit}
-            className="message-form-button"
-            style={{ width: '100%' }}
+            className="message-form-button w-full"
             disabled={loading ? true : false}
           >
             SEND
@@ -222,8 +221,7 @@ function MessageForm() {
         <Col>
           <button
             onClick={handleOpenImageRef}
-            className="message-form-button"
-            style={{ width: '100%' }}
+            className="message-form-button w-full"
             disabled={loading ? true : false}
           >
             UPLOAD
@@ -232,7 +230,7 @@ function MessageForm() {
       </Row>
       <input
         accept="image/jpeg, image/png"
-        style={{ display: 'none' }}
+        className="hidden"
         type="file"
         ref={inputOpenImageRef}
         onChange={handleUploadImage}
