@@ -1,4 +1,4 @@
-import { hashTagStore } from './../../store/PostStore';
+import { hashTagStore } from './../../store/PostWriteStore';
 
 export default function HashTagSection() {
   // store에서 불러오기

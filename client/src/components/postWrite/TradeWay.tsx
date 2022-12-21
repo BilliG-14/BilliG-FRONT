@@ -1,4 +1,4 @@
-import { tradeWayStore } from './../../store/PostStore';
+import { tradeWayStore } from './../../store/PostWriteStore';
 import { useRef } from 'react';
 
 export default function TradeWay() {

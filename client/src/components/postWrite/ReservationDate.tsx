@@ -1,5 +1,5 @@
 import { ChangeEvent, useRef } from 'react';
-import { reservationStore } from './../../store/PostStore';
+import { reservationStore } from './../../store/PostWriteStore';
 
 export default function ReservationDate() {
   const { reservationDate, setReservationDate } = reservationStore();

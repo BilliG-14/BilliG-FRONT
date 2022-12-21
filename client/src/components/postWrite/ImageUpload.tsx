@@ -1,4 +1,4 @@
-import { imageUploadStore } from './../../store/PostStore';
+import { imageUploadStore } from './../../store/PostWriteStore';
 import { useState } from 'react';
 import { AiFillCamera } from 'react-icons/ai';
 

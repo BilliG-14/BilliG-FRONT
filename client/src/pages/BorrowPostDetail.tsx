@@ -4,22 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 
 import Caution from './../components/postDetail/Caution';
-
-type PostDataType = {
-  imgUrl: string[];
-  postType: string;
-  category: object;
-  author: object;
-  title: string;
-  description: string;
-  lender: object;
-  stateOfTransaction: number;
-  address: string;
-  price: object;
-  period: object;
-  tradeWay: object;
-  hashtag: string[];
-};
+import { PostDataType } from '../store/PostReadStore';
 
 export default function BorrowPostDetail() {
   const [borrowData, setBorrowData] = useState<PostDataType>();
@@ -49,7 +34,7 @@ export default function BorrowPostDetail() {
         {/* 상단 정보(카테고리, 작성일) */}
         <section className="max-w-screen-lg flex justify-between mb-4">
           <div className="text-sm text-b-text-darkgray ml-4">
-            빌리기 {'>'} 생활용품
+            빌리기 {'>'} {borrowData?.category.name}
           </div>
           <div className="text-xs text-b-text-darkgray mr-4">
             (작성일) 2022.12.16
@@ -88,8 +73,10 @@ export default function BorrowPostDetail() {
                   요금
                 </div>
                 <div>
-                  <div className="mb-2">1,000원/시간</div>
-                  <div>5,000원/일</div>
+                  <div className="mb-2">
+                    {borrowData?.price.priceTime}원/시간
+                  </div>
+                  <div>{borrowData?.price.priceDay}/일</div>
                 </div>
               </div>
               <hr className="hr-1 my-4"></hr>
@@ -99,7 +86,9 @@ export default function BorrowPostDetail() {
                 </div>
 
                 <div>
-                  <div>2022-12-20 ~ 2022-12-30</div>
+                  <div>
+                    {borrowData?.period.start} ~ {borrowData?.period.end}
+                  </div>
                 </div>
               </div>
 
@@ -109,16 +98,16 @@ export default function BorrowPostDetail() {
                   <div className="flex items-center">
                     <img
                       className="h-8 w-8 mr-2 rounded-full"
-                      src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1361&q=80"
+                      src={borrowData?.lender.image}
                       alt="사용자 이미지"
                     />
 
                     <div className="flex-1 min-w-0">
                       <p className="text-[12px] font-medium text-gray-900 mb-1">
-                        닉네임
+                        {borrowData?.lender.nickName}
                       </p>
                       <p className="text-[8px] font-medium text-gray-400 ">
-                        서울시 엘리스구
+                        {borrowData?.lender.address1}
                       </p>
                     </div>
                   </div>
@@ -138,7 +127,7 @@ export default function BorrowPostDetail() {
         <section>
           <div>상세정보</div>
           <div className="w-full h-40 mt-3 p-3 rounded-lg">
-            갤럭시 S2 공기계 빌리고 싶어요.....
+            {borrowData?.description}
           </div>
           <br />
           <br />

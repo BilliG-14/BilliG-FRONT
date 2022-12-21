@@ -4,7 +4,7 @@ import {
   tradeWayStore,
   hashTagStore,
   reservationStore,
-} from './../store/PostStore';
+} from './../store/PostWriteStore';
 
 import HashTagSection from '../components/postWrite/HashTagWrite';
 import ImageUpload from '../components/postWrite/ImageUpload';
