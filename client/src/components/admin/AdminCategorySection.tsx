@@ -1,51 +1,57 @@
-import { QueryClient, useMutation, useQuery } from '@tanstack/react-query';
+import {
+  QueryClient,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
 import { useCallback, useRef } from 'react';
 
+type Category = {
+  _id: string;
+  name: string;
+};
+
+/*Category CRUD */
+const apiCategory = {
+  GET: async () => {
+    const { data } = await axios.get(
+      'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/category',
+    );
+    return data;
+  },
+  CREATE: async (catogoryName: string) => {
+    await axios.post(
+      'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/category',
+      JSON.stringify({ name: catogoryName }),
+      {
+        headers: { 'Content-Type': `application/json` },
+      },
+    );
+  },
+  UPDATE: async ({ _id, name }: Category) => {
+    await axios.patch(
+      `https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/category/${_id}`,
+      JSON.stringify({ name: name }),
+      {
+        headers: { 'Content-Type': `application/json` },
+      },
+    );
+  },
+  DELETE: async (_id: string) => {
+    await axios.delete(
+      `https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/category/${_id}`,
+    );
+  },
+};
+
 export default function AdminCategorySection() {
-  const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
   const selectedCategory = useRef<Category>({ _id: '', name: '' });
   const selectedDiv = useRef<HTMLDivElement>(null);
   const elemCreateInput = useRef<HTMLInputElement>(null);
   const elemUpdateInput = useRef<HTMLInputElement>(null);
 
-  type Category = {
-    _id: string;
-    name: string;
-  };
-
-  /*Category CRUD */
-  const apiCategory = {
-    GET: async () => {
-      const { data } = await axios.get(
-        'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/category',
-      );
-      return data;
-    },
-    CREATE: async (catogoryName: string) => {
-      await axios.post(
-        'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/category',
-        JSON.stringify({ name: catogoryName }),
-        {
-          headers: { 'Content-Type': `application/json` },
-        },
-      );
-    },
-    UPDATE: async ({ _id, name }: Category) => {
-      await axios.patch(
-        `https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/category/${_id}`,
-        JSON.stringify({ name: name }),
-        {
-          headers: { 'Content-Type': `application/json` },
-        },
-      );
-    },
-    DELETE: async (_id: string) => {
-      await axios.delete(
-        `https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/category/${_id}`,
-      );
-    },
-  };
   /*get category */
   const { isLoading, data, isError } = useQuery<Category[], AxiosError>(
     ['categories'],
@@ -66,7 +72,7 @@ export default function AdminCategorySection() {
   const createMutation = useMutation(apiCategory.CREATE, {
     onSuccess: () => {
       // post요청 성공 시 category 맵핑된 useQuery api 함수를 실행
-      return queryClient.invalidateQueries(['categories']);
+      queryClient.invalidateQueries(['categories']);
     },
     onError: (error) => {
       console.log(error);
@@ -75,7 +81,7 @@ export default function AdminCategorySection() {
   const updateMutation = useMutation(apiCategory.UPDATE, {
     onSuccess: (_data) => {
       console.log(_data);
-      return queryClient.invalidateQueries(['categories']);
+      queryClient.invalidateQueries(['categories']);
     },
     onError: (error) => {
       console.log(error);
@@ -83,7 +89,7 @@ export default function AdminCategorySection() {
   });
   const deleteMutation = useMutation(apiCategory.DELETE, {
     onSuccess: (_data) => {
-      return queryClient.invalidateQueries(['categories']);
+      queryClient.invalidateQueries(['categories']);
     },
     onError: (error) => {
       console.log(error);
