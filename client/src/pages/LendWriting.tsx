@@ -164,6 +164,18 @@ export default function LendWriting() {
   async function handleButtonClick(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
 
+    if (
+      !fileredCategory ||
+      priceDayRef.current?.value === '' ||
+      priceTimeRef.current?.value === '' ||
+      productNameRef.current?.value === '' ||
+      descriptionRef.current?.value === '' ||
+      imgFiles.length === 0 ||
+      (!tradeWay.delivery && !tradeWay.direct)
+    ) {
+      alert('필수 값을 모두 작성해주세요.');
+      return;
+    }
     // 서버에 데이터 저장
     postData.mutate(formData);
   }
