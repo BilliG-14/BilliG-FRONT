@@ -24,7 +24,10 @@ export interface UpdatedNotice {
   };
   _id: string;
 }
-
+export interface CreatedNotice {
+  title: string;
+  content: string;
+}
 const baseUrl = 'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app';
 const endPoint = 'notice';
 const token = localStorage.getItem('token');
@@ -40,7 +43,7 @@ export const apiReports = {
     });
     return data;
   },
-  CREATE: async (newNotice: Notice) => {
+  CREATE: async (newNotice: CreatedNotice) => {
     const { data } = await axios({
       url: `/${endPoint}`,
       method: 'post',
@@ -98,15 +101,6 @@ function AdminNoticeList() {
       },
     },
   );
-  const createMutation = useMutation(apiReports.CREATE, {
-    onSuccess: () => {
-      // post요청 성공 시 category 맵핑된 useQuery api 함수를 실행
-      queryClient.invalidateQueries(['notices']);
-    },
-    onError: (error) => {
-      console.log(error);
-    },
-  });
   const updateMutation = useMutation(apiReports.UPDATE, {
     onSuccess: (_data) => {
       console.log(_data);
