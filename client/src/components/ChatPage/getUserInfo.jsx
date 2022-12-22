@@ -7,7 +7,7 @@ const getUserInfo = async () => {
     if (userInfo.status === 200 && id === uid) {
       console.log('userInfo: ', userInfo);
       console.log('userInfo.data: ', userInfo.data);
-      return { userInfo, id };
+      return { userInfo };
     } else {
       console.log('로그인이 정상적이지 않습니다.');
     }

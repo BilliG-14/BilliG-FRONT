@@ -15,7 +15,7 @@ import {
   off,
 } from 'firebase/database';
 import { chatRoomStore } from '../../../store/ChatStore';
-import getUserInfo from '../getUserInfo';
+import userInfo from '../getUserInfo';
 
 export class ChatRooms extends Component {
   state = {
@@ -45,10 +45,12 @@ export class ChatRooms extends Component {
     const firstChatRoom = this.state.chatRooms[0];
     if (this.state.firstLoad && this.state.chatRooms.length > 0) {
       /** 현재 채팅방 중 0번째 인덱스에 있는 채팅방 정보 가져옴 */
-      setCurrentChatRoom(firstChatRoom);
+      chatRoomStore.setCurrentChatRoom(firstChatRoom);
       this.setState({ activeChatRoomId: firstChatRoom.id });
     }
-    this.setState({ firstLoad: false }); /** firstLoad 상태값 false로 setState
+    this.setState({
+      firstLoad: false,
+    }); /** firstLoad 상태값 false로 setState */
   };
 
   AddChatRoomsListeners = () => {
@@ -66,18 +68,17 @@ export class ChatRooms extends Component {
       );
       /** 채팅방 알림 기능 */
       this.addNotificationListener(DataSnapshot.key);
-      /** 채팅방 목록 을 push 한 배열로  */ setState;
     });
   };
 
   addNotificationListener = (chatRoomId) => {
     let { messagesRef } = this.state;
     onValue(child(messagesRef, chatRoomId), (DataSnapshot) => {
-      if (this.props.chatRoom) {
+      if (chatRoomStore.chatRoom) {
         /** 리덕스 store에서 가져옴.(mapStateToProps) */
         this.handleNotification(
           chatRoomId,
-          this.props.chatRoom.id,
+          chatRoomStore.initialChatRoomState.currentChatRoom.id,
           this.state.notifications,
           DataSnapshot,
         );
@@ -177,14 +178,14 @@ export class ChatRooms extends Component {
   addChatRoom = async () => {
     const key = push(this.state.chatRoomsRef).key;
     const { name, description } = this.state;
-    const { user } = this.props;
+    const { user } = userInfo.data;
     const newChatRoom = {
       id: key /** 데이터베이스 테이블 아래에 들어갈 id이자, 데이터의 id이기도 함. */,
       name: name,
       description: description,
       createdBy: {
-        name: user.displayName,
-        image: user.photoURL,
+        name: user.nickName,
+        image: user.photoURL, // 이건 보류
       },
     };
 
@@ -206,8 +207,8 @@ export class ChatRooms extends Component {
   /** 채팅방 변경 */
   changeChatRoom = (room) => {
     /** 현재 선택한 채팅방 정보 가져옴 */
-    setCurrentChatRoom(room);
-    setPrivateChatRoom(false);
+    chatRoomStore.setCurrentChatRoom(room);
+    chatRoomStore.setPrivateChatRoom(false);
     this.setState({ activeChatRoomId: room.id });
   };
 
@@ -234,16 +235,6 @@ export class ChatRooms extends Component {
     ));
 
   render() {
-    const { user } = getUserInfo;
-
-    // store에서 불러오기
-    const {
-      initialChatRoomState,
-      isPrivateChatRoom,
-      setCurrentChatRoom,
-      setPrivateChatRoom,
-      setUserPosts,
-    } = chatRoomStore();
     return (
       <div>
         <div className="relative w-full flex items-center">
@@ -301,12 +292,3 @@ export class ChatRooms extends Component {
     );
   }
 }
-
-const mapStateToProps = (state) => {
-  return {
-    user: state.user.currentUser,
-    chatRoom: state.chatRoom.currentChatRoom,
-  };
-};
-
-export default connect(mapStateToProps)(ChatRooms);

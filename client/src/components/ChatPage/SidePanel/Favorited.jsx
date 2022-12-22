@@ -14,24 +14,9 @@ import {
   off,
 } from 'firebase/database';
 import { chatRoomStore } from '../../../store/ChatStore';
-import getUserInfo from '../getUserInfo';
+import userInfo from '../getUserInfo';
 
 export class Favorited extends Component {
-  getUser = () => {
-    const { user } = getUserInfo;
-    return user;
-  };
-  getChatRoom = () => {
-    // store에서 불러오기
-    const {
-      initialChatRoomState,
-      isPrivateChatRoom,
-      setCurrentChatRoom,
-      setPrivateChatRoom,
-      setUserPosts,
-    } = chatRoomStore();
-  };
-
   state = {
     favoritedChatRooms: [],
     activeChatRoomId: '',
@@ -39,14 +24,14 @@ export class Favorited extends Component {
   };
 
   componentDidMount() {
-    if (this.props.user) {
-      this.addListeners(this.props.user.uid);
+    if (userInfo.data) {
+      this.addListeners(userInfo.data._id);
     }
   }
 
   componentWillUnmount() {
-    if (this.props.user) {
-      this.removeListener(this.props.user.uid);
+    if (userInfo.data) {
+      this.removeListener(userInfo.data._id);
     }
   }
 
@@ -84,8 +69,8 @@ export class Favorited extends Component {
   };
 
   changeChatRoom = (room) => {
-    this.props.dispatch(setCurrentChatRoom(room));
-    this.props.dispatch(setPrivateChatRoom(false));
+    chatRoomStore.setCurrentChatRoom(room);
+    chatRoomStore.setPrivateChatRoom(false);
     this.setState({ activeChatRoomId: room.id });
   };
 
@@ -119,11 +104,3 @@ export class Favorited extends Component {
     );
   }
 }
-
-const mapStateToProps = (state) => {
-  return {
-    user: state.user.currentUser,
-  };
-};
-
-export default connect(mapStateToProps)(Favorited);
