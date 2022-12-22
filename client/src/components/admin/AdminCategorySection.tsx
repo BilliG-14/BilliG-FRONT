@@ -217,7 +217,11 @@ export default function AdminCategorySection() {
           yesText="삭제"
           onClickToggleModal={onClickToggleModal}
           onClickYes={() => {
-            handleDelete(selectedCategory.current._id);
+            try {
+              handleDelete(selectedCategory.current._id);
+            } catch (error) {
+              console.log(error);
+            }
           }}
         />
       )}

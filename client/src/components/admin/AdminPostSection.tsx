@@ -3,7 +3,7 @@ import axios, { AxiosError } from 'axios';
 import ConfirmModal from 'components/Modal';
 import { useCallback, useState } from 'react';
 
-/*Category CRUD */
+/*Products CRUD */
 const baseUrl = 'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app';
 const endPoint = 'product';
 const token = localStorage.getItem('token');
