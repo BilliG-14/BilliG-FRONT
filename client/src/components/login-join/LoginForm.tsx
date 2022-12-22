@@ -2,6 +2,7 @@ import axios from 'axios';
 import { FormEvent, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useIsLoginStore } from 'store/LoginJoinStore';
+import api from '../../api/customAxios';
 
 export function LoginForm() {
   const navigate = useNavigate();
@@ -17,15 +18,11 @@ export function LoginForm() {
       password: inputRef.current[1]?.value,
     };
     try {
-      const result = await axios.post(
-        'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/login',
-        JSON.stringify(login),
-        { headers: { 'Content-Type': `application/json` } },
-      );
+      const result = await api.post('/login', JSON.stringify(login));
       const token = result.data.token;
       localStorage.setItem('token', token);
-      setIsLoginTrue();
       alert('로그인에 성공하였습니다.');
+      setIsLoginTrue();
       navigate('/submain');
     } catch (error) {
       console.error(error);
@@ -36,7 +33,7 @@ export function LoginForm() {
     <form
       onSubmit={handleSubmit}
       className="w-2/3 mt-24 mx-auto animate-fade-in-150ms"
-      action="https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/login"
+      action="https://port-0-village-token-dpuqy925lbn63gyo.gksl2.cloudtype.app/login"
     >
       <div className="w-full flex flex-col justify-center items-center">
         <input

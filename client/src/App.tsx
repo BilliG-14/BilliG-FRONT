@@ -19,7 +19,7 @@ import MyBorrowPostListPage from './pages/MyBorrowPostListPage';
 import MyDoneListPage from 'pages/MyDoneListPage';
 import ScrollToTop from 'components/ScrollToTop';
 import { useIsLoginStore } from 'store/LoginJoinStore';
-import axios from 'axios';
+import api from './api/customAxios';
 
 const queryClient = new QueryClient();
 const GlobalStyle = createGlobalStyle`
@@ -37,21 +37,18 @@ function App() {
 
     const getUserInfo = async () => {
       try {
-        const userInfo = await axios.get(
-          'https://port-0-village-token-dpuqy925lbn63gyo.gksl2.cloudtype.app/user',
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+        const userInfo = await api.get('/user/me', {
+          headers: {
+            Authorization: `Bearer ${token}`,
           },
-        );
-        console.log(userInfo);
+        });
+        getUserInfo();
       } catch (error) {
         console.log(error);
       }
     };
 
-    getUserInfo();
+    // getUserInfo();
     // localStorage에 token이 있으나, isLogin이 false가 됫으면
     // token이 만료됬는지를 확인 할 수 있어야함.
     // token이 있다고 무조건 true로 할 순 없음.
