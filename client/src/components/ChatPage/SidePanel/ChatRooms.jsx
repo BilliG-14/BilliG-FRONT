@@ -4,12 +4,6 @@ import { FaPlus } from 'react-icons/fa';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import Badge from 'react-bootstrap/Badge';
-import { connect } from 'react-redux';
-import {
-  setCurrentChatRoom,
-  setPrivateChatRoom,
-} from '../../../redux/actions/chatRoom_action';
 import {
   getDatabase,
   ref,
@@ -20,6 +14,8 @@ import {
   update,
   off,
 } from 'firebase/database';
+import { chatRoomStore } from '../../../store/ChatStore';
+import getUserInfo from '../getUserInfo';
 
 export class ChatRooms extends Component {
   state = {
@@ -49,7 +45,7 @@ export class ChatRooms extends Component {
     const firstChatRoom = this.state.chatRooms[0];
     if (this.state.firstLoad && this.state.chatRooms.length > 0) {
       /** 현재 채팅방 중 0번째 인덱스에 있는 채팅방 정보 가져옴 */
-      this.props.dispatch(setCurrentChatRoom(firstChatRoom));
+      setCurrentChatRoom(firstChatRoom);
       this.setState({ activeChatRoomId: firstChatRoom.id });
     }
     this.setState({ firstLoad: false }); /** firstLoad 상태값 false로 setState
@@ -210,8 +206,8 @@ export class ChatRooms extends Component {
   /** 채팅방 변경 */
   changeChatRoom = (room) => {
     /** 현재 선택한 채팅방 정보 가져옴 */
-    this.props.dispatch(setCurrentChatRoom(room));
-    this.props.dispatch(setPrivateChatRoom(false));
+    setCurrentChatRoom(room);
+    setPrivateChatRoom(false);
     this.setState({ activeChatRoomId: room.id });
   };
 
@@ -228,13 +224,26 @@ export class ChatRooms extends Component {
         onClick={() => this.changeChatRoom(room)}
       >
         # {room.name}
-        <Badge className="float-right mt-4 " variant="danger">
+        <span
+          className="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full "
+          variant="danger"
+        >
           {this.getNotificationCount(room)}
-        </Badge>
+        </span>
       </li>
     ));
 
   render() {
+    const { user } = getUserInfo;
+
+    // store에서 불러오기
+    const {
+      initialChatRoomState,
+      isPrivateChatRoom,
+      setCurrentChatRoom,
+      setPrivateChatRoom,
+      setUserPosts,
+    } = chatRoomStore();
     return (
       <div>
         <div className="relative w-full flex items-center">

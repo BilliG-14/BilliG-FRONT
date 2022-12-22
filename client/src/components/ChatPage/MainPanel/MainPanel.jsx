@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import MessageHeader from './MessageHeader';
 import Message from './Message';
 import MessageForm from './MessageForm';
-import { connect } from 'react-redux';
-import { setUserPosts } from '../../../redux/actions/chatRoom_action';
 import Skeleton from '../../../commons/components/Skeleton';
 import {
   getDatabase,
@@ -14,6 +12,8 @@ import {
   off,
 } from 'firebase/database';
 
+import { chatRoomStore } from '../../../store/ChatStore';
+import userInfo from '../getUserInfo';
 export class MainPanel extends Component {
   messageEndRef = React.createRef();
 
@@ -30,8 +30,7 @@ export class MainPanel extends Component {
   };
 
   componentDidMount() {
-    const { chatRoom } =
-      this.props; /**리덕스 store에 chatRoom 정보가 들어있음. */
+    const { chatRoom } = chatRoomStore.initialChatRoomState.currentChatRoom;
 
     if (chatRoom) {
       this.addMessagesListeners(chatRoom.id);
@@ -63,7 +62,7 @@ export class MainPanel extends Component {
 
     onChildAdded(child(typingRef, chatRoomId), (DataSnapshot) => {
       /** 현재 타이핑 중인 사람 !== 로그인한 사람 */
-      if (DataSnapshot.key !== this.props.user.uid) {
+      if (DataSnapshot.key !== userInfo.data._id) {
         typingUsers = typingUsers.concat({
           id: DataSnapshot.key,
           name: DataSnapshot.val(),
@@ -163,7 +162,7 @@ export class MainPanel extends Component {
       }
       return acc;
     }, {});
-    this.props.dispatch(setUserPosts(userPosts));
+    chatRoomStore.setUserPosts(userPosts);
   };
 
   renderMessages = (messages) =>
@@ -174,7 +173,7 @@ export class MainPanel extends Component {
         key={message.timestamp}
         message={message} /**  타임스탬프 포함한 메시지 정보*/
         user={
-          this.props.user
+          userInfo.data._id
         } /**  메시지가 내가 보낸 것인지, 다른사람이 보낸 것인지 구분하기 위한 것, mapStateToProps에서 받아온 state.user.currentUser 값임*/
       />
     ));
@@ -227,12 +226,3 @@ export class MainPanel extends Component {
     );
   }
 }
-
-const mapStateToProps = (state) => {
-  return {
-    user: state.user.currentUser,
-    chatRoom: state.chatRoom.currentChatRoom,
-  };
-};
-/** 리덕스 store에 chatRoom 정보가 들어있음.*/
-export default connect(mapStateToProps)(MainPanel);

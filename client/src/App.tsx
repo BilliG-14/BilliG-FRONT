@@ -66,7 +66,7 @@ function App() {
   }, [isLogin]);
   console.log(isLoading, isLogin);
 
-  if ((!isLoading && !isLogin) || (isLoading && !isLogin))
+  if ((!isLoading && !isLogin) || (!isLoading && isLogin))
     return <p>loading....</p>;
 
   return (
@@ -84,11 +84,8 @@ function App() {
               <Route path="/write/lend" element={<LendWriting />} />
               <Route path="/write/borrow" element={<BorrowWriting />} />
               <Route path="/submain" element={<Submain />} />
-              {isLoading ? (
-                <div>...loading</div>
-              ) : (
-                <Route path="/chat" element={<ChatPage />} />
-              )}
+
+              <Route path="/chat" element={<ChatPage />} />
 
               <Route path="/search" element={<Search />} />
               <Route path="/read/lend/:id" element={<LendPostDetail />} />

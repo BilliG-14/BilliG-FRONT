@@ -1,9 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import Form from 'react-bootstrap/Form';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { useSelector } from 'react-redux';
 
 import { getDatabase, ref, set, remove, push, child } from 'firebase/database';
 import {
@@ -13,10 +12,18 @@ import {
   getDownloadURL,
 } from 'firebase/storage';
 
+import { chatRoomStore } from '../../../store/ChatStore';
+import getUserInfo from '../getUserInfo';
+
 function MessageForm() {
   /** 리덕스 store에 chatRoom 정보가 들어있음.  */
-  const chatRoom = useSelector((state) => state.chatRoom.currentChatRoom);
-  const user = useSelector((state) => state.user.currentUser);
+  const { userInfo } = getUserInfo;
+
+  // store에서 불러오기
+  const { initialChatRoomState, isPrivateChatRoom } = chatRoomStore();
+
+  const chatRoom = initialChatRoomState.currentChatRoom;
+  const user = userInfo.data;
   /**  채팅창에 입력할 내용 */
   const [content, setContent] = useState('');
   /**  에러 처리 */
@@ -29,9 +36,7 @@ function MessageForm() {
   /**  프로필 사진 변경하기랑 같은 원리로 사용함 */
   const inputOpenImageRef = useRef();
   const typingRef = ref(getDatabase(), 'typing');
-  const isPrivateChatRoom = useSelector(
-    (state) => state.chatRoom.isPrivateChatRoom,
-  );
+  const isPrivateRoom = isPrivateChatRoom;
   const handleChange = (event) => {
     setContent(event.target.value);
   };
@@ -46,11 +51,11 @@ function MessageForm() {
     };
 
     if (fileUrl !== null) {
-      message['image'] =
-        fileUrl; /**  message 테이블의 image 컬럼에 파일 url 추가 */
+      /**  message 테이블의 image 컬럼에 파일 url 추가 */
+      message.user.image = fileUrl;
     } else {
-      message['content'] =
-        content; /**  message 테이블의 content 컬럼에 채팅 내용 추가 */
+      /**  message 테이블의 content 컬럼에 채팅 내용 추가 */
+      message.content = content;
     }
 
     return message;
@@ -84,7 +89,7 @@ function MessageForm() {
   };
 
   const getPath = () => {
-    if (isPrivateChatRoom) {
+    if (isPrivateRoom) {
       return `/message/private/${chatRoom.id}`;
     } else {
       return `/message/public`;
@@ -182,7 +187,6 @@ function MessageForm() {
           />
         </Form.Group>
       </Form>
-      {/** 프로그래스바 정상 동작하지 않음... */}
       {!(percentage === 0 || percentage === 100) && (
         <ProgressBar
           variant="warning"

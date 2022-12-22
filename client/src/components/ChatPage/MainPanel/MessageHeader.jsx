@@ -7,12 +7,10 @@ import FormControl from 'react-bootstrap/FormControl';
 import Image from 'react-bootstrap/Image';
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
 import { FaLock } from 'react-icons/fa';
 import { FaLockOpen } from 'react-icons/fa';
 import { MdFavorite, MdFavoriteBorder } from 'react-icons/md';
 import { AiOutlineSearch } from 'react-icons/ai';
-import { useSelector } from 'react-redux';
 import {
   getDatabase,
   ref,
@@ -22,20 +20,24 @@ import {
   update,
 } from 'firebase/database';
 
+import { chatRoomStore } from '../../../store/ChatStore';
+import getUserInfo from '../getUserInfo';
+
 function MessageHeader({ handleSearchChange }) {
-  const chatRoom = useSelector((state) => state.chatRoom.currentChatRoom);
-  const isPrivateChatRoom = useSelector(
-    (state) => state.chatRoom.isPrivateChatRoom,
-  );
+  const { userInfo } = getUserInfo;
+
+  // store에서 불러오기
+  const { initialChatRoomState, isPrivateChatRoom, setUserPosts } =
+    chatRoomStore();
+
+  const currentchatRoom = initialChatRoomState.currentChatRoom;
+  const userData = userInfo.data;
+  const chatRoom = currentchatRoom;
+  const isPrivateRoom = isPrivateChatRoom;
   const [isFavorited, setIsFavorited] = useState(false);
   const usersRef = ref(getDatabase(), 'users');
-  const user = useSelector((state) => state.user.currentUser);
-  const userPosts = useSelector((state) => state.chatRoom.userPosts);
-  useEffect(() => {
-    if (chatRoom && user) {
-      addFavoriteListener(chatRoom.id, user.uid);
-    }
-  }, []);
+  const user = userData;
+  const userPosts = useSelector((state) => state.chatRoom.userPosts); // 일단 보류
 
   /** 새로고침해도 좋아요 남아있게하기 */
   const addFavoriteListener = (chatRoomId, userId) => {
@@ -47,6 +49,11 @@ function MessageHeader({ handleSearchChange }) {
       }
     });
   };
+  useEffect(() => {
+    if (chatRoom && user) {
+      addFavoriteListener(chatRoom.id, user.uid);
+    }
+  }, []);
 
   const handleFavorite = () => {
     if (isFavorited) {
@@ -94,7 +101,7 @@ function MessageHeader({ handleSearchChange }) {
         <Row>
           <Col>
             <h2>
-              {isPrivateChatRoom ? (
+              {isPrivateRoom ? (
                 <FaLock className="mb-10" />
               ) : (
                 <FaLockOpen className="mb-10" />
@@ -103,7 +110,7 @@ function MessageHeader({ handleSearchChange }) {
               {chatRoom && chatRoom.name}
               {/**  오픈채팅방에서만 즐겨찾기 기능 돌아가게 설정함, 일대일 채팅에서 즐겨찾기 기능 쓰려면
                아래의 if문을 변경해줘야함.    */}
-              {!isPrivateChatRoom && (
+              {!isPrivateRoom && (
                 <span className="cursor-pointer" onClick={handleFavorite}>
                   {isFavorited ? (
                     <MdFavorite className="mb-10" />
@@ -130,7 +137,7 @@ function MessageHeader({ handleSearchChange }) {
           </Col>
         </Row>
 
-        {!isPrivateChatRoom && (
+        {!isPrivateRoom && (
           <div className="flex justify-end">
             <p>
               <Image

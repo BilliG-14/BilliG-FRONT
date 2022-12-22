@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FaRegSmile } from 'react-icons/fa';
 import firebase from '../../../firebase';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 import {
   setCurrentChatRoom,
   setPrivateChatRoom,

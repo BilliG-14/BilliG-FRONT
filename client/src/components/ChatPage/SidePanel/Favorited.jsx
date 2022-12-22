@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { FaRegSmileBeam } from 'react-icons/fa';
-import { connect } from 'react-redux';
 import {
   setCurrentChatRoom,
   setPrivateChatRoom,
@@ -14,8 +13,25 @@ import {
   onChildRemoved,
   off,
 } from 'firebase/database';
+import { chatRoomStore } from '../../../store/ChatStore';
+import getUserInfo from '../getUserInfo';
 
 export class Favorited extends Component {
+  getUser = () => {
+    const { user } = getUserInfo;
+    return user;
+  };
+  getChatRoom = () => {
+    // store에서 불러오기
+    const {
+      initialChatRoomState,
+      isPrivateChatRoom,
+      setCurrentChatRoom,
+      setPrivateChatRoom,
+      setUserPosts,
+    } = chatRoomStore();
+  };
+
   state = {
     favoritedChatRooms: [],
     activeChatRoomId: '',
