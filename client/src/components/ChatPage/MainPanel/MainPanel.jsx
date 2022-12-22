@@ -30,7 +30,8 @@ export class MainPanel extends Component {
   };
 
   componentDidMount() {
-    const { chatRoom } = this.props; //리덕스 store에 chatRoom 정보가 들어있음.
+    const { chatRoom } =
+      this.props; /**리덕스 store에 chatRoom 정보가 들어있음. */
 
     if (chatRoom) {
       this.addMessagesListeners(chatRoom.id);
@@ -45,7 +46,6 @@ export class MainPanel extends Component {
   }
 
   componentWillUnmount() {
-    // ref(getDatabase(), "messages")
     off(this.state.messagesRef);
     this.removeListeners(this.state.listenerLists);
   }
@@ -58,11 +58,11 @@ export class MainPanel extends Component {
 
   addTypingListeners = (chatRoomId) => {
     let typingUsers = [];
-    //typing이 새로 들어올 때
+    /**typing이 새로 들어올 때 */
     let { typingRef } = this.state;
 
     onChildAdded(child(typingRef, chatRoomId), (DataSnapshot) => {
-      // 현재 타이핑 중인 사람 !== 로그인한 사람
+      /** 현재 타이핑 중인 사람 !== 로그인한 사람 */
       if (DataSnapshot.key !== this.props.user.uid) {
         typingUsers = typingUsers.concat({
           id: DataSnapshot.key,
@@ -72,10 +72,10 @@ export class MainPanel extends Component {
       }
     });
 
-    //listenersList state에 등록된 리스너를 넣어주기
+    /**listenersList state에 등록된 리스너를 넣어주기 */
     this.addToListenerLists(chatRoomId, this.state.typingRef, 'child_added');
 
-    //typing을 지워줄 때
+    /**typing을 지워줄 때 */
     onChildRemoved(child(typingRef, chatRoomId), (DataSnapshot) => {
       const index = typingUsers.findIndex(
         (user) => user.id === DataSnapshot.key,
@@ -88,12 +88,12 @@ export class MainPanel extends Component {
       }
     });
 
-    //listenersList state에 등록된 리스너를 넣어주기
+    /**listenersList state에 등록된 리스너를 넣어주기 */
     this.addToListenerLists(chatRoomId, this.state.typingRef, 'child_removed');
   };
 
   addToListenerLists = (id, ref, event) => {
-    //이미 등록된 리스너인지 확인
+    /**이미 등록된 리스너인지 확인 */
     const index = this.state.listenerLists.findIndex((listener) => {
       return (
         listener.id === id && listener.ref === ref && listener.event === event
@@ -112,14 +112,17 @@ export class MainPanel extends Component {
     const chatRoomMessages = [...this.state.messages];
     const regex = new RegExp(this.state.searchTerm, 'gi');
     const searchResults = chatRoomMessages.reduce((acc, message) => {
+      /** 텍스트 메시지 내용이 존재하고, 메시지 내용이 regexp(정규표현식)와 일치하거나 메시지 보낸 유저 네임과  regexp(정규표현식)가 일치되는 것이 있을 경우*/
       if (
-        (message.content && message.content.match(regex)) || // 텍스트 메시지 내용이 존재하고, 메시지 내용이 regexp(정규표현식)와 일치하거나 메시지 보낸 유저 네임과  regexp(정규표현식)가 일치되는 것이 있을 경우
-        message.user.name.match(regex) // acc에 메시지를 push합니다. (계속 축적됨)
+        (message.content && message.content.match(regex)) ||
+        message.user.name.match(
+          regex,
+        ) /** acc에 메시지를 push합니다. (계속 축적됨)*/
       ) {
-        acc.push(message); // acc 리턴
+        acc.push(message); /** acc 리턴*/
       }
       return acc;
-    }, []); //초깃값은 빈 배열
+    }, []); /**초깃값은 빈 배열*/
     this.setState({ searchResults });
   };
 
@@ -166,19 +169,23 @@ export class MainPanel extends Component {
   renderMessages = (messages) =>
     messages.length > 0 &&
     messages.map((message) => (
-      // 여기서 수행할 경우 복잡해지므로 Message 컴포넌트에서 수행함
+      /**  여기서 수행할 경우 복잡해지므로 Message 컴포넌트에서 수행함*/
       <Message
         key={message.timestamp}
-        message={message} // 타임스탬프 포함한 메시지 정보
-        user={this.props.user} // 메시지가 내가 보낸 것인지, 다른사람이 보낸 것인지 구분하기 위한 것, mapStateToProps에서 받아온 state.user.currentUser 값임
+        message={message} /**  타임스탬프 포함한 메시지 정보*/
+        user={
+          this.props.user
+        } /**  메시지가 내가 보낸 것인지, 다른사람이 보낸 것인지 구분하기 위한 것, mapStateToProps에서 받아온 state.user.currentUser 값임*/
       />
     ));
 
   renderTypingUsers = (typingUsers) => {
     return (
       typingUsers.length > 0 &&
-      typingUsers.map((user) => (
-        <span>{user.name.userUid}님이 채팅을 입력하고 있습니다...</span>
+      typingUsers.map((user, idx) => (
+        <span key={idx}>
+          {user.name.userUid}님이 채팅을 입력하고 있습니다...
+        </span>
       ))
     );
   };
@@ -211,7 +218,7 @@ export class MainPanel extends Component {
             ? this.renderMessages(searchResults)
             : this.renderMessages(messages)}
           {this.renderTypingUsers(typingUsers)}
-          {/* 스크롤이 내려갈 자리, node는 div를 가리킴 */}
+          {/**  스크롤이 내려갈 자리, node는 div를 가리킴 */}
           <div ref={(node) => (this.messageEndRef = node)} />
         </div>
 
@@ -227,5 +234,5 @@ const mapStateToProps = (state) => {
     chatRoom: state.chatRoom.currentChatRoom,
   };
 };
-
-export default connect(mapStateToProps)(MainPanel); //리덕스 store에 chatRoom 정보가 들어있음.
+/** 리덕스 store에 chatRoom 정보가 들어있음.*/
+export default connect(mapStateToProps)(MainPanel);

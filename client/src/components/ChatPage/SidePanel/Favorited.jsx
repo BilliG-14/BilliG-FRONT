@@ -43,7 +43,7 @@ export class Favorited extends Component {
     const { userRef } = this.state;
 
     onChildAdded(child(userRef, `${userId}/favorited`), (DataSnapshot) => {
-      //클릭한 방에 대한 정보는 DataSnapshot에 들어있다.
+      /**클릭한 방에 대한 정보는 DataSnapshot에 들어있다. */
       const favoritedChatRoom = {
         id: DataSnapshot.key,
         ...DataSnapshot.val(),

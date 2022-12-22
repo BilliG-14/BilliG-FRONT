@@ -21,12 +21,8 @@ function UserPanel() {
   const handleLogout = () => {
     const auth = getAuth();
     signOut(auth)
-      .then(() => {
-        // Sign-out successful.
-      })
-      .catch((error) => {
-        // An error happened.
-      });
+      .then(() => {})
+      .catch((error) => {});
   };
 
   const handleOpenImageRef = () => {
@@ -41,10 +37,9 @@ function UserPanel() {
     const metadata = { contentType: file.type };
     const storage = getStorage();
 
-    //스토리지에 파일 저장하기 v9, 이미지가 계속 추가되는게 아니라 1개에 계속 덮어씌워짐.
-    // https://firebase.google.com/docs/storage/web/upload-files#full_example
+    /**스토리지에 파일 저장하기 v9, 이미지가 계속 추가되는게 아니라 1개에 계속 덮어씌워짐.*/
     try {
-      //스토리지에 파일 저장하기
+      /**스토리지에 파일 저장하기 */
       let uploadTask = uploadBytesResumable(
         strRef(storage, `user_image/${user.uid}`),
         file,
@@ -54,7 +49,6 @@ function UserPanel() {
       uploadTask.on(
         'state_changed',
         (snapshot) => {
-          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           console.log('Upload is ' + progress + '% done');
@@ -70,43 +64,35 @@ function UserPanel() {
           }
         },
         (error) => {
-          // A full list of error codes is available at
-          // https://firebase.google.com/docs/storage/web/handle-errors
           switch (error.code) {
             case 'storage/unauthorized':
-              // User doesn't have permission to access the object
               break;
             case 'storage/canceled':
-              // User canceled the upload
               break;
             case 'storage/unknown':
-              // Unknown error occurred, inspect error.serverResponse
               break;
             default:
               break;
           }
         },
         () => {
-          // Upload completed successfully, now we can get the download URL
-
-          //스토리지에 올린 이미지 파일의 url 가져오기
+          /**스토리지에 올린 이미지 파일의 url 가져오기 */
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            // 프로필 이미지 수정
+            /** 프로필 이미지 수정 */
             updateProfile(user, {
               photoURL: downloadURL,
             });
 
-            //스토리지에 업로드한 파일로 프로필 업데이트 하기
+            /**스토리지에 업로드한 파일로 프로필 업데이트 하기 */
             dispatch(setPhotoURL(downloadURL));
 
-            //데이터베이스 유저 이미지 수정
+            /**데이터베이스 유저 이미지 수정 */
             update(ref(getDatabase(), `users/${user.uid}`), {
               image: downloadURL,
             });
           });
         },
       );
-      // console.log('uploadTaskSnapshot', uploadTaskSnapshot)
     } catch (error) {
       console.log(error);
     }
@@ -143,7 +129,7 @@ function UserPanel() {
         </Dropdown>
       </div>
 
-      {/* display:none이라 안보이므로 아래에 옮겨둠 */}
+      {/** display:none이라 안보이므로 아래에 옮겨둠 */}
       <input
         onChange={handleUploadImage}
         accept="image/jpeg, image/png"
