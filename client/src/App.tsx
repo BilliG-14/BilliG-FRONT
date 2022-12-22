@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
@@ -17,6 +17,8 @@ import MyGivePostListPage from './pages/MyGivePostListPage';
 import MyBorrowPostListPage from './pages/MyBorrowPostListPage';
 import MyDoneListPage from 'pages/MyDoneListPage';
 import ScrollToTop from 'components/ScrollToTop';
+import { useIsLoginStore } from 'store/LoginJoinStore';
+import api from './api/customAxios';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -25,6 +27,46 @@ const GlobalStyle = createGlobalStyle`
 const queryClient = new QueryClient();
 
 function App() {
+  const {
+    isLogin,
+    isLoading,
+    setIsLoginTrue,
+    setIsLoginFalse,
+    setIsLoadingTrue,
+    setIsLoadingFalse,
+  } = useIsLoginStore();
+
+  useEffect(() => {
+    setIsLoadingFalse();
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setIsLoadingTrue();
+      return;
+    }
+
+    const getUserInfo = async () => {
+      try {
+        const userInfo = await api.get('/user/me');
+        const id = localStorage.getItem('userId');
+
+        if (userInfo.status === 200 && id === userInfo.data._id) {
+          setIsLoginTrue();
+        } else {
+          setIsLoginFalse();
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getUserInfo();
+    setIsLoadingTrue();
+  }, [isLogin]);
+  console.log(isLoading, isLogin);
+
+  if ((!isLoading && !isLogin) || (!isLoading && isLogin))
+    return <p>loading....</p>;
+
   return (
     <React.Fragment>
       <QueryClientProvider client={queryClient}>

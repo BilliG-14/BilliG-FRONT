@@ -2,15 +2,18 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FiSearch } from 'react-icons/fi';
 import { useLoginJoinStore } from 'store/LoginJoinStore';
-import MenuButton from 'components/MenuButton/MenuButton';
 import api from '../../api/customAxios';
+import MenuButton from 'components/MenuButton/MenuButton';
 
-function Nav() {
+function TrueNav() {
   const [setSelectedJoin, setSelectedLogin] = useLoginJoinStore((state) => [
     state.setSelectedJoin,
     state.setSelectedLogin,
   ]);
   const navigate = useNavigate();
+  const goHome = () => {
+    navigate('/');
+  };
   const goLogin = () => {
     setSelectedLogin();
     navigate('/login');
@@ -28,22 +31,15 @@ function Nav() {
     navigate('/search');
   };
   return (
-    <div className="flex justify-between pr-5 h-40 mt-1">
+    <div className="flex justify-between pr-5 h-32">
       <MenuButton />
       <div className="flex flex-col justify-center">
         <div className="flex justify-between items-center w-52 text-lg font-semibold">
           <button
-            className="login hover:text-b-yellow hover: ease-in-out duration-300"
-            onClick={goLogin}
-          >
-            login
-          </button>
-          /
-          <button
             className="join hover:text-b-yellow hover: ease-in-out duration-300"
             onClick={goJoin}
           >
-            join
+            로그인이지롱
           </button>
           /
           <button
@@ -65,4 +61,4 @@ function Nav() {
     </div>
   );
 }
-export default Nav;
+export default TrueNav;
