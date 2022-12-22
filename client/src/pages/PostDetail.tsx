@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useQuery, useMutation } from '@tanstack/react-query';
 
 import Caution from '../components/postDetail/Caution';
 import { PostDataType } from '../store/PostReadStore';
@@ -10,6 +10,8 @@ import { GoPackage } from 'react-icons/go';
 import api from './../api/customAxios';
 
 export default function LendPostDetail() {
+  const navigate = useNavigate();
+
   // 서버에서 get 하는 data state
   const [postData, setPostData] = useState<PostDataType>();
 
@@ -23,6 +25,25 @@ export default function LendPostDetail() {
     onSuccess: (res) => setPostData(res?.data[0]),
     onError: () => console.log('error'),
   });
+
+  // post 삭제하기, useMutate 정의
+  const deleteData = useMutation(() => api.delete(`/product/${id}`), {
+    onSuccess: () => {
+      navigate('/submain');
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  // 현재 상품 상태가 거래전(대여전)상태일때만 삭제가 가능하게끔함.
+  // 프로세스 : 거래전(0) - 거래중(1) - 대여완료(2) - 반납완료(3)
+  function deletePost() {
+    console.log(postData?.stateOfTransaction === 0);
+    if (postData?.stateOfTransaction === 0) {
+      deleteData.mutate();
+    }
+  }
 
   // 서브 사진 클릭하면 메인으로 올리기
   const [mainImgUrl, setMainImgUrl] = useState('');
@@ -216,7 +237,10 @@ export default function LendPostDetail() {
             <button className="text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 mr-1  transition duration-100">
               수정
             </button>
-            <button className="text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 font-medium rounded-lg text-sm px-3 py-1.5   transition duration-100">
+            <button
+              onClick={deletePost}
+              className="text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 font-medium rounded-lg text-sm px-3 py-1.5   transition duration-100"
+            >
               삭제
             </button>
           </div>
