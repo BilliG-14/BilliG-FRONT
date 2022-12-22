@@ -10,8 +10,7 @@ import reset from 'styled-reset';
 import BorrowWriting from './pages/BorrowWriting';
 import LendWriting from './pages/LendWriting';
 import Submain from './pages/Submain';
-import LendPostDetail from './pages/LendPostDetail';
-import BorrowPostDetail from './pages/BorrowPostDetail';
+import PostDetail from './pages/PostDetail';
 import Search from './pages/Search';
 import MyPage from './pages/MyPage';
 import MyGivePostListPage from './pages/MyGivePostListPage';
@@ -42,8 +41,7 @@ function App() {
               <Route path="/write/borrow" element={<BorrowWriting />} />
               <Route path="/submain" element={<Submain />} />
               <Route path="/search" element={<Search />} />
-              <Route path="/read/lend/:id" element={<LendPostDetail />} />
-              <Route path="/read/borrow/:id" element={<BorrowPostDetail />} />
+              <Route path="/read/:id" element={<PostDetail />} />
               <Route path="/mypage" element={<MyPage />} />
               <Route path="/mypage/givelist" element={<MyGivePostListPage />} />
               <Route
