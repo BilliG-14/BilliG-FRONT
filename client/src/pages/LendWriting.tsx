@@ -15,6 +15,7 @@ import HashTagSection from '../components/postWrite/HashTagWrite';
 import ImageUpload from '../components/postWrite/ImageUpload';
 import TradeWay from '../components/postWrite/TradeWay';
 import { useNavigate } from 'react-router-dom';
+import api from './../api/customAxios';
 
 export default function LendWriting() {
   // 빌려드립니다 글쓰기
@@ -60,20 +61,13 @@ export default function LendWriting() {
   const [categorys, setCategorys] = useState<CategoryType[]>([]);
   const [filteredCategory, setFilteredCategory] = useState<CategoryType[]>([]);
 
-  useQuery(
-    ['categories'],
-    () =>
-      axios.get(
-        'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/category',
-      ),
-    {
-      refetchOnMount: 'always',
-      refetchOnWindowFocus: false,
-      staleTime: 60 * 1000 * 60, // 1시간
-      onSuccess: (res) => setCategorys(res.data),
-      onError: (err) => console.log(err),
-    },
-  );
+  useQuery(['categories'], () => api.get('/category'), {
+    refetchOnMount: 'always',
+    refetchOnWindowFocus: false,
+    staleTime: 60 * 1000 * 60, // 1시간
+    onSuccess: (res) => setCategorys(res.data),
+    onError: (err) => console.log(err),
+  });
 
   // 사용자가 선택한 카테고리만 필터
   function changecategory() {
@@ -87,13 +81,10 @@ export default function LendWriting() {
   // useMutate 정의
   const postData = useMutation(
     (data: FormData) =>
-      axios({
-        method: 'POST',
-        url: 'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/product/',
+      api.post('/product', data, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
-        data: data,
       }),
     {
       onSuccess: (data) => {
@@ -104,6 +95,26 @@ export default function LendWriting() {
       },
     },
   );
+
+  // const postData = useMutation(
+  //   (data: FormData) =>
+  //     axios({
+  //       method: 'POST',
+  //       url: 'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/product/',
+  //       headers: {
+  //         'Content-Type': 'multipart/form-data',
+  //       },
+  //       data: data,
+  //     }),
+  //   {
+  //     onSuccess: (data) => {
+  //       navigate(`/read/${data.data._id}`);
+  //     },
+  //     onError: (error) => {
+  //       console.log(error);
+  //     },
+  //   },
+  // );
 
   // formData 넣기
   const formData = new FormData();

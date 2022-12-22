@@ -1,5 +1,7 @@
 import { useRef, useState } from 'react';
 import axios from 'axios';
+import api from './../api/customAxios';
+
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -61,20 +63,13 @@ export default function BorrowWriting() {
   const [categorys, setCategorys] = useState<CategoryType[]>([]);
   const [filteredCategory, setFilteredCategory] = useState<CategoryType[]>([]);
 
-  useQuery(
-    ['categories'],
-    () =>
-      axios.get(
-        'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/category',
-      ),
-    {
-      refetchOnMount: 'always',
-      refetchOnWindowFocus: false,
-      staleTime: 60 * 1000 * 60, // 1시간
-      onSuccess: (res) => setCategorys(res.data),
-      onError: (err) => console.log(err),
-    },
-  );
+  useQuery(['categories'], () => api.get('/category'), {
+    refetchOnMount: 'always',
+    refetchOnWindowFocus: false,
+    staleTime: 60 * 1000 * 60, // 1시간
+    onSuccess: (res) => setCategorys(res.data),
+    onError: (err) => console.log(err),
+  });
 
   // 사용자가 선택한 카테고리만 필터
   function changecategory() {
@@ -88,13 +83,10 @@ export default function BorrowWriting() {
   // useMutate 정의
   const postData = useMutation(
     (data: FormData) =>
-      axios({
-        method: 'POST',
-        url: 'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/product/',
+      api.post('/product', data, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
-        data: data,
       }),
     {
       onSuccess: (data) => {

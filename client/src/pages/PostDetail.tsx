@@ -10,6 +10,7 @@ import { PostDataType } from '../store/PostReadStore';
 // import TradeWayTag from '../components/tag/TradeWayTag';
 import { FaPeopleArrows } from 'react-icons/fa';
 import { GoPackage } from 'react-icons/go';
+import api from './../api/customAxios';
 
 export default function LendPostDetail() {
   // 서버에서 get 하는 data state
@@ -18,28 +19,21 @@ export default function LendPostDetail() {
   // url id 받기
   const { id } = useParams();
 
-  useQuery(
-    ['postData'],
-    () =>
-      axios.get(
-        `https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/product/${id}`,
-      ),
-    {
-      refetchOnMount: 'always',
-      refetchOnWindowFocus: false,
-      staleTime: 60 * 1000 * 60, // 1시간
-      onSuccess: (res) => setPostData(res?.data[0]),
-      onError: () => console.log('error'),
-    },
-  );
-  console.log(postData?.postType);
+  useQuery(['postData'], () => api.get(`product/${id}`), {
+    refetchOnMount: 'always',
+    refetchOnWindowFocus: false,
+    staleTime: 60 * 1000 * 60, // 1시간
+    onSuccess: (res) => setPostData(res?.data[0]),
+    onError: () => console.log('error'),
+  });
+
   // 서브 사진 클릭하면 메인으로 올리기
   const [mainImgUrl, setMainImgUrl] = useState('');
 
   function changeMainImg(e: React.MouseEvent<HTMLImageElement>) {
     setMainImgUrl(e.currentTarget.src);
   }
-
+  console.log(postData);
   return (
     <div className="max-w-screen-lg mx-auto">
       <div className="flex flex-col justify-center mx-auto text-b-text-black">
@@ -55,9 +49,9 @@ export default function LendPostDetail() {
           </div>
           <div className="text-xs text-b-text-darkgray mr-4">
             작성시간{' '}
-            {postData?.createdAt.split('T')[0] +
+            {/* {postData?.createdAt.split('T')[0] +
               ' ' +
-              postData?.createdAt.split('T')[1].slice(0, 8)}
+              postData?.createdAt.split('T')[1].slice(0, 8)} */}
           </div>
         </section>
 
