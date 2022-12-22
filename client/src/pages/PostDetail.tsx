@@ -1,36 +1,28 @@
 import { useState } from 'react';
-import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 
-import Nav from '../components/nav/Nav';
-import Footer from '../components/footer/Footer';
-import Caution from './../components/postDetail/Caution';
+import Caution from '../components/postDetail/Caution';
 import { PostDataType } from '../store/PostReadStore';
 // import TradeWayTag from '../components/tag/TradeWayTag';
 import { FaPeopleArrows } from 'react-icons/fa';
 import { GoPackage } from 'react-icons/go';
+import api from './../api/customAxios';
 
 export default function LendPostDetail() {
   // 서버에서 get 하는 data state
-  const [lendData, setLendData] = useState<PostDataType>();
+  const [postData, setPostData] = useState<PostDataType>();
 
   // url id 받기
   const { id } = useParams();
 
-  useQuery(
-    ['lendPostData'],
-    () =>
-      axios.get(
-        `https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/product/${id}`,
-      ),
-    {
-      refetchOnWindowFocus: false,
-      staleTime: 60 * 1000 * 60, // 1시간
-      onSuccess: (res) => setLendData(res?.data[0]),
-      onError: () => console.log('error'),
-    },
-  );
+  useQuery(['postData'], () => api.get(`product/${id}`), {
+    refetchOnMount: 'always',
+    refetchOnWindowFocus: false,
+    staleTime: 60 * 1000 * 60, // 1시간
+    onSuccess: (res) => setPostData(res?.data[0]),
+    onError: () => console.log('error'),
+  });
 
   // 서브 사진 클릭하면 메인으로 올리기
   const [mainImgUrl, setMainImgUrl] = useState('');
@@ -41,16 +33,21 @@ export default function LendPostDetail() {
 
   return (
     <div className="max-w-screen-lg mx-auto">
-      <div className="w-[800px] flex flex-col justify-center mx-auto text-b-text-black">
-        <Nav />
-        <div className="mb-6 text-3xl">빌려주기</div>
+      <div className="flex flex-col justify-center mx-auto text-b-text-black">
+        <div className="mb-6 text-3xl">
+          {postData?.postType === 'lend' ? '빌려주기' : '빌리기'}
+        </div>
         {/* 상단 정보(카테고리, 작성일) */}
         <section className="max-w-screen-lg flex justify-between mb-4">
           <div className="text-sm text-b-text-darkgray ml-4">
-            빌려주기 {'>'} {lendData?.category.name}
+            {postData?.postType === 'lend' ? '빌려주기' : '빌리기'} {'>'}{' '}
+            {postData?.category.name}
           </div>
           <div className="text-xs text-b-text-darkgray mr-4">
-            (작성일) 2022.12.16
+            작성시간{' '}
+            {/* {postData?.createdAt.split('T')[0] +
+              ' ' +
+              postData?.createdAt.split('T')[1].slice(0, 8)} */}
           </div>
         </section>
 
@@ -58,12 +55,18 @@ export default function LendPostDetail() {
         <section className="flex justify-between mb-4 ">
           <div>
             <img
-              src={mainImgUrl === '' ? lendData?.imgUrl[0] : mainImgUrl}
-              className="w-[380px] h-[380px]"
+              src={
+                !postData?.imgUrl[0]
+                  ? '../../product_default.png'
+                  : mainImgUrl === ''
+                  ? postData?.imgUrl[0]
+                  : mainImgUrl
+              }
+              className="w-[410px] h-[410px]"
               alt="메인 사진"
             />
             <div className="flex justify-center gap-1">
-              {lendData?.imgUrl.map((url, idx) => (
+              {postData?.imgUrl.map((url, idx) => (
                 <img
                   onMouseOver={changeMainImg}
                   key={idx}
@@ -76,11 +79,11 @@ export default function LendPostDetail() {
           </div>
 
           {/* 상품 기본정보 */}
-          <div className="flex flex-col justify-between w-[350px] h-[410px] pt-3 mr-4">
+          <div className="flex flex-col justify-between w-[450px] h-[410px] pt-3 mr-4">
             <div className="text-right">
-              <div className="text-3xl">{lendData?.title}</div>
+              <div className="text-3xl">{postData?.title}</div>
               <div className="flex justify-end">
-                {lendData?.hashtag.map((tag, idx) => {
+                {postData?.hashtag.map((tag, idx) => {
                   return (
                     <div
                       key={idx}
@@ -99,11 +102,23 @@ export default function LendPostDetail() {
                   요금
                 </div>
                 <div>
-                  <div className="mb-2">{lendData?.price.priceTime}원/시간</div>
-                  <div>{lendData?.price.priceDay}/일</div>
+                  <div className="mb-2">{postData?.price.priceTime}원/시간</div>
+                  <div>{postData?.price.priceDay}/일</div>
                 </div>
               </div>
-
+              <hr className="hr-1 my-4"></hr>
+              {postData?.postType === 'lend' ? null : (
+                <div className="flex justify-between mb-2">
+                  <div className="text-sm text-b-text-darkgray w-24 mb-2 text-left my-auto">
+                    대여시간
+                  </div>
+                  <div>
+                    <div>
+                      {postData?.period?.start} ~ {postData?.period?.end}
+                    </div>
+                  </div>
+                </div>
+              )}
               {/* 대여방법 */}
               <div className="flex justify-between mb-2">
                 <div className="text-sm text-b-text-darkgray w-24 mb-2 text-left my-auto">
@@ -113,32 +128,32 @@ export default function LendPostDetail() {
                   {/* <TradeWayTag tradeWay={borrowData?.tradeWay} /> */}
                   <div
                     className={`${
-                      lendData?.tradeWay.direct ? 'bg-b-tag-dir' : ''
+                      postData?.tradeWay.direct ? 'bg-b-tag-dir' : ''
                     } item_tag inline-flex text-b-hash-text p-[5px] rounded-lg font-extrabold my-auto mr-2`}
                   >
-                    {lendData?.tradeWay.direct ? (
+                    {postData?.tradeWay.direct ? (
                       <FaPeopleArrows className="mr-1 text-sm" />
                     ) : (
                       ''
                     )}
 
                     <span className="text-xs">
-                      {lendData?.tradeWay.direct ? '직거래' : ''}
+                      {postData?.tradeWay.direct ? '직거래' : ''}
                     </span>
                   </div>
                   <div
                     className={`${
-                      lendData?.tradeWay.delivery ? 'bg-b-tag-pack' : ''
+                      postData?.tradeWay.delivery ? 'bg-b-tag-pack' : ''
                     } item_tag inline-flex text-b-hash-text p-[5px] rounded-lg font-extrabold my-auto`}
                   >
-                    {lendData?.tradeWay.delivery ? (
+                    {postData?.tradeWay.delivery ? (
                       <GoPackage className="mr-1 text-sm" />
                     ) : (
                       ''
                     )}
 
                     <span className="text-xs">
-                      {lendData?.tradeWay.delivery ? '택배거래' : ''}
+                      {postData?.tradeWay.delivery ? '택배거래' : ''}
                     </span>
                   </div>
                 </div>
@@ -150,16 +165,16 @@ export default function LendPostDetail() {
                   <div className="flex items-center">
                     <img
                       className="h-8 w-8 mr-2 rounded-full"
-                      src={lendData?.lender.image}
+                      src={postData?.lender.image}
                       alt="사용자 이미지"
                     />
 
                     <div className="flex-1 min-w-0">
                       <p className="text-[12px] font-medium text-gray-900 mb-1">
-                        {lendData?.lender.nickName}
+                        {postData?.lender.nickName}
                       </p>
                       <p className="text-[8px] font-medium text-gray-400 ">
-                        {lendData?.lender.address1}
+                        {postData?.lender.address1}
                       </p>
                     </div>
                   </div>
@@ -179,7 +194,7 @@ export default function LendPostDetail() {
         <section>
           <div>상세정보</div>
           <div className="w-full h-40 mt-3 p-3 rounded-lg">
-            {lendData?.description}
+            {postData?.description}
           </div>
           <br />
           <br />
@@ -206,7 +221,6 @@ export default function LendPostDetail() {
             </button>
           </div>
         </section>
-        <Footer />
       </div>
     </div>
   );

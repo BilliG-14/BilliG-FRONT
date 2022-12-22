@@ -48,8 +48,6 @@ export default function ImageUpload() {
     setPriviewFileImages(newPreviewFiles);
   }
 
-  // console.log(imgFiles);
-  // console.log(priviewImages);
   return (
     <section className="mb-4 flex flex-row ">
       <label
