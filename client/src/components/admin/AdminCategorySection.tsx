@@ -1,11 +1,7 @@
-import {
-  QueryClient,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
-import { useCallback, useRef } from 'react';
+import ConfirmModal from 'components/Modal';
+import { useCallback, useRef, useState } from 'react';
 
 type Category = {
   _id: string;
@@ -13,16 +9,16 @@ type Category = {
 };
 
 /*Category CRUD */
+const baseUrl = 'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app';
+const endPoint = 'category';
 const apiCategory = {
   GET: async () => {
-    const { data } = await axios.get(
-      'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/category',
-    );
+    const { data } = await axios.get(`${baseUrl}/${endPoint}`);
     return data;
   },
   CREATE: async (catogoryName: string) => {
     await axios.post(
-      'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/category',
+      `${baseUrl}/${endPoint}`,
       JSON.stringify({ name: catogoryName }),
       {
         headers: { 'Content-Type': `application/json` },
@@ -31,17 +27,15 @@ const apiCategory = {
   },
   UPDATE: async ({ _id, name }: Category) => {
     await axios.patch(
-      `https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/category/${_id}`,
+      `${baseUrl}/${endPoint}/${_id}`,
       JSON.stringify({ name: name }),
       {
-        headers: { 'Content-Type': `application/json` },
+        headers: { 'Content-Type': `application / json` },
       },
     );
   },
   DELETE: async (_id: string) => {
-    await axios.delete(
-      `https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/category/${_id}`,
-    );
+    await axios.delete(`${baseUrl}/${endPoint}/${_id}`);
   },
 };
 
@@ -51,7 +45,10 @@ export default function AdminCategorySection() {
   const selectedDiv = useRef<HTMLDivElement>(null);
   const elemCreateInput = useRef<HTMLInputElement>(null);
   const elemUpdateInput = useRef<HTMLInputElement>(null);
-
+  const [isOpenModal, setOpenModal] = useState<boolean>(false);
+  const onClickToggleModal = useCallback(() => {
+    setOpenModal(!isOpenModal);
+  }, [isOpenModal]);
   /*get category */
   const { isLoading, data, isError } = useQuery<Category[], AxiosError>(
     ['categories'],
@@ -204,8 +201,7 @@ export default function AdminCategorySection() {
               className="w-full mt-4 h-8 rounded-lg bg-red-400 text-white hover:bg-gradient-to-r from-rose-700 to-red-300
             "
               onClick={() => {
-                handleDelete(selectedCategory.current._id);
-                alert('삭제되었습니다.');
+                setOpenModal(!isOpenModal);
               }}
             >
               삭제하기
@@ -213,6 +209,18 @@ export default function AdminCategorySection() {
           </div>
         </div>
       </div>
+      {isOpenModal && (
+        <ConfirmModal
+          title="정말 삭제하시겠습니까?"
+          content="한번 삭제한 카테고리는 되돌릴 수 없습니다"
+          yesColor="red-400"
+          yesText="삭제"
+          onClickToggleModal={onClickToggleModal}
+          onClickYes={() => {
+            handleDelete(selectedCategory.current._id);
+          }}
+        />
+      )}
     </section>
   );
 }
