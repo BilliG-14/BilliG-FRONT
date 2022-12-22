@@ -96,26 +96,6 @@ export default function LendWriting() {
     },
   );
 
-  // const postData = useMutation(
-  //   (data: FormData) =>
-  //     axios({
-  //       method: 'POST',
-  //       url: 'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/product/',
-  //       headers: {
-  //         'Content-Type': 'multipart/form-data',
-  //       },
-  //       data: data,
-  //     }),
-  //   {
-  //     onSuccess: (data) => {
-  //       navigate(`/read/${data.data._id}`);
-  //     },
-  //     onError: (error) => {
-  //       console.log(error);
-  //     },
-  //   },
-  // );
-
   // formData 넣기
   const formData = new FormData();
 

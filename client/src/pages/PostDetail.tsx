@@ -33,7 +33,7 @@ export default function LendPostDetail() {
   function changeMainImg(e: React.MouseEvent<HTMLImageElement>) {
     setMainImgUrl(e.currentTarget.src);
   }
-  console.log(postData);
+
   return (
     <div className="max-w-screen-lg mx-auto">
       <div className="flex flex-col justify-center mx-auto text-b-text-black">
