@@ -59,7 +59,10 @@ export default function BorrowPostDetail() {
                 빌리기 {'>'} {borrowData?.category.name}
               </div>
               <div className="text-xs text-b-text-darkgray mr-4">
-                (작성일) 2022.12.16
+                작성시간{' '}
+                {borrowData?.createdAt.split('T')[0] +
+                  ' ' +
+                  borrowData?.createdAt.split('T')[1].slice(0, 8)}
               </div>
             </section>
 

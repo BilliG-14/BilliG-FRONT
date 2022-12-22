@@ -53,4 +53,6 @@ export type PostDataType = {
     direct: boolean;
   };
   hashtag: string[];
+  createdAt: string;
+  updatedAt: string;
 };
