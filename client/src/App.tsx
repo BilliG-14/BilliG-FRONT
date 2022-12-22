@@ -27,11 +27,20 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 function App() {
-  const { isLogin, setIsLoginTrue, setIsLoginFalse } = useIsLoginStore();
+  const {
+    isLogin,
+    isLoading,
+    setIsLoginTrue,
+    setIsLoginFalse,
+    setIsLoadingTrue,
+    setIsLoadingFalse,
+  } = useIsLoginStore();
 
   useEffect(() => {
+    setIsLoadingFalse();
     const token = localStorage.getItem('token');
     if (!token) {
+      setIsLoadingTrue();
       return;
     }
 
@@ -51,9 +60,12 @@ function App() {
     };
 
     getUserInfo();
+    setIsLoadingTrue();
   }, [isLogin]);
+  console.log(isLoading, isLogin);
 
-  if (!isLogin) return <p>loading....</p>;
+  if ((!isLoading && !isLogin) || (isLoading && !isLogin))
+    return <p>loading....</p>;
 
   return (
     <React.Fragment>
