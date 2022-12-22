@@ -1,5 +1,4 @@
 import { useRef, useState } from 'react';
-import axios from 'axios';
 import api from './../api/customAxios';
 
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -181,7 +180,6 @@ export default function BorrowWriting() {
   return (
     <div className="max-w-screen-lg mx-auto">
       <div className="flex flex-col justify-center mx-auto text-b-text-black">
-        <Nav />
         <div className="mb-6 text-3xl">빌리기</div>
         <form className="w-[800px] mx-auto">
           {/* 상품명/카테고리 section */}
@@ -255,7 +253,6 @@ export default function BorrowWriting() {
             </button>
           </section>
         </form>
-        <Footer />
       </div>
     </div>
   );

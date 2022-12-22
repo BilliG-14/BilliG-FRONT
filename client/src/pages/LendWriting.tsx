@@ -1,6 +1,5 @@
 import { useState, useRef } from 'react';
 import { useQuery, useMutation } from '@tanstack/react-query';
-import axios from 'axios';
 
 import {
   imageUploadStore,
@@ -182,7 +181,6 @@ export default function LendWriting() {
   return (
     <div className="max-w-screen-lg mx-auto">
       <div className="flex flex-col justify-center mx-auto text-b-text-black">
-        <Nav />
         <div className="mb-6 text-3xl">빌려주기</div>
         <form className="w-[800px] mx-auto">
           {/* 상품명/카테고리 section */}
@@ -253,7 +251,6 @@ export default function LendWriting() {
             </button>
           </section>
         </form>
-        <Footer />
       </div>
     </div>
   );

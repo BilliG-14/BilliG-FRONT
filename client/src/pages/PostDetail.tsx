@@ -1,10 +1,7 @@
 import { useState } from 'react';
-import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 
-import Nav from '../components/nav/Nav';
-import Footer from '../components/footer/Footer';
 import Caution from '../components/postDetail/Caution';
 import { PostDataType } from '../store/PostReadStore';
 // import TradeWayTag from '../components/tag/TradeWayTag';
@@ -37,7 +34,6 @@ export default function LendPostDetail() {
   return (
     <div className="max-w-screen-lg mx-auto">
       <div className="flex flex-col justify-center mx-auto text-b-text-black">
-        <Nav />
         <div className="mb-6 text-3xl">
           {postData?.postType === 'lend' ? '빌려주기' : '빌리기'}
         </div>
@@ -225,7 +221,6 @@ export default function LendPostDetail() {
             </button>
           </div>
         </section>
-        <Footer />
       </div>
     </div>
   );
