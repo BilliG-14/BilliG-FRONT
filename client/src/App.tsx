@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import Main from 'pages/Main';
@@ -19,40 +19,60 @@ import MyBorrowPostListPage from './pages/MyBorrowPostListPage';
 import MyDoneListPage from 'pages/MyDoneListPage';
 import ScrollToTop from 'components/ScrollToTop';
 import ChatPage from 'components/ChatPage/ChatPage';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { useDispatch, useSelector } from 'react-redux';
-import { setUser, clearUser } from './redux/actions/user_action';
+import { useIsLoginStore } from 'store/LoginJoinStore';
+import api from './api/customAxios';
 
-const queryClient = new QueryClient();
 const GlobalStyle = createGlobalStyle`
   ${reset}
 `;
 
+const queryClient = new QueryClient();
+
 function App() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const isLoading = useSelector((state) => state.user.isLoading);
+  const {
+    isLogin,
+    isLoading,
+    setIsLoginTrue,
+    setIsLoginFalse,
+    setIsLoadingTrue,
+    setIsLoadingFalse,
+  } = useIsLoginStore();
 
   useEffect(() => {
-    const auth = getAuth();
-    onAuthStateChanged(auth, (user) => {
-      //onAuthStateChanged: 현재 로그인한 사용자 가져오기 --> 이 부분은 백엔드 server에 get요청 보내서 db에 user data가 존재하는지 판단하는것으로 변경해야함.
-      if (user) {
-        //로그인 된 상태
-        navigate('/');
-        dispatch(setUser(user));
-        const uid = user.uid;
-      } else {
-        //로그인 안 된 상태
-        navigate('/login');
-        dispatch(clearUser());
+    setIsLoadingFalse();
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setIsLoadingTrue();
+      return;
+    }
+
+    const getUserInfo = async () => {
+      try {
+        const userInfo = await api.get('/user/me');
+        const id = localStorage.getItem('userId');
+
+        if (userInfo.status === 200 && id === userInfo.data._id) {
+          setIsLoginTrue();
+        } else {
+          setIsLoginFalse();
+        }
+      } catch (error) {
+        console.log(error);
       }
-    });
-  }, []);
+    };
+
+    getUserInfo();
+    setIsLoadingTrue();
+  }, [isLogin]);
+  console.log(isLoading, isLogin);
+
+  if ((!isLoading && !isLogin) || (isLoading && !isLogin))
+    return <p>loading....</p>;
+
   return (
     <React.Fragment>
-      <GlobalStyle />
       <QueryClientProvider client={queryClient}>
+        <GlobalStyle />
         <div className="App h-screen w-screen">
           <BrowserRouter>
             {/* ScrollToTop : navigate했을 때, 스크롤 위치가 그대로 적용되는 문제 방지*/}

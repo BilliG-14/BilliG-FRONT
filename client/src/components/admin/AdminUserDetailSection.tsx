@@ -12,8 +12,7 @@ type User = {
 };
 const userData: User = {
   _id: 'auth_1234',
-  image:
-    'https://lh3.googleusercontent.com/a/AEdFTp5DA_bYK75iaBrz6GCRkCRPROTdal4uqaG13egzFdk=s96-c-rg-br100',
+  image: '',
   email: 'user@gmail.com',
   nickName: '빌리지관리자',
   password: 'barobaroloan123#',

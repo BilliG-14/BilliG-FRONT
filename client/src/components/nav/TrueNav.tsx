@@ -4,7 +4,7 @@ import { FiSearch } from 'react-icons/fi';
 import { useLoginJoinStore } from 'store/LoginJoinStore';
 import api from '../../api/customAxios';
 
-function Nav() {
+function TrueNav() {
   const [setSelectedJoin, setSelectedLogin] = useLoginJoinStore((state) => [
     state.setSelectedJoin,
     state.setSelectedLogin,
@@ -43,17 +43,10 @@ function Nav() {
       <div className="flex flex-col justify-center">
         <div className="flex justify-between items-center w-52 text-lg font-semibold">
           <button
-            className="login hover:text-b-yellow hover: ease-in-out duration-300"
-            onClick={goLogin}
-          >
-            login
-          </button>
-          /
-          <button
             className="join hover:text-b-yellow hover: ease-in-out duration-300"
             onClick={goJoin}
           >
-            join
+            로그인이지롱
           </button>
           /
           <button
@@ -75,4 +68,4 @@ function Nav() {
     </div>
   );
 }
-export default Nav;
+export default TrueNav;
