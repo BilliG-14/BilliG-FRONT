@@ -9,16 +9,16 @@ type Category = {
 };
 
 /*Category CRUD */
+const baseUrl = 'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app';
+const endPoint = 'category';
 const apiCategory = {
   GET: async () => {
-    const { data } = await axios.get(
-      'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/category',
-    );
+    const { data } = await axios.get(`${baseUrl}/${endPoint}`);
     return data;
   },
   CREATE: async (catogoryName: string) => {
     await axios.post(
-      'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/category',
+      `${baseUrl}/${endPoint}`,
       JSON.stringify({ name: catogoryName }),
       {
         headers: { 'Content-Type': `application/json` },
@@ -27,17 +27,15 @@ const apiCategory = {
   },
   UPDATE: async ({ _id, name }: Category) => {
     await axios.patch(
-      `https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/category/${_id}`,
+      `${baseUrl}/${endPoint}/${_id}`,
       JSON.stringify({ name: name }),
       {
-        headers: { 'Content-Type': `application/json` },
+        headers: { 'Content-Type': `application / json` },
       },
     );
   },
   DELETE: async (_id: string) => {
-    await axios.delete(
-      `https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/category/${_id}`,
-    );
+    await axios.delete(`${baseUrl}/${endPoint}/${_id}`);
   },
 };
 
