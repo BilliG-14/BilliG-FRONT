@@ -28,31 +28,32 @@ const GlobalStyle = createGlobalStyle`
 
 function App() {
   const { isLogin, setIsLoginTrue, setIsLoginFalse } = useIsLoginStore();
-  const token = localStorage.getItem('token');
+
   useEffect(() => {
-    if (token === null) {
-      setIsLoginFalse();
+    const token = localStorage.getItem('token');
+    if (!token) {
       return;
     }
 
     const getUserInfo = async () => {
       try {
-        const userInfo = await api.get('/user/me', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        getUserInfo();
+        const userInfo = await api.get('/user/me');
+        const id = localStorage.getItem('userId');
+
+        if (userInfo.status === 200 && id === userInfo.data._id) {
+          setIsLoginTrue();
+        } else {
+          setIsLoginFalse();
+        }
       } catch (error) {
         console.log(error);
       }
     };
 
-    // getUserInfo();
-    // localStorage에 token이 있으나, isLogin이 false가 됫으면
-    // token이 만료됬는지를 확인 할 수 있어야함.
-    // token이 있다고 무조건 true로 할 순 없음.
+    getUserInfo();
   }, [isLogin]);
+
+  if (!isLogin) return <p>loading....</p>;
 
   return (
     <React.Fragment>

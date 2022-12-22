@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 
 const axiosConfig: AxiosRequestConfig = {
-  baseURL: 'https://port-0-village-token-dpuqy925lbn63gyo.gksl2.cloudtype.app',
+  baseURL: 'http://localhost:8080',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -14,7 +14,7 @@ const requestRefresh = async () => {
   try {
     const refreshed = await api.get('/refresh');
     axios.defaults.headers.common.Authorization = `Bearer ${refreshed.data.token}`;
-
+    localStorage.setItem('token', refreshed.data.token);
     return refreshed.data.token;
   } catch (error) {
     console.log(error);
@@ -24,11 +24,9 @@ const requestRefresh = async () => {
 api.interceptors.request.use(
   (config: AxiosRequestConfig): AxiosRequestConfig => {
     const accessToken = localStorage.getItem('token');
-
     if (config.headers && accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
-    console.log('request interceptor config', config);
     return config;
   },
   (error) => Promise.reject(error),
@@ -41,7 +39,6 @@ api.interceptors.response.use(
     if (error?.response?.status === 401 && !prevRequest.sent) {
       prevRequest.sent = true;
       const newAccessToken = await requestRefresh();
-      console.log(newAccessToken);
       prevRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 
       return api(prevRequest);

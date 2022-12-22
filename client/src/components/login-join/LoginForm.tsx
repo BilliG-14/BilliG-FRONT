@@ -9,8 +9,7 @@ export function LoginForm() {
   const inputRef = useRef<HTMLInputElement[] | null[]>([]);
   const inputClassName =
     'block w-full h-10 text-xl border-b-yellow border-solid border-2 rounded-xl px-4 text-yellow-900 font-bold focus:outline-none focus:ring-2 focus:ring-amber-500 mb-7';
-  const { isLogin, setIsLoginTrue } = useIsLoginStore();
-  console.log(isLogin);
+  const { setIsLoginTrue } = useIsLoginStore();
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const login = {
@@ -21,6 +20,7 @@ export function LoginForm() {
       const result = await api.post('/login', JSON.stringify(login));
       const token = result.data.token;
       localStorage.setItem('token', token);
+      localStorage.setItem('userId', result.data._id);
       alert('로그인에 성공하였습니다.');
       setIsLoginTrue();
       navigate('/submain');
@@ -33,7 +33,7 @@ export function LoginForm() {
     <form
       onSubmit={handleSubmit}
       className="w-2/3 mt-24 mx-auto animate-fade-in-150ms"
-      action="https://port-0-village-token-dpuqy925lbn63gyo.gksl2.cloudtype.app/login"
+      action="http://localhost:8080"
     >
       <div className="w-full flex flex-col justify-center items-center">
         <input

@@ -18,7 +18,6 @@ export type ItemType = {
 
 export default function Category() {
   const { isLogin } = useIsLoginStore();
-  console.log(isLogin);
   const [scrollEvent, setScrollEvent] = useState(false);
   const navRef = useRef<HTMLElement | null>(null);
   const sectionRef = useRef<HTMLElement[] | null[]>([]);
