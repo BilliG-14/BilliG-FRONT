@@ -161,6 +161,19 @@ export default function BorrowWriting() {
   async function handleButtonClick(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
 
+    if (
+      !fileredCategory ||
+      reservationDate.start === '' ||
+      reservationDate.end === '' ||
+      priceDayRef.current?.value === '' ||
+      priceTimeRef.current?.value === '' ||
+      productNameRef.current?.value === '' ||
+      descriptionRef.current?.value === '' ||
+      (!tradeWay.delivery && !tradeWay.direct)
+    ) {
+      alert('필수 값을 모두 작성해주세요.');
+      return;
+    }
     // 서버에 데이터 저장
     postData.mutate(formData);
   }
