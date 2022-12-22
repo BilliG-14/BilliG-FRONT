@@ -161,17 +161,26 @@ export default function BorrowWriting() {
   async function handleButtonClick(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
 
-    if (
-      !fileredCategory ||
-      reservationDate.start === '' ||
-      reservationDate.end === '' ||
+    if (fileredCategory.length === 0 || productNameRef.current?.value === '') {
+      alert('카테고리와 이름을 입력해주세요.');
+      return;
+    } else if (imgFiles.length === 0) {
+      alert('상품 시진을 등록해주세요. 3장까지 등록가능합니다.');
+      return;
+    } else if (
       priceDayRef.current?.value === '' ||
-      priceTimeRef.current?.value === '' ||
-      productNameRef.current?.value === '' ||
-      descriptionRef.current?.value === '' ||
-      (!tradeWay.delivery && !tradeWay.direct)
+      priceTimeRef.current?.value === ''
     ) {
-      alert('필수 값을 모두 작성해주세요.');
+      alert('요금을 입력해주세요.');
+      return;
+    } else if (reservationDate.start === '' || reservationDate.end === '') {
+      alert('예약기간을 입력해주세요.');
+      return;
+    } else if (descriptionRef.current?.value === '') {
+      alert('상세설명을 입력해주세요.');
+      return;
+    } else if (!tradeWay.delivery && !tradeWay.direct) {
+      alert('거래방법을 선택해주세요.');
       return;
     }
     // 서버에 데이터 저장
