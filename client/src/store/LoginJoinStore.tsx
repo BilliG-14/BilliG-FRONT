@@ -7,7 +7,7 @@ interface LoginJoinState {
   setSelectedLogin: () => void;
   setSelectedJoin: () => void;
 }
-const useLoginJoinStore = create<LoginJoinState>()(
+export const useLoginJoinStore = create<LoginJoinState>()(
   devtools(
     persist((set) => ({
       selectedLogin: true,
@@ -17,4 +17,15 @@ const useLoginJoinStore = create<LoginJoinState>()(
     })),
   ),
 );
-export default useLoginJoinStore;
+
+interface IsLoginState {
+  isLogin: boolean;
+  setIsLoginFalse: () => void;
+  setIsLoginTrue: () => void;
+}
+
+export const useIsLoginStore = create<IsLoginState>((set) => ({
+  isLogin: false,
+  setIsLoginFalse: () => set(() => ({ isLogin: false })),
+  setIsLoginTrue: () => set(() => ({ isLogin: true })),
+}));

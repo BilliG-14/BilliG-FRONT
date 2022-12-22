@@ -1,12 +1,15 @@
 import axios from 'axios';
 import { FormEvent, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useIsLoginStore } from 'store/LoginJoinStore';
 
 export function LoginForm() {
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement[] | null[]>([]);
   const inputClassName =
     'block w-full h-10 text-xl border-b-yellow border-solid border-2 rounded-xl px-4 text-yellow-900 font-bold focus:outline-none focus:ring-2 focus:ring-amber-500 mb-7';
+  const { isLogin, setIsLoginTrue } = useIsLoginStore();
+  console.log(isLogin);
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const login = {
@@ -21,6 +24,7 @@ export function LoginForm() {
       );
       const token = result.data.token;
       localStorage.setItem('token', token);
+      setIsLoginTrue();
       alert('로그인에 성공하였습니다.');
       navigate('/submain');
     } catch (error) {

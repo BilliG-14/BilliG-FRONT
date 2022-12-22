@@ -1,7 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FiSearch } from 'react-icons/fi';
-import useLoginJoinStore from 'store/LoginJoinStore';
+import { useLoginJoinStore } from 'store/LoginJoinStore';
+import api from '../../api/customAxios';
 
 function Nav() {
   const [setSelectedJoin, setSelectedLogin] = useLoginJoinStore((state) => [
@@ -20,7 +21,9 @@ function Nav() {
     setSelectedJoin();
     navigate('/login');
   };
-  const goMyPage = () => {
+  const goMyPage = async () => {
+    const userinfo = await api.get('/user');
+    console.log(userinfo);
     navigate('/mypage');
   };
   const goSearch = () => {

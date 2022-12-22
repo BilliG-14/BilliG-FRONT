@@ -1,11 +1,10 @@
-import CategoryNav from './CategoryNav';
 import { useRef, useState, useEffect } from 'react';
-import CategorySection from './CategorySection';
 import ItemCard from './ItemCard';
 import { HiArrowRight } from 'react-icons/hi';
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import './category.css';
+import api from '../../api/customAxios';
+import { useIsLoginStore } from 'store/LoginJoinStore';
 
 export type ItemType = {
   id: number;
@@ -18,6 +17,8 @@ export type ItemType = {
 };
 
 export default function Category() {
+  const { isLogin } = useIsLoginStore();
+  console.log(isLogin);
   const [scrollEvent, setScrollEvent] = useState(false);
   const navRef = useRef<HTMLElement | null>(null);
   const sectionRef = useRef<HTMLElement[] | null[]>([]);
@@ -44,9 +45,7 @@ export default function Category() {
     ['categories'],
     async () => {
       console.log('fetching...');
-      return axios.get(
-        'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/category',
-      );
+      return api.get('/category');
     },
     { refetchOnWindowFocus: false, staleTime: 60 * 1000 * 60 },
   );
