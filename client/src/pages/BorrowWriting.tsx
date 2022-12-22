@@ -1,16 +1,14 @@
-import { useRef, useState } from 'react';
+import { useState, useRef } from 'react';
+import { useQuery, useMutation } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 import api from './../api/customAxios';
 
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
 import {
   imageUploadStore,
   tradeWayStore,
   hashTagStore,
   reservationStore,
 } from './../store/PostWriteStore';
-import Nav from '../components/nav/Nav';
-import Footer from '../components/footer/Footer';
 
 import HashTagSection from '../components/postWrite/HashTagWrite';
 import ImageUpload from '../components/postWrite/ImageUpload';
@@ -34,23 +32,12 @@ export default function BorrowWriting() {
 
   const navigate = useNavigate();
   // 사용자 가져오기 : 임시 사용자 지우
-  // useQuery(
-  //   'userData',
-  //   () =>
-  //     axios.get(
-  //       'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/user/63a009de47318b0a880801c4',
-  //     ),
-  //   // 로그인된 상태에서 유저 고유 아이디를 받아온다면 아래 axios로 get 해올 예정
-  //   //       axios.get(
-  //   //   `https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/user/${id}`,
-  //   // ),
-  //   {
-  //     refetchOnWindowFocus: false,
-  //     staleTime: 60 * 1000 * 60, // 1시간
-  //     onSuccess: (res) => console.log(res),
-  //     onError: (err) => console.log(err),
-  //   },
-  // );
+  const { data } = useQuery(['userData'], () => api.get('/user/me'), {
+    refetchOnMount: 'always',
+    refetchOnWindowFocus: false,
+    staleTime: 60 * 1000 * 60, // 1시간
+    onError: (err) => console.log(err),
+  });
 
   // 카테고리 가져오기
   type CategoryType = {
@@ -62,6 +49,7 @@ export default function BorrowWriting() {
   const [categorys, setCategorys] = useState<CategoryType[]>([]);
   const [filteredCategory, setFilteredCategory] = useState<CategoryType[]>([]);
 
+  // 카테고리 받아오기
   useQuery(['categories'], () => api.get('/category'), {
     refetchOnMount: 'always',
     refetchOnWindowFocus: false,
@@ -79,17 +67,17 @@ export default function BorrowWriting() {
     );
   }
 
-  // useMutate 정의
+  // 서버로 post 보내기, useMutate 정의
   const postData = useMutation(
-    (data: FormData) =>
-      api.post('/product', data, {
+    (formData: FormData) =>
+      api.post('/product', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       }),
     {
-      onSuccess: (data) => {
-        navigate(`/read/${data.data._id}`);
+      onSuccess: (res) => {
+        navigate(`/read/${res.data._id}`);
       },
       onError: (error) => {
         console.log(error);
@@ -107,38 +95,10 @@ export default function BorrowWriting() {
   const writeData = {
     postType: 'borrow',
     category: filteredCategory[0],
-    author: {
-      image: '',
-      suspension: false,
-      _id: '63a009de47318b0a880801c4',
-      email: 'asdf@test.com',
-      nickName: 'ppikka',
-      name: '지우',
-      phoneNumber: '01012341234',
-      postalCode: '01234',
-      address1: '광주시 강남구 강남동 101',
-      address2: '12층',
-      createdAt: '2022-12-19T06:51:10.420Z',
-      updatedAt: '2022-12-19T06:51:10.420Z',
-      __v: 0,
-    },
+    author: data?.data,
     title: productNameRef.current?.value,
     description: descriptionRef.current?.value,
-    lender: {
-      image: '',
-      suspension: false,
-      _id: '63a009de47318b0a880801c4',
-      email: 'asdf@test.com',
-      nickName: 'ppikka',
-      name: '지우',
-      phoneNumber: '01012341234',
-      postalCode: '01234',
-      address1: '광주시 강남구 강남동 101',
-      address2: '12층',
-      createdAt: '2022-12-19T06:51:10.420Z',
-      updatedAt: '2022-12-19T06:51:10.420Z',
-      __v: 0,
-    },
+    lender: data?.data,
     stateOfTransaction: 0,
     address: '광주시 강남구 강남동 101',
     price: {
