@@ -1,7 +1,7 @@
 import { JoinForm } from 'components/login-join/JoinForm';
 import { LoginForm } from 'components/login-join/LoginForm';
 import { MouseEvent } from 'react';
-import useLoginJoinStore from 'store/LoginJoinStore';
+import { useLoginJoinStore } from 'store/LoginJoinStore';
 
 function LoginJoinHeader() {
   const { selectedLogin, setSelectedLogin, selectedJoin, setSelectedJoin } =

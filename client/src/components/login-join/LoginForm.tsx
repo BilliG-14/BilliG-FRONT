@@ -1,12 +1,15 @@
 import axios from 'axios';
 import { FormEvent, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useIsLoginStore } from 'store/LoginJoinStore';
+import api from '../../api/customAxios';
 
 export function LoginForm() {
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement[] | null[]>([]);
   const inputClassName =
     'block w-full h-10 text-xl border-b-yellow border-solid border-2 rounded-xl px-4 text-yellow-900 font-bold focus:outline-none focus:ring-2 focus:ring-amber-500 mb-7';
+  const { setIsLoginTrue } = useIsLoginStore();
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const login = {
@@ -14,14 +17,12 @@ export function LoginForm() {
       password: inputRef.current[1]?.value,
     };
     try {
-      const result = await axios.post(
-        'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/login',
-        JSON.stringify(login),
-        { headers: { 'Content-Type': `application/json` } },
-      );
+      const result = await api.post('/login', JSON.stringify(login));
       const token = result.data.token;
       localStorage.setItem('token', token);
+      localStorage.setItem('userId', result.data._id);
       alert('로그인에 성공하였습니다.');
+      setIsLoginTrue();
       navigate('/submain');
     } catch (error) {
       console.error(error);
@@ -32,7 +33,7 @@ export function LoginForm() {
     <form
       onSubmit={handleSubmit}
       className="w-2/3 mt-24 mx-auto animate-fade-in-150ms"
-      action="https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/login"
+      action="http://localhost:8080"
     >
       <div className="w-full flex flex-col justify-center items-center">
         <input
