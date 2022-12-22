@@ -167,10 +167,10 @@ export default function BorrowWriting() {
 
   return (
     <div className="max-w-screen-lg mx-auto">
-      <div className="w-[800px] flex flex-col justify-center mx-auto text-b-text-black">
+      <div className="flex flex-col justify-center mx-auto text-b-text-black">
         <Nav />
         <div className="mb-6 text-3xl">빌리기</div>
-        <form>
+        <form className="w-[800px] mx-auto">
           {/* 상품명/카테고리 section */}
           <section className="flex mb-4">
             <select
@@ -200,7 +200,7 @@ export default function BorrowWriting() {
             <input
               ref={priceTimeRef}
               type="number"
-              className="appearance: none p-3 mx-2 w-60 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
+              className="p-3 mx-2 w-60 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
             />
             <div className="mr-5">원/시간</div>
             <input

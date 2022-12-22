@@ -13,7 +13,7 @@ export default function ReservationDate() {
     .replace(/\./g, '')
     .replace(/\s/g, '-');
 
-  // end가 start보다 빠를 때 유효성검사 진행해야 함
+  // end가 start보다 빠를 때 유효성검사 진행해야 함(구현완료)
   function setDate(e: ChangeEvent<HTMLInputElement>) {
     setReservationDate(startRef.current?.value, endRef.current?.value);
   }
@@ -34,7 +34,7 @@ export default function ReservationDate() {
         ref={endRef}
         onChange={setDate}
         type="date"
-        min={today}
+        min={startRef.current?.value}
         max="2099-12-31"
         className="p-3 mx-2 w-60 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
       />

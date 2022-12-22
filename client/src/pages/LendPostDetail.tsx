@@ -25,6 +25,7 @@ export default function LendPostDetail() {
         `https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/product/${id}`,
       ),
     {
+      refetchOnMount: 'always',
       refetchOnWindowFocus: false,
       staleTime: 60 * 1000 * 60, // 1시간
       onSuccess: (res) => setLendData(res?.data[0]),
@@ -41,7 +42,7 @@ export default function LendPostDetail() {
 
   return (
     <div className="max-w-screen-lg mx-auto">
-      <div className="w-[800px] flex flex-col justify-center mx-auto text-b-text-black">
+      <div className="flex flex-col justify-center mx-auto text-b-text-black">
         <Nav />
         <div className="mb-6 text-3xl">빌려주기</div>
         {/* 상단 정보(카테고리, 작성일) */}
@@ -59,7 +60,7 @@ export default function LendPostDetail() {
           <div>
             <img
               src={mainImgUrl === '' ? lendData?.imgUrl[0] : mainImgUrl}
-              className="w-[380px] h-[380px]"
+              className="w-[410px] h-[410px]"
               alt="메인 사진"
             />
             <div className="flex justify-center gap-1">
@@ -76,7 +77,7 @@ export default function LendPostDetail() {
           </div>
 
           {/* 상품 기본정보 */}
-          <div className="flex flex-col justify-between w-[350px] h-[410px] pt-3 mr-4">
+          <div className="flex flex-col justify-between w-[450px] h-[410px] pt-3 mr-4">
             <div className="text-right">
               <div className="text-3xl">{lendData?.title}</div>
               <div className="flex justify-end">
