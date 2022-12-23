@@ -86,7 +86,11 @@ export default function UserInformation() {
         <div className="img_nick_intro flex mb-4 mt-8">
           <div className="mx-auto">
             <img
-              src={data.image}
+              src={
+                data.image
+                  ? data.image
+                  : `${process.env.PUBLIC_URL}/img/default_user.png`
+              }
               alt="사용자 이미지"
               className="rounded-full h-48 w-48 object-cover mb-5"
             />
