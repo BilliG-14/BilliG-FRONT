@@ -56,3 +56,21 @@ export type PostDataType = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type UserType = {
+  image: string;
+  suspension: boolean;
+  role: string;
+  _id: string;
+  email: string;
+  nickName: string;
+  name: string;
+  phoneNumber: string;
+  postalCode: string;
+  address1: string;
+  address2: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+  reports: [];
+};

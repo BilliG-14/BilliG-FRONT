@@ -28,11 +28,12 @@ export default function LendWriting() {
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
 
   const navigate = useNavigate();
-  // 사용자 가져오기 : 임시 사용자 지우
+
+  // 사용자 가져오기
   const { data } = useQuery(['userData'], () => api.get('/user/me'), {
     refetchOnMount: 'always',
     refetchOnWindowFocus: false,
-    staleTime: 60 * 1000 * 60, // 1시간
+    staleTime: 60 * 1000 * 60,
     onError: (err) => console.log(err),
   });
 
@@ -50,7 +51,7 @@ export default function LendWriting() {
   useQuery(['categories'], () => api.get('/category'), {
     refetchOnMount: 'always',
     refetchOnWindowFocus: false,
-    staleTime: 60 * 1000 * 60, // 1시간
+    staleTime: 60 * 1000 * 60,
     onSuccess: (res) => setCategorys(res.data),
     onError: (err) => console.log(err),
   });
@@ -105,8 +106,8 @@ export default function LendWriting() {
     tradeWay: tradeWay,
     hashtag: hashTags,
     period: {
-      start: '서버 반영아 ~ 되거라~ ',
-      end: '서버 반영아 ~ 되거라~ ',
+      start: '',
+      end: '',
     },
   };
   formData.append('data', JSON.stringify(writeData));
