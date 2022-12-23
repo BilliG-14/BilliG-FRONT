@@ -10,21 +10,10 @@ import { GoPackage } from 'react-icons/go';
 import api from './../api/customAxios';
 import DealDoneModal from '../components/postDetail/DealDoneModal';
 import { ProductReceiveButton } from '../components/postDetail/ProductReceiveModal';
+import { ProductReturnedModal } from '../components/postDetail/ProductReturnedModal';
 
 export default function PostDetail() {
-  const queryClient = useQueryClient();
   const navigate = useNavigate();
-
-  // 현재 로그인 유저의 정보 가져오기
-  // const { data } = useQuery(['userData'], () => api.get('/user/me'), {
-  //   refetchOnWindowFocus: false,
-  //   staleTime: 60 * 1000 * 60,
-  //   onError: (err) => console.log(err),
-  // });
-  // console.log(data?.data._id);
-  // const data = queryClient.getQueryData(['userData']);
-  // console.log('data', data);
-  // console.log(queryClient);
 
   // 현재 로그인 유저의 정보 가져오기
   const LoginUserId = localStorage.getItem('userId');
@@ -230,18 +219,38 @@ export default function PostDetail() {
                         </div>
                       </div>
                     </div>
-
-                    {/* 채팅버튼/혹은 대여완료 */}
-                    {LoginUserId === postData?.author._id ? (
+                    {
                       // <button
                       //   type="button"
                       //   className="w-1/2 h-[50px] focus:outline-none bg-rose-400	 hover:bg-rose-500 text-white hover:text-white font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300"
                       // >
                       //   대여완료하기
                       // </button>
-                      <DealDoneModal id={id} />
+                    }
+
+                    {/* 채팅버튼 혹은 상태에 따라서 버튼 달라짐 */}
+                    {LoginUserId === postData?.author._id ? (
+                      postData.stateOfTransaction === 0 ? (
+                        <DealDoneModal
+                          id={id}
+                          stateNumber={postData.stateOfTransaction}
+                        />
+                      ) : postData.stateOfTransaction === 3 ? (
+                        <ProductReturnedModal
+                          id={id}
+                          stateNumber={postData.stateOfTransaction}
+                        />
+                      ) : (
+                        <ProductReturnedModal
+                          id={id}
+                          stateNumber={postData.stateOfTransaction}
+                        />
+                      )
                     ) : LoginUserId === postData?.lender._id ? (
-                      <ProductReceiveButton id={id} />
+                      <ProductReceiveButton
+                        id={id}
+                        stateNumber={postData.stateOfTransaction}
+                      />
                     ) : (
                       <button className="w-1/2 h-[50px] focus:outline-none bg-b-bg-gray hover:bg-b-yellow hover:text-white font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300">
                         채팅하기

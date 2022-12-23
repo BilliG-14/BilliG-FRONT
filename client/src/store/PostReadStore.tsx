@@ -77,6 +77,7 @@ export interface UserType {
 
 export interface PostIdType {
   id: string | undefined;
+  stateNumber: number;
 }
 
 export interface LenderInformationType {

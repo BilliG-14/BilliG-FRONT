@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import api from './../../api/customAxios';
 import { PostIdType } from 'store/PostReadStore';
 
-export function ProductReceiveButton(props: PostIdType) {
+export function ProductReturnedModal(props: PostIdType) {
   // 거래완료->수령완료 상태 변경 함수
   // 게시글 id prop으로 받아오기
   const { id, stateNumber } = props;
@@ -18,16 +18,16 @@ export function ProductReceiveButton(props: PostIdType) {
     {
       onSuccess: (res) => {
         setStatechangeDone(true);
-        alert('수령완료처리 되었습니다.');
+        alert('반납완료처리 되었습니다.');
       },
       onError: (error) => {
-        alert(`수령완료 처리 중 오류가 발생했습니다. ${error}`);
+        alert(`반납완료 처리 중 오류가 발생했습니다. ${error}`);
       },
     },
   );
 
   function changeState() {
-    stateUpdate.mutate(2);
+    stateUpdate.mutate(3);
     setShowModal(false);
   }
 
@@ -37,10 +37,9 @@ export function ProductReceiveButton(props: PostIdType) {
         type="button"
         className="w-1/2 h-[50px] focus:outline-none  bg-green-600 hover:bg-green-800 disabled:bg-gray-300 text-white  disabled:text-gray-400 hover:text-white font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300"
         onClick={() => setShowModal(true)}
-        // stateNumber === 3 이라면 수령완료 disable
-        disabled={stateNumber >= 2 ? true : false}
+        disabled={statechangeDone || stateNumber === 3 ? true : false}
       >
-        수령완료
+        {statechangeDone || stateNumber === 3 ? '거래종료' : '반납완료'}
       </button>
       {showModal ? (
         <>
@@ -50,7 +49,7 @@ export function ProductReceiveButton(props: PostIdType) {
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 {/*header*/}
                 <div className="flex items-center justify-center pl-6 pb-2 p-3  border-b border-solid border-slate-200 rounded-t">
-                  <h3 className="text-xl font-semibold">물품 수령 확인</h3>
+                  <h3 className="text-xl font-semibold">물품 반납 확인</h3>
                   <button
                     className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                     onClick={() => setShowModal(false)}
@@ -64,12 +63,13 @@ export function ProductReceiveButton(props: PostIdType) {
                 {/*body*/}
                 <div className="relative p-6 text-start">
                   <p className="mb-4 text-[13px] leading-5 font-thin text-b-text-black">
-                    대여물품을 수령하셨나요? <br />
-                    반드시 대여물품을 수령하신 후에 아래의 [수령완료] 버튼을
-                    눌러주세요!
+                    대여해주신 물품을 돌려받으셨나요? <br />
+                    대여물품을 받으시고, 물품이 파손되거나 구성품이 분실되진
+                    않았는지 확인해주세요. <br />
+                    확인이 되셨다면 아래의 [반납완료] 버튼을 눌러주세요!
                   </p>
                   <p className="mb-2 text-sm text-red-500  font-semibold">
-                    주의! [수령완료]버튼을 누르면 거래상태를 변경할 수 없습니다.
+                    주의! [반납완료]버튼을 누르면 거래상태를 변경할 수 없습니다.
                   </p>
                 </div>
 
@@ -83,11 +83,11 @@ export function ProductReceiveButton(props: PostIdType) {
                     창 닫기
                   </button>
                   <button
-                    className="bg-emerald-500 text-white active:bg-emerald-600 font-bold text-sm px-6 py-2 rounded shadow hover:bg-emerald-700 outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    className="bg-rose-600 text-white active:bg-rose-700 font-bold text-sm px-6 py-2 rounded shadow hover:bg-rose-800 outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={changeState}
                   >
-                    수령완료
+                    반납완료
                   </button>
                 </div>
               </div>
