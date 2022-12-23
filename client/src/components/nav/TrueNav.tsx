@@ -23,8 +23,6 @@ function TrueNav() {
     navigate('/login');
   };
   const goMyPage = async () => {
-    const userinfo = await api.get('/user/me');
-    console.log(userinfo);
     navigate('/mypage');
   };
   const goSearch = () => {

@@ -5,29 +5,52 @@ import {
 import ChangePassword from './ChangePassword';
 import ChangePawsswordForm from './ChangePawsswordForm';
 import DeleteUser from './DeleteUser';
-import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import api from '../../api/customAxios';
+import { useNavigate } from 'react-router-dom';
 
 export default function MyinfoPage() {
   const { toggleIntro } = useMyinfoEditStore();
   const { isPW } = usePasswordEditStore();
-
-  const { data: userInfo } = useQuery(
+  const navigate = useNavigate();
+  const { isLoading, data: userInfo } = useQuery(
     ['userInfo'],
     async () => {
-      return api.get('/user/me');
+      return api.get(`/user/${localStorage.getItem('userId')}`);
     },
-    { refetchOnWindowFocus: false, staleTime: 60 * 1000 * 5 },
+    {
+      refetchOnWindowFocus: false,
+      staleTime: 60 * 1000 * 5,
+      onSuccess: (data) => {
+        console.log(data);
+      },
+      onError: (error) => {
+        console.log(error);
+      },
+    },
   );
-  const { name, email, image, nickName, phoneNumber, address1, address2 } =
-    userInfo?.data;
+
+  if (isLoading) return <p>로딩중</p>;
+
+  const {
+    name,
+    email,
+    image,
+    intro,
+    nickName,
+    phoneNumber,
+    address1,
+    address2,
+    reports,
+  } = userInfo?.data;
   return (
     <div className="w-4/5 p-12">
       <section className="img_nick_intro flex mb-4">
         <div className="flex flex-col w-40">
           <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0AqtMahULe4ViGKzXbAr4C4hel5SGwfl7Pg&usqp=CAU"
+            src={
+              image ? image : `${process.env.PUBLIC_URL}/img/default_user.png`
+            }
             alt="조이현"
             className="rounded-full h-32 w-32 object-cover mb-5"
           />
@@ -36,7 +59,7 @@ export default function MyinfoPage() {
           <div>
             <h2 className="nick text-3xl font-extrabold">{nickName}</h2>
             <p className="intro my-4 font-medium">
-              맥북2 대여를 전문으로 하고 있습니다. 연락주세요
+              {intro ? intro : '소개글을 작성해보세요.'}
             </p>
           </div>
         </div>
@@ -79,7 +102,7 @@ export default function MyinfoPage() {
             <h3>제재횟수</h3>
           </div>
           <div className="w-full flex items-center justify-start text-base leading-normal">
-            1 회
+            {`${reports.length} 회`}
           </div>
         </div>
       </section>
@@ -88,7 +111,10 @@ export default function MyinfoPage() {
       <div className="edit_btn flex justify-center mt-8">
         <button
           className="w-2/6 h-12 hover:text-white border border-b-yellow hover:bg-b-yellow focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
-          onClick={toggleIntro}
+          onClick={() => {
+            toggleIntro();
+            navigate('/mypage/edit');
+          }}
         >
           수정하기
         </button>

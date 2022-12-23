@@ -16,7 +16,7 @@ type User = {
 const baseUrl = 'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app';
 const endPoint = 'user';
 const token = localStorage.getItem('token');
-console.log(token);
+// console.log(token);
 const apiUsers = {
   GET: async () => {
     const { data } = await axios({
