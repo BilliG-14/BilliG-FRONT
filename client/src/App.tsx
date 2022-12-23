@@ -23,6 +23,8 @@ import MyPageEdit from './pages/MyPageEdit';
 import Nav from 'components/nav/Nav';
 import UserInformation from 'pages/UserInformation';
 
+import ChatPage from 'components/ChatPage/ChatPage';
+
 const GlobalStyle = createGlobalStyle`
   ${reset}
 `;
@@ -85,6 +87,7 @@ function App() {
               <Route path="/write/borrow" element={<BorrowWriting />} />
               <Route path="/submain" element={<Submain />} />
               <Route path="/search" element={<Search />} />
+              <Route path="/chat" element={<ChatPage />} />
               <Route path="/read/:id" element={<PostDetail />} />
               <Route path="/mypage" element={<MyPage />} />
               <Route path="/mypage/givelist" element={<MyGivePostListPage />} />
