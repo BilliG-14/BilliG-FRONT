@@ -24,11 +24,6 @@ export default function AdminSideBar() {
             </a>
           </li>
           <li className="h-10 flex items-center justify-start">
-            <a href="#!" onClick={() => showUserDetail()}>
-              <p className="items-center justify-center">회원 상세 관리</p>
-            </a>
-          </li>
-          <li className="h-10 flex items-center justify-start">
             <a href="#!" onClick={() => showReport()}>
               <p className="items-center justify-center">신고 내역 관리</p>
             </a>

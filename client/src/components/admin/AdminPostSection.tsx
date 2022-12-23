@@ -77,7 +77,7 @@ export default function AdminPostSection() {
                     </span>
                   </a>
                 </td>
-                <td>{product.author.name}</td>
+                <td>{product.author.nickName}</td>
                 <td className="w-14">
                   <button
                     className="border-red-400 border-solid border-2 w-12 rounded-lg h-7 leading-7 text-red-400 after:content-['삭제'] shadow-lg hover:bg-red-400 hover:text-white"

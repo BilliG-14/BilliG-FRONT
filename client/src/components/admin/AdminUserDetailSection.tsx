@@ -25,7 +25,8 @@ const apiUser = {
     return res.data;
   },
   UPDATE: (id: string) => async (data: any) => {
-    const res = await api.patch('user', data);
+    console.log(`정지하는 계정: ${id}`);
+    const res = await api.patch(`user/${id}`, data);
     return res.data;
   },
 };
@@ -38,15 +39,14 @@ export default function AdminUserDetailSection() {
     setOpenSuspendModal(!isOpenSuspendModal);
   }, [isOpenSuspendModal]);
   const { isLoading, data, isError } = useQuery<User, AxiosError>(
-    ['user'],
+    [`user/${selectedUserId}`],
     apiUser.GET(selectedUserId),
     {
-      refetchOnWindowFocus: false, // react-query는 사용자가 사용하는 윈도우가 다른 곳을 갔다가 다시 화면으로 돌아오면 이 함수를 재실행합니다. 그 재실행 여부 옵션 입니다.
       retry: 0, // 실패시 재호출 몇번 할지
       staleTime: 60 * 1000 * 60,
       onSuccess: (_data) => {
         // 성공시 호출
-        console.log(_data);
+        console.log('선택유저', _data);
       },
       onError: (e: Error) => {
         console.log(e.message);
@@ -56,7 +56,7 @@ export default function AdminUserDetailSection() {
   const updateMutation = useMutation(apiUser.UPDATE(selectedUserId), {
     onSuccess: (_data) => {
       console.log(_data);
-      queryClient.invalidateQueries(['users']);
+      queryClient.invalidateQueries([`user/${selectedUserId}`]);
     },
     onError: (error) => {
       console.log(error);
@@ -74,12 +74,15 @@ export default function AdminUserDetailSection() {
   }
   return (
     <section className="w-full text-b-text-black">
+      <p className="font-bold w-4/5 mx-auto text-center mt-5 text-2xl">
+        사용자 상세 정보
+      </p>
       <div className="w-4/5 p-12 mx-auto">
         <section className="img_nick_intro flex mb-4">
-          <div className="flex flex-col w-40 mx-auto">
+          <div className="mx-auto">
             <img
               src={data.image}
-              alt="조이현"
+              alt=""
               className="rounded-full h-32 w-32 object-cover mb-5"
             />
           </div>
@@ -124,7 +127,7 @@ export default function AdminUserDetailSection() {
           </div>
           <div className="user_penalty flex items-center h-18 py-4 border-b border-solid border-gray-200">
             <div className="w-40 text-lg leading-normal font-bold">
-              <h3>제재횟수</h3>
+              <h3>신고 횟수</h3>
             </div>
             <div className="w-full flex items-center justify-start text-base leading-normal">
               {data.reports.length}
@@ -136,20 +139,18 @@ export default function AdminUserDetailSection() {
             className="w-1/5 h-12 bg-red-400 text-white rounded-lg mr-2 hover:bg-gradient-to-tr from-red-500"
             onClick={() => setOpenSuspendModal(!isOpenSuspendModal)}
           >
-            {data.suspension ? '정지해제' : '정지'}
+            {data.suspension ? '정지해제' : '계정 정지'}
           </button>
           {isOpenSuspendModal && (
             <ConfirmModal
               title="이 계정을 정지할까요?"
+              content={`${data.nickName}`}
               yesText="정지"
               yesColor="red-400"
               onClickToggleModal={onClickSuspendModal}
               onClickYes={() => handleSuspend()}
             />
           )}
-          <button className="w-2/6 h-12 hover:text-white border border-b-yellow hover:bg-b-yellow focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-            수정하기
-          </button>
         </div>
       </div>
     </section>
