@@ -79,3 +79,11 @@ export const hashTagStore = create<HashTagState>((set) => ({
       hashTags: newTags,
     })),
 }));
+
+// interface
+
+export interface CategoryType {
+  _id: string;
+  name: string;
+  __v: number;
+}

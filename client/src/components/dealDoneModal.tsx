@@ -1,18 +1,33 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import api from './../api/customAxios';
 import { useMutation } from '@tanstack/react-query';
+import { LenderInformationType, PostIdType } from 'store/PostReadStore';
 
-export default function Modal() {
-  const [showModal, setShowModal] = useState(false);
+export default function Modal(props: PostIdType) {
+  // 게시글 id prop으로 받아오기
+  const { id } = props;
   const emailRef = useRef<HTMLInputElement>(null);
-  const [userCheck, serUserCheck] = useState(false);
 
+  const [showModal, setShowModal] = useState(false);
+
+  const [userId, setUserId] = useState('');
+  //   const [inputEmail, setInputEmail] = useState('');
+  // 유저 체크했는지 여부 확인 state
+  const [userCheck, setUserCheck] = useState<boolean>(false);
+
+  // 빌리는 사람이 전달해준 이메일이 실제 유저 이메일인지 확인
   const userEmailPost = useMutation(
-    (userEmail: string | undefined) => api.post('/checkEmail', userEmail),
+    (userEmail: string | undefined) =>
+      api.post('/checkEmail', { email: userEmail }),
     {
       onSuccess: (res) => {
-        console.log(res);
-        // res.data.필드? alert("유저가 확인되었습니다.") : alert("등록된 유저가 없습니다. 이메일을 다시 확인해주세요.")
+        if (res.data.userId) {
+          setUserId(res.data.userId);
+          setUserCheck(true);
+          alert('유저가 확인되었습니다.');
+        } else {
+          alert('등록된 유저가 없습니다. 이메일을 다시 확인해주세요.');
+        }
       },
       onError: (error) => {
         console.log(error);
@@ -22,8 +37,40 @@ export default function Modal() {
 
   // 유저체크
   function userCheckFn() {
+    // 이메일 체크하기
     userEmailPost.mutate(emailRef.current?.value);
-    // console.log(emailRef.current?.value);
+  }
+
+  const lenderInformation = {
+    lender: userId,
+    stateOfTransaction: 1,
+  };
+
+  // 유저 체크 완료되었으면 빌리는 유저의 정보를 서버에 저장(게시물 api에 담습니다)
+  const lenderEdit = useMutation(
+    (lenderinfo: LenderInformationType) =>
+      api.patch(`/product/${id}`, {
+        lender: lenderinfo.lender,
+        stateOfTransaction: lenderinfo.stateOfTransaction,
+      }),
+    {
+      onSuccess: (res) => {
+        console.log(res);
+      },
+      onError: (error) => {
+        alert('유저 확인을 다시 한 번 해주세요.');
+      },
+    },
+  );
+
+  function lenderBorrowerFix() {
+    console.log(userCheck);
+    if (userCheck) {
+      lenderEdit.mutate(lenderInformation);
+      setShowModal(false);
+    } else {
+      alert('유저 확인을 해주세요.');
+    }
   }
 
   return (
@@ -88,15 +135,14 @@ export default function Modal() {
                   <button
                     className="text-gray-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-5 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    // onClick={() => setShowModal(false)}
-                    onClick={() => console.log('hi')}
+                    onClick={() => setShowModal(false)}
                   >
                     창 닫기
                   </button>
                   <button
                     className="bg-emerald-500 text-white active:bg-emerald-600 font-bold text-sm px-6 py-2 rounded shadow hover:bg-emerald-700 outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    // onClick={userCheck}
+                    onClick={lenderBorrowerFix}
                   >
                     대여완료
                   </button>

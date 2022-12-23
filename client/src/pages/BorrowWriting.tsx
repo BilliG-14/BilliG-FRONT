@@ -8,6 +8,7 @@ import {
   tradeWayStore,
   hashTagStore,
   reservationStore,
+  CategoryType,
 } from './../store/PostWriteStore';
 
 import HashTagSection from '../components/postWrite/HashTagWrite';
@@ -40,12 +41,6 @@ export default function BorrowWriting() {
   });
 
   // 카테고리 가져오기
-  type CategoryType = {
-    _id: string;
-    name: string;
-    __v: number;
-  };
-
   const [categorys, setCategorys] = useState<CategoryType[]>([]);
   const [filteredCategory, setFilteredCategory] = useState<CategoryType[]>([]);
 
@@ -98,7 +93,7 @@ export default function BorrowWriting() {
     author: data?.data,
     title: productNameRef.current?.value,
     description: descriptionRef.current?.value,
-    lender: data?.data,
+    // lender: data?.data,
     stateOfTransaction: 0,
     address: '광주시 강남구 강남동 101',
     price: {

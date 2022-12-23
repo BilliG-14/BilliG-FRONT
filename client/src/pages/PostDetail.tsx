@@ -27,7 +27,7 @@ export default function PostDetail() {
 
   // 현재 로그인 유저의 정보 가져오기
   const LoginUserId = localStorage.getItem('userId');
-  console.log(LoginUserId);
+
   // 서버에서 get 하는 data state
   const [postData, setPostData] = useState<PostDataType>();
 
@@ -73,8 +73,6 @@ export default function PostDetail() {
     setMainImgUrl(e.currentTarget.src);
   }
 
-  // 모달
-
   return (
     <div className="max-w-screen-lg mx-auto">
       <div className="flex flex-col justify-center mx-auto text-b-text-black">
@@ -95,9 +93,9 @@ export default function PostDetail() {
               </div>
               <div className="text-xs text-b-text-darkgray mr-4">
                 작성시간{' '}
-                {postData?.createdAt.split('T')[0] +
+                {/* {postData?.createdAt.split('T')[0] +
                   ' ' +
-                  postData?.createdAt.split('T')[1].slice(0, 8)}
+                  postData?.createdAt.split('T')[1].slice(0, 8)} */}
               </div>
             </section>
 
@@ -240,7 +238,7 @@ export default function PostDetail() {
                       // >
                       //   대여완료하기
                       // </button>
-                      <Modal />
+                      <Modal id={id} />
                     ) : (
                       <button className="w-1/2 h-[50px] focus:outline-none bg-b-bg-gray hover:bg-b-yellow hover:text-white font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300">
                         채팅하기
