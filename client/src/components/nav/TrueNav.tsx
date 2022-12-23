@@ -29,7 +29,7 @@ function TrueNav() {
     navigate('/search');
   };
   return (
-    <div className="flex justify-between pr-5 h-32">
+    <div className="flex justify-between pr-5 h-32 select-none">
       <MenuButton />
       <div className="flex flex-col justify-center">
         <div className="flex justify-between items-center w-52 text-lg font-semibold">
