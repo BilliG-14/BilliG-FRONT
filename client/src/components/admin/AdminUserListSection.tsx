@@ -72,7 +72,6 @@ export default function AdminUserListSection() {
                   <button
                     className="border-b-yellow border-solid border-2 w-12 rounded-lg h-7 leading-7 text-b-yellow shadow-lg hover:bg-b-yellow hover:text-white"
                     onClick={() => {
-                      alert(`${user._id}, ${user.nickName}`);
                       setSelectedUserId(user._id);
                     }}
                   >

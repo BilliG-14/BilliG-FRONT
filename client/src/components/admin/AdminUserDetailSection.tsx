@@ -74,9 +74,12 @@ export default function AdminUserDetailSection() {
   }
   return (
     <section className="w-full text-b-text-black">
+      <p className="font-bold w-4/5 mx-auto text-center mt-5 text-2xl">
+        사용자 상세 정보
+      </p>
       <div className="w-4/5 p-12 mx-auto">
         <section className="img_nick_intro flex mb-4">
-          <div className="flex flex-col w-40 mx-auto">
+          <div className="mx-auto">
             <img
               src={data.image}
               alt=""
@@ -124,7 +127,7 @@ export default function AdminUserDetailSection() {
           </div>
           <div className="user_penalty flex items-center h-18 py-4 border-b border-solid border-gray-200">
             <div className="w-40 text-lg leading-normal font-bold">
-              <h3>제재횟수</h3>
+              <h3>신고 횟수</h3>
             </div>
             <div className="w-full flex items-center justify-start text-base leading-normal">
               {data.reports.length}
@@ -148,9 +151,6 @@ export default function AdminUserDetailSection() {
               onClickYes={() => handleSuspend()}
             />
           )}
-          <button className="w-2/6 h-12 hover:text-white border border-b-yellow hover:bg-b-yellow focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-            수정하기
-          </button>
         </div>
       </div>
     </section>
