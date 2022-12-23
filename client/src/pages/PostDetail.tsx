@@ -219,14 +219,6 @@ export default function PostDetail() {
                         </div>
                       </div>
                     </div>
-                    {
-                      // <button
-                      //   type="button"
-                      //   className="w-1/2 h-[50px] focus:outline-none bg-rose-400	 hover:bg-rose-500 text-white hover:text-white font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300"
-                      // >
-                      //   대여완료하기
-                      // </button>
-                    }
 
                     {/* 채팅버튼 혹은 상태에 따라서 버튼 달라짐 */}
                     {LoginUserId === postData?.author._id ? (
@@ -251,6 +243,20 @@ export default function PostDetail() {
                         id={id}
                         stateNumber={postData.stateOfTransaction}
                       />
+                    ) : postData.stateOfTransaction === 3 ? (
+                      <button
+                        disabled
+                        className="w-1/2 h-[50px] focus:outline-none disabled:bg-gray-300 text-white  disabled:text-gray-400 font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300"
+                      >
+                        거래종료
+                      </button>
+                    ) : postData.stateOfTransaction !== 0 ? (
+                      <button
+                        disabled
+                        className="w-1/2 h-[50px] focus:outline-none disabled:bg-gray-300 text-white  disabled:text-gray-400 font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300"
+                      >
+                        거래중
+                      </button>
                     ) : (
                       <button className="w-1/2 h-[50px] focus:outline-none bg-b-bg-gray hover:bg-b-yellow hover:text-white font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300">
                         채팅하기
