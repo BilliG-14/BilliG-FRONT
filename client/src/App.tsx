@@ -19,6 +19,9 @@ import MyDoneListPage from 'pages/MyDoneListPage';
 import ScrollToTop from 'components/ScrollToTop';
 import { useIsLoginStore } from 'store/LoginJoinStore';
 import api from './api/customAxios';
+import MyPageEdit from './pages/MyPageEdit';
+import Nav from 'components/nav/Nav';
+import UserInformation from 'pages/UserInformation';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -62,7 +65,6 @@ function App() {
     getUserInfo();
     setIsLoadingTrue();
   }, [isLogin]);
-  console.log(isLoading, isLogin);
 
   if ((!isLoading && !isLogin) || (!isLoading && isLogin))
     return <p>loading....</p>;
@@ -90,11 +92,13 @@ function App() {
                 path="/mypage/borrowlist"
                 element={<MyBorrowPostListPage />}
               />
+              <Route path="/mypage/edit" element={<MyPageEdit />} />
               <Route path="/mypage/donegivelist" element={<MyDoneListPage />} />
               <Route
                 path="/mypage/doneborrowlist"
                 element={<MyDoneListPage />}
               />
+              <Route path="/user/:id" element={<UserInformation />} />
             </Routes>
           </BrowserRouter>
         </div>

@@ -5,25 +5,61 @@ import {
 import ChangePassword from './ChangePassword';
 import ChangePawsswordForm from './ChangePawsswordForm';
 import DeleteUser from './DeleteUser';
+import { useQuery } from '@tanstack/react-query';
+import api from '../../api/customAxios';
+import { useNavigate } from 'react-router-dom';
 
 export default function MyinfoPage() {
   const { toggleIntro } = useMyinfoEditStore();
   const { isPW } = usePasswordEditStore();
+  const navigate = useNavigate();
+  const { isLoading, data: userInfo } = useQuery(
+    ['userInfo'],
+    async () => {
+      return api.get(`/user/${localStorage.getItem('userId')}`);
+    },
+    {
+      refetchOnWindowFocus: false,
+      staleTime: 60 * 1000 * 5,
+      onSuccess: (data) => {
+        console.log(data);
+      },
+      onError: (error) => {
+        console.log(error);
+      },
+    },
+  );
+
+  if (isLoading) return <p>로딩중</p>;
+
+  const {
+    name,
+    email,
+    image,
+    intro,
+    nickName,
+    phoneNumber,
+    address1,
+    address2,
+    reports,
+  } = userInfo?.data;
   return (
     <div className="w-4/5 p-12">
       <section className="img_nick_intro flex mb-4">
         <div className="flex flex-col w-40">
           <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0AqtMahULe4ViGKzXbAr4C4hel5SGwfl7Pg&usqp=CAU"
+            src={
+              image ? image : `${process.env.PUBLIC_URL}/img/default_user.png`
+            }
             alt="조이현"
             className="rounded-full h-32 w-32 object-cover mb-5"
           />
         </div>
         <div className="nick_intro pl-7 w-full">
           <div>
-            <h2 className="nick text-3xl font-extrabold">yihyun</h2>
+            <h2 className="nick text-3xl font-extrabold">{nickName}</h2>
             <p className="intro my-4 font-medium">
-              맥북2 대여를 전문으로 하고 있습니다. 연락주세요
+              {intro ? intro : '소개글을 작성해보세요.'}
             </p>
           </div>
         </div>
@@ -34,7 +70,7 @@ export default function MyinfoPage() {
             <h3>이름</h3>
           </div>
           <div className="w-full flex items-center justify-start text-base leading-normal">
-            조이현
+            {name}
           </div>
         </div>
         <div className="user_email flex items-center h-18 py-4 border-b border-solid border-gray-200">
@@ -42,7 +78,7 @@ export default function MyinfoPage() {
             <h3>이메일 주소</h3>
           </div>
           <div className="w-full flex items-center justify-start text-base leading-normal">
-            jyh@gmail.com
+            {email}
           </div>
         </div>
         <div className="user_phone flex items-center h-18 py-4 border-b border-solid border-gray-200">
@@ -50,7 +86,7 @@ export default function MyinfoPage() {
             <h3>핸드폰 번호</h3>
           </div>
           <div className="w-full flex items-center justify-start text-base leading-normal">
-            010-2585-3929
+            {phoneNumber}
           </div>
         </div>
         <div className="user_address flex items-center h-18 py-4 border-b border-solid border-gray-200">
@@ -58,7 +94,7 @@ export default function MyinfoPage() {
             <h3>주소</h3>
           </div>
           <div className="w-full flex items-center justify-start text-base leading-normal">
-            서울시 도봉구 도봉산로 22길 월드컵아파트 201동 1101호
+            {`${address1} ${address2}`}
           </div>
         </div>
         <div className="user_penalty flex items-center h-18 py-4 border-b border-solid border-gray-200">
@@ -66,7 +102,7 @@ export default function MyinfoPage() {
             <h3>제재횟수</h3>
           </div>
           <div className="w-full flex items-center justify-start text-base leading-normal">
-            1 회
+            {`${reports.length} 회`}
           </div>
         </div>
       </section>
@@ -75,7 +111,10 @@ export default function MyinfoPage() {
       <div className="edit_btn flex justify-center mt-8">
         <button
           className="w-2/6 h-12 hover:text-white border border-b-yellow hover:bg-b-yellow focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
-          onClick={toggleIntro}
+          onClick={() => {
+            toggleIntro();
+            navigate('/mypage/edit');
+          }}
         >
           수정하기
         </button>

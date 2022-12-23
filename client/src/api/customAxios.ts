@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 
 const axiosConfig: AxiosRequestConfig = {
-  baseURL: 'http://localhost:8080',
+  baseURL: 'https://port-0-cookie-dpuqy925lbn63gyo.gksl2.cloudtype.app',
   headers: {
     'Content-Type': 'application/json',
   },

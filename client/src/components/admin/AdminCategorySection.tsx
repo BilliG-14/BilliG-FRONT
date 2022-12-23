@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import axios, { AxiosError } from 'axios';
+import api from 'api/customAxios';
+import { AxiosError } from 'axios';
 import ConfirmModal from 'components/Modal';
 import { useCallback, useRef, useState } from 'react';
 
@@ -9,33 +10,21 @@ type Category = {
 };
 
 /*Category CRUD */
-const baseUrl = 'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app';
 const endPoint = 'category';
 const apiCategory = {
   GET: async () => {
-    const { data } = await axios.get(`${baseUrl}/${endPoint}`);
+    const { data } = await api.get(`${endPoint}`);
     return data;
   },
   CREATE: async (catogoryName: string) => {
-    await axios.post(
-      `${baseUrl}/${endPoint}`,
-      JSON.stringify({ name: catogoryName }),
-      {
-        headers: { 'Content-Type': `application/json` },
-      },
-    );
+    const { data } = await api.post(`/${endPoint}`, { name: catogoryName });
+    return data;
   },
   UPDATE: async ({ _id, name }: Category) => {
-    await axios.patch(
-      `${baseUrl}/${endPoint}/${_id}`,
-      JSON.stringify({ name: name }),
-      {
-        headers: { 'Content-Type': `application / json` },
-      },
-    );
+    await api.patch(`${endPoint}/${_id}`, { name: name });
   },
   DELETE: async (_id: string) => {
-    await axios.delete(`${baseUrl}/${endPoint}/${_id}`);
+    await api.delete(`${endPoint}/${_id}`);
   },
 };
 
@@ -217,7 +206,11 @@ export default function AdminCategorySection() {
           yesText="삭제"
           onClickToggleModal={onClickToggleModal}
           onClickYes={() => {
-            handleDelete(selectedCategory.current._id);
+            try {
+              handleDelete(selectedCategory.current._id);
+            } catch (error) {
+              console.log(error);
+            }
           }}
         />
       )}
