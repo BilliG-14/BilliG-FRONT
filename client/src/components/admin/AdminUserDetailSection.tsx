@@ -25,7 +25,8 @@ const apiUser = {
     return res.data;
   },
   UPDATE: (id: string) => async (data: any) => {
-    const res = await api.patch('user', data);
+    console.log(`정지하는 계정: ${id}`);
+    const res = await api.patch(`user/${id}`, data);
     return res.data;
   },
 };
@@ -38,15 +39,14 @@ export default function AdminUserDetailSection() {
     setOpenSuspendModal(!isOpenSuspendModal);
   }, [isOpenSuspendModal]);
   const { isLoading, data, isError } = useQuery<User, AxiosError>(
-    ['user'],
+    [`user/${selectedUserId}`],
     apiUser.GET(selectedUserId),
     {
-      refetchOnWindowFocus: false, // react-query는 사용자가 사용하는 윈도우가 다른 곳을 갔다가 다시 화면으로 돌아오면 이 함수를 재실행합니다. 그 재실행 여부 옵션 입니다.
       retry: 0, // 실패시 재호출 몇번 할지
       staleTime: 60 * 1000 * 60,
       onSuccess: (_data) => {
         // 성공시 호출
-        console.log(_data);
+        console.log('선택유저', _data);
       },
       onError: (e: Error) => {
         console.log(e.message);
@@ -56,7 +56,7 @@ export default function AdminUserDetailSection() {
   const updateMutation = useMutation(apiUser.UPDATE(selectedUserId), {
     onSuccess: (_data) => {
       console.log(_data);
-      queryClient.invalidateQueries(['users']);
+      queryClient.invalidateQueries([`user/${selectedUserId}`]);
     },
     onError: (error) => {
       console.log(error);
@@ -79,7 +79,7 @@ export default function AdminUserDetailSection() {
           <div className="flex flex-col w-40 mx-auto">
             <img
               src={data.image}
-              alt="조이현"
+              alt=""
               className="rounded-full h-32 w-32 object-cover mb-5"
             />
           </div>
@@ -136,11 +136,12 @@ export default function AdminUserDetailSection() {
             className="w-1/5 h-12 bg-red-400 text-white rounded-lg mr-2 hover:bg-gradient-to-tr from-red-500"
             onClick={() => setOpenSuspendModal(!isOpenSuspendModal)}
           >
-            {data.suspension ? '정지해제' : '정지'}
+            {data.suspension ? '정지해제' : '계정 정지'}
           </button>
           {isOpenSuspendModal && (
             <ConfirmModal
               title="이 계정을 정지할까요?"
+              content={`${data.nickName}`}
               yesText="정지"
               yesColor="red-400"
               onClickToggleModal={onClickSuspendModal}
