@@ -1,4 +1,4 @@
-export type PostDataType = {
+export interface PostDataType {
   imgUrl: string[];
   postType: string;
   category: {
@@ -55,4 +55,32 @@ export type PostDataType = {
   hashtag: string[];
   createdAt: string;
   updatedAt: string;
-};
+}
+
+export interface UserType {
+  image: string;
+  suspension: boolean;
+  role: string;
+  _id: string;
+  email: string;
+  nickName: string;
+  name: string;
+  phoneNumber: string;
+  postalCode: string;
+  address1: string;
+  address2: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+  reports: [];
+}
+
+export interface PostIdType {
+  id: string | undefined;
+  stateNumber: number;
+}
+
+export interface LenderInformationType {
+  lender: string;
+  stateOfTransaction: number;
+}
