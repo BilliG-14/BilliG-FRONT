@@ -221,7 +221,7 @@ export default function PostDetail() {
                     </div>
 
                     {/* 채팅버튼 혹은 상태에 따라서 버튼 달라짐 */}
-                    {LoginUserId === postData?.author?._id ? (
+                    {LoginUserId === postData?.author._id ? (
                       postData.stateOfTransaction === 0 ? (
                         <DealDoneModal
                           id={id}
@@ -238,11 +238,25 @@ export default function PostDetail() {
                           stateNumber={postData.stateOfTransaction}
                         />
                       )
-                    ) : LoginUserId === postData?.lender?._id ? (
+                    ) : LoginUserId === postData?.lender._id ? (
                       <ProductReceiveButton
                         id={id}
                         stateNumber={postData.stateOfTransaction}
                       />
+                    ) : postData.stateOfTransaction === 3 ? (
+                      <button
+                        disabled
+                        className="w-1/2 h-[50px] focus:outline-none disabled:bg-gray-300 text-white  disabled:text-gray-400 font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300"
+                      >
+                        거래종료
+                      </button>
+                    ) : postData.stateOfTransaction !== 0 ? (
+                      <button
+                        disabled
+                        className="w-1/2 h-[50px] focus:outline-none disabled:bg-gray-300 text-white  disabled:text-gray-400 font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300"
+                      >
+                        거래중
+                      </button>
                     ) : (
                       <button className="w-1/2 h-[50px] focus:outline-none bg-b-bg-gray hover:bg-b-yellow hover:text-white font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300">
                         채팅하기
