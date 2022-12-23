@@ -8,6 +8,7 @@ import { PostDataType } from '../store/PostReadStore';
 import { FaPeopleArrows } from 'react-icons/fa';
 import { GoPackage } from 'react-icons/go';
 import api from './../api/customAxios';
+import Modal from './../components/dealDoneModal';
 
 export default function PostDetail() {
   const queryClient = useQueryClient();
@@ -71,6 +72,8 @@ export default function PostDetail() {
   function changeMainImg(e: React.MouseEvent<HTMLImageElement>) {
     setMainImgUrl(e.currentTarget.src);
   }
+
+  // 모달
 
   return (
     <div className="max-w-screen-lg mx-auto">
@@ -231,9 +234,13 @@ export default function PostDetail() {
 
                     {/* 채팅버튼/혹은 대여완료 */}
                     {LoginUserId === postData?.author._id ? (
-                      <button className="w-1/2 h-[50px] focus:outline-none bg-rose-400	 hover:bg-rose-500 text-white hover:text-white font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300">
-                        대여완료하기
-                      </button>
+                      // <button
+                      //   type="button"
+                      //   className="w-1/2 h-[50px] focus:outline-none bg-rose-400	 hover:bg-rose-500 text-white hover:text-white font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300"
+                      // >
+                      //   대여완료하기
+                      // </button>
+                      <Modal />
                     ) : (
                       <button className="w-1/2 h-[50px] focus:outline-none bg-b-bg-gray hover:bg-b-yellow hover:text-white font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300">
                         채팅하기
