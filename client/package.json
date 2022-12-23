@@ -20,6 +20,7 @@
     "axios": "^1.2.1",
     "daisyui": "^2.43.2",
     "firebase": "^9.15.0",
+    "firebase-tools": "^11.19.0",
     "md5": "^2.3.0",
     "moment": "^2.29.4",
     "postcss-loader": "^7.0.2",

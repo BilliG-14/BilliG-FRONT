@@ -15,6 +15,23 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
+/** 이게 오리지널 */
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 export default auth;
+
+/** 실패1 */
+// const app = initializeApp(firebaseConfig);
+// const auth = getAuth(app);
+// const db = getFirestore();
+// export { auth, db };
+
+/** 실패2 */
+// const app = initializeApp(firebaseConfig);
+// export const auth = getAuth();
+
+/** 실패 n */
+// firebase.initializeApp(firebaseConfig);
+// export const auth = firebase.auth();
+// export const db = firebase.firestore();
+// export const storage = firebase.storage();

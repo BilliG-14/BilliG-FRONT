@@ -91,16 +91,19 @@ export class MainPanel extends Component {
     this.addToListenerLists(chatRoomId, this.state.typingRef, 'child_removed');
   };
 
-  addToListenerLists = (id, ref, event) => {
+  addToListenerLists = (id, reference, event) => {
+    /**ref 이미 선언됐다고 오류나서 reference로 이름바꿈..*/
     /**이미 등록된 리스너인지 확인 */
     const index = this.state.listenerLists.findIndex((listener) => {
       return (
-        listener.id === id && listener.ref === ref && listener.event === event
+        listener.id === id &&
+        listener.reference === reference &&
+        listener.event === event
       );
     });
 
     if (index === -1) {
-      const newListener = { id, ref, event };
+      const newListener = { id, reference, event };
       this.setState({
         listenerLists: this.state.listenerLists.concat(newListener),
       });

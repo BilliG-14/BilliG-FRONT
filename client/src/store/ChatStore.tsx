@@ -9,15 +9,9 @@ interface ChatRoomState {
     };
   };
   isPrivateChatRoom: boolean;
-  setCurrentChatRoom: (
-    currentChatRoom: object,
-    isPrivateChatRoom: boolean,
-  ) => void;
-  setPrivateChatRoom: (
-    currentChatRoom: object,
-    isPrivateChatRoom: boolean,
-  ) => void;
-  setUserPosts: (currentChatRoom: object, userPosts: string) => void;
+  setCurrentChatRoom: (currentChatRoom: object) => void;
+  setPrivateChatRoom: (isPrivateChatRoom: boolean) => void;
+  setUserPosts: (userPosts: string) => void;
 }
 /** 채팅방 store */
 export const chatRoomStore = create<ChatRoomState>((set) => ({
