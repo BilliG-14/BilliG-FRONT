@@ -89,8 +89,8 @@ export default function BorrowWriting() {
   // 이미지 파일 제외한 나머지 data json 형식으로 넣기
   const writeData = {
     postType: 'borrow',
-    category: filteredCategory[0]._id,
-    author: data?.data._id,
+    category: filteredCategory[0]?._id,
+    author: data?.data,
     title: productNameRef.current?.value,
     description: descriptionRef.current?.value,
     // lender: data?.data,
