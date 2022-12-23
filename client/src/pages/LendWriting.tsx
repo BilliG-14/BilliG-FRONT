@@ -88,7 +88,7 @@ export default function LendWriting() {
   const writeData = {
     postType: 'lend',
     category: filteredCategory[0]?._id,
-    author: data?.data,
+    author: data?.data?._id,
     title: productNameRef.current?.value,
     description: descriptionRef.current?.value,
     // lender: data?.data,
