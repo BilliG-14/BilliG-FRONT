@@ -11,8 +11,9 @@ type User = {
   postalCode?: string;
   address1?: string;
   address2?: string;
-  createdAt?: string;
+  createdAt: string;
   updatedAt?: string;
+  role: string;
 };
 
 const apiUsers = {
@@ -57,17 +58,19 @@ export default function AdminUserListSection() {
             <th>이메일</th>
             <th>닉네임</th>
             <th>전화번호</th>
+            <th>권한</th>
             <th>상세보기</th>
           </tr>
         </thead>
         <tbody className="font-semibold">
-          {data &&
-            data.map((user) => (
+          {data?.map((user) => {
+            return (
               <tr key={user._id} className="text-center">
-                <td>{user.createdAt}</td>
+                <td>{new Date(user.createdAt).toLocaleDateString()}</td>
                 <td>{user.email}</td>
                 <td>{user.nickName}</td>
                 <td>{user.phoneNumber}</td>
+                <td>{user.role}</td>
                 <td className="w-14">
                   <button
                     className="border-b-yellow border-solid border-2 w-12 rounded-lg h-7 leading-7 text-b-yellow shadow-lg hover:bg-b-yellow hover:text-white"
@@ -79,7 +82,8 @@ export default function AdminUserListSection() {
                   </button>
                 </td>
               </tr>
-            ))}
+            );
+          })}
         </tbody>
       </table>
     </section>
