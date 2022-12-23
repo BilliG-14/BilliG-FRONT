@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
-import axios from 'axios';
+import api from './../api/customAxios';
+
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -59,46 +60,38 @@ export default function BorrowWriting() {
   };
 
   const [categorys, setCategorys] = useState<CategoryType[]>([]);
-  useQuery(
-    ['categories'],
-    () =>
-      axios.get(
-        'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/category',
-      ),
-    {
-      refetchOnWindowFocus: false,
-      staleTime: 60 * 1000 * 60, // 1시간
-      onSuccess: (res) => setCategorys(res.data),
-      onError: (err) => console.log(err),
-    },
-  );
+  const [filteredCategory, setFilteredCategory] = useState<CategoryType[]>([]);
 
-  const fileredCategory = categorys.filter(
-    (category) =>
-      category.name ===
-      categoryRef.current?.options[categoryRef.current?.options.selectedIndex]
-        .innerText,
-  );
+  useQuery(['categories'], () => api.get('/category'), {
+    refetchOnMount: 'always',
+    refetchOnWindowFocus: false,
+    staleTime: 60 * 1000 * 60, // 1시간
+    onSuccess: (res) => setCategorys(res.data),
+    onError: (err) => console.log(err),
+  });
+
+  // 사용자가 선택한 카테고리만 필터
+  function changecategory() {
+    setFilteredCategory(
+      categorys.filter(
+        (category) => category._id === categoryRef.current?.value,
+      ),
+    );
+  }
 
   // useMutate 정의
   const postData = useMutation(
     (data: FormData) =>
-      axios({
-        method: 'POST',
-        url: 'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/product/',
+      api.post('/product', data, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
-        data: data,
       }),
     {
       onSuccess: (data) => {
-        // 요청이 성공한 경우
-        navigate(`/read/borrow/${data.data._id}`);
-        // console.log(data);
+        navigate(`/read/${data.data._id}`);
       },
       onError: (error) => {
-        // 요청에 에러가 발생된 경우
         console.log(error);
       },
     },
@@ -113,7 +106,7 @@ export default function BorrowWriting() {
   // 이미지 파일 제외한 나머지 data json 형식으로 넣기
   const writeData = {
     postType: 'borrow',
-    category: fileredCategory[0],
+    category: filteredCategory[0],
     author: {
       image: '',
       suspension: false,
@@ -148,7 +141,6 @@ export default function BorrowWriting() {
     },
     stateOfTransaction: 0,
     address: '광주시 강남구 강남동 101',
-    // imgFiles,
     price: {
       priceDay: Number(priceDayRef.current?.value),
       priceTime: Number(priceTimeRef.current?.value),
@@ -160,28 +152,48 @@ export default function BorrowWriting() {
   formData.append('data', JSON.stringify(writeData));
 
   // 등록하기 클릭 시 event
-  async function handleButtonClick(e: React.MouseEvent<HTMLButtonElement>) {
+  function handleButtonClick(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-
+    if (filteredCategory.length === 0 || productNameRef.current?.value === '') {
+      alert('카테고리와 이름을 입력해주세요.');
+      return;
+    } else if (
+      priceDayRef.current?.value === '' ||
+      priceTimeRef.current?.value === ''
+    ) {
+      alert('요금을 입력해주세요.');
+      return;
+    } else if (reservationDate.start === '' || reservationDate.end === '') {
+      alert('예약기간을 입력해주세요.');
+      return;
+    } else if (descriptionRef.current?.value === '') {
+      alert('상세설명을 입력해주세요.');
+      return;
+    } else if (!tradeWay.delivery && !tradeWay.direct) {
+      alert('거래방법을 선택해주세요.');
+      return;
+    }
     // 서버에 데이터 저장
     postData.mutate(formData);
   }
 
   return (
     <div className="max-w-screen-lg mx-auto">
-      <div className="w-[800px] flex flex-col justify-center mx-auto text-b-text-black">
-        <Nav />
+      <div className="flex flex-col justify-center mx-auto text-b-text-black">
         <div className="mb-6 text-3xl">빌리기</div>
-        <form>
+        <form className="w-[800px] mx-auto">
           {/* 상품명/카테고리 section */}
           <section className="flex mb-4">
             <select
+              onChange={changecategory}
               ref={categoryRef}
               className="flex-none pl-3 w-1/6 h-10 border-solid border  border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2"
             >
               <option>카테고리 설정</option>
               {categorys.map((category) => (
-                <option key={category._id}>{category.name}</option>
+                <option key={category._id} value={category._id}>
+                  {category.name}
+                </option>
               ))}
             </select>
             <input
@@ -202,7 +214,7 @@ export default function BorrowWriting() {
             <input
               ref={priceTimeRef}
               type="number"
-              className="appearance: none p-3 mx-2 w-60 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
+              className="p-3 mx-2 w-60 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
             />
             <div className="mr-5">원/시간</div>
             <input
@@ -241,7 +253,6 @@ export default function BorrowWriting() {
             </button>
           </section>
         </form>
-        <Footer />
       </div>
     </div>
   );

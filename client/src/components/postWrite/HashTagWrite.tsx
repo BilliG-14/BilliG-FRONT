@@ -17,10 +17,15 @@ export default function HashTagSection() {
   }
 
   function handleTagSpaceBar(e: React.KeyboardEvent<HTMLInputElement>) {
-    // 스페이스로 해시태그 등록 시 input이 초기화가 되지 않고 스페이스가 남는 이슈 있음
-    if (e.key === 'Enter') {
+    if (
+      e.key === 'Enter' &&
+      !hashTags.includes(hashTagInputText) &&
+      hashTags.length < 6
+    ) {
       setHashTagInputText('');
       setHashTag(hashTagInputText);
+    } else {
+      setHashTagInputText('');
     }
   }
 
@@ -37,7 +42,7 @@ export default function HashTagSection() {
     <section className="flex flex-col mb-4 h-[70px]">
       <div className="flex flex-row">
         <span className="w-[100px] h-10 p-3 text-center">해시태그</span>
-        <div className="">
+        <div className="group/item">
           <div>
             <input
               value={hashTagInputText}
@@ -48,6 +53,11 @@ export default function HashTagSection() {
               className="p-3 mr-4 w-40 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
             />
           </div>
+          <p className="group/edit invisible group-focus-within/item:visible group-focus-within/item:   mt-2 text-[6px] text-b-text-darkgray leading-4 border-solid border border-gray-300 p-2 rounded-lg">
+            엔터를 입력하면 태그를 등록 할 수 있습니다. <br />
+            등록된 태그를 클릭하면 삭제됩니다. <br />
+            태그는 6개까지 등록이 가능합니다.
+          </p>
         </div>
         <div className="flex flex-wrap">
           {hashTags.map((tag) => (
@@ -61,10 +71,13 @@ export default function HashTagSection() {
           ))}
         </div>
       </div>
-      <div className="mt-1 ml-24 text-[6px] text-b-text-darkgray leading-4">
-        <p>엔터를 입력하면 태그를 등록 할 수 있습니다.</p>
-        <p>등록된 태그를 클릭하면 삭제됩니다.</p>
-      </div>
+      {/* <div className=" mt-1 ml-24 text-[6px] text-b-text-darkgray leading-4">
+        <p className="">
+          엔터를 입력하면 태그를 등록 할 수 있습니다. <br />
+          등록된 태그를 클릭하면 삭제됩니다. <br />
+          태그는 6개까지 등록이 가능합니다.
+        </p>
+      </div> */}
     </section>
   );
 }
