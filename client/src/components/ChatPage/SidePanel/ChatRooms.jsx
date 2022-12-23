@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { FaRegSmileWink } from 'react-icons/fa';
 import { FaPlus } from 'react-icons/fa';
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
 import {
   getDatabase,
   ref,
@@ -161,10 +158,13 @@ export class ChatRooms extends Component {
       this.setState({ notifications: updatedNotifications });
     }
   };
+
   /** 채팅방 만들기 모달 창 닫기 */
   handleClose = () => this.setState({ show: false });
+
   /** 채팅방 만들기 모달 창 열기 */
   handleShow = () => this.setState({ show: true });
+
   /** 채팅방 만들기 모달 창 생성하기 누르면 동작 */
   handleSubmit = (e) => {
     e.preventDefault();
@@ -185,7 +185,8 @@ export class ChatRooms extends Component {
       description: description,
       createdBy: {
         name: user.nickName,
-        image: user.photoURL, // 이건 보류
+        image:
+          'https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F9948F536603072310A', // 이건 보류 ( user.image)
       },
     };
 
@@ -252,42 +253,67 @@ export class ChatRooms extends Component {
         </ul>
 
         {/** ADD CHAT ROOM MODAL */}
-        <Modal show={this.state.show} onHide={this.handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Create a chat room</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form onSubmit={this.handleSubmit}>
-              <Form.Group controlId="formBasicEmail">
-                <Form.Label>방 이름</Form.Label>
-                <Form.Control
+        <div
+          className="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
+          show={this.state.show}
+          onHide={this.handleClose}
+        >
+          <div
+            className="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md"
+            closeButton
+          >
+            <h5 className="text-xl font-medium leading-normal text-gray-800">
+              Create a chat room
+            </h5>
+          </div>
+          <div className="modal-body relative p-4">
+            <form onSubmit={this.handleSubmit}>
+              <div className="form-group mb-6" controlId="formBasicEmail">
+                <label className="form-label inline-block mb-2 text-gray-700">
+                  방 이름
+                </label>
+                <input
+                  className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                   onChange={(e) => this.setState({ name: e.target.value })}
                   type="text"
                   placeholder="Enter a chat room name"
                 />
-              </Form.Group>
+              </div>
 
-              <Form.Group controlId="formBasicPassword">
-                <Form.Label>방 설명</Form.Label>
-                <Form.Control
+              <div className="form-group mb-6" controlId="formBasicPassword">
+                <label className="form-label inline-block mb-2 text-gray-700">
+                  방 설명
+                </label>
+                <input
+                  className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                   onChange={(e) =>
                     this.setState({ description: e.target.value })
                   }
                   type="text"
                   placeholder="Enter a chat room description"
                 />
-              </Form.Group>
-            </Form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={this.handleClose}>
+              </div>
+            </form>
+          </div>
+          <div className="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
+            <button
+              type="button"
+              className="px-6 py-2.5 bg-purple-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out"
+              variant="secondary"
+              onClick={this.handleClose}
+            >
               Close
-            </Button>
-            <Button variant="primary" onClick={this.handleSubmit}>
+            </button>
+            <button
+              type="button"
+              className="px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+              variant="primary"
+              onClick={this.handleSubmit}
+            >
               Create
-            </Button>
-          </Modal.Footer>
-        </Modal>
+            </button>
+          </div>
+        </div>
       </div>
     );
   }

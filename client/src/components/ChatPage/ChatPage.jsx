@@ -2,18 +2,22 @@ import React from 'react';
 import SidePanel from './SidePanel/SidePanel';
 import MainPanel from './MainPanel/MainPanel';
 import getUserInfo from './getUserInfo';
-
+import { chatRoomStore } from '../../store/ChatStore';
 function ChatPage() {
   const { userInfo, uid } = getUserInfo();
+  const { initialChatRoomState } = chatRoomStore;
   return (
     <div className="flex">
       <div className="w-1/5">
         <SidePanel key={userInfo && uid} />
-        대충사이드패널
       </div>
       <div className="w-full">
-        {/* <MainPanel key={currentChatRoom && currentChatRoom.id} /> */}
-        대충메인패널
+        <MainPanel
+          key={
+            initialChatRoomState.currentChatRoom &&
+            initialChatRoomState.currentChatRoom.id
+          }
+        />
       </div>
     </div>
   );

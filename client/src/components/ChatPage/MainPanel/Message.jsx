@@ -12,6 +12,7 @@ function Message({ message, user }) {
     );
   };
   const isMessageMine = (message, user) => {
+    //이건 뭐지; 보류
     if (user) {
       return message.user.id === user.uid;
     }

@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
 import { FaRegSmileBeam } from 'react-icons/fa';
-import {
-  setCurrentChatRoom,
-  setPrivateChatRoom,
-} from '../../../redux/actions/chatRoom_action';
 
 import {
   child,

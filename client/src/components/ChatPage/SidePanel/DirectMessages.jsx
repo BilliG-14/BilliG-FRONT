@@ -44,9 +44,9 @@ export class DirectMessages extends Component {
       ? `${userId}/${currentUserId}`
       : `${currentUserId}/${userId}`;
   };
+
   /**currentChatRoom을 클릭한 방으로 변경 */
   changeChatRoom = (user) => {
-    //뭔지모를 에러 보류
     const chatRoomId = this.getChatRoomId(user.uid); /**상대방의 uid */
     const chatRoomData = {
       id: chatRoomId /** getChatRoomId에서 만들어 반환해준 나와 상대방만의 채팅방 id */,

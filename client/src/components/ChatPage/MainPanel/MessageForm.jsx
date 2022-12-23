@@ -1,8 +1,4 @@
 import React, { useState, useRef } from 'react';
-import Form from 'react-bootstrap/Form';
-import ProgressBar from 'react-bootstrap/ProgressBar';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 
 import { getDatabase, ref, set, remove, push, child } from 'firebase/database';
 import {
@@ -176,23 +172,29 @@ function MessageForm() {
 
   return (
     <div>
-      <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="exampleForm.ControlTextarea1">
-          <Form.Control
+      <form onSubmit={handleSubmit}>
+        <div
+          className="form-group mb-6"
+          controlId="exampleForm.ControlTextarea1"
+        >
+          <input
+            type="text"
+            className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
             onKeyDown={handleKeyDown}
             value={content}
             onChange={handleChange}
             as="textarea"
             rows={3}
           />
-        </Form.Group>
-      </Form>
+        </div>
+      </form>
       {!(percentage === 0 || percentage === 100) && (
-        <ProgressBar
-          variant="warning"
-          label={`${percentage}%`}
+        <div
+          class="text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-l-full bg-yellow-500"
           now={percentage}
-        />
+        >
+          `{percentage}%`
+        </div>
       )}
       <div>
         {errors.map((errorMsg) => (
@@ -201,8 +203,8 @@ function MessageForm() {
           </p>
         ))}
       </div>
-      <Row>
-        <Col>
+      <div className="grid-rows-1">
+        <div className="grid-cols-1">
           <button
             onClick={handleSubmit}
             className="message-form-button w-full"
@@ -210,8 +212,8 @@ function MessageForm() {
           >
             SEND
           </button>
-        </Col>
-        <Col>
+        </div>
+        <div className="grid-cols-1">
           <button
             onClick={handleOpenImageRef}
             className="message-form-button w-full"
@@ -219,8 +221,8 @@ function MessageForm() {
           >
             UPLOAD
           </button>
-        </Col>
-      </Row>
+        </div>
+      </div>
       <input
         accept="image/jpeg, image/png"
         className="hidden"

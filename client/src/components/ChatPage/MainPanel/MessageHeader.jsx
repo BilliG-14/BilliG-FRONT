@@ -1,12 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import InputGroup from 'react-bootstrap/InputGroup';
-import FormControl from 'react-bootstrap/FormControl';
-import Image from 'react-bootstrap/Image';
-import Accordion from 'react-bootstrap/Accordion';
-import Card from 'react-bootstrap/Card';
 import { FaLock } from 'react-icons/fa';
 import { FaLockOpen } from 'react-icons/fa';
 import { MdFavorite, MdFavoriteBorder } from 'react-icons/md';
@@ -27,8 +19,7 @@ function MessageHeader({ handleSearchChange }) {
   const { userInfo } = getUserInfo;
 
   // store에서 불러오기
-  const { initialChatRoomState, isPrivateChatRoom, setUserPosts } =
-    chatRoomStore();
+  const { initialChatRoomState, isPrivateChatRoom } = chatRoomStore();
 
   const currentchatRoom = initialChatRoomState.currentChatRoom;
   const userData = userInfo.data;
@@ -37,7 +28,7 @@ function MessageHeader({ handleSearchChange }) {
   const [isFavorited, setIsFavorited] = useState(false);
   const usersRef = ref(getDatabase(), 'users');
   const user = userData;
-  const userPosts = useSelector((state) => state.chatRoom.userPosts); // 일단 보류
+  const userPosts = initialChatRoomState.currentChatRoom.userPosts;
 
   /** 새로고침해도 좋아요 남아있게하기 */
   const addFavoriteListener = (chatRoomId, userId) => {
@@ -97,9 +88,9 @@ function MessageHeader({ handleSearchChange }) {
 
   return (
     <div className="w-full h-190 border-solid border-slate-200 outline-2 p-4 mb-4">
-      <Container>
-        <Row>
-          <Col>
+      <div className="container">
+        <div className="grid-rows-1">
+          <div className="grid-cols-1">
             <h2>
               {isPrivateRoom ? (
                 <FaLock className="mb-10" />
@@ -120,61 +111,81 @@ function MessageHeader({ handleSearchChange }) {
                 </span>
               )}
             </h2>
-          </Col>
+          </div>
 
-          <Col>
-            <InputGroup className="mb-3">
-              <InputGroup.Text id="basic-addon1">
+          <div className="grid-cols-1">
+            <div className="mb-3">
+              <input
+                type="text"
+                class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                id="basic-addon1"
+              >
                 <AiOutlineSearch />
-              </InputGroup.Text>
-              <FormControl
+              </input>
+              <div
+                className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                 onChange={handleSearchChange}
                 placeholder="Search Messages"
                 aria-label="Search"
                 aria-describedby="basic-addon1"
               />
-            </InputGroup>
-          </Col>
-        </Row>
+            </div>
+          </div>
+        </div>
 
         {!isPrivateRoom && (
           <div className="flex justify-end">
             <p>
-              <Image
+              <img
                 src={chatRoom && chatRoom.createdBy.image}
                 roundedCircle
                 className="w-30 h-30"
+                alt="프로필 이미지"
               />{' '}
               {chatRoom && chatRoom.createdBy.name}
             </p>
           </div>
         )}
 
-        <Row>
-          <Col>
-            <Accordion>
-              <Accordion.Item eventKey="0">
-                <Accordion.Header>Description</Accordion.Header>
-                <Accordion.Collapse eventKey="0">
-                  <Card.Body>{chatRoom && chatRoom.description}</Card.Body>
-                </Accordion.Collapse>
-              </Accordion.Item>
-            </Accordion>
-          </Col>
-          <Col>
-            <Accordion>
-              <Accordion.Item eventKey="0">
-                <Accordion.Header>Posts Count</Accordion.Header>
-                <Accordion.Collapse eventKey="0">
-                  <Card.Body>
+        <div className="grid-rows-1">
+          <div className="grid-cols-1">
+            <div className="accordion">
+              <div
+                className="accordion-item bg-white border border-gray-200"
+                eventKey="0"
+              >
+                <h2 className="accordion-header mb-0">Description</h2>
+                <button
+                  className=" accordion-button relative flex items-center w-full py-4 px-5 text-base text-gray-800 text-left bg-white border-0 rounded-none transition focus:outline-none"
+                  eventKey="0"
+                >
+                  <div className="accordion-body py-4 px-5">
+                    {chatRoom && chatRoom.description}
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="grid-cols-1">
+            <div className="accordion">
+              <div
+                className="accordion-item bg-white border border-gray-200"
+                eventKey="0"
+              >
+                <h2 className="accordion-header mb-0">Description</h2>
+                <button
+                  className=" accordion-button relative flex items-center w-full py-4 px-5 text-base text-gray-800 text-left bg-white border-0 rounded-none transition focus:outline-none"
+                  eventKey="0"
+                >
+                  <div className="accordion-body py-4 px-5">
                     {userPosts && renderUserPosts(userPosts)}
-                  </Card.Body>
-                </Accordion.Collapse>
-              </Accordion.Item>
-            </Accordion>
-          </Col>
-        </Row>
-      </Container>
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
