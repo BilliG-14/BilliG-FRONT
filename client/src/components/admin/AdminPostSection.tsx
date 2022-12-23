@@ -1,25 +1,20 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import axios, { AxiosError } from 'axios';
+import api from 'api/customAxios';
+import { AxiosError } from 'axios';
 import ConfirmModal from 'components/Modal';
 import { useCallback, useState } from 'react';
 
 /*Products CRUD */
-const baseUrl = 'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app';
 const endPoint = 'product';
-const token = localStorage.getItem('token');
 const apiProduct = {
   GET: async () => {
-    const { data } = await axios.get(`${baseUrl}/${endPoint}`);
+    const { data } = await api.get(`${endPoint}`);
     return data;
   },
   DELETE: async (_id: string) => {
-    const { data } = await axios({
+    const { data } = await api({
       url: `/${endPoint}/${_id}`,
       method: 'delete',
-      baseURL: `${baseUrl}`,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
     });
   },
 };

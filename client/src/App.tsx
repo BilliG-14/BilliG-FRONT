@@ -20,6 +20,7 @@ import MyDoneListPage from 'pages/MyDoneListPage';
 import ScrollToTop from 'components/ScrollToTop';
 import { useIsLoginStore } from 'store/LoginJoinStore';
 import api from './api/customAxios';
+import Nav from 'components/nav/Nav';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -65,7 +66,7 @@ function App() {
   }, [isLogin]);
   console.log(isLoading, isLogin);
 
-  if ((!isLoading && !isLogin) || (isLoading && !isLogin))
+  if ((!isLoading && !isLogin) || (!isLoading && isLogin))
     return <p>loading....</p>;
 
   return (

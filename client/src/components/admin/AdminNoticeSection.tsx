@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import axios, { AxiosError } from 'axios';
+import api from 'api/customAxios';
+import { AxiosError } from 'axios';
 import ConfirmModal from 'components/Modal';
 import { useCallback, useState } from 'react';
 import { useNoticePageStore } from 'store/AdminPageStore';
@@ -28,54 +29,26 @@ export interface CreatedNotice {
   title: string;
   content: string;
 }
-const baseUrl = 'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app';
 const endPoint = 'notice';
-const token = localStorage.getItem('token');
 export const apiReports = {
   GETALL: async () => {
-    const { data } = await axios({
-      url: `/${endPoint}`,
-      method: 'get',
-      baseURL: `${baseUrl}`,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const { data } = await api.get(`/${endPoint}`);
     return data;
   },
   CREATE: async (newNotice: CreatedNotice) => {
-    const { data } = await axios({
-      url: `/${endPoint}`,
-      method: 'post',
-      baseURL: `${baseUrl}`,
-      data: newNotice,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const { data } = await api.post(`/${endPoint}`, newNotice);
     return data;
   },
   UPDATE: async ({ updated, _id }: UpdatedNotice) => {
-    const { data } = await axios({
+    const { data } = await api({
       url: `/${endPoint}/${_id}`,
       method: 'patch',
-      baseURL: `${baseUrl}`,
       data: updated,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
     });
     return data;
   },
   DELETE: async (_id: string) => {
-    await axios({
-      url: `/${endPoint}/${_id}`,
-      method: 'delete',
-      baseURL: `${baseUrl}`,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    await api.delete(`/${endPoint}/${_id}`);
   },
 };
 function AdminNoticeList() {

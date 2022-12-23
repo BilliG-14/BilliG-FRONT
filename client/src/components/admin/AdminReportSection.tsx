@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import axios, { AxiosError } from 'axios';
+import api from 'api/customAxios';
+import { AxiosError } from 'axios';
 import ConfirmModal from 'components/Modal';
 import { useCallback, useState } from 'react';
 
@@ -10,30 +11,14 @@ type Report = {
   details: string;
 };
 /*Report CRUD */
-const baseUrl = 'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app';
 const endPoint = 'report';
-const token = localStorage.getItem('token');
 const apiReports = {
   GET: async () => {
-    const { data } = await axios({
-      url: `/${endPoint}`,
-      method: 'get',
-      baseURL: `${baseUrl}`,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const { data } = await api.get(`/${endPoint}`);
     return data;
   },
   DELETE: async (_id: string) => {
-    const { data } = await axios({
-      url: `/${endPoint}/${_id}`,
-      method: 'delete',
-      baseURL: `${baseUrl}`,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const { data } = await api.delete(`/${endPoint}/${_id}`);
   },
 };
 export default function AdminReportSection() {
