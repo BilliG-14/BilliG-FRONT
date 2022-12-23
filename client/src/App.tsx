@@ -10,8 +10,7 @@ import reset from 'styled-reset';
 import BorrowWriting from './pages/BorrowWriting';
 import LendWriting from './pages/LendWriting';
 import Submain from './pages/Submain';
-import LendPostDetail from './pages/LendPostDetail';
-import BorrowPostDetail from './pages/BorrowPostDetail';
+import PostDetail from './pages/PostDetail';
 import Search from './pages/Search';
 import MyPage from './pages/MyPage';
 import MyGivePostListPage from './pages/MyGivePostListPage';
@@ -21,10 +20,11 @@ import ScrollToTop from 'components/ScrollToTop';
 import { useIsLoginStore } from 'store/LoginJoinStore';
 import api from './api/customAxios';
 
-const queryClient = new QueryClient();
 const GlobalStyle = createGlobalStyle`
   ${reset}
 `;
+
+const queryClient = new QueryClient();
 
 function App() {
   const {
@@ -69,8 +69,8 @@ function App() {
 
   return (
     <React.Fragment>
-      <GlobalStyle />
       <QueryClientProvider client={queryClient}>
+        <GlobalStyle />
         <div className="App h-screen w-screen">
           <BrowserRouter>
             {/* ScrollToTop : navigate했을 때, 스크롤 위치가 그대로 적용되는 문제 방지*/}
@@ -83,8 +83,7 @@ function App() {
               <Route path="/write/borrow" element={<BorrowWriting />} />
               <Route path="/submain" element={<Submain />} />
               <Route path="/search" element={<Search />} />
-              <Route path="/read/lend" element={<LendPostDetail />} />
-              <Route path="/read/borrow" element={<BorrowPostDetail />} />
+              <Route path="/read/:id" element={<PostDetail />} />
               <Route path="/mypage" element={<MyPage />} />
               <Route path="/mypage/givelist" element={<MyGivePostListPage />} />
               <Route

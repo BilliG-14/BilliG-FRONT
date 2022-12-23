@@ -8,6 +8,7 @@ import {
   AdminHashTagSection,
 } from 'components/admin';
 import useAdminPageStore, { AdminSection } from 'store/AdminPageStore';
+import AdminCategorySection from './AdminCategorySection';
 
 export default function AdminMainSection() {
   const section = useAdminPageStore((state) => state.section);
@@ -27,6 +28,8 @@ export default function AdminMainSection() {
         return <AdminRentalSection />;
       case AdminSection.HASHTAG:
         return <AdminHashTagSection />;
+      case AdminSection.CATEGORY:
+        return <AdminCategorySection />;
       default:
         return <section></section>;
     }
