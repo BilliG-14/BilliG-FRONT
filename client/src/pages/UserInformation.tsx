@@ -3,7 +3,6 @@ import api from 'api/customAxios';
 import { AxiosError } from 'axios';
 import { useParams } from 'react-router-dom';
 import { RiAlarmWarningFill, RiCloseFill } from 'react-icons/ri';
-import Nav from 'components/nav/Nav';
 import { useState, useRef, useCallback } from 'react';
 import ConfirmModal from 'components/Modal';
 
@@ -73,7 +72,6 @@ export default function UserInformation() {
   );
   const createMutation = useMutation(apiReport.CREATE, {
     onSuccess: (_data) => {
-      // post요청 성공 시 category 맵핑된 useQuery api 함수를 실행
       console.log(_data);
     },
     onError: (error) => {
@@ -84,13 +82,12 @@ export default function UserInformation() {
   if (isError) return <div>회원정보를 불러올 수 없습니다.</div>;
   return (
     <>
-      <Nav />
       <div className="h-full w-screen max-w-screen-lg m-auto flex flex-col items-center">
-        <div className="img_nick_intro flex mb-4 mt-28">
+        <div className="img_nick_intro flex mb-4 mt-8">
           <div className="mx-auto">
             <img
               src={data.image}
-              alt=""
+              alt="사용자 이미지"
               className="rounded-full h-48 w-48 object-cover mb-5"
             />
           </div>
