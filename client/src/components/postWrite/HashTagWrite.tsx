@@ -17,13 +17,11 @@ export default function HashTagSection() {
   }
 
   function handleTagSpaceBar(e: React.KeyboardEvent<HTMLInputElement>) {
-    if (
-      e.key === 'Enter' &&
-      !hashTags.includes(hashTagInputText) &&
-      hashTags.length < 6
-    ) {
-      setHashTagInputText('');
-      setHashTag(hashTagInputText);
+    if (!hashTags.includes(hashTagInputText) && hashTags.length < 6) {
+      if (e.key === 'Enter') {
+        setHashTagInputText('');
+        setHashTag(hashTagInputText);
+      }
     } else {
       setHashTagInputText('');
     }
