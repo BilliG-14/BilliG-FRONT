@@ -20,6 +20,8 @@ import ScrollToTop from 'components/ScrollToTop';
 import { useIsLoginStore } from 'store/LoginJoinStore';
 import api from './api/customAxios';
 import MyPageEdit from './pages/MyPageEdit';
+import Nav from 'components/nav/Nav';
+import UserInformation from 'pages/UserInformation';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -96,6 +98,7 @@ function App() {
                 path="/mypage/doneborrowlist"
                 element={<MyDoneListPage />}
               />
+              <Route path="/user/:id" element={<UserInformation />} />
             </Routes>
           </BrowserRouter>
         </div>

@@ -42,7 +42,7 @@ export default function ConfirmModal(props: ConfirmModalProps) {
           <span className="font-bold text-lg">{props.title}</span>
         </div>
         {props.content && (
-          <div className="h-10 flex items-center justify-center">
+          <div className="p-6 flex items-center justify-center">
             <span className="font-semibold">{props.content}</span>
           </div>
         )}
@@ -64,7 +64,7 @@ export default function ConfirmModal(props: ConfirmModalProps) {
         </div>
       </div>
       <div
-        className=" w-screen h-screen bg-black -z-50 opacity-60"
+        className=" w-screen h-screen bg-black -z-50 opacity-10"
         onClick={(e: React.MouseEvent) => {
           e.preventDefault();
           props.onClickToggleModal();
