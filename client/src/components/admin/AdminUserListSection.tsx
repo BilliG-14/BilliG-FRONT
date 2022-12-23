@@ -1,8 +1,9 @@
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import { useQuery } from '@tanstack/react-query';
-
+import api from 'api/customAxios';
+import useAdminPageStore from 'store/AdminPageStore';
 type User = {
-  id: string;
+  _id: string;
   email?: string;
   nickName?: string;
   name?: string;
@@ -13,32 +14,19 @@ type User = {
   createdAt?: string;
   updatedAt?: string;
 };
-const baseUrl = 'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app';
-const endPoint = 'user';
-const token = localStorage.getItem('token');
-console.log(token);
+
 const apiUsers = {
   GET: async () => {
-    const { data } = await axios({
-      url: `/${endPoint}`,
-      method: 'get',
-      baseURL: `${baseUrl}`,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return data;
-  },
-  UPDATE: async (updateUser: User) => {
-    const { id, ...updated } = updateUser;
-    await axios.patch(`${baseUrl}/${endPoint}/${id}`, JSON.stringify(updated), {
-      headers: { 'Content-Type': `application / json` },
-    });
+    const res = await api.get('user');
+    return res.data;
   },
 };
 
 export default function AdminUserListSection() {
-  const { isLoading, data, isError, error } = useQuery<User[], AxiosError>(
+  const setSelectedUserId = useAdminPageStore(
+    (state) => state.setSelectedUserId,
+  );
+  const { isLoading, data, isError } = useQuery<User[], AxiosError>(
     ['users'],
     apiUsers.GET,
     {
@@ -75,13 +63,16 @@ export default function AdminUserListSection() {
         <tbody className="font-semibold">
           {data &&
             data.map((user) => (
-              <tr key={user.id} className="text-center">
+              <tr key={user._id} className="text-center">
                 <td>{user.createdAt}</td>
                 <td>{user.email}</td>
                 <td>{user.nickName}</td>
                 <td>{user.phoneNumber}</td>
                 <td className="w-14">
-                  <button className="border-b-yellow border-solid border-2 w-12 rounded-lg h-7 leading-7 text-b-yellow shadow-lg hover:bg-b-yellow hover:text-white">
+                  <button
+                    className="border-b-yellow border-solid border-2 w-12 rounded-lg h-7 leading-7 text-b-yellow shadow-lg hover:bg-b-yellow hover:text-white"
+                    onClick={() => setSelectedUserId(user._id)}
+                  >
                     조회
                   </button>
                 </td>
