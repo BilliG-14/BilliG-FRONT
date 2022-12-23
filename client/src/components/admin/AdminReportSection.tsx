@@ -72,7 +72,7 @@ export default function AdminReportSection() {
           {data.map((report) => (
             <tr key={report._id} className="text-center">
               <td>{report.reporter.name}</td>
-              <td className="text-red-500">{report.target?.name}</td>
+              <td className="text-red-500">{report.target.name}</td>
               <td>{report.details}</td>
               <td className="w-14">
                 <button

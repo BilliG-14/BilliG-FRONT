@@ -42,7 +42,7 @@ export default function ConfirmModal(props: ConfirmModalProps) {
           <span className="font-bold text-lg">{props.title}</span>
         </div>
         {props.content && (
-          <div className="h-10 flex items-center justify-center">
+          <div className="p-6 flex items-center justify-center">
             <span className="font-semibold">{props.content}</span>
           </div>
         )}
