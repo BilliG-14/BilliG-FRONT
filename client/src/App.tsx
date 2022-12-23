@@ -64,7 +64,7 @@ function App() {
   }, [isLogin]);
   console.log(isLoading, isLogin);
 
-  if ((!isLoading && !isLogin) || (isLoading && !isLogin))
+  if ((!isLoading && !isLogin) || (!isLoading && isLogin))
     return <p>loading....</p>;
 
   return (

@@ -5,10 +5,23 @@ import {
 import ChangePassword from './ChangePassword';
 import ChangePawsswordForm from './ChangePawsswordForm';
 import DeleteUser from './DeleteUser';
+import { useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import api from '../../api/customAxios';
 
 export default function MyinfoPage() {
   const { toggleIntro } = useMyinfoEditStore();
   const { isPW } = usePasswordEditStore();
+
+  const { data: userInfo } = useQuery(
+    ['userInfo'],
+    async () => {
+      return api.get('/user/me');
+    },
+    { refetchOnWindowFocus: false, staleTime: 60 * 1000 * 5 },
+  );
+  const { name, email, image, nickName, phoneNumber, address1, address2 } =
+    userInfo?.data;
   return (
     <div className="w-4/5 p-12">
       <section className="img_nick_intro flex mb-4">
@@ -21,7 +34,7 @@ export default function MyinfoPage() {
         </div>
         <div className="nick_intro pl-7 w-full">
           <div>
-            <h2 className="nick text-3xl font-extrabold">yihyun</h2>
+            <h2 className="nick text-3xl font-extrabold">{nickName}</h2>
             <p className="intro my-4 font-medium">
               맥북2 대여를 전문으로 하고 있습니다. 연락주세요
             </p>
@@ -34,7 +47,7 @@ export default function MyinfoPage() {
             <h3>이름</h3>
           </div>
           <div className="w-full flex items-center justify-start text-base leading-normal">
-            조이현
+            {name}
           </div>
         </div>
         <div className="user_email flex items-center h-18 py-4 border-b border-solid border-gray-200">
@@ -42,7 +55,7 @@ export default function MyinfoPage() {
             <h3>이메일 주소</h3>
           </div>
           <div className="w-full flex items-center justify-start text-base leading-normal">
-            jyh@gmail.com
+            {email}
           </div>
         </div>
         <div className="user_phone flex items-center h-18 py-4 border-b border-solid border-gray-200">
@@ -50,7 +63,7 @@ export default function MyinfoPage() {
             <h3>핸드폰 번호</h3>
           </div>
           <div className="w-full flex items-center justify-start text-base leading-normal">
-            010-2585-3929
+            {phoneNumber}
           </div>
         </div>
         <div className="user_address flex items-center h-18 py-4 border-b border-solid border-gray-200">
@@ -58,7 +71,7 @@ export default function MyinfoPage() {
             <h3>주소</h3>
           </div>
           <div className="w-full flex items-center justify-start text-base leading-normal">
-            서울시 도봉구 도봉산로 22길 월드컵아파트 201동 1101호
+            {`${address1} ${address2}`}
           </div>
         </div>
         <div className="user_penalty flex items-center h-18 py-4 border-b border-solid border-gray-200">
