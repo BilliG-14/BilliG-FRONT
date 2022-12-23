@@ -1,9 +1,9 @@
-import { useState, useRef, useEffect } from 'react';
-import api from './../api/customAxios';
+import { useState, useRef } from 'react';
+import api from '../../api/customAxios';
 import { useMutation } from '@tanstack/react-query';
 import { LenderInformationType, PostIdType } from 'store/PostReadStore';
 
-export default function Modal(props: PostIdType) {
+export default function DealDoneModal(props: PostIdType) {
   // 게시글 id prop으로 받아오기
   const { id } = props;
   const emailRef = useRef<HTMLInputElement>(null);
@@ -11,7 +11,6 @@ export default function Modal(props: PostIdType) {
   const [showModal, setShowModal] = useState(false);
 
   const [userId, setUserId] = useState('');
-  //   const [inputEmail, setInputEmail] = useState('');
   // 유저 체크했는지 여부 확인 state
   const [userCheck, setUserCheck] = useState<boolean>(false);
 
@@ -21,6 +20,8 @@ export default function Modal(props: PostIdType) {
       api.post('/checkEmail', { email: userEmail }),
     {
       onSuccess: (res) => {
+        /* 실제 유저라면(받아오는 데이터에 userId 필드가 있다면
+        유저 아이디, 유저를 체크했다는 state 값 변경 */
         if (res.data.userId) {
           setUserId(res.data.userId);
           setUserCheck(true);
@@ -55,7 +56,7 @@ export default function Modal(props: PostIdType) {
       }),
     {
       onSuccess: (res) => {
-        console.log(res);
+        alert('대여자 등록이 완료되었습니다.');
       },
       onError: (error) => {
         alert('유저 확인을 다시 한 번 해주세요.');
@@ -63,8 +64,7 @@ export default function Modal(props: PostIdType) {
     },
   );
 
-  function lenderBorrowerFix() {
-    console.log(userCheck);
+  function changeLenderState() {
     if (userCheck) {
       lenderEdit.mutate(lenderInformation);
       setShowModal(false);
@@ -107,7 +107,7 @@ export default function Modal(props: PostIdType) {
                   <p className="mb-2 text-red-500  font-semibold">
                     대여완료 전 꼭 확인해주세요!
                   </p>
-                  <p className="mb-6 text-[13px] leading-4 font-thin text-b-text-black">
+                  <p className="mb-6 text-[13px] leading-5 font-thin text-b-text-black">
                     대여자에게 전달받은 이메일을 입력하여 <br />
                     빌리지의 유저인지 유저확인을 꼭 하신 후 대여완료 버튼을
                     눌러주세요!
@@ -142,7 +142,7 @@ export default function Modal(props: PostIdType) {
                   <button
                     className="bg-emerald-500 text-white active:bg-emerald-600 font-bold text-sm px-6 py-2 rounded shadow hover:bg-emerald-700 outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={lenderBorrowerFix}
+                    onClick={changeLenderState}
                   >
                     대여완료
                   </button>

@@ -8,7 +8,8 @@ import { PostDataType } from '../store/PostReadStore';
 import { FaPeopleArrows } from 'react-icons/fa';
 import { GoPackage } from 'react-icons/go';
 import api from './../api/customAxios';
-import Modal from './../components/dealDoneModal';
+import DealDoneModal from '../components/postDetail/DealDoneModal';
+import { ProductReceiveButton } from '../components/postDetail/ProductReceiveModal';
 
 export default function PostDetail() {
   const queryClient = useQueryClient();
@@ -238,7 +239,9 @@ export default function PostDetail() {
                       // >
                       //   대여완료하기
                       // </button>
-                      <Modal id={id} />
+                      <DealDoneModal id={id} />
+                    ) : LoginUserId === postData?.lender._id ? (
+                      <ProductReceiveButton id={id} />
                     ) : (
                       <button className="w-1/2 h-[50px] focus:outline-none bg-b-bg-gray hover:bg-b-yellow hover:text-white font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300">
                         채팅하기
