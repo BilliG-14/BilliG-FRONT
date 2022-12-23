@@ -71,7 +71,7 @@ export default function AdminPostSection() {
               <tr key={product._id} className="text-center">
                 <td>{product.postType}</td>
                 <td>
-                  <a href={`/read/${product.postType}/${product._id}`}>
+                  <a href={`/read/${product._id}`}>
                     <span className="hover:font-bold hover:text-b-yellow">
                       {product.title}
                     </span>
