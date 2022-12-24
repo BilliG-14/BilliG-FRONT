@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useQuery, useMutation } from '@tanstack/react-query';
 
 import Caution from '../components/postDetail/Caution';
 import { PostDataType } from '../store/PostReadStore';
@@ -8,9 +8,8 @@ import { PostDataType } from '../store/PostReadStore';
 import { FaPeopleArrows } from 'react-icons/fa';
 import { GoPackage } from 'react-icons/go';
 import api from './../api/customAxios';
-import DealDoneModal from '../components/postDetail/DealDoneModal';
-import { ProductReceiveButton } from '../components/postDetail/ProductReceiveModal';
-import { ProductReturnedModal } from '../components/postDetail/ProductReturnedModal';
+import LendButtons from '../components/postDetail/LendButtons';
+import BorrowButtons from '../components/postDetail/BorrowButtons';
 
 export default function PostDetail() {
   const navigate = useNavigate();
@@ -26,8 +25,7 @@ export default function PostDetail() {
 
   useQuery(['postData'], () => api.get(`product/${id}`), {
     refetchOnMount: 'always',
-    refetchOnWindowFocus: false,
-    staleTime: 60 * 1000 * 60, // 1시간
+    refetchOnWindowFocus: true,
     onSuccess: (res) => setPostData(res?.data[0]),
     onError: () => console.log('error'),
   });
@@ -83,9 +81,14 @@ export default function PostDetail() {
               </div>
               <div className="text-xs text-b-text-darkgray mr-4">
                 작성시간{' '}
-                {/* {postData?.createdAt.split('T')[0] +
+                {postData?.createdAt.split('T')[0] +
                   ' ' +
-                  postData?.createdAt.split('T')[1].slice(0, 8)} */}
+                  postData?.createdAt.split('T')[1].slice(0, 8)}
+                <br />
+                수정시간{' '}
+                {postData?.updatedAt.split('T')[0] +
+                  ' ' +
+                  postData?.updatedAt.split('T')[1].slice(0, 8)}
               </div>
             </section>
 
@@ -118,9 +121,9 @@ export default function PostDetail() {
 
               {/* 상품 기본정보 */}
               <div className="flex flex-col justify-between w-[450px] h-[410px] pt-3 mr-4">
-                <div className="text-right">
+                <div className="text-left">
                   <div className="text-3xl">{postData?.title}</div>
-                  <div className="flex justify-end">
+                  <div className="flex">
                     {postData?.hashtag.map((tag, idx) => {
                       return (
                         <div
@@ -141,9 +144,11 @@ export default function PostDetail() {
                     </div>
                     <div>
                       <div className="mb-2">
-                        {postData?.price.priceTime}원/시간
+                        {postData?.price.priceTime.toLocaleString()} 원/시간
                       </div>
-                      <div>{postData?.price.priceDay}/일</div>
+                      <div>
+                        {postData?.price.priceDay.toLocaleString()} 원/일
+                      </div>
                     </div>
                   </div>
                   <hr className="hr-1 my-4"></hr>
@@ -159,6 +164,7 @@ export default function PostDetail() {
                       </div>
                     </div>
                   )}
+
                   {/* 대여방법 */}
                   <div className="flex justify-between mb-2">
                     <div className="text-sm text-b-text-darkgray w-24 mb-2 text-left my-auto">
@@ -201,7 +207,10 @@ export default function PostDetail() {
 
                   {/* 사용자 정보 */}
                   <div className="flex flex-row gap-2 items-end mt-6">
-                    <div className="w-1/2 p-2 text-left bg-white border border-solid border-gray-300 rounded-lg">
+                    <Link
+                      to={`/user/${postData?.author?._id}`}
+                      className="w-1/2 p-2 text-left bg-white border border-solid border-gray-300 rounded-lg"
+                    >
                       <div className="flex items-center">
                         <img
                           className="h-8 w-8 mr-2 rounded-full"
@@ -218,49 +227,27 @@ export default function PostDetail() {
                           </p>
                         </div>
                       </div>
-                    </div>
+                    </Link>
 
                     {/* 채팅버튼 혹은 상태에 따라서 버튼 달라짐 */}
-                    {LoginUserId === postData?.author._id ? (
-                      postData.stateOfTransaction === 0 ? (
-                        <DealDoneModal
-                          id={id}
-                          stateNumber={postData.stateOfTransaction}
-                        />
-                      ) : postData.stateOfTransaction === 3 ? (
-                        <ProductReturnedModal
-                          id={id}
-                          stateNumber={postData.stateOfTransaction}
-                        />
-                      ) : (
-                        <ProductReturnedModal
-                          id={id}
-                          stateNumber={postData.stateOfTransaction}
-                        />
-                      )
-                    ) : LoginUserId === postData?.lender._id ? (
-                      <ProductReceiveButton
-                        id={id}
+                    {postData?.postType === 'lend' ? (
+                      <LendButtons
+                        postType={postData?.postType}
+                        loginedUserId={LoginUserId}
+                        postId={id}
+                        authorId={postData?.author?._id}
+                        borrowerId={postData?.borrower?._id}
                         stateNumber={postData.stateOfTransaction}
                       />
-                    ) : postData.stateOfTransaction === 3 ? (
-                      <button
-                        disabled
-                        className="w-1/2 h-[50px] focus:outline-none disabled:bg-gray-300 text-white  disabled:text-gray-400 font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300"
-                      >
-                        거래종료
-                      </button>
-                    ) : postData.stateOfTransaction !== 0 ? (
-                      <button
-                        disabled
-                        className="w-1/2 h-[50px] focus:outline-none disabled:bg-gray-300 text-white  disabled:text-gray-400 font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300"
-                      >
-                        거래중
-                      </button>
                     ) : (
-                      <button className="w-1/2 h-[50px] focus:outline-none bg-b-bg-gray hover:bg-b-yellow hover:text-white font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300">
-                        채팅하기
-                      </button>
+                      <BorrowButtons
+                        postType={postData?.postType}
+                        loginedUserId={LoginUserId}
+                        postId={id}
+                        authorId={postData?.author?._id}
+                        lenderId={postData?.lender?._id}
+                        stateNumber={postData.stateOfTransaction}
+                      />
                     )}
                   </div>
                 </div>
@@ -287,7 +274,7 @@ export default function PostDetail() {
               <Caution />
             </section>
 
-            {/* 게시글 footer - 목록/수정/삭제 button */}
+            {/* 게시글 footer - 목록/수정/삭제 button (게시글의 작성자일때만 수정/삭제 버튼이 보임) */}
             <section className="flex justify-between my-5">
               <button className="text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 font-medium rounded-lg text-sm px-3 py-1.5   transition duration-100">
                 목록

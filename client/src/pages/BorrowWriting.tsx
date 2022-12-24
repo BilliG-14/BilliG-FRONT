@@ -95,7 +95,7 @@ export default function BorrowWriting() {
     description: descriptionRef.current?.value,
     // lender: data?.data,
     stateOfTransaction: 0,
-    address: '광주시 강남구 강남동 101',
+    address: data?.data?.address1,
     price: {
       priceDay: Number(priceDayRef.current?.value),
       priceTime: Number(priceTimeRef.current?.value),

@@ -10,7 +10,7 @@ export default function ImageUpload() {
   const { imgFiles, setImgFile } = imageUploadStore();
   const [priviewImages, setPriviewFileImages] = useState<PreviewImg[]>([]);
 
-  // 이미지 갯수 제한(가장 우선)(구현완료), 이미지 크기 제한 구현해야 함
+  // 이미지 갯수 제한(가장 우선)(구현완료), 이미지 크기 제한 구현 예정
   // 게시글을 볼 때 메인 이미지를 어떻게 정할것인지?
   function imagePreview(e: React.ChangeEvent<HTMLInputElement>): void {
     const target = e.currentTarget;

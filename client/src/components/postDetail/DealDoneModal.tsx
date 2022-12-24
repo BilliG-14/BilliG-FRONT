@@ -1,20 +1,20 @@
 import { useState, useRef } from 'react';
 import api from '../../api/customAxios';
 import { useMutation } from '@tanstack/react-query';
-import { LenderInformationType, PostIdType } from 'store/PostReadStore';
+import { UserInformationPostType, PostIdType } from 'store/PostReadStore';
 
 export default function DealDoneModal(props: PostIdType) {
   // 게시글 id prop으로 받아오기
-  const { id } = props;
-  const emailRef = useRef<HTMLInputElement>(null);
-
+  const { postId, postType } = props;
   const [showModal, setShowModal] = useState(false);
-
   const [userId, setUserId] = useState('');
+
   // 유저 체크했는지 여부 확인 state
   const [userCheck, setUserCheck] = useState<boolean>(false);
 
-  // 빌리는 사람이 전달해준 이메일이 실제 유저 이메일인지 확인
+  const emailRef = useRef<HTMLInputElement>(null);
+
+  // 빌리는/빌려주려는 사람이 전달해준 이메일이 실제 유저 이메일인지 확인
   const userEmailPost = useMutation(
     (userEmail: string | undefined) =>
       api.post('/checkEmail', { email: userEmail }),
@@ -22,14 +22,13 @@ export default function DealDoneModal(props: PostIdType) {
       onSuccess: (res) => {
         /* 실제 유저라면(받아오는 데이터에 userId 필드가 있다면
         유저 아이디, 유저를 체크했다는 state 값 변경 */
-        console.log(res.data);
-        // if (res.data?.userId) {
-        //   setUserId(res.data?.userId);
-        //   setUserCheck(true);
-        //   alert('유저가 확인되었습니다.');
-        // } else {
-        //   alert('등록된 유저가 없습니다. 이메일을 다시 확인해주세요.');
-        // }
+        if (res.data?.userId) {
+          setUserId(res.data?.userId);
+          setUserCheck(true);
+          alert('유저가 확인되었습니다.');
+        } else {
+          alert('등록된 유저가 없습니다. 이메일을 다시 확인해주세요.');
+        }
       },
       onError: (error) => {
         console.log(error);
@@ -43,21 +42,21 @@ export default function DealDoneModal(props: PostIdType) {
     userEmailPost.mutate(emailRef.current?.value);
   }
 
-  const lenderInformation = {
-    lender: userId,
+  // 빌려주기 상황 - 유저 체크 완료되었으면 빌리는 유저의 정보를 서버에 저장(게시물 api에 담습니다)
+  const borrowerInformation = {
+    borrower: userId,
     stateOfTransaction: 1,
   };
 
-  // 유저 체크 완료되었으면 빌리는 유저의 정보를 서버에 저장(게시물 api에 담습니다)
-  const lenderEdit = useMutation(
-    (lenderinfo: LenderInformationType) =>
-      api.patch(`/product/${id}`, {
-        lender: lenderinfo.lender,
-        stateOfTransaction: lenderinfo.stateOfTransaction,
+  const borrowerEdit = useMutation(
+    (borrowerinfo: UserInformationPostType) =>
+      api.patch(`/product/${postId}`, {
+        borrower: borrowerinfo.borrower,
+        stateOfTransaction: borrowerinfo.stateOfTransaction,
       }),
     {
       onSuccess: (res) => {
-        alert('대여자 등록이 완료되었습니다.');
+        alert('차용유저 등록이 완료되었습니다.');
       },
       onError: (error) => {
         alert('유저 확인을 다시 한 번 해주세요.');
@@ -65,7 +64,39 @@ export default function DealDoneModal(props: PostIdType) {
     },
   );
 
-  function changeLenderState() {
+  // 빌리려고 하는 유저(차용인) 등록
+  function changeBorrowState() {
+    if (userCheck) {
+      borrowerEdit.mutate(borrowerInformation);
+      setShowModal(false);
+    } else {
+      alert('유저 확인을 해주세요.');
+    }
+  }
+
+  // 빌리기 상황 - 유저 체크 완료되었으면 빌리는 유저의 정보를 서버에 저장(게시물 api에 담습니다)
+  const lenderInformation = {
+    lender: userId,
+    stateOfTransaction: 1,
+  };
+
+  const lenderEdit = useMutation(
+    (lenderinfo: UserInformationPostType) =>
+      api.patch(`/product/${postId}`, {
+        lender: lenderinfo.lender,
+        stateOfTransaction: lenderinfo.stateOfTransaction,
+      }),
+    {
+      onSuccess: (res) => {
+        alert('대여유저 등록이 완료되었습니다.');
+      },
+      onError: (error) => {
+        alert('유저 확인을 다시 한 번 해주세요.');
+      },
+    },
+  );
+
+  function changeLendState() {
     if (userCheck) {
       lenderEdit.mutate(lenderInformation);
       setShowModal(false);
@@ -77,8 +108,7 @@ export default function DealDoneModal(props: PostIdType) {
   return (
     <>
       <button
-        // className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-        className="w-1/2 h-[50px] focus:outline-none bg-rose-400 hover:bg-rose-500 text-white hover:text-white font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300"
+        className="w-1/2 h-[50px] focus:outline-none  bg-green-600 hover:bg-green-800 text-white hover:text-white font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300"
         type="button"
         onClick={() => setShowModal(true)}
       >
@@ -92,7 +122,11 @@ export default function DealDoneModal(props: PostIdType) {
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 {/*header*/}
                 <div className="flex items-center justify-center pl-6 pb-2 p-3  border-b border-solid border-slate-200 rounded-t">
-                  <h3 className="text-xl font-semibold">대여자 정보 확인</h3>
+                  <h3 className="text-xl font-semibold">
+                    {postType === 'lend'
+                      ? '차용유저 정보 확인'
+                      : '대여유저 정보 확인'}
+                  </h3>
                   <button
                     className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                     onClick={() => setShowModal(false)}
@@ -108,14 +142,29 @@ export default function DealDoneModal(props: PostIdType) {
                   <p className="mb-2 text-red-500  font-semibold">
                     대여완료 전 꼭 확인해주세요!
                   </p>
-                  <p className="mb-6 text-[13px] leading-5 font-thin text-b-text-black">
-                    대여자에게 전달받은 이메일을 입력하여 <br />
-                    빌리지의 유저인지 유저확인을 꼭 하신 후 대여완료 버튼을
-                    눌러주세요!
-                  </p>
+                  {postType === 'lend' ? (
+                    <p className="mb-6 text-[13px] leading-5 font-thin text-b-text-black">
+                      물품을 빌리려고 하는 유저에게 전달받은 이메일을 입력하여
+                      <br />
+                      빌리지의 유저인지 유저확인을 꼭 하신 후 대여완료 버튼을
+                      눌러주세요!
+                    </p>
+                  ) : (
+                    <p className="mb-6 text-[13px] leading-5 font-thin text-b-text-black">
+                      물품을 대여해주는 유저에게 전달받은 이메일을 입력하여
+                      <br />
+                      빌리지의 유저인지 유저확인을 꼭 하신 후 대여완료 버튼을
+                      눌러주세요!
+                    </p>
+                  )}
+
                   <div className="flex gap-3 items-center">
                     {/* 이메일 input */}
-                    <div className="text-sm">대여자 이메일</div>
+                    <div className="text-sm">
+                      {postType === 'lend'
+                        ? '빌리는 유저 이메일'
+                        : '대여 유저 이메일'}
+                    </div>
                     <input
                       type="text"
                       ref={emailRef}
@@ -143,9 +192,11 @@ export default function DealDoneModal(props: PostIdType) {
                   <button
                     className="bg-emerald-500 text-white active:bg-emerald-600 font-bold text-sm px-6 py-2 rounded shadow hover:bg-emerald-700 outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={changeLenderState}
+                    onClick={
+                      postType === 'lend' ? changeBorrowState : changeLendState
+                    }
                   >
-                    대여완료
+                    {postType === 'lend' ? '빌려주기 완료' : '빌리기 완료'}
                   </button>
                 </div>
               </div>
