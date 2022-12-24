@@ -38,7 +38,6 @@ export default function BorrowCategory() {
   );
 
   if (isLoading) return <p>Loading..</p>;
-  console.log(sectionRef);
   return (
     <div className="relative">
       <nav

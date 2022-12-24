@@ -26,9 +26,7 @@ export default function CategorySectionBorrow({
     {
       refetchOnWindowFocus: false,
       staleTime: 60 * 1000 * 60,
-      onSuccess: (data) => {
-        console.log(data);
-      },
+      onSuccess: (data) => {},
       onError: (error) => {
         console.log(error);
       },
