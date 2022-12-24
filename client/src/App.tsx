@@ -84,7 +84,7 @@ function App() {
               <Route path="/admin" element={<AdminMain />} />
               <Route path="/write/lend" element={<LendWriting />} />
               <Route path="/write/borrow" element={<BorrowWriting />} />
-              <Route path="/submain" element={<Submain />} />
+              <Route path="/submain/lend" element={<Submain />} />
               <Route path="/search" element={<Search />} />
               <Route path="/read/:id" element={<PostDetail />} />
               <Route path="/mypage" element={<MyPage />} />
