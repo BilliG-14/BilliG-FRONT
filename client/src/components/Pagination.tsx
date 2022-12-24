@@ -7,6 +7,20 @@ type PagingProps = {
   hasNextPage?: boolean;
 };
 
+function getFirstandLast(totalPage: number, page: number) {
+  //페이지가 10개 이하면 전부 다 보여줌
+  if (totalPage <= 10) {
+    return { firstNum: 1, lastNum: totalPage };
+  }
+  //모든 페이지가 11개 이상일 경우
+  if (page <= 5) {
+    return { firstNum: 1, lastNum: 11 };
+  }
+  if (page >= totalPage - 5) {
+    return { firstNum: totalPage - 10, lastNum: totalPage };
+  }
+  return { firstNum: page - 5, lastNum: page + 5 };
+}
 export function Pagination({
   page = 1,
   totalPage = 10,
@@ -14,47 +28,38 @@ export function Pagination({
   hasPrevPage = true,
   hasNextPage = true,
 }: PagingProps) {
-  const currPageStyle = useCallback(
-    (index: number) => {
-      if (page === index + 1)
-        return 'border-solid border-2 border-b-yellow text-b-yellow ';
-      return '';
-    },
-    [page],
-  );
+  const { firstNum, lastNum } = getFirstandLast(totalPage, page);
+  const numRange = new Array(lastNum - firstNum + 1)
+    .fill(1)
+    .map((_, i) => firstNum + i);
   return (
-    <div className="w-full flex justify-center text-lg font-bold">
+    <div className="w-full flex justify-center text-lg font-bold select-none">
       <ul className="flex">
         <li>
           <button className="w-8 h-6" onClick={() => setPage(1)}>
             <i className="fa-solid fa-angles-left"></i>
           </button>
         </li>
-        {hasPrevPage && (
-          <li>
-            <button className="ml-1 w-6 h-6" onClick={() => setPage(page - 1)}>
-              <i className="fa-solid fa-angle-left"></i>
+        <li className={`${hasPrevPage ? '' : 'invisible'}`}>
+          <button className="w-6 h-6" onClick={() => setPage(page - 1)}>
+            <i className="fa-solid fa-angle-left"></i>
+          </button>
+        </li>
+        {numRange.map((p) => (
+          <li key={p}>
+            <button
+              className={`w-6 h-6 ${p === page ? 'text-b-yellow' : ''}`}
+              onClick={() => setPage(p)}
+            >
+              {p}
             </button>
           </li>
-        )}
-        {Array(totalPage)
-          .fill(1)
-          .map((_, index) => {
-            return (
-              <li key={index + 1}>
-                <button className="w-6 h-6" onClick={() => setPage(index + 1)}>
-                  {index + 1}
-                </button>
-              </li>
-            );
-          })}
-        {hasNextPage && (
-          <li>
-            <button className="mr-1 w-6 h-6" onClick={() => setPage(page + 1)}>
-              <i className="fa-solid fa-angle-right"></i>
-            </button>
-          </li>
-        )}
+        ))}
+        <li className={`${hasNextPage ? '' : 'invisible'}`}>
+          <button className="w-6 h-6" onClick={() => setPage(page + 1)}>
+            <i className="fa-solid fa-angle-right"></i>
+          </button>
+        </li>
         <li>
           <button onClick={() => setPage(totalPage)}>
             <i className="fa-solid fa-angles-right"></i>
