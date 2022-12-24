@@ -23,6 +23,7 @@ import MyPageEdit from './pages/MyPageEdit';
 import Nav from 'components/nav/Nav';
 import UserInformation from 'pages/UserInformation';
 import ProductsLendList from 'pages/ProductsLendList';
+import PostUpdate from './pages/PostUpdate';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -87,6 +88,7 @@ function App() {
               <Route path="/submain" element={<Submain />} />
               <Route path="/search" element={<Search />} />
               <Route path="/read/:id" element={<PostDetail />} />
+              <Route path="/update/:id" element={<PostUpdate />} />
               <Route path="/mypage" element={<MyPage />} />
               <Route path="/mypage/givelist" element={<MyGivePostListPage />} />
               <Route

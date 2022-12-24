@@ -285,9 +285,11 @@ export default function PostDetail() {
               </button>
               {LoginUserId === postData?.author._id ? (
                 <div>
-                  <button className="text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 mr-1  transition duration-100">
-                    수정
-                  </button>
+                  <Link to={`/update/${id}`}>
+                    <button className="text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 mr-1  transition duration-100">
+                      수정
+                    </button>
+                  </Link>
                   <button
                     onClick={deletePost}
                     className="text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 font-medium rounded-lg text-sm px-3 py-1.5   transition duration-100"

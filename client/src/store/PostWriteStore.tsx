@@ -1,5 +1,43 @@
 import create from 'zustand';
 
+// 카테고리 store
+export interface CategoryType {
+  _id?: string;
+  name?: string;
+  __v?: number;
+  categoryId?: string | undefined;
+}
+
+interface CategoryState {
+  categorys: [CategoryType];
+  filteredCategory: CategoryType;
+  setCategorys: (category: [CategoryType]) => void;
+  setFilteredCategory: (category: CategoryType) => void;
+}
+
+export const categoryStore = create<CategoryState>((set) => ({
+  categorys: [
+    {
+      _id: '',
+      name: '',
+      __v: 0,
+    },
+  ],
+  filteredCategory: {
+    _id: '',
+    name: '',
+    __v: 0,
+  },
+  setCategorys: (category) =>
+    set(() => ({
+      categorys: category,
+    })),
+  setFilteredCategory: (category) =>
+    set(() => ({
+      filteredCategory: category,
+    })),
+}));
+
 // 예약일 store
 interface ReservationState {
   reservationDate: {
@@ -79,11 +117,3 @@ export const hashTagStore = create<HashTagState>((set) => ({
       hashTags: newTags,
     })),
 }));
-
-// interface
-
-export interface CategoryType {
-  _id: string;
-  name: string;
-  __v: number;
-}
