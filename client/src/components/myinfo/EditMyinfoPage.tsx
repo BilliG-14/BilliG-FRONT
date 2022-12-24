@@ -1,5 +1,5 @@
 import Postcode from 'components/PostCode';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState } from 'react';
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import api from '../../api/customAxios';
 import { useNavigate } from 'react-router-dom';
@@ -47,6 +47,7 @@ export default function EditMyinfoPage() {
   );
   // * useMutation
   const client = useQueryClient();
+  console.log(client);
   const updateUserInfoMutation = useMutation(
     ['userInfo'],
     async (updateData: UpdateInfo) => {
