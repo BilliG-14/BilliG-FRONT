@@ -50,7 +50,7 @@ export default function PostDetail() {
       deleteData.mutate();
     } else {
       alert(
-        '현재 거래 상태에서는 글을 삭제할 수 없습니다. 관리자에게 문의하세요.',
+        '현재 거래 상태에서는 글을 삭제할 수 없습니다. \n관리자에게 문의하세요.',
       );
       return;
     }

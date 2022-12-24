@@ -22,13 +22,14 @@ export default function DealDoneModal(props: PostIdType) {
       onSuccess: (res) => {
         /* 실제 유저라면(받아오는 데이터에 userId 필드가 있다면
         유저 아이디, 유저를 체크했다는 state 값 변경 */
-        if (res.data.userId) {
-          setUserId(res.data.userId);
-          setUserCheck(true);
-          alert('유저가 확인되었습니다.');
-        } else {
-          alert('등록된 유저가 없습니다. 이메일을 다시 확인해주세요.');
-        }
+        console.log(res.data);
+        // if (res.data?.userId) {
+        //   setUserId(res.data?.userId);
+        //   setUserCheck(true);
+        //   alert('유저가 확인되었습니다.');
+        // } else {
+        //   alert('등록된 유저가 없습니다. 이메일을 다시 확인해주세요.');
+        // }
       },
       onError: (error) => {
         console.log(error);
