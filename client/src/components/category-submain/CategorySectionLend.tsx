@@ -1,5 +1,5 @@
 import React from 'react';
-import LendItemCard from './LendItemCard';
+import SubmainLendItemCard from './SubmainLendItemCard';
 import { HiArrowRight } from 'react-icons/hi';
 import { useQuery } from '@tanstack/react-query';
 import api from '../../api/customAxios';
@@ -59,7 +59,7 @@ export default function CategorySectionLend({
         </header>
         <div className="flex justify-center">
           {categoryLendItems?.data.docs.map((item: Item) => (
-            <LendItemCard
+            <SubmainLendItemCard
               key={item._id}
               item={item}
               categoryName={category.name}

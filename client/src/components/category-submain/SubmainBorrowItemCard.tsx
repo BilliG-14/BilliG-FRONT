@@ -10,7 +10,7 @@ export default function SubmainBorrowItemCard({
   item,
   categoryName,
 }: BorrowItemProps) {
-  const { title, imgUrl, address, tradeWay, price } = item;
+  const { title, imgUrl, address, tradeWay, price, period } = item;
 
   return (
     <div className="w-1/4 inline-block my-5 px-2.5 mx-4 rounded-lg bg-white">
@@ -21,6 +21,9 @@ export default function SubmainBorrowItemCard({
         <div className="title ">
           <p className="name h-12 mb-1 font-bold leading-6 underline underline-offset-4">
             {title}
+          </p>
+          <p className="category mb-1 font-semibold text-sm">
+            {`${period.start} ~ ${period.end} `}
           </p>
           <p className="category mb-1 text-b-text-darkgray text-sm">
             {categoryName}
