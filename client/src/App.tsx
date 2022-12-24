@@ -22,6 +22,7 @@ import api from './api/customAxios';
 import MyPageEdit from './pages/MyPageEdit';
 import Nav from 'components/nav/Nav';
 import UserInformation from 'pages/UserInformation';
+import ProductsLendList from 'pages/ProductsLendList';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -99,6 +100,7 @@ function App() {
                 element={<MyDoneListPage />}
               />
               <Route path="/user/:id" element={<UserInformation />} />
+              <Route path="/products/lend" element={<ProductsLendList />} />
             </Routes>
           </BrowserRouter>
         </div>

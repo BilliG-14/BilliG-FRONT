@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 
 const axiosConfig: AxiosRequestConfig = {
-  baseURL: 'http://localhost:8080/',
+  baseURL: 'http://ec2-43-201-78-83.ap-northeast-2.compute.amazonaws.com/',
   headers: {
     'Content-Type': 'application/json',
   },
