@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 
 const axiosConfig: AxiosRequestConfig = {
-  baseURL: 'https://port-0-cookie-dpuqy925lbn63gyo.gksl2.cloudtype.app',
+  baseURL: 'http://ec2-43-201-78-83.ap-northeast-2.compute.amazonaws.com/',
   headers: {
     'Content-Type': 'application/json',
   },
