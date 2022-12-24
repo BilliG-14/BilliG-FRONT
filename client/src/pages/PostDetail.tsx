@@ -247,49 +247,6 @@ export default function PostDetail() {
                         stateNumber={postData.stateOfTransaction}
                       />
                     )}
-
-                    {/* 채팅버튼 혹은 상태에 따라서 버튼 달라짐 */}
-                    {/* {LoginUserId === postData?.author?._id ? (
-                      postData.stateOfTransaction === 0 ? (
-                        <DealDoneModal
-                          postId={id}
-                          stateNumber={postData.stateOfTransaction}
-                        />
-                      ) : postData.stateOfTransaction === 3 ? (
-                        <ProductReturnedModal
-                          postId={id}
-                          stateNumber={postData.stateOfTransaction}
-                        />
-                      ) : (
-                        <ProductReturnedModal
-                          postId={id}
-                          stateNumber={postData.stateOfTransaction}
-                        />
-                      )
-                    ) : LoginUserId === postData?.borrower?._id ? (
-                      <ProductReceiveButton
-                        postId={id}
-                        stateNumber={postData.stateOfTransaction}
-                      />
-                    ) : postData.stateOfTransaction === 3 ? (
-                      <button
-                        disabled
-                        className="w-1/2 h-[50px] focus:outline-none disabled:bg-gray-300 text-white  disabled:text-gray-400 font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300"
-                      >
-                        거래종료
-                      </button>
-                    ) : postData.stateOfTransaction !== 0 ? (
-                      <button
-                        disabled
-                        className="w-1/2 h-[50px] focus:outline-none disabled:bg-gray-300 text-white  disabled:text-gray-400 font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300"
-                      >
-                        거래중
-                      </button>
-                    ) : (
-                      <button className="w-1/2 h-[50px] focus:outline-none bg-b-bg-gray hover:bg-b-yellow hover:text-white font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300">
-                        채팅하기
-                      </button>
-                    )} */}
                   </div>
                 </div>
               </div>
@@ -315,7 +272,7 @@ export default function PostDetail() {
               <Caution />
             </section>
 
-            {/* 게시글 footer - 목록/수정/삭제 button */}
+            {/* 게시글 footer - 목록/수정/삭제 button (게시글의 작성자일때만 수정/삭제 버튼이 보임) */}
             <section className="flex justify-between my-5">
               <button className="text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 font-medium rounded-lg text-sm px-3 py-1.5   transition duration-100">
                 목록

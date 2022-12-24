@@ -109,7 +109,6 @@ export default function DealDoneModal(props: PostIdType) {
   return (
     <>
       <button
-        // className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
         className="w-1/2 h-[50px] focus:outline-none  bg-green-600 hover:bg-green-800 text-white hover:text-white font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300"
         type="button"
         onClick={() => setShowModal(true)}

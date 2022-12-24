@@ -69,13 +69,6 @@ export default function HashTagSection() {
           ))}
         </div>
       </div>
-      {/* <div className=" mt-1 ml-24 text-[6px] text-b-text-darkgray leading-4">
-        <p className="">
-          엔터를 입력하면 태그를 등록 할 수 있습니다. <br />
-          등록된 태그를 클릭하면 삭제됩니다. <br />
-          태그는 6개까지 등록이 가능합니다.
-        </p>
-      </div> */}
     </section>
   );
 }
