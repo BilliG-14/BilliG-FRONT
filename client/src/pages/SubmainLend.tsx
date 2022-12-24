@@ -5,7 +5,8 @@ import ChatIcon from '../components/chat-icon/ChatIcon';
 import Footer from '../components/footer/Footer';
 import { useIsLoginStore } from 'store/LoginJoinStore';
 import TrueNav from 'components/nav/TrueNav';
-export default function Submain() {
+
+export default function SubmainLend() {
   const { isLogin } = useIsLoginStore();
   return (
     <div>

@@ -5,10 +5,10 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import CategoryNav from 'components/category-submain/CategoryNav';
 import ItemCard from '../components/category-submain/ItemCard';
-import { ItemType } from 'components/category-submain/Category';
 import Nav from 'components/nav/Nav';
+import { Item } from 'components/myinfo/MyGivePostList';
 type Products = {
-  docs: [ItemType];
+  docs: [Item];
   totalPages: number;
   hasNextPage: boolean;
   hasPrevPage: boolean;
@@ -53,16 +53,6 @@ export default function ProductsLendList() {
     <div className="max-w-screen-lg m-auto">
       <Nav />
       <CategoryNav />
-      <div className="h-[600px]">
-        {isLoading && <p>데이터를 불러오는 중입니다.</p>}
-        {isError && <p className="m-16">데이터를 불러올 수 없습니다</p>}
-        {data &&
-          data.docs.map((product) => (
-            <div key={product.id} className="inline m-2">
-              <ItemCard item={product} />
-            </div>
-          ))}
-      </div>
       <Pagination
         page={page}
         setPage={setPage}

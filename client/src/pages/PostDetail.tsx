@@ -33,7 +33,7 @@ export default function PostDetail() {
   // post 삭제하기, useMutate 정의
   const deleteData = useMutation(() => api.delete(`/product/${id}`), {
     onSuccess: () => {
-      navigate('/submain');
+      navigate('/submain/lend');
     },
     onError: (error) => {
       console.log(error);

@@ -9,7 +9,7 @@ import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 import BorrowWriting from './pages/BorrowWriting';
 import LendWriting from './pages/LendWriting';
-import Submain from './pages/Submain';
+import SubmainLend from './pages/SubmainLend';
 import PostDetail from './pages/PostDetail';
 import Search from './pages/Search';
 import MyPage from './pages/MyPage';
@@ -84,7 +84,7 @@ function App() {
               <Route path="/admin" element={<AdminMain />} />
               <Route path="/write/lend" element={<LendWriting />} />
               <Route path="/write/borrow" element={<BorrowWriting />} />
-              <Route path="/submain" element={<Submain />} />
+              <Route path="/submain/lend" element={<SubmainLend />} />
               <Route path="/search" element={<Search />} />
               <Route path="/read/:id" element={<PostDetail />} />
               <Route path="/mypage" element={<MyPage />} />
