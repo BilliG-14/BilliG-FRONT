@@ -31,7 +31,7 @@ export default function MyGivePostList() {
 
   return (
     <div className="w-4/5 p-12">
-      {[...giveList?.data.docs].map((item: Item) => (
+      {giveList?.data.docs.map((item: Item) => (
         <GiveItemCard key={item._id} item={item} />
       ))}
       <Pagination
