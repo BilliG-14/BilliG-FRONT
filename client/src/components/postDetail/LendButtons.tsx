@@ -15,13 +15,14 @@ export default function LendButtons(props: PostIdType) {
             postId={postId}
             stateNumber={stateNumber}
           />
-        ) : stateNumber === 3 ? (
-          <ProductReturnedModal
-            postType={postType}
-            postId={postId}
-            stateNumber={stateNumber}
-          />
         ) : (
+          // : stateNumber === 3 ? (
+          //   <ProductReturnedModal
+          //     postType={postType}
+          //     postId={postId}
+          //     stateNumber={stateNumber}
+          //   />
+          // )
           <ProductReturnedModal
             postType={postType}
             postId={postId}

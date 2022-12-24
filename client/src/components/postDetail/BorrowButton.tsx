@@ -15,21 +15,22 @@ export default function BorrowButtons(props: PostIdType) {
             postId={postId}
             stateNumber={stateNumber}
           />
-        ) : stateNumber === 3 ? (
-          <ProductReturnedModal
-            postType={postType}
-            postId={postId}
-            stateNumber={stateNumber}
-          />
         ) : (
-          <ProductReturnedModal
+          // : stateNumber === 3 ? (
+          //   <ProductReturnedModal
+          //     postType={postType}
+          //     postId={postId}
+          //     stateNumber={stateNumber}
+          //   />
+          // )
+          <ProductReceiveButton
             postType={postType}
             postId={postId}
             stateNumber={stateNumber}
           />
         )
       ) : loginedUserId === lenderId ? (
-        <ProductReceiveButton
+        <ProductReturnedModal
           postType={postType}
           postId={postId}
           stateNumber={stateNumber}

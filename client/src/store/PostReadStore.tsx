@@ -58,12 +58,7 @@ export interface PostIdType {
   borrowerId?: string | undefined;
 }
 
-// export interface LenderInformationType {
-//   lender: string;
-//   stateOfTransaction: number;
-// }
-
-export interface UserInformationType {
+export interface UserInformationPostType {
   lender?: string;
   borrower?: string;
   stateOfTransaction: number;

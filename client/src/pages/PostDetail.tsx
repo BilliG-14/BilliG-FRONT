@@ -87,6 +87,11 @@ export default function PostDetail() {
                 {postData?.createdAt.split('T')[0] +
                   ' ' +
                   postData?.createdAt.split('T')[1].slice(0, 8)}
+                <br />
+                수정시간{' '}
+                {postData?.updatedAt.split('T')[0] +
+                  ' ' +
+                  postData?.updatedAt.split('T')[1].slice(0, 8)}
               </div>
             </section>
 
@@ -119,9 +124,9 @@ export default function PostDetail() {
 
               {/* 상품 기본정보 */}
               <div className="flex flex-col justify-between w-[450px] h-[410px] pt-3 mr-4">
-                <div className="text-right">
+                <div className="text-left">
                   <div className="text-3xl">{postData?.title}</div>
-                  <div className="flex justify-end">
+                  <div className="flex">
                     {postData?.hashtag.map((tag, idx) => {
                       return (
                         <div
@@ -142,9 +147,11 @@ export default function PostDetail() {
                     </div>
                     <div>
                       <div className="mb-2">
-                        {postData?.price.priceTime}원/시간
+                        {postData?.price.priceTime.toLocaleString()} 원/시간
                       </div>
-                      <div>{postData?.price.priceDay}/일</div>
+                      <div>
+                        {postData?.price.priceDay.toLocaleString()} 원/일
+                      </div>
                     </div>
                   </div>
                   <hr className="hr-1 my-4"></hr>

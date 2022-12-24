@@ -38,7 +38,8 @@ export function ProductReceiveButton(props: PostIdType) {
         className="w-1/2 h-[50px] focus:outline-none  bg-green-600 hover:bg-green-800 disabled:bg-gray-300 text-white  disabled:text-gray-400 hover:text-white font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300"
         onClick={() => setShowModal(true)}
         // stateNumber === 3 이라면 수령완료 disable
-        disabled={statechangeDone || stateNumber >= 2 ? true : false}
+        // disabled={statechangeDone || stateNumber >= 2 ? true : false}
+        disabled={stateNumber >= 2 ? true : false}
       >
         {stateNumber === 3 ? '거래종료' : '수령완료'}
       </button>

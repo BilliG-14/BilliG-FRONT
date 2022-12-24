@@ -17,7 +17,7 @@ export function ProductReturnedModal(props: PostIdType) {
       }),
     {
       onSuccess: (res) => {
-        setStatechangeDone(true);
+        // setStatechangeDone(true);
         alert('반납완료처리 되었습니다.');
       },
       onError: (error) => {
@@ -35,11 +35,13 @@ export function ProductReturnedModal(props: PostIdType) {
     <>
       <button
         type="button"
-        className="w-1/2 h-[50px] focus:outline-none  bg-green-600 hover:bg-green-800 disabled:bg-gray-300 text-white  disabled:text-gray-400 hover:text-white font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300"
+        className="w-1/2 h-[50px] focus:outline-none  bg-rose-500 hover:bg-rose-600 disabled:bg-gray-300 text-white  disabled:text-gray-400 hover:text-white font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300"
         onClick={() => setShowModal(true)}
-        disabled={statechangeDone || stateNumber === 3 ? true : false}
+        // disabled={statechangeDone || stateNumber === 3 ? true : false}
+        disabled={stateNumber === 3 ? true : false}
       >
-        {statechangeDone || stateNumber === 3 ? '거래종료' : '반납완료'}
+        {/* {statechangeDone || stateNumber === 3 ? '거래종료' : '반납완료'} */}
+        {stateNumber === 3 ? '거래종료' : '반납완료'}
       </button>
       {showModal ? (
         <>

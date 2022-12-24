@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import api from '../../api/customAxios';
 import { useMutation } from '@tanstack/react-query';
-import { UserInformationType, PostIdType } from 'store/PostReadStore';
+import { UserInformationPostType, PostIdType } from 'store/PostReadStore';
 
 export default function DealDoneModal(props: PostIdType) {
   // 게시글 id prop으로 받아오기
@@ -50,7 +50,7 @@ export default function DealDoneModal(props: PostIdType) {
   };
 
   const borrowerEdit = useMutation(
-    (borrowerinfo: UserInformationType) =>
+    (borrowerinfo: UserInformationPostType) =>
       api.patch(`/product/${postId}`, {
         borrower: borrowerinfo.borrower,
         stateOfTransaction: borrowerinfo.stateOfTransaction,
@@ -82,7 +82,7 @@ export default function DealDoneModal(props: PostIdType) {
   };
 
   const lenderEdit = useMutation(
-    (lenderinfo: UserInformationType) =>
+    (lenderinfo: UserInformationPostType) =>
       api.patch(`/product/${postId}`, {
         lender: lenderinfo.lender,
         stateOfTransaction: lenderinfo.stateOfTransaction,
@@ -110,7 +110,7 @@ export default function DealDoneModal(props: PostIdType) {
     <>
       <button
         // className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-        className="w-1/2 h-[50px] focus:outline-none bg-rose-400 hover:bg-rose-500 text-white hover:text-white font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300"
+        className="w-1/2 h-[50px] focus:outline-none  bg-green-600 hover:bg-green-800 text-white hover:text-white font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300"
         type="button"
         onClick={() => setShowModal(true)}
       >
