@@ -22,7 +22,6 @@ export default function DealDoneModal(props: PostIdType) {
       onSuccess: (res) => {
         /* 실제 유저라면(받아오는 데이터에 userId 필드가 있다면
         유저 아이디, 유저를 체크했다는 state 값 변경 */
-        console.log(res.data);
         if (res.data?.userId) {
           setUserId(res.data?.userId);
           setUserCheck(true);

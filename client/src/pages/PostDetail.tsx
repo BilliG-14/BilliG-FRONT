@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useQuery, useMutation } from '@tanstack/react-query';
 
 import Caution from '../components/postDetail/Caution';
 import { PostDataType } from '../store/PostReadStore';
@@ -8,11 +8,8 @@ import { PostDataType } from '../store/PostReadStore';
 import { FaPeopleArrows } from 'react-icons/fa';
 import { GoPackage } from 'react-icons/go';
 import api from './../api/customAxios';
-import DealDoneModal from '../components/postDetail/DealDoneModal';
-import { ProductReceiveButton } from '../components/postDetail/ProductReceiveModal';
-import { ProductReturnedModal } from '../components/postDetail/ProductReturnedModal';
-import LendButtons from './../components/postDetail/LendButtons';
-import BorrowButtons from './../components/postDetail/BorrowButton';
+import LendButtons from '../components/postDetail/LendButtons';
+import BorrowButtons from '../components/postDetail/BorrowButtons';
 
 export default function PostDetail() {
   const navigate = useNavigate();
@@ -167,6 +164,7 @@ export default function PostDetail() {
                       </div>
                     </div>
                   )}
+
                   {/* 대여방법 */}
                   <div className="flex justify-between mb-2">
                     <div className="text-sm text-b-text-darkgray w-24 mb-2 text-left my-auto">
@@ -209,7 +207,10 @@ export default function PostDetail() {
 
                   {/* 사용자 정보 */}
                   <div className="flex flex-row gap-2 items-end mt-6">
-                    <div className="w-1/2 p-2 text-left bg-white border border-solid border-gray-300 rounded-lg">
+                    <Link
+                      to={`/user/${postData?.author?._id}`}
+                      className="w-1/2 p-2 text-left bg-white border border-solid border-gray-300 rounded-lg"
+                    >
                       <div className="flex items-center">
                         <img
                           className="h-8 w-8 mr-2 rounded-full"
@@ -226,7 +227,8 @@ export default function PostDetail() {
                           </p>
                         </div>
                       </div>
-                    </div>
+                    </Link>
+
                     {/* 채팅버튼 혹은 상태에 따라서 버튼 달라짐 */}
                     {postData?.postType === 'lend' ? (
                       <LendButtons

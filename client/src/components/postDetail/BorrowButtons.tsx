@@ -1,6 +1,6 @@
 import DealDoneModal from './DealDoneModal';
 import { ProductReturnedModal } from './ProductReturnedModal';
-import { PostIdType } from './../../store/PostReadStore';
+import { PostIdType } from '../../store/PostReadStore';
 import { ProductReceiveButton } from './ProductReceiveModal';
 
 // 게시글이 빌리기 상태일때의 버튼들 컴포넌트
