@@ -5,22 +5,14 @@ import { useQuery } from '@tanstack/react-query';
 import './category.css';
 import api from '../../api/customAxios';
 import { useIsLoginStore } from 'store/LoginJoinStore';
-
-export type ItemType = {
-  id: number;
-  img: string;
-  title: string;
-  category: string;
-  address: string;
-  deal: string;
-  price: { time: string; day: string };
-};
+import CategorySection from './CategorySection';
+import { Item } from 'components/myinfo/MyGivePostList';
 
 export default function Category() {
-  const { isLogin } = useIsLoginStore();
   const [scrollEvent, setScrollEvent] = useState(false);
   const navRef = useRef<HTMLElement | null>(null);
   const sectionRef = useRef<HTMLElement[] | null[]>([]);
+
   const handleScroll = () => {
     if (window.scrollY > 600) {
       setScrollEvent(true);
@@ -48,45 +40,6 @@ export default function Category() {
     },
     { refetchOnWindowFocus: false, staleTime: 60 * 1000 * 60 },
   );
-
-  const [itemList, setItemList] = useState<ItemType[]>([
-    {
-      id: 1,
-      img: 'https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/macbook-air-midnight-select-20220606?wid=904&hei=840&fmt=jpeg&qlt=90&.v=1653084303665',
-      title: 'Apple 2022 맥북 프로 13 M2 대여해드려요',
-      category: 'IT기기',
-      address: '서울시 동대문구',
-      deal: '직거래',
-      price: { time: '5,000', day: '30,000' },
-    },
-    {
-      id: 2,
-      img: 'https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/macbook-air-midnight-select-20220606?wid=904&hei=840&fmt=jpeg&qlt=90&.v=1653084303665',
-      title: 'Apple 2022 맥북 프로 13 M2 대여해드려요',
-      category: 'IT기기',
-      address: '서울시 동대문구',
-      deal: '택배',
-      price: { time: '5,000', day: '30,000' },
-    },
-    {
-      id: 3,
-      img: 'https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/macbook-air-midnight-select-20220606?wid=904&hei=840&fmt=jpeg&qlt=90&.v=1653084303665',
-      title: 'Apple 2022 맥북 프로 13 M2 대여해드려요',
-      category: 'IT기기',
-      address: '서울시 동대문구',
-      deal: '직거래',
-      price: { time: '5,000', day: '30,000' },
-    },
-    {
-      id: 4,
-      img: 'https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/macbook-air-midnight-select-20220606?wid=904&hei=840&fmt=jpeg&qlt=90&.v=1653084303665',
-      title: 'Apple 2022 맥북 프로 13 M2 대여해드려요',
-      category: 'IT기기',
-      address: '서울시 동대문구',
-      deal: '택배',
-      price: { time: '5,000', day: '30,000' },
-    },
-  ]);
 
   if (isLoading) return <p>Loading..</p>;
   return (
@@ -126,6 +79,18 @@ export default function Category() {
         {categories?.data.map(
           (category: { _id: string; name: string }, idx: number) => {
             return (
+              <CategorySection
+                key={category._id}
+                idx={idx}
+                category={category}
+                sectionRef={sectionRef}
+              />
+            );
+          },
+        )}
+        {/* {categories?.data.map(
+          (category: { _id: string; name: string }, idx: number) => {
+            return (
               <section
                 key={category._id}
                 ref={(el) => (sectionRef.current[idx] = el)}
@@ -155,7 +120,7 @@ export default function Category() {
               </section>
             );
           },
-        )}
+        )} */}
       </div>
     </div>
   );
