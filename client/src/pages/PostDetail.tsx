@@ -11,6 +11,8 @@ import api from './../api/customAxios';
 import DealDoneModal from '../components/postDetail/DealDoneModal';
 import { ProductReceiveButton } from '../components/postDetail/ProductReceiveModal';
 import { ProductReturnedModal } from '../components/postDetail/ProductReturnedModal';
+import LendButtons from './../components/postDetail/LendButtons';
+import BorrowButtons from './../components/postDetail/BorrowButton';
 
 export default function PostDetail() {
   const navigate = useNavigate();
@@ -218,28 +220,48 @@ export default function PostDetail() {
                         </div>
                       </div>
                     </div>
+                    {/* 채팅버튼 혹은 상태에 따라서 버튼 달라짐 */}
+                    {postData?.postType === 'lend' ? (
+                      <LendButtons
+                        postType={postData?.postType}
+                        loginedUserId={LoginUserId}
+                        postId={id}
+                        authorId={postData?.author?._id}
+                        borrowerId={postData?.borrower?._id}
+                        stateNumber={postData.stateOfTransaction}
+                      />
+                    ) : (
+                      <BorrowButtons
+                        postType={postData?.postType}
+                        loginedUserId={LoginUserId}
+                        postId={id}
+                        authorId={postData?.author?._id}
+                        lenderId={postData?.lender?._id}
+                        stateNumber={postData.stateOfTransaction}
+                      />
+                    )}
 
                     {/* 채팅버튼 혹은 상태에 따라서 버튼 달라짐 */}
-                    {LoginUserId === postData?.author?._id ? (
+                    {/* {LoginUserId === postData?.author?._id ? (
                       postData.stateOfTransaction === 0 ? (
                         <DealDoneModal
-                          id={id}
+                          postId={id}
                           stateNumber={postData.stateOfTransaction}
                         />
                       ) : postData.stateOfTransaction === 3 ? (
                         <ProductReturnedModal
-                          id={id}
+                          postId={id}
                           stateNumber={postData.stateOfTransaction}
                         />
                       ) : (
                         <ProductReturnedModal
-                          id={id}
+                          postId={id}
                           stateNumber={postData.stateOfTransaction}
                         />
                       )
-                    ) : LoginUserId === postData?.lender?._id ? (
+                    ) : LoginUserId === postData?.borrower?._id ? (
                       <ProductReceiveButton
-                        id={id}
+                        postId={id}
                         stateNumber={postData.stateOfTransaction}
                       />
                     ) : postData.stateOfTransaction === 3 ? (
@@ -260,7 +282,7 @@ export default function PostDetail() {
                       <button className="w-1/2 h-[50px] focus:outline-none bg-b-bg-gray hover:bg-b-yellow hover:text-white font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300">
                         채팅하기
                       </button>
-                    )}
+                    )} */}
                   </div>
                 </div>
               </div>

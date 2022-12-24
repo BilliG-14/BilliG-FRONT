@@ -6,13 +6,13 @@ import { PostIdType } from 'store/PostReadStore';
 export function ProductReceiveButton(props: PostIdType) {
   // 거래완료->수령완료 상태 변경 함수
   // 게시글 id prop으로 받아오기
-  const { id, stateNumber } = props;
+  const { postId, stateNumber } = props;
   const [showModal, setShowModal] = useState(false);
   const [statechangeDone, setStatechangeDone] = useState(false);
 
   const stateUpdate = useMutation(
     (state: number) =>
-      api.patch(`/product/${id}`, {
+      api.patch(`/product/${postId}`, {
         stateOfTransaction: state,
       }),
     {

@@ -6,13 +6,13 @@ import { PostIdType } from 'store/PostReadStore';
 export function ProductReturnedModal(props: PostIdType) {
   // 거래완료->수령완료 상태 변경 함수
   // 게시글 id prop으로 받아오기
-  const { id, stateNumber } = props;
+  const { postId, stateNumber } = props;
   const [showModal, setShowModal] = useState(false);
   const [statechangeDone, setStatechangeDone] = useState(false);
 
   const stateUpdate = useMutation(
     (state: number) =>
-      api.patch(`/product/${id}`, {
+      api.patch(`/product/${postId}`, {
         stateOfTransaction: state,
       }),
     {
@@ -64,8 +64,8 @@ export function ProductReturnedModal(props: PostIdType) {
                 <div className="relative p-6 text-start">
                   <p className="mb-4 text-[13px] leading-5 font-thin text-b-text-black">
                     대여해주신 물품을 돌려받으셨나요? <br />
-                    대여물품을 받으시고, 물품이 파손되거나 구성품이 분실되진
-                    않았는지 확인해주세요. <br />
+                    대여해주신 물품을 받으시고, 물품이 파손되거나 구성품이
+                    분실되진 않았는지 확인해주세요. <br />
                     확인이 되셨다면 아래의 [반납완료] 버튼을 눌러주세요!
                   </p>
                   <p className="mb-2 text-sm text-red-500  font-semibold">
