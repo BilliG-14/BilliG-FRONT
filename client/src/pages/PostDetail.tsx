@@ -26,8 +26,7 @@ export default function PostDetail() {
 
   useQuery(['postData'], () => api.get(`product/${id}`), {
     refetchOnMount: 'always',
-    refetchOnWindowFocus: false,
-    staleTime: 60 * 1000 * 60, // 1시간
+    refetchOnWindowFocus: true,
     onSuccess: (res) => setPostData(res?.data[0]),
     onError: () => console.log('error'),
   });
@@ -83,9 +82,9 @@ export default function PostDetail() {
               </div>
               <div className="text-xs text-b-text-darkgray mr-4">
                 작성시간{' '}
-                {/* {postData?.createdAt.split('T')[0] +
+                {postData?.createdAt.split('T')[0] +
                   ' ' +
-                  postData?.createdAt.split('T')[1].slice(0, 8)} */}
+                  postData?.createdAt.split('T')[1].slice(0, 8)}
               </div>
             </section>
 
@@ -221,7 +220,7 @@ export default function PostDetail() {
                     </div>
 
                     {/* 채팅버튼 혹은 상태에 따라서 버튼 달라짐 */}
-                    {LoginUserId === postData?.author._id ? (
+                    {LoginUserId === postData?.author?._id ? (
                       postData.stateOfTransaction === 0 ? (
                         <DealDoneModal
                           id={id}
@@ -238,7 +237,7 @@ export default function PostDetail() {
                           stateNumber={postData.stateOfTransaction}
                         />
                       )
-                    ) : LoginUserId === postData?.lender._id ? (
+                    ) : LoginUserId === postData?.lender?._id ? (
                       <ProductReceiveButton
                         id={id}
                         stateNumber={postData.stateOfTransaction}
