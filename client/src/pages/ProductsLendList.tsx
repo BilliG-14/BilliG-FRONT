@@ -27,10 +27,9 @@ export default function ProductsLendList() {
   const [page, setPage] = useState(1);
   const endPoint = '/product/page';
   const postType = 'lend';
-  const per = 20;
-  console.log(page);
+  const per = 2;
   const { isLoading, data, isError } = useQuery<Products, AxiosError>(
-    [`products/${page}`],
+    [`products?per=${per}&page=${page}&postType=${postType}`],
     async () => {
       const res = await api.get(
         `${endPoint}?per=${per}&page=${page}&postType=${postType}`,
@@ -51,13 +50,15 @@ export default function ProductsLendList() {
     },
   );
   return (
-    <div className="h-full w-screen max-w-screen-lg m-auto">
-      {isLoading && <p>데이터를 불러오는 중입니다.</p>}
-      {isError && <p className="m-16">데이터를 불러올 수 없습니다</p>}
-      {data &&
-        data.docs.map((product) => <p key={product._id}>{product.title}</p>)}
+    <div className="h-[800px] w-screen max-w-screen-lg m-auto">
+      <div className="h-[800px] w-screen">
+        {isLoading && <p>데이터를 불러오는 중입니다.</p>}
+        {isError && <p className="m-16">데이터를 불러올 수 없습니다</p>}
+        {data &&
+          data.docs.map((product) => <p key={product._id}>{product.title}</p>)}
+      </div>
       <Pagination
-        page={1}
+        page={page}
         setPage={setPage}
         totalPage={data?.totalPages}
         hasNextPage={data?.hasNextPage}
