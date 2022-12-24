@@ -6,18 +6,16 @@ import { PostIdType } from 'store/PostReadStore';
 export function ProductReceiveButton(props: PostIdType) {
   // 거래완료->수령완료 상태 변경 함수
   // 게시글 id prop으로 받아오기
-  const { id, stateNumber } = props;
+  const { postId, stateNumber } = props;
   const [showModal, setShowModal] = useState(false);
-  const [statechangeDone, setStatechangeDone] = useState(false);
 
   const stateUpdate = useMutation(
     (state: number) =>
-      api.patch(`/product/${id}`, {
+      api.patch(`/product/${postId}`, {
         stateOfTransaction: state,
       }),
     {
       onSuccess: (res) => {
-        setStatechangeDone(true);
         alert('수령완료처리 되었습니다.');
       },
       onError: (error) => {
@@ -37,8 +35,8 @@ export function ProductReceiveButton(props: PostIdType) {
         type="button"
         className="w-1/2 h-[50px] focus:outline-none  bg-green-600 hover:bg-green-800 disabled:bg-gray-300 text-white  disabled:text-gray-400 hover:text-white font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300"
         onClick={() => setShowModal(true)}
-        // stateNumber === 3 이라면 수령완료 disable
-        disabled={statechangeDone || stateNumber >= 2 ? true : false}
+        // stateNumber가 2보다 크다면 수령완료 disable
+        disabled={stateNumber >= 2 ? true : false}
       >
         {stateNumber === 3 ? '거래종료' : '수령완료'}
       </button>

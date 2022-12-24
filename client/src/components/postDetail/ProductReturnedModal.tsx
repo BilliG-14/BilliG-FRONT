@@ -6,18 +6,16 @@ import { PostIdType } from 'store/PostReadStore';
 export function ProductReturnedModal(props: PostIdType) {
   // 거래완료->수령완료 상태 변경 함수
   // 게시글 id prop으로 받아오기
-  const { id, stateNumber } = props;
+  const { postId, stateNumber } = props;
   const [showModal, setShowModal] = useState(false);
-  const [statechangeDone, setStatechangeDone] = useState(false);
 
   const stateUpdate = useMutation(
     (state: number) =>
-      api.patch(`/product/${id}`, {
+      api.patch(`/product/${postId}`, {
         stateOfTransaction: state,
       }),
     {
       onSuccess: (res) => {
-        setStatechangeDone(true);
         alert('반납완료처리 되었습니다.');
       },
       onError: (error) => {
@@ -35,11 +33,17 @@ export function ProductReturnedModal(props: PostIdType) {
     <>
       <button
         type="button"
-        className="w-1/2 h-[50px] focus:outline-none  bg-green-600 hover:bg-green-800 disabled:bg-gray-300 text-white  disabled:text-gray-400 hover:text-white font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300"
-        onClick={() => setShowModal(true)}
-        disabled={statechangeDone || stateNumber === 3 ? true : false}
+        className="w-1/2 h-[50px] focus:outline-none  bg-rose-500 hover:bg-rose-600 disabled:bg-gray-300 text-white  disabled:text-gray-400 hover:text-white font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300"
+        onClick={() =>
+          stateNumber === 2
+            ? setShowModal(true)
+            : alert(
+                '수령완료 상태가 아닙니다. \n차용인이 수령완료 버튼을 클릭해야 반납완료 버튼을 누를 수 있습니다.',
+              )
+        }
+        disabled={stateNumber === 3 ? true : false}
       >
-        {statechangeDone || stateNumber === 3 ? '거래종료' : '반납완료'}
+        {stateNumber === 3 ? '거래종료' : '반납완료'}
       </button>
       {showModal ? (
         <>
@@ -64,8 +68,8 @@ export function ProductReturnedModal(props: PostIdType) {
                 <div className="relative p-6 text-start">
                   <p className="mb-4 text-[13px] leading-5 font-thin text-b-text-black">
                     대여해주신 물품을 돌려받으셨나요? <br />
-                    대여물품을 받으시고, 물품이 파손되거나 구성품이 분실되진
-                    않았는지 확인해주세요. <br />
+                    대여해주신 물품을 받으시고, 물품이 파손되거나 구성품이
+                    분실되진 않았는지 확인해주세요. <br />
                     확인이 되셨다면 아래의 [반납완료] 버튼을 눌러주세요!
                   </p>
                   <p className="mb-2 text-sm text-red-500  font-semibold">

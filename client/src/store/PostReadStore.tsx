@@ -6,38 +6,11 @@ export interface PostDataType {
     name: string;
     __v: number;
   };
-  author: {
-    image: string;
-    suspension: boolean;
-    _id: string;
-    email: string;
-    nickName: string;
-    name: string;
-    phoneNumber: string;
-    postalCode: string;
-    address1: string;
-    address2: string;
-    createdAt: string;
-    updatedAt: string;
-    __v: number;
-  };
+  author: UserType;
   title: string;
   description: string;
-  lender: {
-    image: string;
-    suspension: boolean;
-    _id: string;
-    email: string;
-    nickName: string;
-    name: string;
-    phoneNumber: string;
-    postalCode: string;
-    address1: string;
-    address2: string;
-    createdAt: string;
-    updatedAt: string;
-    __v: number;
-  };
+  borrower?: UserType;
+  lender?: UserType;
   stateOfTransaction: number;
   address: string;
   price: {
@@ -76,11 +49,17 @@ export interface UserType {
 }
 
 export interface PostIdType {
-  id: string | undefined;
+  postType: string;
+  postId: string | undefined;
   stateNumber: number;
+  loginedUserId?: string | null;
+  authorId?: string;
+  lenderId?: string | undefined;
+  borrowerId?: string | undefined;
 }
 
-export interface LenderInformationType {
-  lender: string;
+export interface UserInformationPostType {
+  lender?: string;
+  borrower?: string;
   stateOfTransaction: number;
 }
