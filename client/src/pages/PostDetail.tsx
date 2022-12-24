@@ -43,14 +43,18 @@ export default function PostDetail() {
   // 현재 상품 상태가 거래전(대여전)상태일때만 삭제가 가능하게끔함.
   // 프로세스 : 거래전(0) - 거래중(1) - 대여완료(2) - 반납완료(3)
   function deletePost() {
-    console.log(postData?.stateOfTransaction === 0);
-    if (postData?.stateOfTransaction === 0) {
-      deleteData.mutate();
-    } else {
-      alert(
-        '현재 거래 상태에서는 글을 삭제할 수 없습니다. \n관리자에게 문의하세요.',
-      );
-      return;
+    const answer = window.confirm(
+      '삭제된 글은 복구할 수 없습니다. \n게시물을 삭제하시겠습니까?',
+    );
+    if (answer) {
+      if (postData?.stateOfTransaction === 0) {
+        deleteData.mutate();
+      } else {
+        alert(
+          '현재 거래 상태에서는 글을 삭제할 수 없습니다. \n관리자에게 문의하세요.',
+        );
+        return;
+      }
     }
   }
 
