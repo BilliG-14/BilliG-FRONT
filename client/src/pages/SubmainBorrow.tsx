@@ -4,9 +4,9 @@ import ChatIcon from '../components/chat-icon/ChatIcon';
 import Footer from '../components/footer/Footer';
 import { useIsLoginStore } from 'store/LoginJoinStore';
 import TrueNav from 'components/nav/TrueNav';
-import LendCategory from '../components/category-submain/LendCategory';
+import BorrowCategory from '../components/category-submain/BorrowCategory';
 
-export default function SubmainLend() {
+export default function SubmainBorrow() {
   const { isLogin } = useIsLoginStore();
   return (
     <div>
@@ -14,7 +14,7 @@ export default function SubmainLend() {
         {isLogin ? <TrueNav /> : <Nav />}
       </div>
       <Carousels />
-      <LendCategory />
+      <BorrowCategory />
       <ChatIcon />
       <Footer />
     </div>

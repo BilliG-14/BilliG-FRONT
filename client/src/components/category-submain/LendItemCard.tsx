@@ -1,12 +1,15 @@
 import DealTag from 'components/tag/DealTag';
 import { Item } from 'components/myinfo/MyGivePostList';
 
-type ItemProps = {
+type LendItemProps = {
   item: Item;
   categoryName: string;
 };
 
-export default function ItemCard({ item, categoryName }: ItemProps) {
+export default function SubmainLendItemCard({
+  item,
+  categoryName,
+}: LendItemProps) {
   const { title, imgUrl, address, tradeWay, price } = item;
 
   return (

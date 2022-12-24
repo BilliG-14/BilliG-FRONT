@@ -13,7 +13,7 @@ export default function Main() {
       <MainStepSection />
       <div className="mb-12 text-lg hover:font-extrabold">
         <MainButton content="물품 빌리러 가기" path="/submain/lend" />
-        <MainButton content="물품 빌려주러 가기" path="/submain" />
+        <MainButton content="물품 빌려주러 가기" path="/submain/borrow" />
       </div>
       <ScrollTopButton />
     </div>
