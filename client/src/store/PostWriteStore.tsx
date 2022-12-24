@@ -1,4 +1,5 @@
 import create from 'zustand';
+import TradeWay from './../components/postWrite/TradeWay';
 
 // 카테고리 store
 export interface CategoryType {
@@ -6,13 +7,18 @@ export interface CategoryType {
   name?: string;
   __v?: number;
   categoryId?: string | undefined;
+  // writeCategory?: {
+  //   _id: string;
+  //   name: string;
+  //   __v: number;
+  // };
 }
 
 interface CategoryState {
   categorys: [CategoryType];
-  filteredCategory: CategoryType;
+  filteredCategory: string | undefined;
   setCategorys: (category: [CategoryType]) => void;
-  setFilteredCategory: (category: CategoryType) => void;
+  setFilteredCategory: (categoryid: string | undefined) => void;
 }
 
 export const categoryStore = create<CategoryState>((set) => ({
@@ -23,18 +29,14 @@ export const categoryStore = create<CategoryState>((set) => ({
       __v: 0,
     },
   ],
-  filteredCategory: {
-    _id: '',
-    name: '',
-    __v: 0,
-  },
+  filteredCategory: '',
   setCategorys: (category) =>
     set(() => ({
       categorys: category,
     })),
-  setFilteredCategory: (category) =>
+  setFilteredCategory: (categoryId) =>
     set(() => ({
-      filteredCategory: category,
+      filteredCategory: categoryId,
     })),
 }));
 
