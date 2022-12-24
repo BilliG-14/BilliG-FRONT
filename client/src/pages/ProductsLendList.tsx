@@ -3,15 +3,12 @@ import { AxiosError } from 'axios';
 import { Pagination } from 'components/Pagination';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-
-type Product = {
-  address: string;
-  title: string;
-  description: string;
-  _id: string;
-};
+import CategoryNav from 'components/category-submain/CategoryNav';
+import ItemCard from '../components/category-submain/ItemCard';
+import { ItemType } from 'components/category-submain/Category';
+import Nav from 'components/nav/Nav';
 type Products = {
-  docs: [Product];
+  docs: [ItemType];
   totalPages: number;
   hasNextPage: boolean;
   hasPrevPage: boolean;
@@ -28,8 +25,11 @@ export default function ProductsLendList() {
   const endPoint = '/product/page';
   const postType = 'lend';
   const per = 2;
+  const categoryId = '63a16fe01027a8c93f03ade0';
   const { isLoading, data, isError } = useQuery<Products, AxiosError>(
-    [`products?per=${per}&page=${page}&postType=${postType}`],
+    [
+      `products?category=${categoryId}&per=${per}&page=${page}&postType=${postType}`,
+    ],
     async () => {
       const res = await api.get(
         `${endPoint}?per=${per}&page=${page}&postType=${postType}`,
@@ -50,12 +50,18 @@ export default function ProductsLendList() {
     },
   );
   return (
-    <div className="h-[800px] w-screen max-w-screen-lg m-auto">
-      <div className="h-[800px] w-screen">
+    <div className="max-w-screen-lg m-auto">
+      <Nav />
+      <CategoryNav />
+      <div className="h-[600px]">
         {isLoading && <p>데이터를 불러오는 중입니다.</p>}
         {isError && <p className="m-16">데이터를 불러올 수 없습니다</p>}
         {data &&
-          data.docs.map((product) => <p key={product._id}>{product.title}</p>)}
+          data.docs.map((product) => (
+            <div key={product.id} className="inline m-2">
+              <ItemCard item={product} />
+            </div>
+          ))}
       </div>
       <Pagination
         page={page}
