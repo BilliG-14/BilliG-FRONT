@@ -27,6 +27,7 @@ export default function Category(props: CategoryType) {
     setFilteredCategory(categoryRef.current?.selectedOptions[0].value);
   }
 
+  console.log(filteredCategory);
   return (
     <select
       onChange={changecategory}
