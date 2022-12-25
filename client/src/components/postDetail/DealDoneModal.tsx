@@ -1,18 +1,29 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, ChangeEvent } from 'react';
 import api from '../../api/customAxios';
 import { useMutation } from '@tanstack/react-query';
 import { UserInformationPostType, PostIdType } from 'store/PostReadStore';
+import { reservationStore } from 'store/PostWriteStore';
 
 export default function DealDoneModal(props: PostIdType) {
   // 게시글 id prop으로 받아오기
-  const { postId, postType } = props;
+  const { postId, postType, authorId } = props;
   const [showModal, setShowModal] = useState(false);
   const [userId, setUserId] = useState('');
 
   // 유저 체크했는지 여부 확인 state
   const [userCheck, setUserCheck] = useState<boolean>(false);
 
+  const { reservationDate, setReservationDate } = reservationStore();
+
   const emailRef = useRef<HTMLInputElement>(null);
+  const startRef = useRef<HTMLInputElement>(null);
+  const endRef = useRef<HTMLInputElement>(null);
+
+  // 오늘부터 선택 가능
+  const today = new Date()
+    .toLocaleDateString()
+    .replace(/\./g, '')
+    .replace(/\s/g, '-');
 
   // 빌리는/빌려주려는 사람이 전달해준 이메일이 실제 유저 이메일인지 확인
   const userEmailPost = useMutation(
@@ -20,9 +31,15 @@ export default function DealDoneModal(props: PostIdType) {
       api.post('/checkEmail', { email: userEmail }),
     {
       onSuccess: (res) => {
-        /* 실제 유저라면(받아오는 데이터에 userId 필드가 있다면
-        유저 아이디, 유저를 체크했다는 state 값 변경 */
-        if (res.data?.userId) {
+        /* 실제 유저라면(받아오는 데이터에 userId 필드가 있다면)
+        유저 아이디, 유저를 체크했다는 state 값 변경
+        + 글 작성자 이메일은 입력할 수 없게 함 */
+        if (res.data?.userId === authorId) {
+          alert(
+            '글 작성자의 이메일은 입력할 수 없습니다. \n다시 입력해주세요.',
+          );
+          return;
+        } else if (res.data?.userId) {
           setUserId(res.data?.userId);
           setUserCheck(true);
           alert('유저가 확인되었습니다.');
@@ -42,10 +59,16 @@ export default function DealDoneModal(props: PostIdType) {
     userEmailPost.mutate(emailRef.current?.value);
   }
 
+  // 대여기간 state
+  function setDate(e: ChangeEvent<HTMLInputElement>) {
+    setReservationDate(startRef.current?.value, endRef.current?.value);
+  }
+
   // 빌려주기 상황 - 유저 체크 완료되었으면 빌리는 유저의 정보를 서버에 저장(게시물 api에 담습니다)
   const borrowerInformation = {
     borrower: userId,
     stateOfTransaction: 1,
+    period: reservationDate,
   };
 
   const borrowerEdit = useMutation(
@@ -53,6 +76,7 @@ export default function DealDoneModal(props: PostIdType) {
       api.patch(`/product/${postId}`, {
         borrower: borrowerinfo.borrower,
         stateOfTransaction: borrowerinfo.stateOfTransaction,
+        period: borrowerinfo.period,
       }),
     {
       onSuccess: (res) => {
@@ -78,6 +102,7 @@ export default function DealDoneModal(props: PostIdType) {
   const lenderInformation = {
     lender: userId,
     stateOfTransaction: 1,
+    period: reservationDate,
   };
 
   const lenderEdit = useMutation(
@@ -85,6 +110,7 @@ export default function DealDoneModal(props: PostIdType) {
       api.patch(`/product/${postId}`, {
         lender: lenderinfo.lender,
         stateOfTransaction: lenderinfo.stateOfTransaction,
+        period: lenderinfo.period,
       }),
     {
       onSuccess: (res) => {
@@ -98,6 +124,10 @@ export default function DealDoneModal(props: PostIdType) {
 
   function changeLendState() {
     if (userCheck) {
+      if (!startRef.current?.value || !endRef.current?.value) {
+        alert('기간 설정을 정확하게 해주세요.');
+        return;
+      }
       lenderEdit.mutate(lenderInformation);
       setShowModal(false);
     } else {
@@ -110,7 +140,11 @@ export default function DealDoneModal(props: PostIdType) {
       <button
         className="w-1/2 h-[50px] focus:outline-none  bg-green-600 hover:bg-green-800 text-white hover:text-white font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300"
         type="button"
-        onClick={() => setShowModal(true)}
+        onClick={() => {
+          setShowModal(true);
+          setUserId('');
+          setUserCheck(false);
+        }}
       >
         거래완료
       </button>
@@ -138,7 +172,7 @@ export default function DealDoneModal(props: PostIdType) {
                 </div>
 
                 {/*body*/}
-                <div className="relative p-6 text-start">
+                <div className="relative p-6 text-start text-sm">
                   <p className="mb-2 text-red-500  font-semibold">
                     대여완료 전 꼭 확인해주세요!
                   </p>
@@ -158,7 +192,7 @@ export default function DealDoneModal(props: PostIdType) {
                     </p>
                   )}
 
-                  <div className="flex gap-3 items-center">
+                  <div className="flex gap-3 items-center  text-b-text-black">
                     {/* 이메일 input */}
                     <div className="text-sm">
                       {postType === 'lend'
@@ -168,7 +202,7 @@ export default function DealDoneModal(props: PostIdType) {
                     <input
                       type="text"
                       ref={emailRef}
-                      className="h-8 p-2 text-sm border-solid border  border-gray-300 rounded-md"
+                      className="h-8 p-2 border-solid border  border-gray-300 rounded-md"
                     />
                     <button
                       onClick={userCheckFn}
@@ -177,6 +211,30 @@ export default function DealDoneModal(props: PostIdType) {
                     >
                       유저 확인
                     </button>
+                  </div>
+
+                  <div className="mt-4 mb-2">빌리는 기간 설정</div>
+                  <div className="flex mb-1 gap-3 items-center justify-around text-xs">
+                    <div>시작날짜</div>
+                    <div>종료날짜</div>
+                  </div>
+                  <div className="flex items-center justify-around text-[13px]">
+                    <input
+                      type="date"
+                      ref={startRef}
+                      min={today}
+                      max="2099-12-31"
+                      onChange={setDate}
+                      className="w-44 h-8 p-2 border-solid border  border-gray-300 rounded-md"
+                    />
+                    <input
+                      type="date"
+                      ref={endRef}
+                      min={today}
+                      max="2099-12-31"
+                      onChange={setDate}
+                      className="w-44 h-8 p-2 border-solid border  border-gray-300 rounded-md"
+                    />
                   </div>
                 </div>
 

@@ -27,7 +27,6 @@ export default function BorrowWriting() {
   // Ref
   const productNameRef = useRef<HTMLInputElement>(null);
   const priceDayRef = useRef<HTMLInputElement>(null);
-  const priceTimeRef = useRef<HTMLInputElement>(null);
   const categoryRef = useRef<HTMLSelectElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
 
@@ -98,7 +97,6 @@ export default function BorrowWriting() {
     address: data?.data?.address1,
     price: {
       priceDay: Number(priceDayRef.current?.value),
-      priceTime: Number(priceTimeRef.current?.value),
     },
     period: reservationDate,
     tradeWay: tradeWay,
@@ -113,8 +111,8 @@ export default function BorrowWriting() {
       alert('카테고리와 이름을 입력해주세요.');
       return;
     } else if (
-      priceDayRef.current?.value === '' ||
-      priceTimeRef.current?.value === ''
+      !priceDayRef.current?.value ||
+      priceDayRef.current?.value === '0'
     ) {
       alert('요금을 입력해주세요.');
       return;
@@ -153,7 +151,6 @@ export default function BorrowWriting() {
             </select>
             <input
               ref={productNameRef}
-              id="productName"
               className="grow p-3 ml-2 w-9/12 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
               type="text"
               placeholder="상품명"
@@ -167,17 +164,13 @@ export default function BorrowWriting() {
           <section className="flex items-center mb-4">
             <div className="w-[100px] p-3 text-center">요금</div>
             <input
-              ref={priceTimeRef}
-              type="number"
-              className="p-3 mx-2 w-60 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
-            />
-            <div className="mr-5">원/시간</div>
-            <input
               ref={priceDayRef}
               type="number"
               className="p-3 mx-2 w-60 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
             />
-            <span className="">원/일</span>
+            <span className="mr-9">원/일</span>
+            {/* 거래방법 section */}
+            <TradeWay />
           </section>
 
           {/* 빌리는 기간 section */}
@@ -192,10 +185,7 @@ export default function BorrowWriting() {
             />
           </section>
 
-          {/* 거래방법 section */}
-          <TradeWay />
-
-          {/* 해시태그 component */}
+          {/* 해시태그 section */}
           <HashTagSection />
 
           <section className="flex flex-col justify-center items-center">

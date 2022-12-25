@@ -2,7 +2,7 @@ import React from 'react';
 import { HiArrowRight } from 'react-icons/hi';
 import { useQuery } from '@tanstack/react-query';
 import api from '../../api/customAxios';
-import { Item } from 'components/myinfo/MyGivePostList';
+import { Item } from 'components/myinfo/MyLendPostList';
 import SubmainBorrowItemCard from './SubmainBorrowItemCard';
 import { useNavigate } from 'react-router-dom';
 

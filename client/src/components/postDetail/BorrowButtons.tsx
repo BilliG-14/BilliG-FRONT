@@ -16,6 +16,7 @@ export default function BorrowButtons(props: PostIdType) {
             postType={postType}
             postId={postId}
             stateNumber={stateNumber}
+            authorId={authorId}
           />
         ) : (
           <ProductReceiveButton

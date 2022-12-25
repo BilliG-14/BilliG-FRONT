@@ -25,6 +25,7 @@ function TrueNav() {
     setIsLoginFalse();
     localStorage.removeItem('userId');
     localStorage.removeItem('token');
+    navigate('/submain/lend');
   };
 
   const { isLoading, data: userInfo } = useQuery(

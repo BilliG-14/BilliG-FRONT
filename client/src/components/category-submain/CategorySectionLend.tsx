@@ -3,7 +3,7 @@ import SubmainLendItemCard from './SubmainLendItemCard';
 import { HiArrowRight } from 'react-icons/hi';
 import { useQuery } from '@tanstack/react-query';
 import api from '../../api/customAxios';
-import { Item } from 'components/myinfo/MyGivePostList';
+import { Item } from 'components/myinfo/MyLendPostList';
 import { useNavigate } from 'react-router-dom';
 
 type ItemListProps = {

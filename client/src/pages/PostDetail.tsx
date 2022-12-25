@@ -40,12 +40,26 @@ export default function PostDetail() {
     },
   });
 
-  // 현재 상품 상태가 거래전(대여전)상태일때만 삭제가 가능하게끔함.
+  // 현재 상품 상태가 거래전(대여전)상태일때만 수정/삭제가 가능함.
   // 프로세스 : 거래전(0) - 거래중(1) - 대여완료(2) - 반납완료(3)
+  function editPost() {
+    if (postData?.stateOfTransaction !== 0) {
+      alert(
+        '현재 거래 상태에서는 글을 수정할 수 없습니다. \n관리자에게 문의하세요.',
+      );
+      return;
+    }
+    navigate(`/update/${id}`);
+  }
+
   function deletePost() {
-    console.log(postData?.stateOfTransaction === 0);
     if (postData?.stateOfTransaction === 0) {
-      deleteData.mutate();
+      const answer = window.confirm(
+        '삭제된 글은 복구할 수 없습니다. \n게시물을 삭제하시겠습니까?',
+      );
+      if (answer) {
+        deleteData.mutate();
+      }
     } else {
       alert(
         '현재 거래 상태에서는 글을 삭제할 수 없습니다. \n관리자에게 문의하세요.',
@@ -139,17 +153,10 @@ export default function PostDetail() {
 
                 <div className="text-right">
                   <div className="flex justify-between mb-2">
-                    <div className="text-sm text-b-text-darkgray w-24 mb-2 text-left">
+                    <div className="text-sm text-b-text-darkgray w-24 text-left">
                       요금
                     </div>
-                    <div>
-                      <div className="mb-2">
-                        {postData?.price.priceTime.toLocaleString()} 원/시간
-                      </div>
-                      <div>
-                        {postData?.price.priceDay.toLocaleString()} 원/일
-                      </div>
-                    </div>
+                    <div>{postData?.price.priceDay.toLocaleString()} 원/일</div>
                   </div>
                   <hr className="hr-1 my-4"></hr>
                   {postData?.postType === 'lend' ? null : (
@@ -281,7 +288,10 @@ export default function PostDetail() {
               </button>
               {LoginUserId === postData?.author._id ? (
                 <div>
-                  <button className="text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 mr-1  transition duration-100">
+                  <button
+                    onClick={editPost}
+                    className="text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 mr-1  transition duration-100"
+                  >
                     수정
                   </button>
                   <button
