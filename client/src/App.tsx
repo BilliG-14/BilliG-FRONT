@@ -22,8 +22,8 @@ import api from './api/customAxios';
 import MyPageEdit from './pages/MyPageEdit';
 import Nav from 'components/nav/Nav';
 import UserInformation from 'pages/UserInformation';
-import ProductsLendList from 'pages/ProductsLendList';
 import SubmainBorrow from './pages/SubmainBorrow';
+import ProductsList from 'pages/ProductsList';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -102,7 +102,14 @@ function App() {
                 element={<MyDoneListPage />}
               />
               <Route path="/user/:id" element={<UserInformation />} />
-              <Route path="/products/lend" element={<ProductsLendList />} />
+              <Route
+                path="/products/lend/:categoryId"
+                element={<ProductsList postType="lend" />}
+              />
+              <Route
+                path="/products/borrow/:categoryId"
+                element={<ProductsList postType="borrow" />}
+              />
             </Routes>
           </BrowserRouter>
         </div>
