@@ -7,7 +7,7 @@ export default function ReservationDate() {
   const startRef = useRef<HTMLInputElement>(null);
   const endRef = useRef<HTMLInputElement>(null);
 
-  // 오늘부터 선택 가능하게끔
+  // 오늘부터 선택 가능
   const today = new Date()
     .toLocaleDateString()
     .replace(/\./g, '')
@@ -36,7 +36,7 @@ export default function ReservationDate() {
         ref={endRef}
         onChange={setDate}
         type="date"
-        min={startRef.current?.value}
+        min={startRef.current?.value ? startRef.current?.value : today}
         max="2099-12-31"
         className="p-3 mx-2 w-[265px] h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
       />
