@@ -3,10 +3,12 @@ import { AxiosError } from 'axios';
 import { Pagination } from 'components/Pagination';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import CategoryNav from 'components/category-submain/CategoryNav';
-import ItemCard from '../components/category-submain/ItemCard';
 import Nav from 'components/nav/Nav';
 import { Item } from 'components/myinfo/MyGivePostList';
+import ListByCategory from 'components/productsList/ListByCategory';
+import { useParams } from 'react-router-dom';
+import ProductsListNav from 'components/productsList/ProductsListNav';
+
 type Products = {
   docs: [Item];
   totalPages: number;
@@ -19,29 +21,31 @@ type Products = {
   prevPage: number;
   totalDocs: number;
 };
-
 export default function ProductsLendList() {
+  const { categoryId } = useParams();
   const [page, setPage] = useState(1);
   const endPoint = '/product/page';
   const postType = 'lend';
-  const per = 2;
-  const categoryId = '63a16fe01027a8c93f03ade0';
-  const { isLoading, data, isError } = useQuery<Products, AxiosError>(
+  const per = 8;
+  const {
+    isLoading,
+    data: products,
+    isError,
+  } = useQuery<Products, AxiosError>(
     [
       `products?category=${categoryId}&per=${per}&page=${page}&postType=${postType}`,
     ],
     async () => {
       const res = await api.get(
-        `${endPoint}?per=${per}&page=${page}&postType=${postType}`,
+        `${endPoint}?category=${categoryId}&per=${per}&page=${page}&postType=${postType}`,
       );
       return res.data;
     },
     {
-      refetchOnWindowFocus: false, // react-query는 사용자가 사용하는 윈도우가 다른 곳을 갔다가 다시 화면으로 돌아오면 이 함수를 재실행합니다. 그 재실행 여부 옵션 입니다.
-      retry: 0, // 실패시 재호출 몇번 할지
+      refetchOnWindowFocus: false,
+      retry: 0,
       staleTime: 60 * 1000 * 60,
       onSuccess: (_data) => {
-        // 성공시 호출
         console.log(_data);
       },
       onError: (e: Error) => {
@@ -49,16 +53,19 @@ export default function ProductsLendList() {
       },
     },
   );
+  if (isLoading) return <div className=""></div>;
   return (
-    <div className="max-w-screen-lg m-auto">
-      <Nav />
-      <CategoryNav />
+    <div className="max-w-screen-lg m-auto pb-32">
+      <ProductsListNav />
+      {products && (
+        <ListByCategory items={products?.docs} categoryName={'IT'} />
+      )}
       <Pagination
         page={page}
         setPage={setPage}
-        totalPage={data?.totalPages}
-        hasNextPage={data?.hasNextPage}
-        hasPrevPage={data?.hasPrevPage}
+        totalPage={products?.totalPages}
+        hasNextPage={products?.hasNextPage}
+        hasPrevPage={products?.hasPrevPage}
       />
     </div>
   );

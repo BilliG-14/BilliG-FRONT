@@ -100,7 +100,10 @@ function App() {
                 element={<MyDoneListPage />}
               />
               <Route path="/user/:id" element={<UserInformation />} />
-              <Route path="/products/lend" element={<ProductsLendList />} />
+              <Route
+                path="/products/lend/:categoryId"
+                element={<ProductsLendList />}
+              />
             </Routes>
           </BrowserRouter>
         </div>
