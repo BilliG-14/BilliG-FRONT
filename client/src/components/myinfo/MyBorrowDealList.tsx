@@ -5,15 +5,15 @@ import api from '../../api/customAxios';
 import { Item } from './MyLendPostList';
 import { Pagination } from 'components/Pagination';
 
-export default function MyBorrowPostList() {
+export default function MyBorrowDealList() {
   const [page, setPage] = useState(1);
-  const { isLoading, data: borrowList } = useQuery(
-    [`borrowList/${page}`],
+  const { isLoading, data: borrowDealList } = useQuery(
+    [`borrowDealList/${page}`],
     async () => {
       return api.get(
-        `/product/page?author=${localStorage.getItem(
+        `/product/page?borrower=${localStorage.getItem(
           'userId',
-        )}&postType=borrow&per=10&page=${page}&stateOfTransaction=0`,
+        )}&postType=lend&per=10&page=${page}&stateOfTransaction=1,2`,
       );
     },
     {
@@ -32,15 +32,15 @@ export default function MyBorrowPostList() {
   if (isLoading) return <p>Loading..</p>;
   return (
     <div className="w-4/5 p-12">
-      {borrowList?.data.docs.map((item: Item) => (
+      {borrowDealList?.data.docs.map((item: Item) => (
         <BorrowItemCard key={item._id} item={item} />
       ))}
       <Pagination
         page={page}
         setPage={setPage}
-        totalPage={borrowList?.data.totalPages}
-        hasNextPage={borrowList?.data.hasNextPage}
-        hasPrevPage={borrowList?.data.hasPrevPage}
+        totalPage={borrowDealList?.data.totalPages}
+        hasNextPage={borrowDealList?.data.hasNextPage}
+        hasPrevPage={borrowDealList?.data.hasPrevPage}
       />
     </div>
   );

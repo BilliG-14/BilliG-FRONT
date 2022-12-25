@@ -1,5 +1,5 @@
 import SubmainBorrowItemCard from 'components/category-submain/SubmainBorrowItemCard';
-import { Item } from 'components/myinfo/MyGivePostList';
+import { Item } from 'components/myinfo/MyLendPostList';
 import SubmainLendItemCard from '../category-submain/SubmainLendItemCard';
 type ListProps = {
   items: Item[];

@@ -1,5 +1,6 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useIsLoginStore, useLoginJoinStore } from 'store/LoginJoinStore';
 
 export default function WriteBtns({
   setOnWriteBtn,
@@ -7,6 +8,15 @@ export default function WriteBtns({
   setOnWriteBtn: Dispatch<SetStateAction<boolean>>;
 }) {
   const navigate = useNavigate();
+  const [setSelectedLogin] = useLoginJoinStore((state) => [
+    state.setSelectedLogin,
+  ]);
+  const { isLogin } = useIsLoginStore();
+
+  const goLogin = () => {
+    setSelectedLogin();
+    navigate('/login');
+  };
   return (
     <div
       className="mr-5"
@@ -19,6 +29,10 @@ export default function WriteBtns({
       <button
         className="text-xl font-bold hover:text-b-yellow hover:ease-in-out hover: duration-300 mr-2"
         onClick={() => {
+          if (!isLogin) {
+            goLogin();
+            return;
+          }
           navigate('/write/lend');
         }}
       >
@@ -27,6 +41,11 @@ export default function WriteBtns({
       <button
         className="text-xl font-bold hover:text-b-yellow hover:ease-in-out duration-300 mr-2"
         onClick={() => {
+          if (!isLogin) {
+            setSelectedLogin();
+            navigate('/login');
+            return;
+          }
           navigate('/write/borrow');
         }}
       >
