@@ -5,7 +5,7 @@ import { UserInformationPostType, PostIdType } from 'store/PostReadStore';
 
 export default function DealDoneModal(props: PostIdType) {
   // 게시글 id prop으로 받아오기
-  const { postId, postType } = props;
+  const { postId, postType, authorId } = props;
   const [showModal, setShowModal] = useState(false);
   const [userId, setUserId] = useState('');
 
@@ -20,9 +20,15 @@ export default function DealDoneModal(props: PostIdType) {
       api.post('/checkEmail', { email: userEmail }),
     {
       onSuccess: (res) => {
-        /* 실제 유저라면(받아오는 데이터에 userId 필드가 있다면
-        유저 아이디, 유저를 체크했다는 state 값 변경 */
-        if (res.data?.userId) {
+        /* 실제 유저라면(받아오는 데이터에 userId 필드가 있다면)
+        유저 아이디, 유저를 체크했다는 state 값 변경
+        + 글 작성자 이메일은 입력할 수 없게 함 */
+        if (res.data?.userId === authorId) {
+          alert(
+            '글 작성자의 이메일은 입력할 수 없습니다. \n다시 입력해주세요.',
+          );
+          return;
+        } else if (res.data?.userId) {
           setUserId(res.data?.userId);
           setUserCheck(true);
           alert('유저가 확인되었습니다.');

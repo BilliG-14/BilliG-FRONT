@@ -131,7 +131,7 @@ export default function BorrowWriting() {
       return;
     }
     // 서버에 데이터 저장
-    // postData.mutate(formData);
+    postData.mutate(formData);
   }
 
   return (
