@@ -4,7 +4,7 @@ import { Pagination } from 'components/Pagination';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import CategoryNav from 'components/category-submain/CategoryNav';
-import ItemCard from '../components/category-submain/ItemCard';
+import SubmainLendItemCard from '../components/category-submain/SubmainLendItemCard';
 import Nav from 'components/nav/Nav';
 import { Item } from 'components/myinfo/MyGivePostList';
 type Products = {

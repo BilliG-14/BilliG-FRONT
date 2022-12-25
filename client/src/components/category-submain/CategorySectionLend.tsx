@@ -1,5 +1,5 @@
 import React from 'react';
-import ItemCard from './ItemCard';
+import SubmainLendItemCard from './SubmainLendItemCard';
 import { HiArrowRight } from 'react-icons/hi';
 import { useQuery } from '@tanstack/react-query';
 import api from '../../api/customAxios';
@@ -8,16 +8,16 @@ import { Item } from 'components/myinfo/MyGivePostList';
 type ItemListProps = {
   category: { _id: string; name: string };
   idx: number;
-  sectionRef: React.ForwardedRef<HTMLElement[] | null[]>;
+  sectionRef: React.ForwardedRef<HTMLElement | null>;
 };
 
-export default function CategorySection({
+export default function CategorySectionLend({
   category,
   idx,
   sectionRef,
 }: ItemListProps) {
-  const { isLoading, data: categoryItems } = useQuery(
-    [`categoryItems/${category._id}`],
+  const { isLoading, data: categoryLendItems } = useQuery(
+    [`categoryLendItems/${category._id}`],
     async () => {
       return api.get(
         `/product/page?&postType=lend&per=4&page=1&category=${category._id}`,
@@ -26,9 +26,7 @@ export default function CategorySection({
     {
       refetchOnWindowFocus: false,
       staleTime: 60 * 1000 * 60,
-      onSuccess: (data) => {
-        console.log(data);
-      },
+      onSuccess: (data) => {},
       onError: (error) => {
         console.log(error);
       },
@@ -36,11 +34,14 @@ export default function CategorySection({
   );
 
   if (isLoading) return <p>Loading...</p>;
-  console.log(categoryItems);
+
   return (
-    <section className={`${bg[idx]} max-w-screen-lg mt-4 p-9 m-auto`}>
+    <section
+      className={`${bg[idx]} max-w-screen-lg mt-4 p-9 m-auto`}
+      ref={sectionRef}
+    >
       <div>
-        <header className="flex justify-between px-12">
+        <header className="flex justify-between px-6">
           <h2 className="text-white text-4xl font-extrabold">
             {category.name}
           </h2>
@@ -55,8 +56,12 @@ export default function CategorySection({
           </a>
         </header>
         <div className="flex justify-center">
-          {categoryItems?.data.docs.map((item: Item) => (
-            <ItemCard key={item._id} item={item} categoryName={category.name} />
+          {categoryLendItems?.data.docs.map((item: Item) => (
+            <SubmainLendItemCard
+              key={item._id}
+              item={item}
+              categoryName={category.name}
+            />
           ))}
         </div>
       </div>

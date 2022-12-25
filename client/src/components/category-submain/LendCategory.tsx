@@ -1,14 +1,11 @@
 import { useRef, useState, useEffect } from 'react';
-import ItemCard from './ItemCard';
-import { HiArrowRight } from 'react-icons/hi';
+
 import { useQuery } from '@tanstack/react-query';
 import './category.css';
 import api from '../../api/customAxios';
-import { useIsLoginStore } from 'store/LoginJoinStore';
-import CategorySection from './CategorySection';
-import { Item } from 'components/myinfo/MyGivePostList';
+import CategorySectionLend from './CategorySectionLend';
 
-export default function Category() {
+export default function LendCategory() {
   const [scrollEvent, setScrollEvent] = useState(false);
   const navRef = useRef<HTMLElement | null>(null);
   const sectionRef = useRef<HTMLElement[] | null[]>([]);
@@ -79,58 +76,16 @@ export default function Category() {
         {categories?.data.map(
           (category: { _id: string; name: string }, idx: number) => {
             return (
-              <CategorySection
+              <CategorySectionLend
                 key={category._id}
                 idx={idx}
                 category={category}
-                sectionRef={sectionRef}
+                sectionRef={(el) => (sectionRef.current[idx] = el)}
               />
             );
           },
         )}
-        {/* {categories?.data.map(
-          (category: { _id: string; name: string }, idx: number) => {
-            return (
-              <section
-                key={category._id}
-                ref={(el) => (sectionRef.current[idx] = el)}
-                className={`${bg[idx]} max-w-screen-lg mt-4 p-9 m-auto`}
-              >
-                <div>
-                  <header className="flex justify-between px-12">
-                    <h2 className="text-white text-4xl font-extrabold">
-                      {category.name}
-                    </h2>
-                    <a
-                      href="#"
-                      className="flex justify-center items-center text-white text-lg font-extrabold hover:scale-125 ease-out duration-300"
-                    >
-                      <span className="mr-1">더보기</span>
-                      <span>
-                        <HiArrowRight />
-                      </span>
-                    </a>
-                  </header>
-                  <div className="flex justify-center">
-                    {itemList.map((item) => (
-                      <ItemCard key={item.id} item={item} />
-                    ))}
-                  </div>
-                </div>
-              </section>
-            );
-          },
-        )} */}
       </div>
     </div>
   );
 }
-
-const bg: string[] = [
-  'bg-b-bg-sec0',
-  'bg-b-bg-sec1',
-  'bg-b-bg-sec2',
-  'bg-b-bg-sec3',
-  'bg-b-bg-sec4',
-  'bg-b-bg-sec5',
-];

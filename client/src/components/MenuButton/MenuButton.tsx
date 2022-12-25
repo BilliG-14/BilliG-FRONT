@@ -26,11 +26,11 @@ const MenuButton = () => {
         <img className="house2 hidden" src="../../h2.png" alt="house2" />
       </div> */}
       <div className="section mt-5 relative z-0">
-        <Link to="/write/lend" className="owner">
+        <Link to="/submain/lend" className="owner">
           빌려주기
         </Link>
         <img className="house1" src="../../h1.png" alt="house1" />
-        <Link to="/write/borrow" className="renter">
+        <Link to="/submain/borrow" className="renter">
           빌리기
         </Link>
         <img className="house2" src="../../h2.png" alt="house2" />

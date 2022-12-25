@@ -23,6 +23,7 @@ import MyPageEdit from './pages/MyPageEdit';
 import Nav from 'components/nav/Nav';
 import UserInformation from 'pages/UserInformation';
 import ProductsLendList from 'pages/ProductsLendList';
+import SubmainBorrow from './pages/SubmainBorrow';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -85,6 +86,7 @@ function App() {
               <Route path="/write/lend" element={<LendWriting />} />
               <Route path="/write/borrow" element={<BorrowWriting />} />
               <Route path="/submain/lend" element={<SubmainLend />} />
+              <Route path="/submain/borrow" element={<SubmainBorrow />} />
               <Route path="/search" element={<Search />} />
               <Route path="/read/:id" element={<PostDetail />} />
               <Route path="/mypage" element={<MyPage />} />
