@@ -4,6 +4,7 @@ import { HiArrowRight } from 'react-icons/hi';
 import { useQuery } from '@tanstack/react-query';
 import api from '../../api/customAxios';
 import { Item } from 'components/myinfo/MyGivePostList';
+import { useNavigate } from 'react-router-dom';
 
 type ItemListProps = {
   category: { _id: string; name: string };
@@ -16,6 +17,7 @@ export default function CategorySectionLend({
   idx,
   sectionRef,
 }: ItemListProps) {
+  const navigate = useNavigate();
   const { isLoading, data: categoryLendItems } = useQuery(
     [`categoryLendItems/${category._id}`],
     async () => {
@@ -45,15 +47,17 @@ export default function CategorySectionLend({
           <h2 className="text-white text-4xl font-extrabold">
             {category.name}
           </h2>
-          <a
-            href="#"
+          <button
             className="flex justify-center items-center text-white text-lg font-extrabold hover:scale-125 ease-out duration-300"
+            onClick={() => {
+              navigate(`/products/lend/${category._id}`);
+            }}
           >
             <span className="mr-1">더보기</span>
             <span>
               <HiArrowRight />
             </span>
-          </a>
+          </button>
         </header>
         <div className="flex justify-center">
           {categoryLendItems?.data.docs.map((item: Item) => (
