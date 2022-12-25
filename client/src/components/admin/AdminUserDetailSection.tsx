@@ -81,7 +81,11 @@ export default function AdminUserDetailSection() {
         <section className="img_nick_intro flex mb-4">
           <div className="mx-auto">
             <img
-              src={data.image}
+              src={
+                data.image
+                  ? data.image
+                  : `${process.env.PUBLIC_URL}/img/default_user.png`
+              }
               alt=""
               className="rounded-full h-32 w-32 object-cover mb-5"
             />
