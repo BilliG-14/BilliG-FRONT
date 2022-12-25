@@ -31,7 +31,7 @@ export default function useScrollFadeIn() {
     ref: dom,
     style: {
       opacity: 0,
-      transform: 'translate3d(0, 50%, 0)',
+      transform: 'translate3d(0, 20%, 0)',
     },
   };
 }
