@@ -26,6 +26,7 @@ import ProductsList from 'pages/ProductsList';
 import MyLendDealListPage from './pages/MyLendDealListPage';
 import MyBorrowDealListPage from './pages/MyBorrowDealListPage';
 import MyLendDoneListPage from './pages/MyLendDoneListPage';
+import MyBrorowDoneListPage from './pages/MyBrorowDoneListPage';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -110,10 +111,10 @@ function App() {
                 path="/mypage/donegivelist"
                 element={<MyLendDoneListPage />}
               />
-              {/* <Route
+              <Route
                 path="/mypage/doneborrowlist"
-                element={<MyLendDoneListPage />}
-              /> */}
+                element={<MyBrorowDoneListPage />}
+              />
               <Route path="/user/:id" element={<UserInformation />} />
               <Route
                 path="/products/lend/:categoryId"

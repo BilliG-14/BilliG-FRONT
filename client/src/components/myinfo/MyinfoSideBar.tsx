@@ -49,11 +49,6 @@ export default function MyInfoSideBar() {
           <li className="h-10 flex items-center justify-start">
             <Link to="/mypage/doneborrowlist">빌리기 완료 조회</Link>
           </li>
-          <li className="h-10 flex items-center justify-start">
-            <a href="#!">
-              <p className="items-center justify-center">수익금 조회</p>
-            </a>
-          </li>
         </ul>
       </div>
     </div>
