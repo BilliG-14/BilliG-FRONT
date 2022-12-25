@@ -1,5 +1,4 @@
 import create from 'zustand';
-import TradeWay from './../components/postWrite/TradeWay';
 
 // 카테고리 store
 export interface CategoryType {
@@ -7,11 +6,6 @@ export interface CategoryType {
   name?: string;
   __v?: number;
   categoryId?: string | undefined;
-  // writeCategory?: {
-  //   _id: string;
-  //   name: string;
-  //   __v: number;
-  // };
 }
 
 interface CategoryState {
@@ -74,6 +68,16 @@ export const imageUploadStore = create<ImageUploadState>((set) => ({
   setImgFile: (imgFileList) => set((state) => ({ imgFiles: imgFileList })),
 }));
 
+interface UpdateImageUploadState {
+  imgUrlList: string[];
+  setImgUrlList: (imgUrl: string[]) => void;
+}
+
+export const UpdateImageUploadStore = create<UpdateImageUploadState>((set) => ({
+  imgUrlList: [],
+  setImgUrlList: (urlList) => set((state) => ({ imgUrlList: urlList })),
+}));
+
 // 거래방법 store
 interface TradeWayState {
   tradeWay: {
@@ -104,6 +108,7 @@ interface HashTagState {
   setHashTag: (text: string) => void;
   setHashTagInputText: (text: string) => void;
   deleteHashTags: (newTags: string[]) => void;
+  serverHashTags: (tagList: string[]) => void;
 }
 
 export const hashTagStore = create<HashTagState>((set) => ({
@@ -118,4 +123,5 @@ export const hashTagStore = create<HashTagState>((set) => ({
     set(() => ({
       hashTags: newTags,
     })),
+  serverHashTags: (tagList) => set(() => ({ hashTags: tagList })),
 }));

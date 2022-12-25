@@ -2,7 +2,7 @@ import { ChangeEvent, useRef } from 'react';
 import { reservationStore } from './../../store/PostWriteStore';
 
 export default function ReservationDate() {
-  const { setReservationDate } = reservationStore();
+  const { reservationDate, setReservationDate } = reservationStore();
 
   const startRef = useRef<HTMLInputElement>(null);
   const endRef = useRef<HTMLInputElement>(null);
@@ -22,6 +22,7 @@ export default function ReservationDate() {
     <section className="mb-4 flex items-center">
       <div className="w-[100px] p-3 text-center">예약기간</div>
       <input
+        value={reservationDate.start}
         ref={startRef}
         onChange={setDate}
         type="date"
@@ -31,6 +32,7 @@ export default function ReservationDate() {
       />
       <div>~</div>
       <input
+        value={reservationDate.end}
         ref={endRef}
         onChange={setDate}
         type="date"

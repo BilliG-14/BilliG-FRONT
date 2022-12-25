@@ -10,6 +10,7 @@ import {
   reservationStore,
   CategoryType,
   categoryStore,
+  UpdateImageUploadStore,
 } from './../store/PostWriteStore';
 
 import HashTagSection from '../components/postWrite/HashTagWrite';
@@ -18,14 +19,17 @@ import TradeWay from '../components/postWrite/TradeWay';
 import ReservationDate from './../components/postWrite/ReservationDate';
 import { PostDataType } from './../store/PostReadStore';
 import Category from 'components/postWrite/Category';
+import UpdatedImageUpload from 'components/postWrite/UpdatedImageUpload';
 
 export default function PostUpdate() {
   // 빌립니다 글쓰기
   // store에서 가져오는 state들
-  const { hashTags, setHashTag } = hashTagStore();
+  const { hashTags, serverHashTags } = hashTagStore();
   const { imgFiles } = imageUploadStore();
   const { tradeWay, setTradeWay } = tradeWayStore();
-  const { reservationDate } = reservationStore();
+  const { reservationDate, setReservationDate } = reservationStore();
+  const { filteredCategory, setFilteredCategory } = categoryStore();
+  const { imgUrlList, setImgUrlList } = UpdateImageUploadStore();
 
   // Ref
   const productNameRef = useRef<HTMLInputElement>(null);
@@ -55,6 +59,8 @@ export default function PostUpdate() {
     staleTime: 60 * 1000 * 60,
     onSuccess: (data) => {
       setPostData(data?.data[0]);
+      setFilteredCategory(data?.data[0].category._id);
+      setImgUrlList(data?.data[0].imgUrl);
       setTitle(data?.data[0].title);
       setPrice(data?.data[0].price);
       setDescription(data?.data[0].description);
@@ -62,14 +68,16 @@ export default function PostUpdate() {
         data?.data[0].tradeWay.direct,
         data?.data[0].tradeWay.delivery,
       );
-      data?.data[0].hashtag.map((tag: string) => setHashTag(tag));
+      // data?.data[0].hashtag.map((tag: string) => setHashTag(tag));
+      serverHashTags(data?.data[0].hashtag);
+      setReservationDate(data?.data[0].period.start, data?.data[0].period.end);
     },
     onError: (err) => console.log('데이터 가져오기 에러', err),
   });
 
   // 기존 글 나타내기
-  // console.log(price);
-  const { filteredCategory } = categoryStore();
+  // console.log(postData);
+
   // 사용자가 카테고리를 변경하지 않았을 때 기존 카테고리 id 가지고 있기
   // if (!filteredCategory) {
   //       category:  postData?.category._id;
@@ -94,14 +102,31 @@ export default function PostUpdate() {
     setDescription(e.currentTarget.value);
   }
 
+  //  (postData?.postType === "borrow"? period: reservationDate : null)
   // 서버로 post 보내기, useMutate 정의
   const updatedPostData = useMutation(
-    (formData: FormData) =>
-      api.post('/product', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      }),
+    () =>
+      api.patch(
+        `/product/${id}`,
+        postData?.postType === 'lend'
+          ? {
+              category: filteredCategory,
+              title: title,
+              description: description,
+              price: price,
+              tradeWay: tradeWay,
+              hashtag: hashTags,
+            }
+          : {
+              category: filteredCategory,
+              title: title,
+              description: description,
+              price: price,
+              period: reservationDate,
+              tradeWay: tradeWay,
+              hashtag: hashTags,
+            },
+      ),
     {
       onSuccess: (res) => {
         navigate(`/read/${res.data._id}`);
@@ -113,59 +138,73 @@ export default function PostUpdate() {
   );
 
   // formData 넣기
-  const formData = new FormData();
+  // const formData = new FormData();
 
   // 업로드된 이미지 파일 넣기
-  imgFiles.forEach((imgFile) => formData.append('images', imgFile));
+  // imgFiles.forEach((imgFile) => formData.append('images', imgFile));
 
   // 이미지 파일 제외한 나머지 data json 형식으로 넣기
-  const writeData = {
-    postType: 'borrow',
-    category: filteredCategory,
-    // author: data?.data?._id,
-    title: productNameRef.current?.value,
-    description: descriptionRef.current?.value,
-    // lender: data?.data,
-    stateOfTransaction: 0,
-    // address: data?.data?.address1,
-    price: {
-      priceDay: Number(priceDayRef.current?.value),
-      priceTime: Number(priceTimeRef.current?.value),
-    },
-    period: reservationDate,
-    tradeWay: tradeWay,
-    hashtag: hashTags,
-  };
-  formData.append('data', JSON.stringify(writeData));
+  // const writeData = {
+  //   // postType: {postData.postType},
+  //   category: filteredCategory,
+  //   // author: data?.data?._id,
+  //   title: productNameRef.current?.value,
+  //   description: descriptionRef.current?.value,
+  //   // lender: data?.data,
+  //   // stateOfTransaction: 0,
+  //   // address: data?.data?.address1,
+  //   price: {
+  //     priceDay: Number(priceDayRef.current?.value),
+  //     priceTime: Number(priceTimeRef.current?.value),
+  //   },
+  //   period: reservationDate,
+  //   tradeWay: tradeWay,
+  //   hashtag: hashTags,
+  // };
+  // formData.append('data', JSON.stringify(writeData));
 
   // 등록하기 클릭 시 event
   function handleButtonClick(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    // if (
-    //   /*filteredCategory.length === 0 || */ productNameRef.current?.value === ''
-    // ) {
-    //   alert('카테고리와 이름을 입력해주세요.');
-    //   return;
-    // } else if (
-    //   priceDayRef.current?.value === '' ||
-    //   priceTimeRef.current?.value === ''
-    // ) {
-    //   alert('요금을 입력해주세요.');
-    //   return;
-    // } else if (reservationDate.start === '' || reservationDate.end === '') {
+    if (
+      /*filteredCategory.length === 0 || */ productNameRef.current?.value === ''
+    ) {
+      alert('카테고리와 이름을 입력해주세요.');
+      return;
+    } else if (!price.priceDay || !price.priceTime) {
+      alert('요금을 입력해주세요.');
+      return;
+    }
+    // else if (reservationDate.start === '' || reservationDate.end === '') {
     //   alert('예약기간을 입력해주세요.');
     //   return;
-    // } else if (descriptionRef.current?.value === '') {
-    //   alert('상세설명을 입력해주세요.');
-    //   return;
-    // } else if (!tradeWay.delivery && !tradeWay.direct) {
-    //   alert('거래방법을 선택해주세요.');
-    //   return;
     // }
+    else if (!description) {
+      alert('상세설명을 입력해주세요.');
+      return;
+    } else if (!tradeWay.delivery && !tradeWay.direct) {
+      alert('거래방법을 선택해주세요.');
+      return;
+    }
+
+    if (postData?.postType === 'borrow') {
+      if (reservationDate.start === '' || reservationDate.end === '') {
+        alert('예약기간을 입력해주세요.');
+        return;
+      }
+    }
     // 서버에 데이터 저장
-    // updatedPostData.mutate(formData);
+    updatedPostData.mutate();
     // console.log(filteredCategory[0]?._id);
-    console.log(hashTags);
+
+    // 수정시 바뀔 수 있는 항목
+    // - category, title, image, price, description, tradeway, hashtag, + reservationDate
+    // console.log(filteredCategory);
+    // console.log(title);
+    // console.log(price);
+    // console.log(description);
+    // console.log(tradeWay);
+    // console.log(hashTags);
   }
 
   return (
@@ -202,7 +241,7 @@ export default function PostUpdate() {
           </section>
 
           {/* 사진 업로드 component */}
-          <ImageUpload />
+          <UpdatedImageUpload bringImgUrlList={imgUrlList} />
 
           {/* 요금 section */}
           <section className="flex items-center mb-4">
