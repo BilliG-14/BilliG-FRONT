@@ -23,7 +23,7 @@ export function LoginForm() {
       localStorage.setItem('userId', result.data._id);
       alert('로그인에 성공하였습니다.');
       setIsLoginTrue();
-      navigate('/submain');
+      navigate('/submain/lend');
     } catch (error) {
       console.error(error);
       alert(error);

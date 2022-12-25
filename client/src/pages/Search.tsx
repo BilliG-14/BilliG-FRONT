@@ -3,11 +3,14 @@ import Nav from '../components/nav/Nav';
 import SearchBar from 'components/searchPage/SearchBar';
 import HashTag from 'components/tag/HashTag';
 import Footer from '../components/footer/Footer';
+import { useIsLoginStore } from 'store/LoginJoinStore';
+import TrueNav from '../components/nav/TrueNav';
 
 export default function Search() {
+  const { isLogin } = useIsLoginStore();
   return (
     <div className="w-screen max-w-screen-lg relative m-auto">
-      <Nav />
+      {isLogin ? <TrueNav /> : <Nav />}
       <SearchBar />
       <div>
         <div className="text-2xl font-bold py-2 px-32 mb-1">

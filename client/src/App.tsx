@@ -9,7 +9,7 @@ import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 import BorrowWriting from './pages/BorrowWriting';
 import LendWriting from './pages/LendWriting';
-import Submain from './pages/Submain';
+import SubmainLend from './pages/SubmainLend';
 import PostDetail from './pages/PostDetail';
 import Search from './pages/Search';
 import MyPage from './pages/MyPage';
@@ -22,8 +22,9 @@ import api from './api/customAxios';
 import MyPageEdit from './pages/MyPageEdit';
 import Nav from 'components/nav/Nav';
 import UserInformation from 'pages/UserInformation';
-import ProductsLendList from 'pages/ProductsLendList';
 import PostUpdate from './pages/PostUpdate';
+import SubmainBorrow from './pages/SubmainBorrow';
+import ProductsList from 'pages/ProductsList';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -85,7 +86,8 @@ function App() {
               <Route path="/admin" element={<AdminMain />} />
               <Route path="/write/lend" element={<LendWriting />} />
               <Route path="/write/borrow" element={<BorrowWriting />} />
-              <Route path="/submain" element={<Submain />} />
+              <Route path="/submain/lend" element={<SubmainLend />} />
+              <Route path="/submain/borrow" element={<SubmainBorrow />} />
               <Route path="/search" element={<Search />} />
               <Route path="/read/:id" element={<PostDetail />} />
               <Route path="/update/:id" element={<PostUpdate />} />
@@ -102,7 +104,14 @@ function App() {
                 element={<MyDoneListPage />}
               />
               <Route path="/user/:id" element={<UserInformation />} />
-              <Route path="/products/lend" element={<ProductsLendList />} />
+              <Route
+                path="/products/lend/:categoryId"
+                element={<ProductsList postType="lend" />}
+              />
+              <Route
+                path="/products/borrow/:categoryId"
+                element={<ProductsList postType="borrow" />}
+              />
             </Routes>
           </BrowserRouter>
         </div>

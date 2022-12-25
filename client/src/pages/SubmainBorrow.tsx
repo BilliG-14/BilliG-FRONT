@@ -1,11 +1,12 @@
-import Category from 'components/category-submain/Category';
 import Carousels from 'components/category-submain/Carousels';
 import Nav from '../components/nav/Nav';
 import ChatIcon from '../components/chat-icon/ChatIcon';
 import Footer from '../components/footer/Footer';
 import { useIsLoginStore } from 'store/LoginJoinStore';
 import TrueNav from 'components/nav/TrueNav';
-export default function Submain() {
+import BorrowCategory from '../components/category-submain/BorrowCategory';
+
+export default function SubmainBorrow() {
   const { isLogin } = useIsLoginStore();
   return (
     <div>
@@ -13,7 +14,7 @@ export default function Submain() {
         {isLogin ? <TrueNav /> : <Nav />}
       </div>
       <Carousels />
-      <Category />
+      <BorrowCategory />
       <ChatIcon />
       <Footer />
     </div>
