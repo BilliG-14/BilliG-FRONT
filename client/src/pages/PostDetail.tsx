@@ -153,14 +153,10 @@ export default function PostDetail() {
 
                 <div className="text-right">
                   <div className="flex justify-between mb-2">
-                    <div className="text-sm text-b-text-darkgray w-24 mb-2 text-left">
+                    <div className="text-sm text-b-text-darkgray w-24 text-left">
                       요금
                     </div>
-                    <div>
-                      <div>
-                        {postData?.price.priceDay.toLocaleString()} 원/일
-                      </div>
-                    </div>
+                    <div>{postData?.price.priceDay.toLocaleString()} 원/일</div>
                   </div>
                   <hr className="hr-1 my-4"></hr>
                   {postData?.postType === 'lend' ? null : (

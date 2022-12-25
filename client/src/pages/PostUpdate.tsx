@@ -39,8 +39,7 @@ export default function PostUpdate() {
   // 상품 가져오기
   const [postData, setPostData] = useState<PostDataType>();
   const [title, setTitle] = useState<string>('');
-  const [price, setPrice] = useState<{ priceTime: number; priceDay: number }>({
-    priceTime: 0,
+  const [price, setPrice] = useState<{ priceDay: number }>({
     priceDay: 0,
   });
   const [description, setDescription] = useState<string>('');
@@ -69,11 +68,6 @@ export default function PostUpdate() {
   // 글 업데이트
   function changeTitle(e: ChangeEvent<HTMLInputElement>) {
     setTitle(e.currentTarget.value);
-  }
-
-  function changePriceTime(e: ChangeEvent<HTMLInputElement>) {
-    const newPrice = { ...price, priceTime: Number(e.currentTarget?.value) };
-    setPrice(newPrice);
   }
 
   function changePriceDay(e: ChangeEvent<HTMLInputElement>) {
@@ -125,7 +119,7 @@ export default function PostUpdate() {
     if (filteredCategory === '카테고리 설정' || title === '') {
       alert('카테고리와 이름을 입력해주세요.');
       return;
-    } else if (!price.priceDay || !price.priceTime) {
+    } else if (!price.priceDay) {
       alert('요금을 입력해주세요.');
       return;
     } else if (!description) {
@@ -173,19 +167,14 @@ export default function PostUpdate() {
           <section className="flex items-center mb-4">
             <div className="w-[100px] p-3 text-center">요금</div>
             <input
-              value={price.priceTime}
-              onChange={changePriceTime}
-              type="number"
-              className="p-3 mx-2 w-60 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
-            />
-            <div className="mr-5">원/시간</div>
-            <input
               value={price.priceDay}
               onChange={changePriceDay}
               type="number"
               className="p-3 mx-2 w-60 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
             />
-            <span className="">원/일</span>
+            <span className="mr-9">원/일</span>
+            {/* 거래방법 section */}
+            <TradeWay />
           </section>
 
           {/* 빌리는 기간 section */}
@@ -200,9 +189,6 @@ export default function PostUpdate() {
               className="p-3 w-full h-40 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
             />
           </section>
-
-          {/* 거래방법 section */}
-          <TradeWay />
 
           {/* 해시태그 component */}
           <HashTagSection />
