@@ -2,7 +2,7 @@ import { tradeWayStore } from './../../store/PostWriteStore';
 import { useRef } from 'react';
 
 export default function TradeWay() {
-  const { setTradeWay } = tradeWayStore();
+  const { tradeWay, setTradeWay } = tradeWayStore();
 
   const direct = useRef<HTMLInputElement>(null);
   const delivery = useRef<HTMLInputElement>(null);
@@ -15,6 +15,7 @@ export default function TradeWay() {
     <section className="mb-4 h-10 flex items-center">
       <span className="w-[100px] p-3 text-center">거래방법</span>
       <input
+        checked={tradeWay.direct}
         ref={direct}
         onChange={changeCheckBoxHandle}
         type="checkbox"
@@ -22,6 +23,7 @@ export default function TradeWay() {
       />
       <span className="mr-7">직거래</span>
       <input
+        checked={tradeWay.delivery}
         ref={delivery}
         onChange={changeCheckBoxHandle}
         type="checkbox"

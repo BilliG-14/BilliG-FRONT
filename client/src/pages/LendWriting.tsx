@@ -117,8 +117,10 @@ export default function LendWriting() {
       alert('상품 사진을 등록해주세요. 3장까지 등록가능합니다.');
       return;
     } else if (
-      priceDayRef.current?.value === '' ||
-      priceTimeRef.current?.value === ''
+      !priceDayRef.current?.value ||
+      !priceTimeRef.current?.value ||
+      priceDayRef.current?.value === '0' ||
+      priceTimeRef.current?.value === '0'
     ) {
       alert('요금을 입력해주세요.');
       return;

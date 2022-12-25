@@ -22,6 +22,7 @@ import api from './api/customAxios';
 import MyPageEdit from './pages/MyPageEdit';
 import Nav from 'components/nav/Nav';
 import UserInformation from 'pages/UserInformation';
+import PostUpdate from './pages/PostUpdate';
 import SubmainBorrow from './pages/SubmainBorrow';
 import ProductsList from 'pages/ProductsList';
 
@@ -89,6 +90,7 @@ function App() {
               <Route path="/submain/borrow" element={<SubmainBorrow />} />
               <Route path="/search" element={<Search />} />
               <Route path="/read/:id" element={<PostDetail />} />
+              <Route path="/update/:id" element={<PostUpdate />} />
               <Route path="/mypage" element={<MyPage />} />
               <Route path="/mypage/givelist" element={<MyGivePostListPage />} />
               <Route

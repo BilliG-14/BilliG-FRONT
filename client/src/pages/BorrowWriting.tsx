@@ -113,8 +113,10 @@ export default function BorrowWriting() {
       alert('카테고리와 이름을 입력해주세요.');
       return;
     } else if (
-      priceDayRef.current?.value === '' ||
-      priceTimeRef.current?.value === ''
+      !priceDayRef.current?.value ||
+      !priceTimeRef.current?.value ||
+      priceDayRef.current?.value === '0' ||
+      priceTimeRef.current?.value === '0'
     ) {
       alert('요금을 입력해주세요.');
       return;
