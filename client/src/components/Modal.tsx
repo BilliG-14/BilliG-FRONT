@@ -64,7 +64,7 @@ export default function ConfirmModal(props: ConfirmModalProps) {
         </div>
       </div>
       <div
-        className=" w-screen h-screen bg-black -z-50 opacity-10"
+        className="w-screen h-screen bg-black -z-50 opacity-10"
         onClick={(e: React.MouseEvent) => {
           e.preventDefault();
           props.onClickToggleModal();

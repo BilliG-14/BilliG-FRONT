@@ -62,4 +62,8 @@ export interface UserInformationPostType {
   lender?: string;
   borrower?: string;
   stateOfTransaction: number;
+  period: {
+    start: string | undefined;
+    end: string | undefined;
+  };
 }
