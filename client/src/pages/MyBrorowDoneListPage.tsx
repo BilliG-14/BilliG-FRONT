@@ -7,6 +7,7 @@ import MyBorrowDoneList from '../components/myinfo/MyBorrowDoneList';
 
 export default function MyBrorowDoneListPage() {
   const { isLogin } = useIsLoginStore();
+
   return (
     <div className="h-full w-screen max-w-screen-lg m-auto">
       {isLogin ? <TrueNav /> : <Nav />}
