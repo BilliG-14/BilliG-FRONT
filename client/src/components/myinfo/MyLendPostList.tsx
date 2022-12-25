@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import api from '../../api/customAxios';
 import { Pagination } from 'components/Pagination';
 
-export default function MyGivePostList() {
+export default function MyLendPostList() {
   const [page, setPage] = useState(1);
   const { isLoading, data: giveList } = useQuery(
     [`giveList/${page}`],
@@ -12,12 +12,13 @@ export default function MyGivePostList() {
       return api.get(
         `/product/page?author=${localStorage.getItem(
           'userId',
-        )}&postType=lend&per=10&page=${page}`,
+        )}&postType=lend&per=10&page=${page}&stateOfTransaction=0`,
       );
     },
     {
       refetchOnWindowFocus: false,
       staleTime: 60 * 1000 * 60,
+      retry: 1,
       onSuccess: (data) => {
         console.log(data);
       },

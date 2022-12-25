@@ -1,7 +1,7 @@
 import Nav from '../components/nav/Nav';
 import MyInfoHeader from 'components/myinfo/MyInfoHeader';
 import MyInfoSideBar from '../components/myinfo/MyinfoSideBar';
-import MyGivePostList from '../components/myinfo/MyGivePostList';
+import MyLendPostList from '../components/myinfo/MyLendPostList';
 import { useIsLoginStore } from 'store/LoginJoinStore';
 import TrueNav from '../components/nav/TrueNav';
 
@@ -14,7 +14,7 @@ export default function MyGivePostListPage() {
       <section className="max-w-screen-lg h-full">
         <div className="flex h-full">
           <MyInfoSideBar />
-          <MyGivePostList />
+          <MyLendPostList />
         </div>
       </section>
     </div>

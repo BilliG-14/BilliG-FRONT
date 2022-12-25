@@ -1,5 +1,5 @@
 import DealTag from 'components/tag/DealTag';
-import { Item } from 'components/myinfo/MyGivePostList';
+import { Item } from 'components/myinfo/MyLendPostList';
 import { useNavigate } from 'react-router-dom';
 
 type LendItemProps = {

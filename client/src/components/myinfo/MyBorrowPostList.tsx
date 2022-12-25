@@ -2,7 +2,7 @@ import { useState } from 'react';
 import BorrowItemCard from './BorrowItemCard';
 import { useQuery } from '@tanstack/react-query';
 import api from '../../api/customAxios';
-import { Item } from './MyGivePostList';
+import { Item } from './MyLendPostList';
 import { Pagination } from 'components/Pagination';
 
 export default function MyBorrowPostList() {
@@ -13,12 +13,13 @@ export default function MyBorrowPostList() {
       return api.get(
         `/product/page?author=${localStorage.getItem(
           'userId',
-        )}&postType=borrow&per=10&page=${page}`,
+        )}&postType=borrow&per=10&page=${page}&stateOfTransaction=0`,
       );
     },
     {
       refetchOnWindowFocus: false,
       staleTime: 60 * 1000 * 60,
+      retry: 1,
       onSuccess: (data) => {
         console.log(data);
       },

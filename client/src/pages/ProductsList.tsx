@@ -3,7 +3,7 @@ import { AxiosError } from 'axios';
 import { Pagination } from 'components/Pagination';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Item } from 'components/myinfo/MyGivePostList';
+import { Item } from 'components/myinfo/MyLendPostList';
 import ListByCategory from 'components/productsList/ListByCategory';
 import { useParams } from 'react-router-dom';
 import ProductsListNav from 'components/productsList/ProductsListNav';
