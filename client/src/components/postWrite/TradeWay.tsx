@@ -12,7 +12,7 @@ export default function TradeWay() {
   }
 
   return (
-    <section className="mb-4 h-10 flex items-center">
+    <section className="h-10 flex items-center">
       <span className="w-[100px] p-3 text-center">거래방법</span>
       <input
         checked={tradeWay.direct}

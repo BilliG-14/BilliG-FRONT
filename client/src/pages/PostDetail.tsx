@@ -157,9 +157,6 @@ export default function PostDetail() {
                       요금
                     </div>
                     <div>
-                      <div className="mb-2">
-                        {postData?.price.priceTime.toLocaleString()} 원/시간
-                      </div>
                       <div>
                         {postData?.price.priceDay.toLocaleString()} 원/일
                       </div>

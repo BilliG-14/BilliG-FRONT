@@ -144,7 +144,7 @@ export default function DealDoneModal(props: PostIdType) {
                 </div>
 
                 {/*body*/}
-                <div className="relative p-6 text-start">
+                <div className="relative p-6 text-start text-sm">
                   <p className="mb-2 text-red-500  font-semibold">
                     대여완료 전 꼭 확인해주세요!
                   </p>
@@ -174,7 +174,7 @@ export default function DealDoneModal(props: PostIdType) {
                     <input
                       type="text"
                       ref={emailRef}
-                      className="h-8 p-2 text-sm border-solid border  border-gray-300 rounded-md"
+                      className="h-8 p-2 border-solid border  border-gray-300 rounded-md"
                     />
                     <button
                       onClick={userCheckFn}
@@ -184,6 +184,26 @@ export default function DealDoneModal(props: PostIdType) {
                       유저 확인
                     </button>
                   </div>
+                  <div>빌리는 기간 설정</div>
+                  <div className="flex gap-3 items-center justify-around">
+                    <div>시작날짜</div>
+                    <div>종료날짜</div>
+                  </div>
+                  <div className="flex items-center justify-around">
+                    <input
+                      type="date"
+                      className="h-8 p-2 border-solid border  border-gray-300 rounded-md"
+                    />
+                    <input
+                      type="date"
+                      className="h-8 p-2 border-solid border  border-gray-300 rounded-md"
+                    />
+                  </div>
+                  <div className="flex gap-3 items-center">빌리는 시간</div>
+                  <input
+                    type="text"
+                    className="h-8 p-2 border-solid border  border-gray-300 rounded-md"
+                  />
                 </div>
 
                 {/*footer*/}

@@ -28,9 +28,9 @@ export default function ReservationDate() {
         type="date"
         min={today}
         max="2099-12-31"
-        className="p-3 mx-2 w-60 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
+        className="p-3 mx-2 w-[265px] h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
       />
-      <div>~</div>
+      <div className="mx-6">~</div>
       <input
         value={reservationDate.end}
         ref={endRef}
@@ -38,7 +38,7 @@ export default function ReservationDate() {
         type="date"
         min={startRef.current?.value}
         max="2099-12-31"
-        className="p-3 mx-2 w-60 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
+        className="p-3 mx-2 w-[265px] h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
       />
     </section>
   );
