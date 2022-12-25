@@ -19,7 +19,7 @@ export default function GiveItemCard({ item }: GivePostProps) {
     >
       <li className="flex w-full h-full justify-center py-3">
         <div className="item_info flex w-4/5 border-b-2 border-solid border-gray-300">
-          <img src={imgUrl[0]} alt="m2 맥북" className="w-24 h-24 m-auto" />
+          <img src={imgUrl[0]} alt="m2 맥북" className="w-24 h-24" />
           <div className="w-4/5 p-3 pl-10">
             <p className="text-lg font-semibold mt-1">{title}</p>
             <ul>

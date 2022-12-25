@@ -3,7 +3,6 @@ import { AxiosError } from 'axios';
 import { Pagination } from 'components/Pagination';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import Nav from 'components/nav/Nav';
 import { Item } from 'components/myinfo/MyGivePostList';
 import ListByCategory from 'components/productsList/ListByCategory';
 import { useParams } from 'react-router-dom';
@@ -21,11 +20,15 @@ type Products = {
   prevPage: number;
   totalDocs: number;
 };
-export default function ProductsLendList() {
+type ProductsListProps = {
+  postType: string;
+};
+export default function ProductsList(props: ProductsListProps) {
+  const { postType } = props;
   const { categoryId } = useParams();
+  const [categoryName, setCategoryName] = useState<string>('');
   const [page, setPage] = useState(1);
   const endPoint = '/product/page';
-  const postType = 'lend';
   const per = 8;
   const {
     isLoading,
@@ -33,7 +36,7 @@ export default function ProductsLendList() {
     isError,
   } = useQuery<Products, AxiosError>(
     [
-      `products?category=${categoryId}&per=${per}&page=${page}&postType=${postType}`,
+      `${endPoint}?category=${categoryId}&per=${per}&page=${page}&postType=${postType}`,
     ],
     async () => {
       const res = await api.get(
@@ -56,9 +59,18 @@ export default function ProductsLendList() {
   if (isLoading) return <div className=""></div>;
   return (
     <div className="max-w-screen-lg m-auto pb-32">
-      <ProductsListNav />
+      <ProductsListNav
+        postType={postType}
+        currentCategoryId={categoryId ? categoryId : ''}
+        setCategoryName={setCategoryName}
+        setPage={setPage}
+      />
       {products && (
-        <ListByCategory items={products?.docs} categoryName={'IT'} />
+        <ListByCategory
+          items={products?.docs}
+          categoryName={categoryName}
+          postType={postType}
+        />
       )}
       <Pagination
         page={page}

@@ -22,7 +22,8 @@ import api from './api/customAxios';
 import MyPageEdit from './pages/MyPageEdit';
 import Nav from 'components/nav/Nav';
 import UserInformation from 'pages/UserInformation';
-import ProductsLendList from 'pages/ProductsLendList';
+import SubmainBorrow from './pages/SubmainBorrow';
+import ProductsList from 'pages/ProductsList';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -85,6 +86,7 @@ function App() {
               <Route path="/write/lend" element={<LendWriting />} />
               <Route path="/write/borrow" element={<BorrowWriting />} />
               <Route path="/submain/lend" element={<SubmainLend />} />
+              <Route path="/submain/borrow" element={<SubmainBorrow />} />
               <Route path="/search" element={<Search />} />
               <Route path="/read/:id" element={<PostDetail />} />
               <Route path="/mypage" element={<MyPage />} />
@@ -102,7 +104,11 @@ function App() {
               <Route path="/user/:id" element={<UserInformation />} />
               <Route
                 path="/products/lend/:categoryId"
-                element={<ProductsLendList />}
+                element={<ProductsList postType="lend" />}
+              />
+              <Route
+                path="/products/borrow/:categoryId"
+                element={<ProductsList postType="borrow" />}
               />
             </Routes>
           </BrowserRouter>

@@ -1,10 +1,16 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
-import axios from 'axios';
+import React, { Dispatch, SetStateAction } from 'react';
 import api from 'api/customAxios';
 import { useNavigate } from 'react-router-dom';
 
-export default function ProductsListNav() {
+type NavProps = {
+  postType: string;
+  currentCategoryId: string;
+  setCategoryName: Dispatch<SetStateAction<string>>;
+  setPage: Dispatch<SetStateAction<number>>;
+};
+export default function ProductsListNav(props: NavProps) {
+  const { postType, currentCategoryId, setCategoryName, setPage } = props;
   const navigate = useNavigate();
   const { isLoading, data: categories } = useQuery(
     ['categories'],
@@ -20,6 +26,13 @@ export default function ProductsListNav() {
   };
 
   if (isLoading) return <p>Loading..</p>;
+  if (categories) {
+    const currentCategory = categories.data.find(
+      (category: { _id: string; name: string }) =>
+        category._id === currentCategoryId,
+    );
+    currentCategory && setCategoryName(currentCategory.name);
+  }
   return (
     <nav className="flex max-w-screen-lg h-16 border-b-2 border-solid border-gray-500 m-auto">
       <ul
@@ -34,7 +47,10 @@ export default function ProductsListNav() {
             >
               <a
                 href="#!"
-                onClick={() => navigate(`/products/lend/${category._id}`)}
+                onClick={() => {
+                  setPage(1);
+                  navigate(`/products/${postType}/${category._id}`);
+                }}
               >
                 {category.name}
               </a>

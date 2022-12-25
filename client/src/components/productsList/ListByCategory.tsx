@@ -1,8 +1,10 @@
-import ItemCard from 'components/category-submain/ItemCard';
+import SubmainBorrowItemCard from 'components/category-submain/SubmainBorrowItemCard';
 import { Item } from 'components/myinfo/MyGivePostList';
+import SubmainLendItemCard from '../category-submain/SubmainLendItemCard';
 type ListProps = {
   items: Item[];
   categoryName: string;
+  postType: string;
 };
 //데이터를 4개 단위로 묶어서 2차원 배열로 맡음
 function chunk(data: Item[], size = 4) {
@@ -14,15 +16,25 @@ function chunk(data: Item[], size = 4) {
 }
 
 export default function ListByCategory(props: ListProps) {
-  const { items, categoryName } = props;
+  const { items, categoryName, postType } = props;
   const chunkedItems = chunk(items, 4);
   return (
     <div className="w-full flex flex-col items-center mb-8">
       {chunkedItems.map((fourItems, i1) => (
         <div key={i1} className="w-full flex justify-start">
           {fourItems.map((item, i2) => {
-            return (
-              <ItemCard key={i2} item={item} categoryName={categoryName} />
+            return postType == 'lend' ? (
+              <SubmainLendItemCard
+                key={i2}
+                item={item}
+                categoryName={categoryName}
+              />
+            ) : (
+              <SubmainBorrowItemCard
+                key={i2}
+                item={item}
+                categoryName={categoryName}
+              />
             );
           })}
         </div>
