@@ -17,7 +17,7 @@ export default function MyLendPostList() {
     },
     {
       refetchOnWindowFocus: false,
-      staleTime: 60 * 1000 * 60,
+      staleTime: 60 * 1000 * 5,
       retry: 1,
       onSuccess: (data) => {
         console.log(data);

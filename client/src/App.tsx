@@ -15,7 +15,6 @@ import Search from './pages/Search';
 import MyPage from './pages/MyPage';
 import MyGivePostListPage from './pages/MyGivePostListPage';
 import MyBorrowPostListPage from './pages/MyBorrowPostListPage';
-import MyDoneListPage from 'pages/MyDoneListPage';
 import ScrollToTop from 'components/ScrollToTop';
 import { useIsLoginStore } from 'store/LoginJoinStore';
 import api from './api/customAxios';
@@ -26,6 +25,7 @@ import SubmainBorrow from './pages/SubmainBorrow';
 import ProductsList from 'pages/ProductsList';
 import MyLendDealListPage from './pages/MyLendDealListPage';
 import MyBorrowDealListPage from './pages/MyBorrowDealListPage';
+import MyLendDoneListPage from './pages/MyLendDoneListPage';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -106,11 +106,14 @@ function App() {
                 element={<MyBorrowDealListPage />}
               />
               <Route path="/mypage/edit" element={<MyPageEdit />} />
-              <Route path="/mypage/donegivelist" element={<MyDoneListPage />} />
               <Route
-                path="/mypage/doneborrowlist"
-                element={<MyDoneListPage />}
+                path="/mypage/donegivelist"
+                element={<MyLendDoneListPage />}
               />
+              {/* <Route
+                path="/mypage/doneborrowlist"
+                element={<MyLendDoneListPage />}
+              /> */}
               <Route path="/user/:id" element={<UserInformation />} />
               <Route
                 path="/products/lend/:categoryId"

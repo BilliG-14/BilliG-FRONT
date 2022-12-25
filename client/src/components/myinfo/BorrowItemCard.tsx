@@ -34,10 +34,11 @@ export default function BorrowItemCard({ item }: BorrowPostProps) {
             <ul>
               <li className="mt-1">
                 <span>대여기간 : </span>
+                {/* {period.time && <span>{`${period.time} 시간`}</span>} */}
                 <span>{`${period.start} ~ `}</span>
                 <span>{`${period.end}`}</span>
               </li>
-              <li className="text-b-text-darkgray mt-2 mb-1">
+              <li className="text-b-text-darkgray mt-3 mb-1">
                 <span>거래지역 : </span>
                 <span>{`📍 ${address}`}</span>
               </li>
@@ -49,18 +50,18 @@ export default function BorrowItemCard({ item }: BorrowPostProps) {
             </ul>
           </div>
         </div>
-        <div className="item_deal_price flex flex-col justify-center border-b-2 border-solid border-gray-300">
-          <div className="flex flex-col justify-center items-center">
+        <div className="item_deal_price flex flex-col items-center justify-evenly border-b-2 border-solid border-gray-300">
+          <div className="flex flex-col justify-center items-center ">
             {tradeWay.direct ? <DealTag deal="직거래" /> : null}
             {tradeWay.delivery ? <DealTag deal="택배거래" /> : null}
           </div>
           <div className="price text-right mt-1">
-            <p className="per_time mb-2">
+            {/* <p className="per_time mb-2">
               <span className="font-semibold">{`${price.priceTime.toLocaleString(
                 'ko-KR',
               )} 원`}</span>
               <span className="text-xs"> / 시간</span>
-            </p>
+            </p> */}
             <p className="per_day">
               <span className="font-semibold">{`${price.priceDay.toLocaleString(
                 'ko-KR',
