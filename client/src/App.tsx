@@ -35,6 +35,13 @@ const GlobalStyle = createGlobalStyle`
 
 const queryClient = new QueryClient();
 
+// 지도 관련 설정
+declare global {
+  interface Window {
+    kakao: any;
+  }
+}
+
 function App() {
   const {
     isLogin,

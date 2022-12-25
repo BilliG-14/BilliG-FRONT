@@ -10,6 +10,7 @@ import { GoPackage } from 'react-icons/go';
 import api from './../api/customAxios';
 import LendButtons from '../components/postDetail/LendButtons';
 import BorrowButtons from '../components/postDetail/BorrowButtons';
+import Map from 'components/postDetail/Map';
 
 export default function PostDetail() {
   const navigate = useNavigate();
@@ -272,9 +273,10 @@ export default function PostDetail() {
               <br />
               <br />
               <div>위치</div>
-              <div className="w-full h-96 mt-3 rounded-lg ">
+              {/* <div className="w-full h-96 mt-3 rounded-lg ">
                 지도 나타나는 곳
-              </div>
+              </div> */}
+              <Map address={postData?.author.address1} />
               <br />
               <br />
               <br />
