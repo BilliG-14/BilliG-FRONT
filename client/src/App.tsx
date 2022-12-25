@@ -24,6 +24,8 @@ import Nav from 'components/nav/Nav';
 import UserInformation from 'pages/UserInformation';
 import SubmainBorrow from './pages/SubmainBorrow';
 import ProductsList from 'pages/ProductsList';
+import MyLendDealListPage from './pages/MyLendDealListPage';
+import MyBorrowDealListPage from './pages/MyBorrowDealListPage';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -94,6 +96,14 @@ function App() {
               <Route
                 path="/mypage/borrowlist"
                 element={<MyBorrowPostListPage />}
+              />
+              <Route
+                path="/mypage/lenddeallist"
+                element={<MyLendDealListPage />}
+              />
+              <Route
+                path="/mypage/borrowdeallist"
+                element={<MyBorrowDealListPage />}
               />
               <Route path="/mypage/edit" element={<MyPageEdit />} />
               <Route path="/mypage/donegivelist" element={<MyDoneListPage />} />

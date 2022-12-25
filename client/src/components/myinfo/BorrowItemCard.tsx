@@ -2,13 +2,22 @@ import React from 'react';
 import DealTag from 'components/tag/DealTag';
 import { Item } from './MyLendPostList';
 import { useNavigate } from 'react-router-dom';
+import DealStepTag from '../tag/DealStepTag';
 
 interface BorrowPostProps {
   item: Item;
 }
 
 export default function BorrowItemCard({ item }: BorrowPostProps) {
-  const { title, address, imgUrl, tradeWay, price, period } = item;
+  const {
+    title,
+    address,
+    imgUrl,
+    tradeWay,
+    price,
+    period,
+    stateOfTransaction,
+  } = item;
   const navigate = useNavigate();
   return (
     <div
@@ -20,7 +29,7 @@ export default function BorrowItemCard({ item }: BorrowPostProps) {
       <li className="flex w-full h-full justify-center py-3">
         <div className="item_info flex w-4/5 border-b-2 border-solid border-gray-300">
           <img src={imgUrl[0]} alt="m2 맥북" className="w-24 h-24" />
-          <div className="w-4/5 p-3 pl-10">
+          <div className="w-4/5 pl-10">
             <p className="text-lg font-semibold mt-1">{title}</p>
             <ul>
               <li className="mt-1">
@@ -28,9 +37,14 @@ export default function BorrowItemCard({ item }: BorrowPostProps) {
                 <span>{`${period.start} ~ `}</span>
                 <span>{`${period.end}`}</span>
               </li>
-              <li className="text-b-text-darkgray mt-3">
+              <li className="text-b-text-darkgray mt-2 mb-1">
                 <span>거래지역 : </span>
                 <span>{`📍 ${address}`}</span>
+              </li>
+              <li>
+                {stateOfTransaction === 1 || stateOfTransaction === 2 ? (
+                  <DealStepTag stateOfTransaction={stateOfTransaction} />
+                ) : null}
               </li>
             </ul>
           </div>

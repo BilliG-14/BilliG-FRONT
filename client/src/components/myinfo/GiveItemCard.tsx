@@ -2,13 +2,14 @@ import React from 'react';
 import DealTag from 'components/tag/DealTag';
 import { Item } from './MyLendPostList';
 import { useNavigate } from 'react-router-dom';
+import DealStepTag from 'components/tag/DealStepTag';
 
 interface GivePostProps {
   item: Item;
 }
 
 export default function GiveItemCard({ item }: GivePostProps) {
-  const { title, address, imgUrl, tradeWay, price } = item;
+  const { title, address, imgUrl, tradeWay, price, stateOfTransaction } = item;
   const navigate = useNavigate();
   return (
     <div
@@ -23,9 +24,14 @@ export default function GiveItemCard({ item }: GivePostProps) {
           <div className="w-4/5 p-3 pl-10">
             <p className="text-lg font-semibold mt-1">{title}</p>
             <ul>
-              <li className="text-b-text-darkgray mt-3">
+              <li className="text-b-text-darkgray mt-2 mb-1">
                 <span>거래지역 : </span>
                 <span>{`📍 ${address}`}</span>
+              </li>
+              <li>
+                {stateOfTransaction === 1 || stateOfTransaction === 2 ? (
+                  <DealStepTag stateOfTransaction={stateOfTransaction} />
+                ) : null}
               </li>
             </ul>
           </div>

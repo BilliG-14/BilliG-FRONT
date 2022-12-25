@@ -35,10 +35,10 @@ export default function MyInfoSideBar() {
             <p>거래중인 물품</p>
           </li>
           <li className="h-10 flex items-center justify-start">
-            <Link to="#">빌려주기 조회</Link>
+            <Link to="/mypage/lenddeallist">빌려주기 조회</Link>
           </li>
           <li className="h-10 flex items-center justify-start">
-            <Link to="#">빌리기 조회</Link>
+            <Link to="/mypage/borrowdeallist">빌리기 조회</Link>
           </li>
           <li className="h-10 flex w-full text-xl font-bold items-center justify-start border-solid border-b-2 border-gray-300">
             <p>거래완료 물품</p>
