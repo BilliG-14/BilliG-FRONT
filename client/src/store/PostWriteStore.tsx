@@ -102,13 +102,14 @@ export const tradeWayStore = create<TradeWayState>((set) => ({
 }));
 
 // 해시태그 store
+
 interface HashTagState {
   hashTagInputText: string;
   hashTags: string[];
   setHashTags: (text: string) => void;
   setHashTagInputText: (text: string) => void;
   deleteHashTags: (newTags: string[]) => void;
-  serverHashTags: (tagList: string[]) => void;
+  serverHashTags: (tagList: string) => void;
 }
 
 export const hashTagStore = create<HashTagState>((set) => ({
@@ -123,5 +124,6 @@ export const hashTagStore = create<HashTagState>((set) => ({
     set(() => ({
       hashTags: newTags,
     })),
-  serverHashTags: (tagList) => set(() => ({ hashTags: tagList })),
+  serverHashTags: (tagList) =>
+    set((state) => ({ hashTags: [...state.hashTags, tagList] })),
 }));
