@@ -1,11 +1,20 @@
 import axios from 'axios';
-import { FormEvent, useRef } from 'react';
+import ConfirmModal from 'components/Modal';
+import { FormEvent, useCallback, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useIsLoginStore } from 'store/LoginJoinStore';
 import api from '../../api/customAxios';
 
 export function LoginForm() {
   const navigate = useNavigate();
+  const [isOpenSuccessModal, setOpenSuccessModal] = useState<boolean>(false);
+  const [isOpenFailModal, setOpenFailModal] = useState<boolean>(false);
+  const onSuccessToggleModal = useCallback(() => {
+    setOpenSuccessModal(!isOpenSuccessModal);
+  }, [isOpenSuccessModal]);
+  const onFailToggleModal = useCallback(() => {
+    setOpenFailModal(!isOpenFailModal);
+  }, [isOpenFailModal]);
   const inputRef = useRef<HTMLInputElement[] | null[]>([]);
   const inputClassName =
     'block w-full h-10 text-xl border-b-yellow border-solid border-2 rounded-xl px-4 text-yellow-900 font-bold focus:outline-none focus:ring-2 focus:ring-amber-500 mb-7';
@@ -21,12 +30,11 @@ export function LoginForm() {
       const token = result.data.token;
       localStorage.setItem('token', token);
       localStorage.setItem('userId', result.data._id);
-      alert('로그인에 성공하였습니다.');
+      onSuccessToggleModal();
       setIsLoginTrue();
-      navigate('/submain/lend');
     } catch (error) {
       console.error(error);
-      alert(error);
+      onFailToggleModal();
     }
   };
   return (
@@ -62,6 +70,24 @@ export function LoginForm() {
         </a>
       </div>
       <LoginButton />
+      {isOpenSuccessModal && (
+        <ConfirmModal
+          title="로그인에 성공하였습니다."
+          onClickToggleModal={() => {
+            onSuccessToggleModal();
+            navigate('/submain/lend');
+          }}
+          onlyYes={true}
+        />
+      )}
+      {isOpenFailModal && (
+        <ConfirmModal
+          title="이메일과 비밀번호를 다시 확인해주세요"
+          onClickToggleModal={onFailToggleModal}
+          onlyYes={true}
+          yesColor={'red-400'}
+        />
+      )}
     </form>
   );
 }
