@@ -1,46 +1,53 @@
 import React from 'react';
 import DealTag from 'components/tag/DealTag';
+import { Item } from 'components/myinfo/MyLendPostList';
 
-export default function SearchItemCard() {
+interface SearchItemCardProp {
+  item: Item;
+}
+
+export default function SearchItemCard({ item }: SearchItemCardProp) {
+  const { title, address, imgUrl, hashtag, tradeWay, price } = item;
   return (
-    <div className="h-36">
-      <li className="flex w-full h-full justify-center py-3">
-        <div className="item_info flex w-2/3 border-b-2 border-solid border-b-yellow">
-          <a href="#">
-            <img
-              src="https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/macbook-air-midnight-select-20220606?wid=904&hei=840&fmt=jpeg&qlt=90&.v=1653084303665"
-              alt="m2 맥북"
-              className="w-24 h-24 m-auto"
-            />
-          </a>
-          <div className="w-4/5 p-3 pl-10">
-            <a href="#">
-              <p className="text-lg font-semibold mt-1">
-                Apple 2022 맥북 프로 13 M2 대여해드려요
-              </p>
-            </a>
-            <ul>
-              <li className="text-b-text-darkgray mt-3">
-                <span>거래지역 : </span>
-                <span>📍 서울시 중랑구</span>
-              </li>
-            </ul>
-          </div>
+    <li className="h-36 flex w-full justify-center py-3">
+      <div className="item_info flex w-2/3 border-b-2 border-solid border-b-yellow">
+        <img
+          src={
+            imgUrl[0]
+              ? imgUrl[0]
+              : `${process.env.PUBLIC_URL}/product_default.png`
+          }
+          alt={hashtag[0] ? hashtag[0] : 'item'}
+          className="w-24 h-24 m-auto"
+        />
+        <div className="w-4/5 p-3 pl-10">
+          <p className="text-lg font-semibold mt-1">{title}</p>
+          <ul>
+            <li className="text-b-text-darkgray mt-3">
+              <span>거래지역 : </span>
+              <span>{`📍 ${address}`}</span>
+            </li>
+          </ul>
         </div>
-        <div className="item_deal_price border-b-2 border-solid border-b-yellow">
-          <DealTag deal="직거래" />
-          <div className="price text-right mt-1">
-            <p className="per_time mb-2">
-              <span className="font-semibold"> {`5,000 원`}</span>
-              <span className="text-xs"> / 시간</span>
-            </p>
-            <p className="per_day">
-              <span className="font-semibold"> {`30,000 원`}</span>
-              <span className="text-xs"> / 일</span>
-            </p>
-          </div>
+      </div>
+      <div className="item_deal_price flex flex-col items-center justify-evenly border-b-2 border-solid border-b-yellow">
+        <div className="flex flex-col justify-center items-center">
+          {tradeWay.direct ? <DealTag deal="직거래" /> : null}
+          {tradeWay.delivery ? <DealTag deal="택배거래" /> : null}
         </div>
-      </li>
-    </div>
+        <div className="price text-right mt-1">
+          {/* <p className="per_time mb-2">
+            <span className="font-semibold"> {`5,000 원`}</span>
+            <span className="text-xs"> / 시간</span>
+          </p> */}
+          <p className="per_day">
+            <span className="font-semibold">
+              {`${price.priceDay.toLocaleString('ko-KR')} 원`}
+            </span>
+            <span className="text-xs"> / 일</span>
+          </p>
+        </div>
+      </div>
+    </li>
   );
 }
