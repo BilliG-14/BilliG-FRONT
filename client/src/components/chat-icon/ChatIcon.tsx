@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 function ChatIcon() {
   const navigate = useNavigate();
   const goChat = () => {
-    navigate('/chat');
+    navigate('/chatjoin');
   };
   return (
     <div className="w-full flex justify-end px-14">

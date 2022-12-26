@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import Main from 'pages/Main';
@@ -28,13 +28,15 @@ import MyLendDealListPage from './pages/MyLendDealListPage';
 import MyBorrowDealListPage from './pages/MyBorrowDealListPage';
 import MyLendDoneListPage from './pages/MyLendDoneListPage';
 import MyBrorowDoneListPage from './pages/MyBrorowDoneListPage';
+import HttpClient from './service/http';
+import ChatService from './service/chat';
+import Chat from './components/chat/Chat';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
 `;
 
 const queryClient = new QueryClient();
-
 function App() {
   const {
     isLogin,
@@ -44,6 +46,12 @@ function App() {
     setIsLoadingTrue,
     setIsLoadingFalse,
   } = useIsLoginStore();
+
+  /** 채팅 유저 이름 state */
+  const [username, setUsername] = useState('');
+  const baseURL = process.env.REACT_APP_BASE_URL;
+  const httpClient = new HttpClient();
+  const chatService = new ChatService(httpClient);
 
   useEffect(() => {
     setIsLoadingFalse();
@@ -125,6 +133,34 @@ function App() {
               <Route
                 path="/products/borrow/:categoryId"
                 element={<ProductsList postType="borrow" />}
+              />
+              <Route
+                path="/chat"
+                element={
+                  username ? (
+                    <Chat
+                      chatService={chatService}
+                      username={username}
+                      baseURL={baseURL}
+                    />
+                  ) : (
+                    <Link to="/" />
+                  )
+                }
+              />
+              <Route
+                path="/chat/:roomId"
+                element={
+                  username ? (
+                    <Chat
+                      chatService={chatService}
+                      username={username}
+                      baseURL={baseURL}
+                    />
+                  ) : (
+                    <Link to="/" />
+                  )
+                }
               />
             </Routes>
           </BrowserRouter>
