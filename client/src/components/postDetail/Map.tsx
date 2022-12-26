@@ -72,5 +72,5 @@ export default function Map(props: AddressType) {
     // 마커가 지도 위에 표시되도록 설정합니다
     marker.setMap(map);
   }, [mapXY.x]);
-  return <div id="map" className="w-[700px] h-[400px] rounded-lg"></div>;
+  return <div id="map" className="w-full h-[400px] rounded-lg"></div>;
 }

@@ -1,11 +1,11 @@
-import { hashTagStore } from './../../store/PostWriteStore';
+import { hashTagStore } from '../../store/PostWriteStore';
 
 export default function HashTagSection() {
   // store에서 불러오기
   const {
     hashTagInputText,
     hashTags,
-    setHashTag,
+    setHashTags,
     setHashTagInputText,
     deleteHashTags,
   } = hashTagStore();
@@ -17,15 +17,18 @@ export default function HashTagSection() {
   }
 
   function handleTagSpaceBar(e: React.KeyboardEvent<HTMLInputElement>) {
-    if (!hashTags.includes(hashTagInputText) && hashTags.length < 6) {
+    if (!hashTags.includes(hashTagInputText) && hashTags.length < 5) {
       if (e.key === 'Enter') {
+        setHashTags(hashTagInputText);
         setHashTagInputText('');
-        setHashTag(hashTagInputText);
+        return;
       }
     } else {
       setHashTagInputText('');
     }
   }
+  console.log(hashTagInputText);
+  console.log(hashTags);
 
   // 해시태그 클릭 시 삭제
   function deleteHashTag(e: React.MouseEvent<HTMLDivElement>) {
@@ -48,13 +51,13 @@ export default function HashTagSection() {
               onKeyDown={handleTagSpaceBar}
               type="text"
               placeholder="태그를 입력해주세요"
-              className="p-3 mr-4 w-40 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
+              className="p-3 mr-4 w-[200px] h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
             />
           </div>
-          <p className="group/edit invisible group-focus-within/item:visible group-focus-within/item:   mt-2 text-[6px] text-b-text-darkgray leading-4 border-solid border border-gray-300 p-2 rounded-lg">
+          <p className="group/edit invisible group-focus-within/item:visible w-[200px] mt-2 text-[6px] text-b-text-darkgray leading-4 border-solid border border-gray-300 p-2 rounded-lg">
             엔터를 입력하면 태그를 등록 할 수 있습니다. <br />
             등록된 태그를 클릭하면 삭제됩니다. <br />
-            태그는 6개까지 등록이 가능합니다.
+            태그는 5개까지 등록이 가능합니다.
           </p>
         </div>
         <div className="flex flex-wrap">

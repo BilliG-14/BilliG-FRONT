@@ -10,7 +10,7 @@ import {
   CategoryType,
 } from './../store/PostWriteStore';
 
-import HashTagSection from '../components/postWrite/HashTagWrite';
+import HashTagSection from '../components/postWrite/HashTag';
 import ImageUpload from '../components/postWrite/ImageUpload';
 import TradeWay from '../components/postWrite/TradeWay';
 
@@ -134,7 +134,7 @@ export default function LendWriting() {
   return (
     <div className="max-w-screen-lg mx-auto">
       <div className="flex flex-col justify-center mx-auto text-b-text-black">
-        <div className="mb-6 text-3xl">빌려주기</div>
+        <div className="mb-6 text-3xl font-bold">빌려주기</div>
         <form className="w-[800px] mx-auto">
           {/* 상품명/카테고리 section */}
           <section className="flex mb-4">
@@ -167,7 +167,7 @@ export default function LendWriting() {
             <input
               ref={priceDayRef}
               type="number"
-              className="p-3 mx-2 w-60 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
+              className="p-3 mx-2 w-54 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
             />
 
             <span className="mr-9">원/일</span>
@@ -191,7 +191,7 @@ export default function LendWriting() {
             <button
               type="button"
               onClick={handleButtonClick}
-              className="w-1/6 h-10 hover:text-white border border-b-yellow hover:bg-b-yellow focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+              className="w-1/6 h-10 hover:text-white border border-b-yellow hover:bg-b-yellow focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 my-3"
             >
               등록하기
             </button>
