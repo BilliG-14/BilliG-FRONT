@@ -5,11 +5,12 @@ export default class HttpClient {
   // constructor(baseURL: string | undefined) {
   //   this.baseURL = baseURL;
   // }
+
   async fetch(url: string, options: any) {
     const res = await fetch(`${this.state.baseURL}${url}`, {
       ...options,
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     });
 
@@ -20,7 +21,7 @@ export default class HttpClient {
       console.error(error);
     }
     if (res.status > 299 || res.status < 200) {
-      const message = "http통신 문제 🤪";
+      const message = 'http통신 문제 🤪';
       throw new Error(message);
     }
 

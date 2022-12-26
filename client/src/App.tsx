@@ -47,8 +47,6 @@ function App() {
     setIsLoadingFalse,
   } = useIsLoginStore();
 
-  /** 채팅 유저 이름 state */
-  const [username, setUsername] = useState('');
   const baseURL = process.env.REACT_APP_BASE_URL;
   const httpClient = new HttpClient();
   const chatService = new ChatService(httpClient);
@@ -136,31 +134,11 @@ function App() {
               />
               <Route
                 path="/chat"
-                element={
-                  username ? (
-                    <Chat
-                      chatService={chatService}
-                      username={username}
-                      baseURL={baseURL}
-                    />
-                  ) : (
-                    <Link to="/" />
-                  )
-                }
+                element={<Chat chatService={chatService} baseURL={baseURL} />}
               />
               <Route
                 path="/chat/:roomId"
-                element={
-                  username ? (
-                    <Chat
-                      chatService={chatService}
-                      username={username}
-                      baseURL={baseURL}
-                    />
-                  ) : (
-                    <Link to="/" />
-                  )
-                }
+                element={<Chat chatService={chatService} baseURL={baseURL} />}
               />
             </Routes>
           </BrowserRouter>
