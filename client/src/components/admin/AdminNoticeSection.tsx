@@ -114,7 +114,9 @@ function AdminNoticeList() {
             data.map((notice) => (
               <tr key={notice._id} className="text-center">
                 <td>{new Date(notice.createdAt).toLocaleString()}</td>
-                <td>{notice.title}</td>
+                <td>
+                  <a href={`/notices/${notice._id}`}>{notice.title}</a>
+                </td>
                 <td>{notice.writer.nickName}</td>
                 <td className="w-14">
                   <button

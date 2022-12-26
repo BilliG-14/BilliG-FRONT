@@ -3,6 +3,8 @@ import { apiReports, Notice } from 'components/admin/AdminNoticeSection';
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useParams } from 'react-router-dom';
+import MarkdownRenderer from '../components/MarkdownRenderer';
+import { createGlobalStyle } from 'styled-components';
 
 export default function ReadNotice() {
   const { id } = useParams();
@@ -43,7 +45,9 @@ export default function ReadNotice() {
               <p className="text-base mt-2">
                 {new Date(notice.createdAt).toLocaleDateString()}
               </p>
-              <p className="mt-16">{notice.content}</p>
+              <div className="mt-16 pb-32">
+                <MarkdownRenderer content={notice.content} />
+              </div>
             </div>
           )}
         </div>
