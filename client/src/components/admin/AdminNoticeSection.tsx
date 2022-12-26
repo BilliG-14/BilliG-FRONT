@@ -61,10 +61,6 @@ function AdminNoticeList() {
   const queryClient = useQueryClient();
   /*삭제할 공지 */
   const [targetNotice, setTargetNotice] = useState<Notice>();
-  const [isOpenModal, setOpenModal] = useState<boolean>(false);
-  const onClickToggleModal = useCallback(() => {
-    setOpenModal(!isOpenModal);
-  }, [isOpenModal]);
   //공지글 읽어오기
   const {
     isLoading,

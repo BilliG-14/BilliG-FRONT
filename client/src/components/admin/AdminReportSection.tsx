@@ -4,11 +4,19 @@ import { AxiosError } from 'axios';
 import ConfirmModal from 'components/Modal';
 import { useCallback, useState } from 'react';
 
-type Report = {
-  _id: string;
-  reporter: string;
-  target: string;
+export type Report = {
+  createdAt: string;
   details: string;
+  reporter: {
+    name: string;
+    _id: string;
+  };
+  target: {
+    name: string;
+    _id: string;
+  };
+  updatedAt: string;
+  _id: string;
 };
 /*Report CRUD */
 const endPoint = 'report';
@@ -23,11 +31,9 @@ const apiReports = {
 };
 export default function AdminReportSection() {
   const queryClient = useQueryClient();
-  const [isOpenModal, setOpenModal] = useState<boolean>(false);
-  const onClickToggleModal = useCallback(() => {
-    setOpenModal(!isOpenModal);
-  }, [isOpenModal]);
-  const { isLoading, data, isError } = useQuery<any[], AxiosError>(
+  //신고내역 선택
+  const [targetReport, setTargetReport] = useState<Report>();
+  const { isLoading, data, isError } = useQuery<Report[], AxiosError>(
     ['reports'],
     apiReports.GET,
     {
@@ -77,24 +83,24 @@ export default function AdminReportSection() {
               <td className="w-14">
                 <button
                   className="border-red-400 border-solid border-2 w-12 rounded-lg h-7 leading-7 text-red-400 after:content-['삭제'] shadow-lg hover:bg-red-400 hover:text-white"
-                  onClick={() => setOpenModal(!isOpenModal)}
+                  onClick={() => setTargetReport(report)}
                 ></button>
               </td>
-              {isOpenModal && (
-                <ConfirmModal
-                  title={`${report.reporter.name}님의 신고내역을 삭제하시겠습니까?`}
-                  yesColor="red-400"
-                  yesText="삭제"
-                  onClickToggleModal={onClickToggleModal}
-                  onClickYes={() => {
-                    deleteMutation.mutate(report._id);
-                  }}
-                />
-              )}
             </tr>
           ))}
         </tbody>
       </table>
+      {targetReport && (
+        <ConfirmModal
+          title={`${targetReport.reporter.name}님의 ${targetReport.target.name}신고내역을 삭제하시겠습니까?`}
+          yesColor="red-400"
+          yesText="삭제"
+          onClickToggleModal={() => setTargetReport(undefined)}
+          onClickYes={() => {
+            deleteMutation.mutate(targetReport._id);
+          }}
+        />
+      )}
     </section>
   );
 }
