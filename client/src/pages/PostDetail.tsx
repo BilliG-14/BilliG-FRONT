@@ -7,9 +7,11 @@ import { PostDataType } from '../store/PostReadStore';
 // import TradeWayTag from '../components/tag/TradeWayTag';
 import { FaPeopleArrows } from 'react-icons/fa';
 import { GoPackage } from 'react-icons/go';
+import { MdLocationOn } from 'react-icons/md';
 import api from './../api/customAxios';
 import LendButtons from '../components/postDetail/LendButtons';
 import BorrowButtons from '../components/postDetail/BorrowButtons';
+import Map from 'components/postDetail/Map';
 
 export default function PostDetail() {
   const navigate = useNavigate();
@@ -78,8 +80,12 @@ export default function PostDetail() {
   return (
     <div className="max-w-screen-lg mx-auto">
       <div className="flex flex-col justify-center mx-auto text-b-text-black">
-        <div className="mb-6 text-3xl">
-          {postData?.postType === 'lend' ? '빌려주기' : '빌리기'}
+        <div className="mb-6 text-3xl font-bold">
+          {postData?.postType === 'lend' ? (
+            <Link to="/submain/lend">빌려주기</Link>
+          ) : (
+            <Link to="/submain/borrow">빌리기</Link>
+          )}
         </div>
         {!postData ? (
           <div className="h-[500px] text-center text-sm mt-10">
@@ -90,8 +96,21 @@ export default function PostDetail() {
             {/* 상단 정보(카테고리, 작성일) */}
             <section className="max-w-screen-lg flex justify-between mb-4">
               <div className="text-sm text-b-text-darkgray ml-4">
-                {postData?.postType === 'lend' ? '빌려주기' : '빌리기'} {'>'}{' '}
-                {postData?.category.name}
+                {postData?.postType === 'lend' ? (
+                  <Link to="/submain/lend">빌려주기</Link>
+                ) : (
+                  <Link to="/submain/borrow">빌리기</Link>
+                )}{' '}
+                {'>'}{' '}
+                {postData?.postType === 'lend' ? (
+                  <Link to={`/products/lend/${postData?.category._id}`}>
+                    {postData?.category.name}
+                  </Link>
+                ) : (
+                  <Link to={`/products/borrow/${postData?.category._id}`}>
+                    {postData?.category.name}
+                  </Link>
+                )}
               </div>
               <div className="text-xs text-b-text-darkgray mr-4">
                 작성시간{' '}
@@ -107,7 +126,7 @@ export default function PostDetail() {
             </section>
 
             {/* 게시글 header - 기본 정보들 */}
-            <section className="flex justify-between mb-4 ">
+            <section className="flex justify-around my-4">
               <div>
                 <img
                   src={
@@ -126,7 +145,7 @@ export default function PostDetail() {
                       onMouseOver={changeMainImg}
                       key={idx}
                       src={url}
-                      className="w-16 h-16 mt-2 border border-solid border-gray-300"
+                      className="w-16 h-16 mt-3 border border-solid border-gray-300"
                       alt="원하는 제품 사진"
                     />
                   ))}
@@ -136,7 +155,7 @@ export default function PostDetail() {
               {/* 상품 기본정보 */}
               <div className="flex flex-col justify-between w-[450px] h-[410px] pt-3 mr-4">
                 <div className="text-left">
-                  <div className="text-3xl">{postData?.title}</div>
+                  <div className="text-3xl font-bold">{postData?.title}</div>
                   <div className="flex">
                     {postData?.hashtag.map((tag, idx) => {
                       return (
@@ -156,7 +175,12 @@ export default function PostDetail() {
                     <div className="text-sm text-b-text-darkgray w-24 text-left">
                       요금
                     </div>
-                    <div>{postData?.price.priceDay.toLocaleString()} 원/일</div>
+                    <div className="flex items-end align-bottom">
+                      <div className="text-lg leading-none font-semibold">
+                        {postData?.price.priceDay.toLocaleString()} 원
+                      </div>
+                      <div className="text-[14px]">&nbsp;/ 일</div>
+                    </div>
                   </div>
                   <hr className="hr-1 my-4"></hr>
                   {postData?.postType === 'lend' ? null : (
@@ -181,8 +205,8 @@ export default function PostDetail() {
                       {/* <TradeWayTag tradeWay={borrowData?.tradeWay} /> */}
                       <div
                         className={`${
-                          postData?.tradeWay.direct ? 'bg-b-tag-dir' : ''
-                        } item_tag inline-flex text-b-hash-text p-[5px] rounded-lg font-extrabold my-auto mr-2`}
+                          postData?.tradeWay.direct ? 'bg-b-tag-dir' : null
+                        } item_tag inline-flex text-b-hash-text p-[5px] rounded-lg font-extrabold my-auto`}
                       >
                         {postData?.tradeWay.direct ? (
                           <FaPeopleArrows className="mr-1 text-sm" />
@@ -191,13 +215,15 @@ export default function PostDetail() {
                         )}
 
                         <span className="text-xs">
-                          {postData?.tradeWay.direct ? '직거래' : ''}
+                          {postData?.tradeWay.direct ? '직거래' : null}
                         </span>
                       </div>
                       <div
                         className={`${
-                          postData?.tradeWay.delivery ? 'bg-b-tag-pack' : ''
-                        } item_tag inline-flex text-b-hash-text p-[5px] rounded-lg font-extrabold my-auto`}
+                          postData?.tradeWay.delivery
+                            ? 'bg-b-tag-pack item_tag inline-flex text-b-hash-text p-[5px] rounded-lg font-extrabold my-auto ml-2'
+                            : null
+                        }`}
                       >
                         {postData?.tradeWay.delivery ? (
                           <GoPackage className="mr-1 text-sm" />
@@ -206,7 +232,7 @@ export default function PostDetail() {
                         )}
 
                         <span className="text-xs">
-                          {postData?.tradeWay.delivery ? '택배거래' : ''}
+                          {postData?.tradeWay.delivery ? '택배거래' : null}
                         </span>
                       </div>
                     </div>
@@ -264,28 +290,37 @@ export default function PostDetail() {
             {/* 게시글 main - 상세 정보들 */}
             <br />
             <section>
-              <div>상세정보</div>
-              <div className="w-full h-40 mt-3 p-3 rounded-lg">
+              <div className="font-semibold text-lg">상세정보</div>
+              <div className="w-full h-40 mt-3 mb-12 p-3 rounded-lg">
                 {postData?.description}
               </div>
-              <br />
-              <br />
-              <br />
-              <div>위치</div>
-              <div className="w-full h-96 mt-3 rounded-lg ">
-                지도 나타나는 곳
+              <div className="flex items-end gap-7">
+                <div className="font-semibold text-lg leading-none">위치</div>
+
+                <div className="flex text-sm leading-none items-end">
+                  <MdLocationOn className="w-5 h-5 mr-1 text-b-yellow" />
+                  {postData?.author.address1}
+                </div>
               </div>
-              <br />
-              <br />
-              <br />
+              <div className="my-3 p-3">
+                <Map address={postData?.author.address1} />
+              </div>
               <Caution />
             </section>
 
             {/* 게시글 footer - 목록/수정/삭제 button (게시글의 작성자일때만 수정/삭제 버튼이 보임) */}
             <section className="flex justify-between my-5">
-              <button className="text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 font-medium rounded-lg text-sm px-3 py-1.5   transition duration-100">
-                목록
-              </button>
+              <Link
+                to={
+                  postData?.postType === 'lend'
+                    ? '/submain/lend'
+                    : '/submain/borrow'
+                }
+              >
+                <button className="text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 font-medium rounded-lg text-sm px-3 py-1.5   transition duration-100">
+                  목록
+                </button>
+              </Link>
               {LoginUserId === postData?.author._id ? (
                 <div>
                   <button

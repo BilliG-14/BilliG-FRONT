@@ -30,12 +30,20 @@ import MyLendDoneListPage from './pages/MyLendDoneListPage';
 import MyBrorowDoneListPage from './pages/MyBrorowDoneListPage';
 import Notices from 'pages/Notices';
 import ReadNotice from 'pages/Notice';
+import NotFound from 'components/NotFound';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
 `;
 
 const queryClient = new QueryClient();
+
+// 지도 관련 설정
+declare global {
+  interface Window {
+    kakao: any;
+  }
+}
 
 function App() {
   const {
@@ -130,6 +138,7 @@ function App() {
                 path="/products/borrow/:categoryId"
                 element={<ProductsList postType="borrow" />}
               />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
         </div>
