@@ -4,17 +4,22 @@ export default function NotFound() {
   return (
     <div className="w-screen max-w-screen-lg mx-auto my-60">
       <div>
-        <img
-          src="../../billig.png"
-          alt="billig logo"
-          className="w-[25%] mx-auto"
-        />
-        {/* <div className="relative left-[600px]"></div> */}
+        <div className="relative">
+          <img
+            src="../../billig.png"
+            alt="billig logo"
+            className="w-[25%] mx-auto opacity-60"
+          />
+
+          <div className="absolute text-5xl font-black text-b-text-black top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+            404 Not Found
+          </div>
+        </div>
         <div className="">
           <div className="text-lg leading-7 text-center p-4">
             헉! <br />
             잘못된 접근입니다
-            <div className="text-sm mt-2">URL을 다시 확인해주세요.</div>
+            <div className="text-sm">URL을 다시 확인해주세요.</div>
           </div>
 
           <div className="text-center p-4">
