@@ -15,11 +15,11 @@ function Chat({ chatService, baseURL }: any) {
     setUserInfoData();
   }, []);
   return (
-    <div className="flex">
+    <div className="flex max-w-screen-lg mx-auto">
       <div className="w-1/5">
         <SidePanel key={userInfo && true} user={userInfo} />
       </div>
-      <div className="w-full">
+      <div className="w-4/5">
         <MainPanel key={userInfo && true} user={userInfo} />
       </div>
     </div>

@@ -34,9 +34,10 @@ function MainPanel({ user }: any) {
       sendMessage(textRef.current.value, currentRoom);
     }
     formRef?.current?.reset();
-    scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
-
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
+  });
   useEffect(() => {
     socket.on(
       `message${currentRoom}`,
@@ -56,11 +57,14 @@ function MainPanel({ user }: any) {
     <div className="pr-10 h-full w-full">
       {currentRoom ? (
         <div className="h-full w-full ">
-          <div className="bg-gray-300 w-full h-3/5 border-solid outline-2 border-slate-200 rounded p-4 mb-4 overflow-auto">
+          <div className="bg-white w-full h-4/5 border-solid outline-2 border-slate-200 rounded p-4 overflow-auto">
             {messages.map(({ sender, message }, idx) => {
               return (
                 <h6 key={idx}>
-                  {sender} <span className="text-lg text-black">{message}</span>
+                  {sender}{' '}
+                  <span className="text-lg text-black bg-b-yellow">
+                    {message}
+                  </span>
                 </h6>
               );
             })}
@@ -68,15 +72,15 @@ function MainPanel({ user }: any) {
             <div ref={scrollRef} />
           </div>
 
-          <div className="bg-red-300 h-1/5 w-full">
+          <div className="bg-b-bg-gray h-1/5 w-full">
             <form
               ref={formRef}
-              className=" w-full h-full inputform"
+              className=" w-full h-full inputform p-8 pt-2"
               onSubmit={onSubmit}
             >
               <input
                 ref={textRef}
-                className="w-4/5 h-1/4 textInput"
+                className="w-11/12 h-1/5 textInput outline outline-1 outline-slate-200 rounded-3xl p-2 pl-5"
                 type="text"
               />
             </form>

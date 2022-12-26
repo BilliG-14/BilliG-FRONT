@@ -1,6 +1,6 @@
-// import React, { useState, useEffect } from 'react';
-// import { FaRegSmileWink } from 'react-icons/fa';
-// import { FaPlus } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
+import { FaRegSmileWink } from 'react-icons/fa';
+import { FaPlus } from 'react-icons/fa';
 
 // interface ChatMessageType {
 //   message?: string;
@@ -58,21 +58,27 @@ function ChatRoomList() {
   //         </span>
   //       </li>
   //     ));
-  //   return (
-  //     <div>
-  //       <div className="relative w-full flex items-center">
-  //         <FaRegSmileWink className="mr-3" />
-  //         CHAT ROOMS
-  //         {/* ({chatRooms.length}) */}
-  //         <FaPlus
-  //           //   onClick={handleShow}
-  //           className="absolute right-0 cursor-pointer"
-  //         />
-  //         {/** 채팅방 목록 렌더링 */}
-  //         <ul className="list-none p-0">{renderChatRooms(chatRooms)}</ul>
-  //       </div>
-  //     </div>
-  //   );
+  return (
+    <div className="mt-5 px-2">
+      <div className="relative w-full flex flex-col">
+        <FaRegSmileWink className="mr-3 text-2xl mb-2" />
+        CHAT ROOMS
+        {/* ({chatRooms.length}) */}
+        <FaPlus
+          //   onClick={handleShow}
+          className="absolute right-0 cursor-pointer text-2xl"
+        />
+        {/** 채팅방 목록 렌더링 */}
+        <ul className="mt-2 list-none p-0">
+          <li className="mt-2">엉터리생고기님의 대화방</li>
+          <li className="mt-2">낙지마당님의 대화방</li>
+          <li className="mt-2">달려라메시님의 대화방</li>
+          <li className="mt-2">주님의 대화방</li>
+        </ul>
+        {/* <ul className="list-none p-0">{renderChatRooms(chatRooms)}</ul> */}
+      </div>
+    </div>
+  );
 }
 
 export default ChatRoomList;
