@@ -12,6 +12,7 @@ import api from './../api/customAxios';
 import LendButtons from '../components/postDetail/LendButtons';
 import BorrowButtons from '../components/postDetail/BorrowButtons';
 import Map from 'components/postDetail/Map';
+import Loading from 'components/Loading';
 
 export default function PostDetail() {
   const navigate = useNavigate();

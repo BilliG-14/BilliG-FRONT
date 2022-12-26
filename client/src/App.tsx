@@ -30,6 +30,7 @@ import MyBrorowDoneListPage from './pages/MyBrorowDoneListPage';
 import Notices from 'pages/Notices';
 import ReadNotice from 'pages/Notice';
 import NotFound from 'components/NotFound';
+import Loading from 'components/Loading';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -81,8 +82,7 @@ function App() {
     setIsLoadingTrue();
   }, [isLogin]);
 
-  if ((!isLoading && !isLogin) || (!isLoading && isLogin))
-    return <p>loading....</p>;
+  if ((!isLoading && !isLogin) || (!isLoading && isLogin)) return <Loading />;
 
   return (
     <React.Fragment>
@@ -137,6 +137,7 @@ function App() {
                 path="/products/borrow/:categoryId"
                 element={<ProductsList postType="borrow" />}
               />
+              <Route path="/loading" element={<Loading />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>

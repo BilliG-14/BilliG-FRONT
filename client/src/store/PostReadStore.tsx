@@ -1,4 +1,5 @@
 export interface PostDataType {
+  _id: string;
   imgUrl: string[];
   postType: string;
   category: {
