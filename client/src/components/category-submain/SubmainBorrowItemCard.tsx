@@ -30,7 +30,7 @@ export default function SubmainBorrowItemCard({
             {title}
           </p>
           <p className="category mb-1 font-semibold text-sm">
-            {`${period.start} ~ ${period.end} `}
+            {`${period.start} ~ ${period.end}`}
           </p>
           <p className="category mb-1 text-b-text-darkgray text-sm">
             {categoryName}
