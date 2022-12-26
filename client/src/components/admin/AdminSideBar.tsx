@@ -12,7 +12,7 @@ export default function AdminSideBar() {
     showCategory,
   } = useAdminPageStore();
   return (
-    <div className="w-1/5 h-full p-4 bg-b-bg-gray select-none">
+    <div className="w-1/5 h-[930px] p-4 bg-b-bg-gray select-none">
       <div className="menu_box mb-7">
         <p className="items-center justify-center text-xl font-extrabold mb-1">
           회원 관리
@@ -43,11 +43,6 @@ export default function AdminSideBar() {
           <li className="h-10 flex items-center justify-start">
             <a href="#!" onClick={() => showNotice()}>
               <p className="items-center justify-center">공지 사항</p>
-            </a>
-          </li>
-          <li className="h-10 flex items-center justify-start">
-            <a href="#!" onClick={() => showHashTag()}>
-              <p className="items-center justify-center">추천 태그</p>
             </a>
           </li>
           <li className="h-10 flex items-center justify-start">
