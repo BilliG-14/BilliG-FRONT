@@ -28,8 +28,8 @@ export default function Notices() {
         <div className="text-3xl font-extrabold ml-10 mt-10">
           <p>공지사항</p>
         </div>
-        <div className="ml-10 mt-16">
-          <table className="w-full border-y border-solid border-b-text-gray">
+        <div className="ml-10 mt-16 border-y border-solid border-b-text-gray">
+          <table className="w-full">
             <tbody className="text-b-text-black">
               {notices &&
                 notices.map((notice) => (

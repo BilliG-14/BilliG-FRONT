@@ -36,9 +36,9 @@ export default function ConfirmModal(props: ConfirmModalProps) {
     props.onClickToggleModal();
   };
   return (
-    <div className="w-screen h-screen flex justify-center items-center fixed top-0 left-0 text-b-text-black">
+    <div className="w-screen h-screen flex justify-center items-center fixed top-0 left-0 text-b-text-black break-keep">
       <div className="w-[400px] flex flex-col bg-white fixed rounded-xl shadow-2xl z-50 animate-fade-in-150ms">
-        <div className="h-12 border-b border-solid border-gray-200 flex items-center justify-center">
+        <div className="py-3 px-3 border-b border-solid border-gray-200 flex items-center justify-center">
           <span className="font-bold text-lg">{props.title}</span>
         </div>
         {props.content && (
