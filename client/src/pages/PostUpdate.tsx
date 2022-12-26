@@ -17,7 +17,7 @@ import HashTagSection from '../components/postWrite/HashTag';
 import ImageUpload from '../components/postWrite/ImageUpload';
 import TradeWay from '../components/postWrite/TradeWay';
 import ReservationDate from './../components/postWrite/ReservationDate';
-import { PostDataType } from './../store/PostReadStore';
+import { PostDataType, ServerHashTags } from './../store/PostReadStore';
 import Category from 'components/postWrite/Category';
 import UpdatedImageUpload from 'components/postWrite/UpdatedImageUpload';
 
@@ -59,7 +59,10 @@ export default function PostUpdate() {
         data?.data[0].tradeWay.direct,
         data?.data[0].tradeWay.delivery,
       );
-      serverHashTags(data?.data[0].hashtag);
+      data?.data[0].hashtag.map((tag: ServerHashTags) => {
+        serverHashTags(tag.name);
+      });
+
       setReservationDate(data?.data[0].period.start, data?.data[0].period.end);
     },
     onError: (err) => console.log('데이터 가져오기 에러', err),
