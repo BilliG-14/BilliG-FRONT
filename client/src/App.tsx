@@ -28,6 +28,7 @@ import MyLendDealListPage from './pages/MyLendDealListPage';
 import MyBorrowDealListPage from './pages/MyBorrowDealListPage';
 import MyLendDoneListPage from './pages/MyLendDoneListPage';
 import MyBrorowDoneListPage from './pages/MyBrorowDoneListPage';
+import NotFound from 'components/NotFound';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -133,6 +134,7 @@ function App() {
                 path="/products/borrow/:categoryId"
                 element={<ProductsList postType="borrow" />}
               />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
         </div>

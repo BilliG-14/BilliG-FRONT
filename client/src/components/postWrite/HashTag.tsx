@@ -27,8 +27,6 @@ export default function HashTagSection() {
       setHashTagInputText('');
     }
   }
-  console.log(hashTagInputText);
-  console.log(hashTags);
 
   // 해시태그 클릭 시 삭제
   function deleteHashTag(e: React.MouseEvent<HTMLDivElement>) {
