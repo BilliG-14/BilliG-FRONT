@@ -11,6 +11,7 @@ const socket = io('http://34.64.44.34:3003/chat', {
 const baseURL = 'http://34.64.44.34:3003/';
 
 function MainPanel({ user }: any) {
+  const scrollRef = useRef<HTMLInputElement>(null);
   const [messages, setMessages] = useState<MessageInterface[]>([]);
   const [currentRoom, setCurrentRoom] = useState('');
   const formRef = useRef<HTMLFormElement | null>(null);
@@ -33,6 +34,7 @@ function MainPanel({ user }: any) {
       sendMessage(textRef.current.value, currentRoom);
     }
     formRef?.current?.reset();
+    scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   useEffect(() => {
@@ -44,6 +46,7 @@ function MainPanel({ user }: any) {
         setMessages([...messages, { sender: name, message }]);
       },
     );
+
     // socket.on('users', (room: any) => {
     //   setUsers(room);
     // });
@@ -57,12 +60,14 @@ function MainPanel({ user }: any) {
             {messages.map(({ sender, message }, idx) => {
               return (
                 <h6 key={idx}>
-                  {sender}{' '}
-                  <span className="text-xs text-slate-400">{message}</span>
+                  {sender} <span className="text-lg text-black">{message}</span>
                 </h6>
               );
             })}
+            {/**  스크롤이 내려갈 자리, node는 div를 가리킴 */}
+            <div ref={scrollRef} />
           </div>
+
           <div className="bg-red-300 h-1/5 w-full">
             <form
               ref={formRef}
