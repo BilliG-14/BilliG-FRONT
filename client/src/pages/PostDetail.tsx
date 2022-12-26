@@ -163,7 +163,7 @@ export default function PostDetail() {
                           key={idx}
                           className="text-[10px] mt-2 mr-1 p-1.5 bg-gray-200 rounded-lg"
                         >
-                          {tag}
+                          {tag.name}
                         </div>
                       );
                     })}
