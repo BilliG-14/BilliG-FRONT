@@ -65,7 +65,7 @@ export default function Carousels() {
           alt="insurance"
           className="w-full cursor-pointer"
           onClick={() => {
-            navigate('/notices');
+            navigate('/notices/63a99800bceda7b05ae793de');
           }}
         />
         <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
