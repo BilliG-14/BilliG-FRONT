@@ -13,13 +13,12 @@ import SubmainLend from './pages/SubmainLend';
 import PostDetail from './pages/PostDetail';
 import Search from './pages/Search';
 import MyPage from './pages/MyPage';
-import MyGivePostListPage from './pages/MyGivePostListPage';
+import MyLendPostListPage from './pages/MyLendPostListPage';
 import MyBorrowPostListPage from './pages/MyBorrowPostListPage';
 import ScrollToTop from 'components/ScrollToTop';
 import { useIsLoginStore } from 'store/LoginJoinStore';
 import api from './api/customAxios';
 import MyPageEdit from './pages/MyPageEdit';
-import Nav from 'components/nav/Nav';
 import UserInformation from 'pages/UserInformation';
 import PostUpdate from './pages/PostUpdate';
 import SubmainBorrow from './pages/SubmainBorrow';
@@ -105,9 +104,9 @@ function App() {
               <Route path="/read/:id" element={<PostDetail />} />
               <Route path="/update/:id" element={<PostUpdate />} />
               <Route path="/mypage" element={<MyPage />} />
-              <Route path="/mypage/givelist" element={<MyGivePostListPage />} />
               <Route path="/notices" element={<Notices />} />
               <Route path="/notices/:id" element={<ReadNotice />} />
+              <Route path="/mypage/givelist" element={<MyLendPostListPage />} />
               <Route
                 path="/mypage/borrowlist"
                 element={<MyBorrowPostListPage />}

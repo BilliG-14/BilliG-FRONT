@@ -5,7 +5,7 @@ import MyLendPostList from '../components/myinfo/MyLendPostList';
 import { useIsLoginStore } from 'store/LoginJoinStore';
 import TrueNav from '../components/nav/TrueNav';
 
-export default function MyGivePostListPage() {
+export default function MyLendPostListPage() {
   const { isLogin } = useIsLoginStore();
   return (
     <div className="h-full w-screen max-w-screen-lg m-auto">

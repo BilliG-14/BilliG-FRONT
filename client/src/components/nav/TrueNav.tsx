@@ -35,7 +35,6 @@ function TrueNav() {
     },
     {
       refetchOnWindowFocus: false,
-      staleTime: 60 * 1000 * 5,
       onSuccess: (data) => {
         console.log(data);
       },
