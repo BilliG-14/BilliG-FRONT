@@ -59,26 +59,29 @@ export const apiReports = {
 function AdminNoticeList() {
   /*react-query */
   const queryClient = useQueryClient();
+  /*삭제할 공지 */
+  const [targetNotice, setTargetNotice] = useState<Notice>();
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const onClickToggleModal = useCallback(() => {
     setOpenModal(!isOpenModal);
   }, [isOpenModal]);
-  const { isLoading, data, isError } = useQuery<Notice[], AxiosError>(
-    ['notices'],
-    apiReports.GETALL,
-    {
-      refetchOnWindowFocus: false,
-      retry: 0,
-      staleTime: 60 * 1000 * 60,
-      onSuccess: (_data) => {
-        // 성공시 호출
-        console.log(_data);
-      },
-      onError: (e: Error) => {
-        console.log(e.message);
-      },
+  //공지글 읽어오기
+  const {
+    isLoading,
+    data: notices,
+    isError,
+  } = useQuery<Notice[], AxiosError>(['notices'], apiReports.GETALL, {
+    refetchOnWindowFocus: false,
+    retry: 0,
+    staleTime: 60 * 1000 * 60,
+    onSuccess: (_data) => {
+      // 성공시 호출
+      console.log(_data);
     },
-  );
+    onError: (e: Error) => {
+      console.log(e.message);
+    },
+  });
   const updateMutation = useMutation(apiReports.UPDATE, {
     onSuccess: (_data) => {
       console.log(_data);
@@ -109,39 +112,48 @@ function AdminNoticeList() {
             <th>삭제</th>
           </tr>
         </thead>
-        <tbody className="font-semibold">
-          {data &&
-            data.map((notice) => (
+        <tbody className="font-semibold break-keep">
+          {notices &&
+            notices.map((notice) => (
               <tr key={notice._id} className="text-center">
-                <td>{new Date(notice.createdAt).toLocaleString()}</td>
-                <td>
-                  <a href={`/notices/${notice._id}`}>{notice.title}</a>
+                <td className="w-36 py-2">
+                  {new Date(notice.createdAt).toLocaleDateString()}
                 </td>
-                <td>{notice.writer.nickName}</td>
-                <td className="w-14">
+                <td className="py-2">
+                  <a
+                    href={`/notices/${notice._id}`}
+                    className="hover:text-b-yellow font-bold"
+                  >
+                    {notice.title}
+                  </a>
+                </td>
+                <td className="w-36 py-2">{notice.writer.nickName}</td>
+                <td className="w-14 py-2">
                   <button
                     className="border-red-400 border-solid border-2 w-12 rounded-lg h-7 leading-7 text-red-400 after:content-['삭제'] shadow-lg hover:bg-red-400 hover:text-white"
-                    onClick={() => setOpenModal(!isOpenModal)}
+                    onClick={() => setTargetNotice(notice)}
                   ></button>
                 </td>
-                {isOpenModal && (
-                  <ConfirmModal
-                    title={`${notice.title} 공지를 삭제하시겠습니까?`}
-                    yesColor="red-400"
-                    yesText="삭제"
-                    onClickToggleModal={onClickToggleModal}
-                    onClickYes={() => {
-                      deleteMutation.mutate(notice._id);
-                      if (deleteMutation.isError) {
-                        alert(deleteMutation.error);
-                      }
-                    }}
-                  />
-                )}
               </tr>
             ))}
         </tbody>
       </table>
+      {targetNotice && (
+        <ConfirmModal
+          title={`${targetNotice.title} 공지를 삭제하시겠습니까?`}
+          yesColor="red-400"
+          yesText="삭제"
+          onClickToggleModal={() => {
+            setTargetNotice(undefined);
+          }}
+          onClickYes={() => {
+            deleteMutation.mutate(targetNotice._id);
+            if (deleteMutation.isError) {
+              alert(deleteMutation.error);
+            }
+          }}
+        />
+      )}
     </section>
   );
 }
