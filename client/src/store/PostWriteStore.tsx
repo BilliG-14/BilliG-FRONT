@@ -105,7 +105,7 @@ export const tradeWayStore = create<TradeWayState>((set) => ({
 interface HashTagState {
   hashTagInputText: string;
   hashTags: string[];
-  setHashTag: (text: string) => void;
+  setHashTags: (text: string) => void;
   setHashTagInputText: (text: string) => void;
   deleteHashTags: (newTags: string[]) => void;
   serverHashTags: (tagList: string[]) => void;
@@ -115,7 +115,7 @@ export const hashTagStore = create<HashTagState>((set) => ({
   hashTagInputText: '',
   hashTags: [],
   setHashTagInputText: (text) => set(() => ({ hashTagInputText: text })),
-  setHashTag: (hashTagInputText) =>
+  setHashTags: (hashTagInputText) =>
     set((state) => ({
       hashTags: [...state.hashTags, hashTagInputText.trim()],
     })),
