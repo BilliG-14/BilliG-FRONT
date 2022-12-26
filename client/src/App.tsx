@@ -137,7 +137,6 @@ function App() {
                 path="/products/borrow/:categoryId"
                 element={<ProductsList postType="borrow" />}
               />
-              <Route path="/loading" element={<Loading />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
