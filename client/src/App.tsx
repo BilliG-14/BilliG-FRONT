@@ -28,6 +28,8 @@ import MyLendDealListPage from './pages/MyLendDealListPage';
 import MyBorrowDealListPage from './pages/MyBorrowDealListPage';
 import MyLendDoneListPage from './pages/MyLendDoneListPage';
 import MyBrorowDoneListPage from './pages/MyBrorowDoneListPage';
+import Notices from 'pages/Notices';
+import ReadNotice from 'pages/Notice';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -96,6 +98,8 @@ function App() {
               <Route path="/update/:id" element={<PostUpdate />} />
               <Route path="/mypage" element={<MyPage />} />
               <Route path="/mypage/givelist" element={<MyGivePostListPage />} />
+              <Route path="/notices" element={<Notices />} />
+              <Route path="/notices/:id" element={<ReadNotice />} />
               <Route
                 path="/mypage/borrowlist"
                 element={<MyBorrowPostListPage />}

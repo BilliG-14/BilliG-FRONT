@@ -35,6 +35,11 @@ export const apiReports = {
     const { data } = await api.get(`/${endPoint}`);
     return data;
   },
+  GETONE: (id: string | undefined) => async () => {
+    const { data } = await api.get(`/${endPoint}/${id}`);
+    return data;
+  },
+
   CREATE: async (newNotice: CreatedNotice) => {
     const { data } = await api.post(`/${endPoint}`, newNotice);
     return data;
@@ -62,8 +67,8 @@ function AdminNoticeList() {
     ['notices'],
     apiReports.GETALL,
     {
-      refetchOnWindowFocus: false, // react-query는 사용자가 사용하는 윈도우가 다른 곳을 갔다가 다시 화면으로 돌아오면 이 함수를 재실행합니다. 그 재실행 여부 옵션 입니다.
-      retry: 0, // 실패시 재호출 몇번 할지
+      refetchOnWindowFocus: false,
+      retry: 0,
       staleTime: 60 * 1000 * 60,
       onSuccess: (_data) => {
         // 성공시 호출
