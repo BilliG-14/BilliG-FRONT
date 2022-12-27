@@ -54,10 +54,8 @@ export default function ChangePawsswordForm() {
         currentPassword,
         newPassword,
       });
-      console.log(change);
       onClickSuccessToggleModal();
     } catch (error) {
-      console.log(error);
       onClickFailToggleModal();
     }
   };

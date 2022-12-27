@@ -6,7 +6,6 @@ export default function CategoryNav() {
   const { isLoading, data: categories } = useQuery(
     ['categories'],
     async () => {
-      console.log('fetching...');
       return axios.get(
         'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/category',
       );
