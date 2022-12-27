@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import api from 'api/customAxios';
 import { AxiosError } from 'axios';
+import Loading from 'components/Loading';
 import ConfirmModal from 'components/Modal';
 import { useCallback, useRef, useState } from 'react';
 
@@ -87,7 +88,7 @@ export default function AdminCategorySection() {
     },
     [updateMutation],
   );
-
+  if (isLoading) return <Loading />;
   return (
     <section className="w-full text-b-text-black p-2">
       <div className="w-2/3 mx-auto mt-12">
@@ -115,9 +116,7 @@ export default function AdminCategorySection() {
         </div>
         <div className="flex mt-8">
           <div className="w-1/2 pl-4 text-lg font-bold ">
-            {isLoading ? (
-              <p>Loading...</p>
-            ) : isError ? (
+            {isError ? (
               <p>카테고리를 불러오지 못했습니다</p>
             ) : (
               <ul>

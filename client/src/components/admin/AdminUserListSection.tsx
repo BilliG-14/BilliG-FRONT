@@ -2,6 +2,7 @@ import { AxiosError } from 'axios';
 import { useQuery } from '@tanstack/react-query';
 import api from 'api/customAxios';
 import useAdminPageStore from 'store/AdminPageStore';
+import Loading from 'components/Loading';
 type User = {
   _id: string;
   email?: string;
@@ -37,7 +38,7 @@ export default function AdminUserListSection() {
     },
   );
   if (isLoading) {
-    return <p>loading...</p>;
+    return <Loading />;
   }
   if (isError) {
     return <p>데이터를 불러오지 못했습니다</p>;

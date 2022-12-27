@@ -2,6 +2,7 @@ import Nav from 'components/nav/Nav';
 import { apiReports, Notice } from 'components/admin/AdminNoticeSection';
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
+import Loading from 'components/Loading';
 
 export default function Notices() {
   const {
@@ -13,6 +14,7 @@ export default function Notices() {
     retry: 0,
     staleTime: 60 * 1000 * 60,
   });
+  if (isLoading) return <Loading />;
   return (
     <div className="w-screen m-auto">
       <div className="max-w-screen-lg mx-auto">

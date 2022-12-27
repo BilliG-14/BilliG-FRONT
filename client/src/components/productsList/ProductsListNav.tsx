@@ -1,49 +1,21 @@
-import { useQuery } from '@tanstack/react-query';
-import { Dispatch, SetStateAction } from 'react';
-import api from 'api/customAxios';
-import { useNavigate } from 'react-router-dom';
+import { CategoryType } from 'store/PostWriteStore';
 
 type NavProps = {
   postType: string;
-  currentCategoryId: string;
-  setCategoryName: Dispatch<SetStateAction<string>>;
-  setPage: Dispatch<SetStateAction<number>>;
+  categories: CategoryType[];
 };
 export default function ProductsListNav(props: NavProps) {
-  const { postType, currentCategoryId, setCategoryName, setPage } = props;
-  const navigate = useNavigate();
-  const { isLoading, data: categories } = useQuery(
-    ['categories'],
-    async () => {
-      return api.get('/category');
-    },
-    { refetchOnWindowFocus: false, staleTime: 60 * 1000 * 60 },
-  );
-
-  if (isLoading) return <p>Loading..</p>;
-  if (categories) {
-    const currentCategory = categories.data.find(
-      (category: { _id: string; name: string }) =>
-        category._id === currentCategoryId,
-    );
-    currentCategory && setCategoryName(currentCategory.name);
-  }
+  const { postType, categories } = props;
   return (
     <nav className="flex max-w-screen-lg h-16 border-b-2 border-solid border-gray-500 m-auto">
       <ul className="flex space-x-10 text-center items-center m-auto text-xl font-extrabold">
-        {categories?.data.map((category: { _id: string; name: string }) => {
+        {categories.map((category) => {
           return (
             <li
               key={category._id}
               className="hover:text-b-yellow hover:scale-125 ease-out duration-300"
             >
-              <a
-                href="#!"
-                onClick={() => {
-                  setPage(1);
-                  navigate(`/products/${postType}/${category._id}`);
-                }}
-              >
+              <a href={`/products/${postType}/${category._id}`}>
                 {category.name}
               </a>
             </li>
