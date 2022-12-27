@@ -1,6 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
 import './MenuButton.css';
-import billig from '../../../public/img/billig_black.svg';
 
 const MenuButton = () => {
   const navigate = useNavigate();
