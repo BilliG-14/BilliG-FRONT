@@ -35,7 +35,7 @@ export default function PostDetail() {
   // post 삭제하기, useMutate 정의
   const deleteData = useMutation(() => api.delete(`/product/${id}`), {
     onSuccess: () => {
-      navigate('/submain/lend');
+      navigate('/submain');
     },
     onError: (error) => {
       console.log(error);
@@ -82,7 +82,7 @@ export default function PostDetail() {
       <div className="flex flex-col justify-center mx-auto text-b-text-black">
         <div className="mb-6 text-3xl font-bold">
           {postData?.postType === 'lend' ? (
-            <Link to="/submain/lend">빌려주기</Link>
+            <Link to="/submain">빌려주기</Link>
           ) : (
             <Link to="/submain/borrow">빌리기</Link>
           )}
@@ -97,7 +97,7 @@ export default function PostDetail() {
             <section className="max-w-screen-lg flex justify-between mb-4">
               <div className="text-sm text-b-text-darkgray ml-4">
                 {postData?.postType === 'lend' ? (
-                  <Link to="/submain/lend">빌려주기</Link>
+                  <Link to="/submain">빌려주기</Link>
                 ) : (
                   <Link to="/submain/borrow">빌리기</Link>
                 )}{' '}
@@ -312,9 +312,7 @@ export default function PostDetail() {
             <section className="flex justify-between my-5">
               <Link
                 to={
-                  postData?.postType === 'lend'
-                    ? '/submain/lend'
-                    : '/submain/borrow'
+                  postData?.postType === 'lend' ? '/submain' : '/submain/borrow'
                 }
               >
                 <button className="text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 font-medium rounded-lg text-sm px-3 py-1.5   transition duration-100">

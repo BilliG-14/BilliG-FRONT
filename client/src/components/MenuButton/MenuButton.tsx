@@ -26,7 +26,7 @@ const MenuButton = () => {
         <img className="house2 hidden" src="../../h2.png" alt="house2" />
       </div> */}
       <div className="section mt-5 relative z-0">
-        <Link to="/submain/lend" className="owner">
+        <Link to="/submain" className="owner">
           빌려주기
         </Link>
         <img className="house1" src="../../h1.png" alt="house1" />

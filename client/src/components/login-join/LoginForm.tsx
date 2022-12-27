@@ -75,7 +75,7 @@ export function LoginForm() {
           title="로그인에 성공하였습니다."
           onClickToggleModal={() => {
             onSuccessToggleModal();
-            navigate('/submain/lend');
+            navigate('/submain');
           }}
           onlyYes={true}
         />
