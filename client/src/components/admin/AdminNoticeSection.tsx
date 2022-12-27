@@ -3,6 +3,7 @@ import api from 'api/customAxios';
 import { AxiosError } from 'axios';
 import Loading from 'components/Loading';
 import ConfirmModal from 'components/Modal';
+import { NoticesPaginateType } from 'pages/Notices';
 import { useState } from 'react';
 import { useNoticePageStore } from 'store/AdminPageStore';
 import AdminNoticeHeader from './AdminNoticeHeader';
@@ -33,7 +34,7 @@ export interface CreatedNotice {
 const endPoint = 'notice';
 export const apiReports = {
   GETALL: async () => {
-    const { data } = await api.get(`/${endPoint}`);
+    const { data } = await api.get('notice?per=1000&page=1');
     return data;
   },
   GETONE: (id: string | undefined) => async () => {
@@ -65,13 +66,17 @@ function AdminNoticeList() {
   //공지글 읽어오기
   const {
     isLoading,
-    data: notices,
+    data: paginatedNotices,
     isError,
-  } = useQuery<Notice[], AxiosError>(['notices'], apiReports.GETALL, {
-    refetchOnWindowFocus: false,
-    retry: 0,
-    staleTime: 60 * 1000 * 60,
-  });
+  } = useQuery<NoticesPaginateType, AxiosError>(
+    ['notices'],
+    apiReports.GETALL,
+    {
+      refetchOnWindowFocus: false,
+      retry: 0,
+      staleTime: 60 * 1000 * 60,
+    },
+  );
   const updateMutation = useMutation(apiReports.UPDATE, {
     onSuccess: (_data) => {
       queryClient.invalidateQueries(['notices']);
@@ -96,8 +101,8 @@ function AdminNoticeList() {
           </tr>
         </thead>
         <tbody className="font-semibold break-keep">
-          {notices &&
-            notices.map((notice) => (
+          {paginatedNotices &&
+            paginatedNotices.docs.map((notice) => (
               <tr key={notice._id} className="text-center">
                 <td className="w-36 py-2">
                   {new Date(notice.createdAt).toLocaleDateString()}
