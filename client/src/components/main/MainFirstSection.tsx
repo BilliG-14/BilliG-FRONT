@@ -1,7 +1,7 @@
 export default function MainFirstSection() {
   return (
     <section className="w-screen mb-56 font-semibold relative">
-      <div className="max-w-screen-lg mx-auto text-center text-b-text-black font-bold mt-16 pt-36 px-16 pb-44 relative">
+      <div className="max-w-screen-lg mx-auto text-center text-b-text-black font-bold mt-8 pt-36 px-16 pb-44 relative">
         <p className="text-5xl animate-fade-in">무엇이든 쉽게 빌리자</p>
         <a href="/submain">
           <p className="text-7xl mt-3 animate-fade-in">대여플랫폼 빌리지</p>

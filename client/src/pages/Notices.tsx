@@ -34,7 +34,7 @@ export default function Notices() {
                       </a>
                     </td>
                     <td className="w-52 text-center py-4 px-1 font-medium">
-                      {notice.writer.nickName}
+                      {notice.writer?.nickName}
                     </td>
                     <td className="w-36 text-center py-4 px-1 font-medium">
                       {new Date(notice.createdAt).toLocaleDateString()}
