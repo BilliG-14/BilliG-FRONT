@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import './MenuButton.css';
-// import img from '../../../public/h1.png';
+import billig from '../../../public/img/billig_black.svg';
 
 const MenuButton = () => {
   const navigate = useNavigate();
@@ -8,40 +8,26 @@ const MenuButton = () => {
     navigate('/');
   };
   return (
-    <div>
-      {/* <button
-        className="home absolute ml-16 top-[35px] z-10 hover:text-b-yellow hover: ease-in-out duration-300"
-        onClick={goHome}
-      >
-        <h1 className="font-extrabold text-5xl">B illi G</h1>
-      </button> */}
-      {/* <div className="w-[250px] h-[100px] relative">
-        <Link to="/" className="owner">
-          빌려주기
-        </Link>
-        <img className="house1 hidden" src="../../h1.png" alt="house1" />
-        <Link to="/" className="renter">
-          빌리기
-        </Link>
-        <img className="house2 hidden" src="../../h2.png" alt="house2" />
-      </div> */}
+    <div className="mt-4">
       <div className="section mt-5 relative z-0">
         <Link to="/submain/lend" className="owner">
           빌려주기
         </Link>
-        <img className="house1" src="../../h1.png" alt="house1" />
+        <img className="house1" src="../img/h1.png" alt="house1" />
         <Link to="/submain/borrow" className="renter">
           빌리기
         </Link>
-        <img className="house2" src="../../h2.png" alt="house2" />
+        <img className="house2" src="../img/h2.png" alt="house2" />
         <button
-          className="home absolute ml-16 top-[10px] z-10 hover:text-b-yellow hover: ease-in-out duration-300"
+          className="home absolute ml-16 w-[49%] top-[-5px] z-10 transition ease-in-out hover:-translate-y--1 hover:scale-[1.1] duration-200"
           onClick={goHome}
         >
-          <h1 className="font-extrabold text-5xl">B illi G</h1>
+          <object data="../img/billig_black.svg" type="">
+            {' '}
+          </object>
         </button>
-        <img className="front" src="../../front1.png" alt="" />
-        <img className="houses" src="../../house.png" alt="vilage" />
+        <img className="front" src="../img/front1.png" alt="" />
+        <img className="houses" src="../img/house.png" alt="vilage" />
       </div>
     </div>
   );

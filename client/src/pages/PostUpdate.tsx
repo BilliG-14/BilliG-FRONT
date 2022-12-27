@@ -59,9 +59,9 @@ export default function PostUpdate() {
         data?.data[0].tradeWay.delivery,
       );
       /* 서버에서 해시태그가 object 형태로 들어와서 해시태그 이름만 배열로 담아야함  */
-      data?.data[0].hashtag.map((tag: ServerHashTags) => {
-        serverHashTagList.push(tag.name);
-      });
+      data?.data[0].hashtag.map((tag: ServerHashTags) =>
+        serverHashTagList.push(tag.name),
+      );
       serverHashTags(serverHashTagList);
       setReservationDate(data?.data[0].period.start, data?.data[0].period.end);
     },

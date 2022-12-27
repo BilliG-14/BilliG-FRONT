@@ -6,7 +6,7 @@ export default function NotFound() {
       <div>
         <div className="relative">
           <img
-            src="../../billig.png"
+            src="../img/billig.png"
             alt="billig logo"
             className="w-[25%] mx-auto opacity-60"
           />
