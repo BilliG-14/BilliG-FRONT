@@ -4,17 +4,35 @@ import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import Loading from 'components/Loading';
 
+export type NoticesPaginateType = {
+  docs: [Notice];
+  totalPages: number;
+  hasNextPage: boolean;
+  hasPrevPage: boolean;
+  limit: number;
+  nextPage: number;
+  page: number;
+  pagingCounter: number;
+  prevPage: number;
+  totalDocs: number;
+};
+
 export default function Notices() {
   const {
     isLoading,
-    data: notices,
+    data: noticesPaginate,
     isError,
-  } = useQuery<Notice[], AxiosError>(['notices'], apiReports.GETALL, {
-    refetchOnWindowFocus: false,
-    retry: 0,
-    staleTime: 60 * 1000 * 60,
-  });
+  } = useQuery<NoticesPaginateType, AxiosError>(
+    ['notices'],
+    apiReports.GETALL,
+    {
+      refetchOnWindowFocus: false,
+      retry: 0,
+      staleTime: 60 * 1000 * 60,
+    },
+  );
   if (isLoading) return <Loading />;
+  console.log(noticesPaginate);
   return (
     <div className="w-screen m-auto">
       <div className="max-w-screen-lg mx-auto">
@@ -24,8 +42,8 @@ export default function Notices() {
         <div className="ml-10 mt-16 border-y border-solid border-b-text-gray">
           <table className="w-full">
             <tbody className="text-b-text-black">
-              {notices &&
-                notices.map((notice) => (
+              {noticesPaginate &&
+                noticesPaginate.docs.map((notice) => (
                   <tr key={notice._id}>
                     <td className="w-24 text-center py-4 px-1 font-bold">
                       공지

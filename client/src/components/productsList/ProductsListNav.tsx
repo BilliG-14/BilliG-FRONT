@@ -33,7 +33,6 @@ export default function ProductsListNav(props: NavProps) {
   );
   if (isLoading) return <Loading />;
   if (isError) return <NotFound />;
-  console.log(categoriesRes);
   const categories = categoriesRes.data;
   return (
     <nav className="flex max-w-screen-lg h-16 border-b-2 border-solid border-gray-500 m-auto select-none">
