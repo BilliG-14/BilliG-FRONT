@@ -29,7 +29,7 @@ function TrueNav() {
   };
 
   const { isLoading, data: userInfo } = useQuery(
-    ['userInfo'],
+    ['userInfo', `${localStorage.getItem('userId')}`],
     async () => {
       return api.get(`/user/${localStorage.getItem('userId')}`);
     },
