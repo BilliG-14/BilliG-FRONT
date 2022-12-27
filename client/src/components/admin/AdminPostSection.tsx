@@ -3,7 +3,7 @@ import api from 'api/customAxios';
 import { AxiosError } from 'axios';
 import ConfirmModal from 'components/Modal';
 import { Pagination } from 'components/Pagination';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { PostDataType } from 'store/PostReadStore';
 
 //페이지네이션을 위한 타입
