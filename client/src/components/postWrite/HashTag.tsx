@@ -14,7 +14,6 @@ export default function HashTagSection() {
   function handleTextChange(e: React.ChangeEvent<HTMLInputElement>) {
     const tagInput = e.target.value;
     setHashTagInputText(tagInput);
-    console.log(e.target.value);
   }
 
   function handleTagEnter(e: React.KeyboardEvent<HTMLInputElement>) {

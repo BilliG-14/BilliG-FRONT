@@ -77,7 +77,7 @@ export default function PostDetail() {
   function changeMainImg(e: React.MouseEvent<HTMLImageElement>) {
     setMainImgUrl(e.currentTarget.src);
   }
-  console.log(postData?.author.image === '');
+
   return (
     <div className="max-w-screen-lg mx-auto">
       <div className="flex flex-col justify-center mx-auto text-b-text-black">

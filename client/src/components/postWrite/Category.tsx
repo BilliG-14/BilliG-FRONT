@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useRef } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import api from '../../api/customAxios';
 
@@ -6,8 +6,7 @@ import { categoryStore, CategoryType } from './../../store/PostWriteStore';
 
 export default function Category(props: CategoryType) {
   const { categoryId } = props;
-  const { categorys, filteredCategory, setCategorys, setFilteredCategory } =
-    categoryStore();
+  const { categorys, setCategorys, setFilteredCategory } = categoryStore();
 
   const categoryRef = useRef<HTMLSelectElement>(null);
 
