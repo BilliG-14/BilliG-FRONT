@@ -38,7 +38,7 @@ export default function ProductsList(props: ProductsListProps) {
     isError: isErrorItem,
   } = useQuery<Products, AxiosError>(
     [
-      `product/page`,
+      `product`,
       `category=${categoryId}`,
       `per=${per}`,
       `page=${page}`,
@@ -50,16 +50,27 @@ export default function ProductsList(props: ProductsListProps) {
       );
       return res.data;
     },
+    {
+      refetchOnWindowFocus: false,
+      staleTime: 60 * 1000 * 5,
+    },
   );
   /*네비게이션에 사용될 카테고리 목록 통신 */
   const {
     isLoading: isLoadingCategory,
     data: categories,
     isError: isErrorCategory,
-  } = useQuery<CategoryType[], AxiosError>(['category'], async () => {
-    const res = await api.get('/category');
-    return res.data;
-  });
+  } = useQuery<CategoryType[], AxiosError>(
+    ['category'],
+    async () => {
+      const res = await api.get('/category');
+      return res.data;
+    },
+    {
+      refetchOnWindowFocus: false,
+      staleTime: 60 * 1000 * 5,
+    },
+  );
   useEffect(() => {
     setPage(1);
   }, [categoryId]);
