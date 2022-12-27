@@ -13,6 +13,8 @@ import LendButtons from '../components/postDetail/LendButtons';
 import BorrowButtons from '../components/postDetail/BorrowButtons';
 import Map from 'components/postDetail/Map';
 import Loading from 'components/Loading';
+import { AxiosError } from 'axios';
+import NotFound from 'components/NotFound';
 
 export default function PostDetail() {
   const navigate = useNavigate();
@@ -20,23 +22,26 @@ export default function PostDetail() {
   // 현재 로그인 유저의 정보 가져오기
   const LoginUserId = localStorage.getItem('userId');
 
-  // 서버에서 get 하는 data state
-  const [postData, setPostData] = useState<PostDataType>();
-
   // 서브 사진 클릭하면 메인으로 올리는 state
   const [mainImgUrl, setMainImgUrl] = useState('');
 
   // url id 받기
   const { id } = useParams();
 
-  const { isLoading } = useQuery(
+  const {
+    isLoading,
+    data: postDatas,
+    isError,
+  } = useQuery<PostDataType[], AxiosError>(
     ['postData', id],
-    () => api.get(`product/${id}`),
+    async () => {
+      const res = await api.get(`/product/${id}`);
+      return res.data;
+    },
     {
       refetchOnMount: true,
       refetchOnWindowFocus: true,
       staleTime: 1000 * 60 * 5,
-      onSuccess: (res) => setPostData(res?.data[0]),
     },
   );
 
@@ -50,6 +55,11 @@ export default function PostDetail() {
   if (isLoading) {
     return <Loading />;
   }
+  if (isError) {
+    return <NotFound />;
+  }
+
+  const postData = postDatas[0];
 
   // 현재 상품 상태가 거래전(대여전)상태일때만 수정/삭제가 가능함.
   // 프로세스 : 거래전(0) - 거래중(1) - 대여완료(2) - 반납완료(3)
@@ -83,7 +93,6 @@ export default function PostDetail() {
   function changeMainImg(e: React.MouseEvent<HTMLImageElement>) {
     setMainImgUrl(e.currentTarget.src);
   }
-  console.log(postData);
   return (
     <div className="max-w-screen-lg mx-auto">
       <div className="flex flex-col justify-center mx-auto text-b-text-black">
@@ -114,7 +123,7 @@ export default function PostDetail() {
                     {postData?.category.name}
                   </Link>
                 ) : (
-                  <Link to={`/products/borrow/${postData?.category._id}`}>
+                  <Link to={`/products/borrow/${postData?.category?._id}`}>
                     {postData?.category.name}
                   </Link>
                 )}
