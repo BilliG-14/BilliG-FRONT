@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { io } from 'socket.io-client';
+import { useParams, useNavigate } from 'react-router-dom';
 interface MessageInterface {
   sender: string;
   message: string;
@@ -10,13 +11,14 @@ const socket = io('http://34.64.44.34:3003/chat', {
 });
 const baseURL = 'http://34.64.44.34:3003/';
 
-function MainPanel({ user }: any) {
+function MainPanel({ user, chatRoomList }: any) {
   const scrollRef = useRef<HTMLInputElement>(null);
   const [messages, setMessages] = useState<MessageInterface[]>([]);
   const [currentRoom, setCurrentRoom] = useState('');
   const formRef = useRef<HTMLFormElement | null>(null);
   const textRef = useRef<HTMLInputElement | null>(null);
-
+  // url id 받기
+  const { roomId } = useParams();
   const sendMessage = useCallback(
     (message: string, sentRoom: string) => {
       if (message && user?.nickName) {
@@ -26,8 +28,8 @@ function MainPanel({ user }: any) {
     [user?.nickName],
   );
   useEffect(() => {
-    setCurrentRoom('1227');
-  }, [user?.nickName]);
+    setCurrentRoom(roomId ?? '');
+  }, [user?.nickName, roomId]);
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -43,9 +45,7 @@ function MainPanel({ user }: any) {
     socket.on(
       `message${currentRoom}`,
       ({ name, message }: { name: string; message: string }) => {
-        console.log('들가기전 .. messages: ', messages);
         setMessages([...messages, { sender: name, message }]);
-        console.log('들가고후 .. messages: ', messages);
       },
     );
 
@@ -54,27 +54,26 @@ function MainPanel({ user }: any) {
     // });
   }, [currentRoom, messages]);
   //--------------------------------------------------
-  //   const [myChatList, setMyChatList] = useState<MyChatListType[]>([]);
   // useEffect(() => {
-  //   if (myChatList) {
-  //     myChatList.forEach((room) => {
+  //   if (chatRoomList) {
+  //     chatRoomList.forEach((room: any) => {
   //       if (room.title === currentRoom) {
   //         setMessages(room.messages);
   //       }
   //     });
   //   }
-  // }, [currentRoom, myChatList]);
+  // }, [currentRoom, chatRoomList]);
 
   // useEffect(() => {
-  //   if (message) {
-  //     if (currentRoom === message.sentRoom) {
+  //   if (messages) {
+  //     if (currentRoom === messages.sentRoom) {
   //       setMessages((messages) => {
-  //         const newmsg = { sender: message.sender, message: message.message };
+  //         const newmsg = { sender: messages.sender, message: messages.message };
   //         return [...messages, newmsg];
   //       });
   //     }
   //   }
-  // }, [message, currentRoom]);
+  // }, [messages, currentRoom]);
   //--------------------------------------------------
 
   return (

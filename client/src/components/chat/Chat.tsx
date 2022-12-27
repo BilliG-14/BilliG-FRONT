@@ -22,8 +22,8 @@ function Chat({ chatService, baseURL }: any) {
   const setChatRoomsInfoData = async () => {
     /** 추후 any 바꾸기! */
     const chatRooms: any = await getChatRooms();
-    setChatRoomsInfo(chatRooms.data.data);
-    console.log('chatRooms : ', chatRoomsInfo);
+    console.log(chatRooms);
+    setChatRoomsInfo(chatRooms);
   };
   useEffect(() => {
     setChatRoomsInfoData();
@@ -42,7 +42,7 @@ function Chat({ chatService, baseURL }: any) {
         <MainPanel
           key={userInfo && true}
           user={userInfo}
-          chatRooms={chatRoomsInfo}
+          chatRoomList={chatRoomsInfo}
         />
       </div>
     </div>

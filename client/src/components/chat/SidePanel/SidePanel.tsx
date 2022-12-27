@@ -9,7 +9,6 @@ function SidePanel({ user, chatRoomList }: any) {
     <div className="bg-amber-400 min-h-screen text-white min-w-275">
       <UserPanel user={user} />
       <ChatRoomList chatRoomList={chatRoomList} />
-      {/* <ChatRooms /> */}
 
       {/* <DirectMessages /> */}
     </div>
