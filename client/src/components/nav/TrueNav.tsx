@@ -75,6 +75,7 @@ function TrueNav() {
               type="button"
               className="mypage flex hover:text-b-yellow hover:scale-110 ease-in-out duration-300"
               onClick={() => {
+                togglePwfalse();
                 navigate('/notices');
               }}
             >
@@ -107,6 +108,7 @@ function TrueNav() {
             type="button"
             className="search hover:text-b-yellow hover: ease-in-out duration-300"
             onClick={() => {
+              togglePwfalse();
               navigate('/search');
             }}
           >

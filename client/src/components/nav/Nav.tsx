@@ -16,6 +16,7 @@ function Nav() {
     state.setSelectedJoin,
     state.setSelectedLogin,
   ]);
+
   const navigate = useNavigate();
   const goLogin = () => {
     setSelectedLogin();
