@@ -23,7 +23,7 @@ export default function CategorySectionLend({
     [`categoryLendItems/${category._id}`],
     async () => {
       return api.get(
-        `/product/page?&postType=lend&per=4&page=1&category=${category._id}`,
+        `/product/page?&postType=lend&per=4&page=1&stateOfTransaction=0&category=${category._id}`,
       );
     },
     {

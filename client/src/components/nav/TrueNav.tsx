@@ -10,7 +10,7 @@ import WriteBtns from './WriteBtns';
 import MenuButton from 'components/MenuButton/MenuButton';
 // react icons
 import { FiSearch } from 'react-icons/fi';
-import { FaRegSmileWink } from 'react-icons/fa';
+import { FaRegSmileWink, FaClipboardList } from 'react-icons/fa';
 import { BsFilePersonFill } from 'react-icons/bs';
 import { RiLogoutCircleFill } from 'react-icons/ri';
 
@@ -29,7 +29,7 @@ function TrueNav() {
   };
 
   const { isLoading, data: userInfo } = useQuery(
-    ['userInfo'],
+    ['userInfo', `${localStorage.getItem('userId')}`],
     async () => {
       return api.get(`/user/${localStorage.getItem('userId')}`);
     },
@@ -44,7 +44,7 @@ function TrueNav() {
     <div className="flex justify-between pr-5 h-40 mt-1 select-none">
       <MenuButton />
       <div className="flex flex-col justify-center">
-        <div className="flex justify-between items-center w-72 text-lg font-semibold">
+        <div className="flex justify-between items-center w-96 text-lg font-semibold">
           <div>
             <button
               type="button"
@@ -68,6 +68,20 @@ function TrueNav() {
                 <BsFilePersonFill className="text-xl mr-1" />
               </span>
               <span className="text-sm">MY PAGE</span>
+            </button>
+          </div>
+          <div>
+            <button
+              type="button"
+              className="mypage flex hover:text-b-yellow hover:scale-110 ease-in-out duration-300"
+              onClick={() => {
+                navigate('/notices');
+              }}
+            >
+              <span>
+                <FaClipboardList className="text-xl mr-1" />
+              </span>
+              <span className="text-sm">NOTICE</span>
             </button>
           </div>
           <div>

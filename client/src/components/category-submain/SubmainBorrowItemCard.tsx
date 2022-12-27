@@ -11,7 +11,7 @@ export default function SubmainBorrowItemCard({
   item,
   categoryName,
 }: BorrowItemProps) {
-  const { title, imgUrl, address, tradeWay, price, period } = item;
+  const { title, imgUrl, address, hashtag, tradeWay, price, period } = item;
   const navigate = useNavigate();
 
   return (
@@ -22,7 +22,15 @@ export default function SubmainBorrowItemCard({
       }}
     >
       <div className="pic w-full h-40 mb-2 p-2 flex items-center justify-center">
-        <img className=" w-full h-full" src={imgUrl[0]} alt="m2 맥북" />
+        <img
+          className=" w-full h-full"
+          src={
+            imgUrl[0]
+              ? imgUrl[0]
+              : `${process.env.PUBLIC_URL}/img/product_default.png`
+          }
+          alt={hashtag[0] ? hashtag[0] : 'item'}
+        />
       </div>
       <div className="item_info my-2 text-left">
         <div className="title ">
