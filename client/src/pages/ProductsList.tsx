@@ -8,7 +8,7 @@ import ListByCategory from 'components/productsList/ListByCategory';
 import { useParams } from 'react-router-dom';
 import ProductsListNav from 'components/productsList/ProductsListNav';
 
-type Products = {
+export type Products = {
   docs: [Item];
   totalPages: number;
   hasNextPage: boolean;
@@ -48,12 +48,6 @@ export default function ProductsList(props: ProductsListProps) {
       refetchOnWindowFocus: false,
       retry: 0,
       staleTime: 60 * 1000 * 60,
-      onSuccess: (_data) => {
-        console.log(_data);
-      },
-      onError: (e: Error) => {
-        console.log(e.message);
-      },
     },
   );
   if (isLoading) return <div className=""></div>;

@@ -1,4 +1,3 @@
-import React from 'react';
 import DealTag from 'components/tag/DealTag';
 import { Item } from './MyLendPostList';
 import { useNavigate } from 'react-router-dom';

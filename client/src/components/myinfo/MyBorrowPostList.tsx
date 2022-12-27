@@ -1,14 +1,21 @@
 import { useState } from 'react';
-import BorrowItemCard from './BorrowItemCard';
 import { useQuery } from '@tanstack/react-query';
 import api from '../../api/customAxios';
+// Type
 import { Item } from './MyLendPostList';
+// components
+import BorrowItemCard from './BorrowItemCard';
 import { Pagination } from 'components/Pagination';
+import Loading from '../Loading';
 
 export default function MyBorrowPostList() {
   const [page, setPage] = useState(1);
-  const { isLoading, data: borrowList } = useQuery(
-    [`borrowList/${page}`],
+  const {
+    isLoading,
+    isError,
+    data: borrowList,
+  } = useQuery(
+    [`borrowList/${page}`, `${localStorage.getItem('userId')}`],
     async () => {
       return api.get(
         `/product/page?author=${localStorage.getItem(
@@ -19,17 +26,10 @@ export default function MyBorrowPostList() {
     {
       refetchOnWindowFocus: false,
       staleTime: 60 * 1000 * 5,
-      retry: 1,
-      onSuccess: (data) => {
-        console.log(data);
-      },
-      onError: (error) => {
-        console.log(error);
-      },
     },
   );
 
-  if (isLoading) return <p>Loading..</p>;
+  if (isLoading) return <Loading />;
   return (
     <div className="w-4/5 p-12">
       {borrowList?.data.docs.map((item: Item) => (

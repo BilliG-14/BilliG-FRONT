@@ -34,6 +34,7 @@ export default function AdminCategorySection() {
   const selectedDiv = useRef<HTMLDivElement>(null);
   const elemCreateInput = useRef<HTMLInputElement>(null);
   const elemUpdateInput = useRef<HTMLInputElement>(null);
+  //카테고리 삭제 모달 관련 state
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const onClickToggleModal = useCallback(() => {
     setOpenModal(!isOpenModal);
@@ -43,49 +44,34 @@ export default function AdminCategorySection() {
     ['categories'],
     apiCategory.GET,
     {
-      refetchOnWindowFocus: false, // react-query는 사용자가 사용하는 윈도우가 다른 곳을 갔다가 다시 화면으로 돌아오면 이 함수를 재실행합니다. 그 재실행 여부 옵션 입니다.
-      retry: 0, // 실패시 재호출 몇번 할지
+      refetchOnWindowFocus: false,
       staleTime: 60 * 1000 * 60,
-      onSuccess: (_data) => {
-        // 성공시 호출
-        console.log(_data);
-      },
-      onError: (e: Error) => {
-        console.log(e.message);
-      },
     },
   );
   const createMutation = useMutation(apiCategory.CREATE, {
     onSuccess: () => {
-      // post요청 성공 시 category 맵핑된 useQuery api 함수를 실행
       queryClient.invalidateQueries(['categories']);
-    },
-    onError: (error) => {
-      console.log(error);
     },
   });
   const updateMutation = useMutation(apiCategory.UPDATE, {
     onSuccess: (_data) => {
-      console.log(_data);
       queryClient.invalidateQueries(['categories']);
-    },
-    onError: (error) => {
-      console.log(error);
     },
   });
   const deleteMutation = useMutation(apiCategory.DELETE, {
     onSuccess: (_data) => {
       queryClient.invalidateQueries(['categories']);
     },
-    onError: (error) => {
-      console.log(error);
-    },
   });
   /*버튼 클릭 시 실행할 함수 */
   const handleCreate = useCallback(
     (newCategoryName: string) => {
-      createMutation.mutate(newCategoryName);
-      alert(`${newCategoryName} 생성되었습니다.`);
+      try {
+        createMutation.mutate(newCategoryName);
+        alert(`${newCategoryName} 생성되었습니다.`);
+      } catch (error) {
+        alert('카테고리 생성에 실패하였습니다.');
+      }
     },
     [createMutation],
   );
@@ -145,7 +131,6 @@ export default function AdminCategorySection() {
                             _id: category._id,
                             name: category.name,
                           };
-                          console.log(selectedCategory.current);
                           if (selectedDiv.current) {
                             selectedDiv.current.style.display = 'block';
                           }
@@ -206,10 +191,13 @@ export default function AdminCategorySection() {
           yesText="삭제"
           onClickToggleModal={onClickToggleModal}
           onClickYes={() => {
+            if (selectedDiv.current) {
+              selectedDiv.current.style.display = 'none';
+            }
             try {
               handleDelete(selectedCategory.current._id);
             } catch (error) {
-              console.log(error);
+              alert('카테고리 삭제에 실패하였습니다.');
             }
           }}
         />

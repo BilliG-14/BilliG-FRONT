@@ -1,5 +1,3 @@
-import React from 'react';
-
 type InputProps = {
   type?: string;
   placeholder?: string;

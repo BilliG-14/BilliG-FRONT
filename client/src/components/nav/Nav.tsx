@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FiSearch } from 'react-icons/fi';
 import { useLoginJoinStore } from 'store/LoginJoinStore';
+// components
 import MenuButton from 'components/MenuButton/MenuButton';
-import api from '../../api/customAxios';
 import WriteBtns from './WriteBtns';
 import GoWriteBtn from './GoWriteBtn';
+// react icons
+import { FiSearch } from 'react-icons/fi';
 import { RiLoginCircleFill } from 'react-icons/ri';
 import { BsFillPersonPlusFill, BsFilePersonFill } from 'react-icons/bs';
 function Nav() {

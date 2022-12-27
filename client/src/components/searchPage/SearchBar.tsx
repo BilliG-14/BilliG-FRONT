@@ -6,7 +6,7 @@ export default function SearchBar() {
       <input
         type="text"
         placeholder="검색어를 입력해주세요..."
-        className="w-full text-xl max-w-3xl border-b border-solid border-b-yellow px-4 py-3"
+        className="w-full text-xl max-w-3xl border-b border-solid border-b-yellow px-4 py-3 focus:outline-none"
       />
       <button
         type="submit"
@@ -17,9 +17,3 @@ export default function SearchBar() {
     </form>
   );
 }
-
-// const adminMenuList: { category: string; list: string[] } = [
-//   { category: '회원관리', list: ['회원 목록 조회', '회원 상세 관리'] },
-//   { category: '게시물 관리', list: ['게시물 조회'] },
-//   { category: '대여 관리', list: ['대여 현황 조회'] },
-// ];

@@ -47,9 +47,6 @@ export default function DealDoneModal(props: PostIdType) {
           alert('등록된 유저가 없습니다. 이메일을 다시 확인해주세요.');
         }
       },
-      onError: (error) => {
-        console.log(error);
-      },
     },
   );
 

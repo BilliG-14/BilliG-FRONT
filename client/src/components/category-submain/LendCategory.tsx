@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import './category.css';
 import api from '../../api/customAxios';
 import CategorySectionLend from './CategorySectionLend';
+import Loading from '../Loading';
 
 export default function LendCategory() {
   const [scrollEvent, setScrollEvent] = useState(false);
@@ -29,20 +30,23 @@ export default function LendCategory() {
     };
   }, []);
 
-  const { isLoading, data: categories } = useQuery(
+  const {
+    isLoading,
+    isError,
+    data: categories,
+  } = useQuery(
     ['categories'],
     async () => {
-      console.log('fetching...');
       return api.get('/category');
     },
     { refetchOnWindowFocus: false, staleTime: 60 * 1000 * 60 },
   );
 
-  if (isLoading) return <p>Loading..</p>;
+  if (isLoading) return <Loading />;
   return (
     <div className="relative">
       <nav
-        className="flex max-w-screen-lg h-16 border-b-2 border-solid border-gray-500 m-auto"
+        className="flex max-w-screen-lg h-16 border-b-2 border-solid border-gray-500 m-auto z-50"
         ref={navRef}
       >
         <ul className="flex space-x-10 text-center items-center m-auto text-xl font-extrabold">

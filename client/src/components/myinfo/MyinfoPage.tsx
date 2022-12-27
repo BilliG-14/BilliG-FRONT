@@ -1,19 +1,29 @@
 import {
   useMyinfoEditStore,
   usePasswordEditStore,
+  useDeleteUserStore,
 } from '../../store/MypageStore';
+import { useQuery } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
+import api from '../../api/customAxios';
+// components
 import ChangePassword from './ChangePassword';
 import ChangePawsswordForm from './ChangePawsswordForm';
 import DeleteUser from './DeleteUser';
-import { useQuery } from '@tanstack/react-query';
-import api from '../../api/customAxios';
-import { useNavigate } from 'react-router-dom';
+import DeleteUserForm from './DeleteUserForm';
+import Loading from '../Loading';
 
 export default function MyinfoPage() {
   const { toggleIntro } = useMyinfoEditStore();
   const { isPW } = usePasswordEditStore();
+  const { isDeleteUser } = useDeleteUserStore();
+  const { togglePwfalse } = usePasswordEditStore();
   const navigate = useNavigate();
-  const { isLoading, data: userInfo } = useQuery(
+  const {
+    isLoading,
+    isError,
+    data: userInfo,
+  } = useQuery(
     ['userInfo'],
     async () => {
       return api.get(`/user/${localStorage.getItem('userId')}`);
@@ -21,16 +31,10 @@ export default function MyinfoPage() {
     {
       refetchOnWindowFocus: false,
       staleTime: 60 * 1000 * 5,
-      onSuccess: (data) => {
-        console.log(data);
-      },
-      onError: (error) => {
-        console.log(error);
-      },
     },
   );
 
-  if (isLoading) return <p>로딩중</p>;
+  if (isLoading) return <Loading />;
 
   const {
     name,
@@ -107,12 +111,13 @@ export default function MyinfoPage() {
         </div>
       </section>
       {isPW ? <ChangePawsswordForm /> : <ChangePassword />}
-      <DeleteUser />
+      {isDeleteUser ? <DeleteUserForm /> : <DeleteUser />}
       <div className="edit_btn flex justify-center mt-8">
         <button
           className="w-2/6 h-12 hover:text-white border border-b-yellow hover:bg-b-yellow focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
           onClick={() => {
             toggleIntro();
+            togglePwfalse();
             navigate('/mypage/edit');
           }}
         >

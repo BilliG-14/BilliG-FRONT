@@ -1,13 +1,19 @@
 import { useState } from 'react';
-import GiveItemCard from './GiveItemCard';
 import { useQuery } from '@tanstack/react-query';
 import api from '../../api/customAxios';
+// components
+import GiveItemCard from './GiveItemCard';
 import { Pagination } from 'components/Pagination';
+import Loading from '../Loading';
 
 export default function MyLendPostList() {
   const [page, setPage] = useState(1);
-  const { isLoading, data: giveList } = useQuery(
-    [`giveList/${page}`],
+  const {
+    isLoading,
+    isError,
+    data: giveList,
+  } = useQuery(
+    [`giveList/${page}`, `${localStorage.getItem('userId')}`],
     async () => {
       return api.get(
         `/product/page?author=${localStorage.getItem(
@@ -18,17 +24,10 @@ export default function MyLendPostList() {
     {
       refetchOnWindowFocus: false,
       staleTime: 60 * 1000 * 5,
-      retry: 1,
-      onSuccess: (data) => {
-        console.log(data);
-      },
-      onError: (error) => {
-        console.log(error);
-      },
     },
   );
 
-  if (isLoading) return <p>Loading..</p>;
+  if (isLoading) return <Loading />;
 
   return (
     <div className="w-4/5 p-12">

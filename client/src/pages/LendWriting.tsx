@@ -10,9 +10,10 @@ import {
   CategoryType,
 } from './../store/PostWriteStore';
 
-import HashTagSection from '../components/postWrite/HashTagWrite';
+import HashTagSection from '../components/postWrite/HashTag';
 import ImageUpload from '../components/postWrite/ImageUpload';
 import TradeWay from '../components/postWrite/TradeWay';
+import Loading from 'components/Loading';
 
 export default function LendWriting() {
   // 빌려드립니다 글쓰기
@@ -30,12 +31,15 @@ export default function LendWriting() {
   const navigate = useNavigate();
 
   // 사용자 가져오기
-  const { data } = useQuery(['userData'], () => api.get('/user/me'), {
-    refetchOnMount: 'always',
-    refetchOnWindowFocus: false,
-    staleTime: 60 * 1000 * 60,
-    onError: (err) => console.log(err),
-  });
+  const { data, isLoading } = useQuery(
+    ['userData'],
+    () => api.get('/user/me'),
+    {
+      refetchOnMount: 'always',
+      refetchOnWindowFocus: false,
+      staleTime: 60 * 1000 * 60,
+    },
+  );
 
   // 카테고리 가져오기
   const [categorys, setCategorys] = useState<CategoryType[]>([]);
@@ -47,7 +51,6 @@ export default function LendWriting() {
     refetchOnWindowFocus: false,
     staleTime: 60 * 1000 * 60,
     onSuccess: (res) => setCategorys(res.data),
-    onError: (err) => console.log(err),
   });
 
   // 사용자가 선택한 카테고리만 필터
@@ -57,6 +60,14 @@ export default function LendWriting() {
         (category) => category._id === categoryRef.current?.value,
       ),
     );
+  }
+
+  // 제목 글자수 제한
+  function checkWordsNumber(e: React.FocusEvent<HTMLInputElement>) {
+    if (e.currentTarget.value.length > 20) {
+      alert('상품명은 20자 이내로 입력 가능합니다.');
+      e.currentTarget.value = e.currentTarget.value.slice(0, 20);
+    }
   }
 
   // 서버로 post 보내기, useMutate 정의
@@ -71,11 +82,12 @@ export default function LendWriting() {
       onSuccess: (res) => {
         navigate(`/read/${res.data._id}`);
       },
-      onError: (error) => {
-        console.log(error);
-      },
     },
   );
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   // formData 넣기
   const formData = new FormData();
@@ -90,7 +102,6 @@ export default function LendWriting() {
     author: data?.data?._id,
     title: productNameRef.current?.value,
     description: descriptionRef.current?.value,
-    // lender: data?.data,
     stateOfTransaction: 0,
     address: data?.data?.address1,
     price: {
@@ -134,7 +145,7 @@ export default function LendWriting() {
   return (
     <div className="max-w-screen-lg mx-auto">
       <div className="flex flex-col justify-center mx-auto text-b-text-black">
-        <div className="mb-6 text-3xl">빌려주기</div>
+        <div className="mb-6 text-3xl font-bold">빌려주기</div>
         <form className="w-[800px] mx-auto">
           {/* 상품명/카테고리 section */}
           <section className="flex mb-4">
@@ -151,10 +162,11 @@ export default function LendWriting() {
               ))}
             </select>
             <input
+              onBlur={checkWordsNumber}
               ref={productNameRef}
               className="grow p-3 ml-2 w-9/12 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
               type="text"
-              placeholder="상품명"
+              placeholder="상품명은 20자까지만 입력 가능합니다."
             />
           </section>
 
@@ -167,7 +179,7 @@ export default function LendWriting() {
             <input
               ref={priceDayRef}
               type="number"
-              className="p-3 mx-2 w-60 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
+              className="p-3 mx-2 w-54 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
             />
 
             <span className="mr-9">원/일</span>
@@ -191,7 +203,7 @@ export default function LendWriting() {
             <button
               type="button"
               onClick={handleButtonClick}
-              className="w-1/6 h-10 hover:text-white border border-b-yellow hover:bg-b-yellow focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+              className="w-1/6 h-10 hover:text-white border border-b-yellow hover:bg-b-yellow focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 my-3"
             >
               등록하기
             </button>

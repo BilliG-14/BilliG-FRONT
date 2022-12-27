@@ -1,4 +1,5 @@
 export interface PostDataType {
+  _id: string;
   imgUrl: string[];
   postType: string;
   category: {
@@ -25,7 +26,16 @@ export interface PostDataType {
     delivery: boolean;
     direct: boolean;
   };
-  hashtag: string[];
+  hashtag: [
+    {
+      createdAt: string;
+      mentions: number;
+      name: string;
+      updatedAt: string;
+      __v: number;
+      _id: string;
+    },
+  ];
   createdAt: string;
   updatedAt: string;
 }
@@ -66,4 +76,14 @@ export interface UserInformationPostType {
     start: string | undefined;
     end: string | undefined;
   };
+}
+
+// 서버 해시태그 타입
+export interface ServerHashTags {
+  createdAt: string;
+  mentions: number;
+  name: string;
+  updatedAt: string;
+  __v: number;
+  _id: string;
 }
