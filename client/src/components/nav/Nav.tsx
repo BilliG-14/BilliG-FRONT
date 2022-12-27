@@ -27,7 +27,7 @@ function Nav() {
     navigate('/login');
   };
   const goSearch = () => {
-    navigate('/search/lend');
+    navigate('/search');
   };
 
   return (

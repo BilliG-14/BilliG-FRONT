@@ -10,7 +10,7 @@ import reset from 'styled-reset';
 import BorrowWriting from './pages/BorrowWriting';
 import LendWriting from './pages/LendWriting';
 import PostDetail from './pages/PostDetail';
-import SearchLendPage from './pages/SearchLendPage';
+import SearchPage from './pages/SearchPage';
 import MyPage from './pages/MyPage';
 import ScrollToTop from 'components/ScrollToTop';
 import { useIsLoginStore } from 'store/LoginJoinStore';
@@ -86,15 +86,15 @@ function App() {
             <ScrollToTop />
             <Routes>
               <Route path="/" element={<Main />} />
+              <Route path="/submain/*" element={<SubmainPage />} />
+              <Route path="/mypage/*" element={<MyPage />} />
               <Route path="/login" element={<LoginJoin />} />
               <Route path="/admin" element={<AdminMain />} />
               <Route path="/write/lend" element={<LendWriting />} />
               <Route path="/write/borrow" element={<BorrowWriting />} />
-              <Route path="/submain/*" element={<SubmainPage />} />
-              <Route path="/search/lend" element={<SearchLendPage />} />
+              <Route path="/search" element={<SearchPage />} />
               <Route path="/read/:id" element={<PostDetail />} />
               <Route path="/update/:id" element={<PostUpdate />} />
-              <Route path="/mypage/*" element={<MyPage />} />
               <Route path="/notices" element={<Notices />} />
               <Route path="/notices/:id" element={<ReadNotice />} />
               <Route path="/user/:id" element={<UserInformation />} />
