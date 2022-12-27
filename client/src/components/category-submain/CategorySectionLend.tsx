@@ -28,10 +28,6 @@ export default function CategorySectionLend({
     {
       refetchOnWindowFocus: false,
       staleTime: 60 * 1000 * 60,
-      onSuccess: (data) => {},
-      onError: (error) => {
-        console.log(error);
-      },
     },
   );
 

@@ -8,7 +8,7 @@ import { Pagination } from '../Pagination';
 export default function MyBorrowDoneList() {
   const [page, setPage] = useState(1);
   const { isLoading, data: borrowDoneList } = useQuery(
-    [`borrowDoneList/${page}`],
+    [`borrowDoneList/${page}`, `${localStorage.getItem('userId')}`],
     async () => {
       return api.get(
         `/product/page?borrower=${localStorage.getItem(
@@ -19,13 +19,6 @@ export default function MyBorrowDoneList() {
     {
       refetchOnWindowFocus: false,
       staleTime: 60 * 1000 * 5,
-      retry: 1,
-      onSuccess: (data) => {
-        console.log(data);
-      },
-      onError: (error) => {
-        console.log(error);
-      },
     },
   );
 
