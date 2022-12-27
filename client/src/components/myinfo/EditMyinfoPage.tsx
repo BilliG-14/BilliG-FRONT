@@ -55,7 +55,6 @@ export default function EditMyinfoPage() {
     },
     {
       onSuccess: () => {
-        console.log('성공???');
         client.invalidateQueries(['userInfo']);
       },
     },
