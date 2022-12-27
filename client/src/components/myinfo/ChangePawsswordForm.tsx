@@ -2,7 +2,6 @@ import ConfirmModal from 'components/Modal';
 import { useCallback, useRef, useState } from 'react';
 import { usePasswordEditStore } from 'store/MypageStore';
 import api from '../../api/customAxios';
-import { useNavigate } from 'react-router-dom';
 
 type PwType = {
   currentPassword: string;
@@ -50,7 +49,7 @@ export default function ChangePawsswordForm() {
     }
 
     try {
-      const change = await api.post('/user/changePassword', {
+      await api.post('/user/changePassword', {
         currentPassword,
         newPassword,
       });

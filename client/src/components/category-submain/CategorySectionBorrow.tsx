@@ -5,6 +5,7 @@ import api from '../../api/customAxios';
 import { Item } from 'components/myinfo/MyLendPostList';
 import SubmainBorrowItemCard from './SubmainBorrowItemCard';
 import { useNavigate } from 'react-router-dom';
+import Loading from '../Loading';
 
 type ItemListProps = {
   category: { _id: string; name: string };
@@ -18,7 +19,11 @@ export default function CategorySectionBorrow({
   sectionRef,
 }: ItemListProps) {
   const navigate = useNavigate();
-  const { isLoading, data: categoryBorrowItems } = useQuery(
+  const {
+    isLoading,
+    isError,
+    data: categoryBorrowItems,
+  } = useQuery(
     [`categoryBorrowItems/${category._id}`],
     async () => {
       return api.get(
@@ -31,7 +36,7 @@ export default function CategorySectionBorrow({
     },
   );
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <Loading />;
 
   return (
     <section

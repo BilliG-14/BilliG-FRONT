@@ -1,30 +1,30 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { FiSearch } from 'react-icons/fi';
-import { useLoginJoinStore, useIsLoginStore } from 'store/LoginJoinStore';
 import api from '../../api/customAxios';
-import MenuButton from 'components/MenuButton/MenuButton';
+import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { useIsLoginStore } from 'store/LoginJoinStore';
+import { usePasswordEditStore } from 'store/MypageStore';
+// components
 import GoWriteBtn from './GoWriteBtn';
 import WriteBtns from './WriteBtns';
-import { useQuery } from '@tanstack/react-query';
+import MenuButton from 'components/MenuButton/MenuButton';
+// react icons
+import { FiSearch } from 'react-icons/fi';
+import { FaRegSmileWink } from 'react-icons/fa';
 import { BsFilePersonFill } from 'react-icons/bs';
 import { RiLogoutCircleFill } from 'react-icons/ri';
-import { FaRegSmileWink } from 'react-icons/fa';
 
 function TrueNav() {
   const [onWriteBtn, setOnWriteBtn] = useState(false);
-  // * 이거 뭔지 모름
-  const [setSelectedJoin, setSelectedLogin] = useLoginJoinStore((state) => [
-    state.setSelectedJoin,
-    state.setSelectedLogin,
-  ]);
   const navigate = useNavigate();
   const { setIsLoginFalse } = useIsLoginStore();
+  const { togglePwfalse } = usePasswordEditStore();
 
   const handleLogout = async () => {
     setIsLoginFalse();
     localStorage.removeItem('userId');
     localStorage.removeItem('token');
+    togglePwfalse();
     navigate('/submain');
   };
 

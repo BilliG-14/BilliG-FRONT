@@ -10,6 +10,7 @@ import SearchItemCardSeleton from 'components/searchPage/SearchItemCard-skeleton
 // icon
 import { FiSearch } from 'react-icons/fi';
 import { Pagination } from '../components/Pagination';
+import Loading from '../components/Loading';
 
 export default function SearchPage() {
   const [page, setPage] = useState(1);
@@ -47,7 +48,7 @@ export default function SearchPage() {
       staleTime: 1000 * 60 * 5,
     },
   );
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <Loading />;
   return (
     <div className="w-screen max-w-screen-lg relative m-auto">
       {/* radio btn */}
