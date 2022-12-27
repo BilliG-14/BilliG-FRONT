@@ -109,7 +109,7 @@ interface HashTagState {
   setHashTags: (text: string) => void;
   setHashTagInputText: (text: string) => void;
   deleteHashTags: (newTags: string[]) => void;
-  serverHashTags: (tagList: string) => void;
+  serverHashTags: (tagList: string[]) => void;
 }
 
 export const hashTagStore = create<HashTagState>((set) => ({
@@ -124,6 +124,5 @@ export const hashTagStore = create<HashTagState>((set) => ({
     set(() => ({
       hashTags: newTags,
     })),
-  serverHashTags: (tagList) =>
-    set((state) => ({ hashTags: [...state.hashTags, tagList] })),
+  serverHashTags: (tagList) => set(() => ({ hashTags: tagList })),
 }));

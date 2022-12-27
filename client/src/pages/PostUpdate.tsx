@@ -1,20 +1,17 @@
-import { useState, useRef, ChangeEvent } from 'react';
+import { useState, ChangeEvent } from 'react';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import api from './../api/customAxios';
 
 import {
-  imageUploadStore,
   tradeWayStore,
   hashTagStore,
   reservationStore,
-  CategoryType,
   categoryStore,
   UpdateImageUploadStore,
 } from './../store/PostWriteStore';
 
 import HashTagSection from '../components/postWrite/HashTag';
-import ImageUpload from '../components/postWrite/ImageUpload';
 import TradeWay from '../components/postWrite/TradeWay';
 import ReservationDate from './../components/postWrite/ReservationDate';
 import { PostDataType, ServerHashTags } from './../store/PostReadStore';
@@ -25,7 +22,6 @@ export default function PostUpdate() {
   // 빌립니다 글쓰기
   // store에서 가져오는 state들
   const { hashTags, serverHashTags } = hashTagStore();
-  const { imgFiles } = imageUploadStore();
   const { tradeWay, setTradeWay } = tradeWayStore();
   const { reservationDate, setReservationDate } = reservationStore();
   const { filteredCategory, setFilteredCategory } = categoryStore();
@@ -44,6 +40,9 @@ export default function PostUpdate() {
   });
   const [description, setDescription] = useState<string>('');
 
+  /* 서버에서 해시태그가 object 형태로 들어와서 해시태그 이름만 배열로 담아야함  */
+  const serverHashTagList: string[] = [];
+
   useQuery(['userData'], () => api.get(`/product/${id}`), {
     refetchOnMount: 'always',
     refetchOnWindowFocus: false,
@@ -59,10 +58,11 @@ export default function PostUpdate() {
         data?.data[0].tradeWay.direct,
         data?.data[0].tradeWay.delivery,
       );
+      /* 서버에서 해시태그가 object 형태로 들어와서 해시태그 이름만 배열로 담아야함  */
       data?.data[0].hashtag.map((tag: ServerHashTags) => {
-        serverHashTags(tag.name);
+        serverHashTagList.push(tag.name);
       });
-
+      serverHashTags(serverHashTagList);
       setReservationDate(data?.data[0].period.start, data?.data[0].period.end);
     },
     onError: (err) => console.log('데이터 가져오기 에러', err),
@@ -80,6 +80,14 @@ export default function PostUpdate() {
 
   function changeDescription(e: ChangeEvent<HTMLTextAreaElement>) {
     setDescription(e.currentTarget.value);
+  }
+
+  // 제목 글자수 제한
+  function checkWordsNumber(e: React.FocusEvent<HTMLInputElement>) {
+    if (e.currentTarget.value.length > 20) {
+      alert('상품명은 20자 이내로 입력 가능합니다.');
+      e.currentTarget.value = e.currentTarget.value.slice(0, 20);
+    }
   }
 
   // 서버로 post 보내기, useMutate 정의
@@ -156,14 +164,15 @@ export default function PostUpdate() {
             <input
               value={title}
               onChange={changeTitle}
+              onBlur={checkWordsNumber}
               id="productName"
               className="grow p-3 ml-2 w-9/12 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
               type="text"
-              placeholder="상품명"
+              placeholder="상품명은 20자까지만 입력 가능합니다."
             />
           </section>
 
-          {/* 사진 업로드 component */}
+          {/* 사진 component */}
           <UpdatedImageUpload bringImgUrlList={imgUrlList} />
 
           {/* 요금 section */}

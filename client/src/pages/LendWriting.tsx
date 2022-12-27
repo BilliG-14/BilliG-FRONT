@@ -59,6 +59,14 @@ export default function LendWriting() {
     );
   }
 
+  // 제목 글자수 제한
+  function checkWordsNumber(e: React.FocusEvent<HTMLInputElement>) {
+    if (e.currentTarget.value.length > 20) {
+      alert('상품명은 20자 이내로 입력 가능합니다.');
+      e.currentTarget.value = e.currentTarget.value.slice(0, 20);
+    }
+  }
+
   // 서버로 post 보내기, useMutate 정의
   const postData = useMutation(
     (formData: FormData) =>
@@ -90,7 +98,6 @@ export default function LendWriting() {
     author: data?.data?._id,
     title: productNameRef.current?.value,
     description: descriptionRef.current?.value,
-    // lender: data?.data,
     stateOfTransaction: 0,
     address: data?.data?.address1,
     price: {
@@ -151,10 +158,11 @@ export default function LendWriting() {
               ))}
             </select>
             <input
+              onBlur={checkWordsNumber}
               ref={productNameRef}
               className="grow p-3 ml-2 w-9/12 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
               type="text"
-              placeholder="상품명"
+              placeholder="상품명은 20자까지만 입력 가능합니다."
             />
           </section>
 
