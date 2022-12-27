@@ -29,11 +29,16 @@ export default function PostDetail() {
   // url id 받기
   const { id } = useParams();
 
-  const { isLoading } = useQuery(['postData'], () => api.get(`product/${id}`), {
-    refetchOnMount: 'always',
-    refetchOnWindowFocus: true,
-    onSuccess: (res) => setPostData(res?.data[0]),
-  });
+  const { isLoading } = useQuery(
+    ['postData', id],
+    () => api.get(`product/${id}`),
+    {
+      refetchOnMount: true,
+      refetchOnWindowFocus: true,
+      staleTime: 1000 * 60 * 5,
+      onSuccess: (res) => setPostData(res?.data[0]),
+    },
+  );
 
   // post 삭제하기, useMutate 정의
   const deleteData = useMutation(() => api.delete(`/product/${id}`), {
@@ -78,7 +83,7 @@ export default function PostDetail() {
   function changeMainImg(e: React.MouseEvent<HTMLImageElement>) {
     setMainImgUrl(e.currentTarget.src);
   }
-
+  console.log(postData);
   return (
     <div className="max-w-screen-lg mx-auto">
       <div className="flex flex-col justify-center mx-auto text-b-text-black">

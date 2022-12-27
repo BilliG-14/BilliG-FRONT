@@ -1,10 +1,12 @@
 import { useState, useRef, ChangeEvent } from 'react';
 import api from '../../api/customAxios';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { UserInformationPostType, PostIdType } from 'store/PostReadStore';
 import { reservationStore } from 'store/PostWriteStore';
 
 export default function DealDoneModal(props: PostIdType) {
+  const queryClient = useQueryClient();
+
   // 게시글 id prop으로 받아오기
   const { postId, postType, authorId } = props;
   const [showModal, setShowModal] = useState(false);
@@ -78,6 +80,7 @@ export default function DealDoneModal(props: PostIdType) {
     {
       onSuccess: (res) => {
         alert('차용유저 등록이 완료되었습니다.');
+        queryClient.invalidateQueries(['postData']);
       },
       onError: (error) => {
         alert('유저 확인을 다시 한 번 해주세요.');
@@ -112,6 +115,7 @@ export default function DealDoneModal(props: PostIdType) {
     {
       onSuccess: (res) => {
         alert('대여유저 등록이 완료되었습니다.');
+        queryClient.invalidateQueries(['postData']);
       },
       onError: (error) => {
         alert('유저 확인을 다시 한 번 해주세요.');
@@ -125,8 +129,12 @@ export default function DealDoneModal(props: PostIdType) {
         alert('기간 설정을 정확하게 해주세요.');
         return;
       }
-      lenderEdit.mutate(lenderInformation);
-      setShowModal(false);
+      lenderEdit.mutate(lenderInformation, {
+        onSuccess: () => {
+          setShowModal(false);
+          queryClient.invalidateQueries(['postData']);
+        },
+      });
     } else {
       alert('유저 확인을 해주세요.');
     }
