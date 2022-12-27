@@ -3,6 +3,7 @@ import { useRef, useState } from 'react';
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import api from '../../api/customAxios';
 import { useNavigate } from 'react-router-dom';
+import Loading from '../Loading';
 
 export default function EditMyinfoPage() {
   // * image state
@@ -32,7 +33,11 @@ export default function EditMyinfoPage() {
   const navigate = useNavigate();
 
   // * useQuery
-  const { isLoading, data: userInfo } = useQuery(
+  const {
+    isLoading,
+    isError,
+    data: userInfo,
+  } = useQuery(
     ['userInfo'],
     async () => {
       return api.get(`/user/${localStorage.getItem('userId')}`);
@@ -89,7 +94,7 @@ export default function EditMyinfoPage() {
     imgRef.current?.click();
   };
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <Loading />;
   const {
     name,
     email,

@@ -3,20 +3,26 @@ import {
   usePasswordEditStore,
   useDeleteUserStore,
 } from '../../store/MypageStore';
+import { useQuery } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
+import api from '../../api/customAxios';
+// components
 import ChangePassword from './ChangePassword';
 import ChangePawsswordForm from './ChangePawsswordForm';
 import DeleteUser from './DeleteUser';
-import { useQuery } from '@tanstack/react-query';
-import api from '../../api/customAxios';
-import { useNavigate } from 'react-router-dom';
 import DeleteUserForm from './DeleteUserForm';
+import Loading from '../Loading';
 
 export default function MyinfoPage() {
   const { toggleIntro } = useMyinfoEditStore();
   const { isPW } = usePasswordEditStore();
   const { isDeleteUser } = useDeleteUserStore();
   const navigate = useNavigate();
-  const { isLoading, data: userInfo } = useQuery(
+  const {
+    isLoading,
+    isError,
+    data: userInfo,
+  } = useQuery(
     ['userInfo'],
     async () => {
       return api.get(`/user/${localStorage.getItem('userId')}`);
@@ -27,7 +33,7 @@ export default function MyinfoPage() {
     },
   );
 
-  if (isLoading) return <p>로딩중</p>;
+  if (isLoading) return <Loading />;
 
   const {
     name,

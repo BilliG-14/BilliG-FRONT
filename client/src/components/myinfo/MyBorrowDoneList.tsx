@@ -1,13 +1,20 @@
 import { useState } from 'react';
-import DoneItemCard from './DoneItemCard';
 import { useQuery } from '@tanstack/react-query';
 import api from '../../api/customAxios';
+// Type
 import { Item } from 'components/myinfo/MyLendPostList';
+// components
 import { Pagination } from '../Pagination';
+import DoneItemCard from './DoneItemCard';
+import Loading from '../Loading';
 
 export default function MyBorrowDoneList() {
   const [page, setPage] = useState(1);
-  const { isLoading, data: borrowDoneList } = useQuery(
+  const {
+    isLoading,
+    isError,
+    data: borrowDoneList,
+  } = useQuery(
     [`borrowDoneList/${page}`, `${localStorage.getItem('userId')}`],
     async () => {
       return api.get(
@@ -22,7 +29,7 @@ export default function MyBorrowDoneList() {
     },
   );
 
-  if (isLoading) return <p>Loading..</p>;
+  if (isLoading) return <Loading />;
 
   return (
     <div className="w-4/5 p-12">

@@ -1,12 +1,18 @@
 import { useState } from 'react';
-import GiveItemCard from './GiveItemCard';
 import { useQuery } from '@tanstack/react-query';
 import api from '../../api/customAxios';
+// components
 import { Pagination } from 'components/Pagination';
+import GiveItemCard from './GiveItemCard';
+import Loading from '../Loading';
 
 export default function MyLendDealList() {
   const [page, setPage] = useState(1);
-  const { isLoading, data: lendDealList } = useQuery(
+  const {
+    isLoading,
+    isError,
+    data: lendDealList,
+  } = useQuery(
     [`lendDealList/${page}`, `${localStorage.getItem('userId')}`],
     async () => {
       return api.get(
@@ -21,7 +27,7 @@ export default function MyLendDealList() {
     },
   );
 
-  if (isLoading) return <p>Loading..</p>;
+  if (isLoading) return <Loading />;
 
   return (
     <div className="w-4/5 p-12">
