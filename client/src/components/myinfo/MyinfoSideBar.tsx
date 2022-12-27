@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
+import { usePasswordEditStore } from 'store/MypageStore';
 
 export default function MyInfoSideBar() {
   const client = useQueryClient();
+  const { togglePwfalse } = usePasswordEditStore();
   return (
     <div className="w-1/5 h-full p-4 bg-b-bg-gray">
       <div className="menu_box mb-7">
@@ -27,6 +29,7 @@ export default function MyInfoSideBar() {
                 `giveList/1`,
                 `${localStorage.getItem('userId')}`,
               ]);
+              togglePwfalse();
             }}
           >
             <Link to="/mypage/lendlist">빌려주기 게시물 조회</Link>
@@ -38,6 +41,7 @@ export default function MyInfoSideBar() {
                 `borrowList/1`,
                 `${localStorage.getItem('userId')}`,
               ]);
+              togglePwfalse();
             }}
           >
             <Link to="/mypage/borrowlist">빌리기 게시물 조회</Link>
@@ -59,6 +63,7 @@ export default function MyInfoSideBar() {
                 `lendDealList/1`,
                 `${localStorage.getItem('userId')}`,
               ]);
+              togglePwfalse();
             }}
           >
             <Link to="/mypage/lenddeallist">빌려주기 조회</Link>
@@ -70,6 +75,7 @@ export default function MyInfoSideBar() {
                 `borrowDealList/1`,
                 `${localStorage.getItem('userId')}`,
               ]);
+              togglePwfalse();
             }}
           >
             <Link to="/mypage/borrowdeallist">빌리기 조회</Link>
@@ -84,6 +90,7 @@ export default function MyInfoSideBar() {
                 `lendDoneList/1`,
                 `${localStorage.getItem('userId')}`,
               ]);
+              togglePwfalse();
             }}
           >
             <Link to="/mypage/donelendlist">빌려주기 완료 조회</Link>
@@ -95,6 +102,7 @@ export default function MyInfoSideBar() {
                 `borrowDoneList/1`,
                 `${localStorage.getItem('userId')}`,
               ]);
+              togglePwfalse();
             }}
           >
             <Link to="/mypage/doneborrowlist">빌리기 완료 조회</Link>

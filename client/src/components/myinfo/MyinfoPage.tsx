@@ -17,6 +17,7 @@ export default function MyinfoPage() {
   const { toggleIntro } = useMyinfoEditStore();
   const { isPW } = usePasswordEditStore();
   const { isDeleteUser } = useDeleteUserStore();
+  const { togglePwfalse } = usePasswordEditStore();
   const navigate = useNavigate();
   const {
     isLoading,
@@ -116,6 +117,7 @@ export default function MyinfoPage() {
           className="w-2/6 h-12 hover:text-white border border-b-yellow hover:bg-b-yellow focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
           onClick={() => {
             toggleIntro();
+            togglePwfalse();
             navigate('/mypage/edit');
           }}
         >
