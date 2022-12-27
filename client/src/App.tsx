@@ -9,7 +9,6 @@ import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 import BorrowWriting from './pages/BorrowWriting';
 import LendWriting from './pages/LendWriting';
-import SubmainLend from './pages/SubmainLend';
 import PostDetail from './pages/PostDetail';
 import SearchLendPage from './pages/SearchLendPage';
 import MyPage from './pages/MyPage';
@@ -18,7 +17,7 @@ import { useIsLoginStore } from 'store/LoginJoinStore';
 import api from './api/customAxios';
 import UserInformation from 'pages/UserInformation';
 import PostUpdate from './pages/PostUpdate';
-import SubmainBorrow from './pages/SubmainBorrow';
+import SubmainPage from './pages/SubmainPage';
 import ProductsList from 'pages/ProductsList';
 import Notices from 'pages/Notices';
 import ReadNotice from 'pages/Notice';
@@ -91,8 +90,7 @@ function App() {
               <Route path="/admin" element={<AdminMain />} />
               <Route path="/write/lend" element={<LendWriting />} />
               <Route path="/write/borrow" element={<BorrowWriting />} />
-              <Route path="/submain/lend" element={<SubmainLend />} />
-              <Route path="/submain/borrow" element={<SubmainBorrow />} />
+              <Route path="/submain/*" element={<SubmainPage />} />
               <Route path="/search/lend" element={<SearchLendPage />} />
               <Route path="/read/:id" element={<PostDetail />} />
               <Route path="/update/:id" element={<PostUpdate />} />
