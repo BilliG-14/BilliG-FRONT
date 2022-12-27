@@ -38,7 +38,7 @@ export default function Main() {
       <MainSecondSection />
       <MainThirdSection />
       <div className="max-w-screen-lg mx-auto flex justify-center text-lg hover:font-extrabold pb-16">
-        <MainButton content="물품 빌리러 가기" path="/submain/lend" />
+        <MainButton content="물품 빌리러 가기" path="/submain" />
         <MainButton content="물품 빌려주러 가기" path="/submain/borrow" />
       </div>
       <ScrollTopButton />

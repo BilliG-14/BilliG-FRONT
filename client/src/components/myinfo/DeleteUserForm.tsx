@@ -34,7 +34,7 @@ export default function DeleteUserForm() {
     localStorage.removeItem('userId');
     localStorage.removeItem('token');
     setIsLoginFalse();
-    navigate('/submain/lend');
+    navigate('/submain');
   };
 
   return (
