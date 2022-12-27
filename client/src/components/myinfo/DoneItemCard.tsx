@@ -1,4 +1,3 @@
-import React from 'react';
 import DealTag from 'components/tag/DealTag';
 import DoneTag from 'components/tag/DoneTag';
 import { Item } from 'components/myinfo/MyLendPostList';
