@@ -1,15 +1,12 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import api from '../api/customAxios';
-import { useIsLoginStore } from 'store/LoginJoinStore';
 // components
 import SearchItemCard from '../components/searchPage/SearchItemCard';
 import HashTag from 'components/tag/HashTag';
 import Footer from '../components/footer/Footer';
-import TrueNav from '../components/nav/TrueNav';
 import { Item } from 'components/myinfo/MyLendPostList';
 import SearchItemCardSeleton from 'components/searchPage/SearchItemCard-skeleton';
-import Nav from '../components/nav/Nav';
 // icon
 import { FiSearch } from 'react-icons/fi';
 import { Pagination } from '../components/Pagination';
@@ -24,7 +21,6 @@ export default function SearchPage() {
   });
   const [items, setItems] = useState([]);
   const [radioStatus, setRadioStatus] = useState('lend');
-  const { isLogin } = useIsLoginStore();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -61,7 +57,6 @@ export default function SearchPage() {
   if (isLoading) return <p>Loading...</p>;
   return (
     <div className="w-screen max-w-screen-lg relative m-auto">
-      {isLogin ? <TrueNav /> : <Nav />}
       {/* radio btn */}
       <form className="flex text-xl font-bold py-2 px-32 mb-1">
         <div className="mr-3">

@@ -22,6 +22,8 @@ import ProductsList from 'pages/ProductsList';
 import Notices from 'pages/Notices';
 import ReadNotice from 'pages/Notice';
 import NotFound from 'components/NotFound';
+import TrueNav from './components/nav/TrueNav';
+import Nav from './components/nav/Nav';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -82,6 +84,9 @@ function App() {
         <GlobalStyle />
         <div className="App h-screen w-screen">
           <BrowserRouter>
+            <div className="w-screen max-w-screen-lg m-auto">
+              {isLogin ? <TrueNav /> : <Nav />}
+            </div>
             {/* ScrollToTop : navigate했을 때, 스크롤 위치가 그대로 적용되는 문제 방지*/}
             <ScrollToTop />
             <Routes>
