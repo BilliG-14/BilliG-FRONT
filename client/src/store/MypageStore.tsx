@@ -15,13 +15,13 @@ export const useMyinfoEditStore = create<MyinpoEditState>((set) => ({
 interface PasswordEditState {
   isPW: boolean;
   togglePw: () => void;
-  // togglePwfalse: () => void;
+  togglePwfalse: () => void;
 }
 
 export const usePasswordEditStore = create<PasswordEditState>((set) => ({
   isPW: false,
   togglePw: () => set((state) => ({ isPW: !state.isPW })),
-  // togglePwfalse: () => set(() => ({ isPW: false })),
+  togglePwfalse: () => set(() => ({ isPW: false })),
 }));
 
 interface DeleteUserState {
