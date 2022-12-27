@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import api from 'api/customAxios';
 import { AdminHeader, AdminSideBar } from 'components/admin';
 import AdminMainSection from 'components/admin/AdminMainSection';
+import Loading from 'components/Loading';
 import NotFound from 'components/NotFound';
 
 export default function AdminMain() {
@@ -14,7 +15,7 @@ export default function AdminMain() {
       refetchOnWindowFocus: false,
     },
   );
-
+  if (isLoading) return <Loading />;
   return (
     <div className="h-full w-screen max-w-screen-lg m-auto">
       {userInfo && userInfo.data.role === 'admin' ? (

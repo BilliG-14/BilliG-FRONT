@@ -47,9 +47,9 @@ export function JoinForm() {
             닉네임에 공백이나 특수문자가 포함되어 있습니다.
           </p>
         )}
-        {joinFormState.nickName.length > 8 && (
+        {joinFormState.nickName.length > 7 && (
           <p className="text-red-400 text-left w-full mt-1 font-medium">
-            닉네임은 최대 8자리입니다.
+            닉네임은 최대 7글자입니다.
           </p>
         )}
         <label htmlFor="email" className={labelClassName}>
@@ -178,7 +178,7 @@ function JoinButton() {
     }
     if (
       !joinFormState.nickName ||
-      joinFormState.nickName.length > 8 ||
+      joinFormState.nickName.length > 7 ||
       checkSpaceAndSpecial(joinFormState.nickName)
     ) {
       setOpenModal(true);

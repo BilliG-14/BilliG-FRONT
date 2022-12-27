@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import api from 'api/customAxios';
 import { AxiosError } from 'axios';
+import Loading from 'components/Loading';
 import ConfirmModal from 'components/Modal';
 import { useState } from 'react';
 
@@ -48,7 +49,7 @@ export default function AdminReportSection() {
     },
   });
   if (isLoading) {
-    return <p>데이터를 불러오는 중입니다...</p>;
+    return <Loading />;
   }
   if (isError) {
     return <p>데이터를 불러오지 못했습니다.</p>;
