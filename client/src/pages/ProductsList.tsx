@@ -1,18 +1,18 @@
 import api from 'api/customAxios';
 import { AxiosError } from 'axios';
-import { Pagination } from 'components/Pagination';
 import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Item } from 'components/myinfo/MyLendPostList';
-import ListByCategory from 'components/productsList/ListByCategory';
 import { useParams } from 'react-router-dom';
+import { CategoryType } from 'store/PostWriteStore';
+import { PostDataType } from '../store/PostReadStore';
+//컴포넌트
+import { Pagination } from 'components/Pagination';
+import ListByCategory from 'components/productsList/ListByCategory';
 import ProductsListNav from 'components/productsList/ProductsListNav';
 import Loading from 'components/Loading';
-import { CategoryType } from 'store/PostWriteStore';
 import NotFound from 'components/NotFound';
-
 export type Products = {
-  docs: [Item];
+  docs: [PostDataType];
   totalPages: number;
   hasNextPage: boolean;
   hasPrevPage: boolean;
@@ -30,7 +30,6 @@ export default function ProductsList(props: ProductsListProps) {
   const { postType } = props;
   const { categoryId } = useParams();
   const [page, setPage] = useState(1);
-  const [categoryName, setCategoryName] = useState('분류 없음');
   const per = 8;
   /*아이템 목록에 사용될 통신 */
   const {
@@ -63,27 +62,16 @@ export default function ProductsList(props: ProductsListProps) {
   });
   useEffect(() => {
     setPage(1);
-    const targetCategory = categories?.find(
-      (category) => category._id === categoryId,
-    );
-    const newCategoryName = targetCategory?.name;
-    setCategoryName(newCategoryName ? newCategoryName : '분류없음');
   }, [categoryId]);
   if (!categoryId) return <NotFound />;
   if (isLoadingItem || isLoadingCategory) return <Loading />;
   if (isErrorItem || isErrorCategory) return <NotFound />;
   return (
-    <div className="max-w-screen-lg m-auto pb-32">
+    <div className="max-w-screen-lg m-auto pb-32 min-w-[922px]">
       {categories && (
         <ProductsListNav postType={postType} categories={categories} />
       )}
-      {products && categories && (
-        <ListByCategory
-          items={products?.docs}
-          categoryName={categoryName ? categoryName : '분류 없음'}
-          postType={postType}
-        />
-      )}
+      {products && categories && <ListByCategory items={products?.docs} />}
       <Pagination
         page={page}
         setPage={setPage}
