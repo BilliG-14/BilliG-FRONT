@@ -32,7 +32,6 @@ export default function Notices() {
     },
   );
   if (isLoading) return <Loading />;
-  console.log(noticesPaginate);
   return (
     <div className="w-screen m-auto">
       <div className="max-w-screen-lg mx-auto">

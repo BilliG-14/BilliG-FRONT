@@ -55,7 +55,6 @@ export default function UserInformation() {
   }, [isOpenModal]);
   /*get category */
   const { id } = useParams();
-  console.log(id);
   const { isLoading, data, isError } = useQuery<User, AxiosError>(
     [`user`, id],
     apiUser.GET(id),
