@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import api from '../../api/customAxios';
 // type
 import { Item } from './MyLendPostList';
@@ -10,6 +10,7 @@ import Loading from '../Loading';
 
 export default function MyBorrowDealList() {
   const [page, setPage] = useState(1);
+  // * useQuery
   const {
     isLoading,
     isError,
@@ -28,7 +29,7 @@ export default function MyBorrowDealList() {
       staleTime: 60 * 1000 * 5,
     },
   );
-
+  // * useMutation
   if (isLoading) return <Loading />;
   return (
     <div className="w-4/5 p-12">

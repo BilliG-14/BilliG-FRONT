@@ -52,7 +52,6 @@ export default function EditMyinfoPage() {
   );
   // * useMutation
   const client = useQueryClient();
-  console.log(client);
   const updateUserInfoMutation = useMutation(
     ['userInfo'],
     async (updateData: UpdateInfo) => {
