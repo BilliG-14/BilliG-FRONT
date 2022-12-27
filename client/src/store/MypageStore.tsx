@@ -24,6 +24,7 @@ export const usePasswordEditStore = create<PasswordEditState>((set) => ({
   togglePwfalse: () => set(() => ({ isPW: false })),
 }));
 
+// 유저 삭제
 interface DeleteUserState {
   isDeleteUser: boolean;
   toggleDeleteUser: () => void;
