@@ -31,6 +31,9 @@ export default function ProductsList(props: ProductsListProps) {
   const { categoryId } = useParams();
   const [page, setPage] = useState(1);
   const per = 8;
+  useEffect(() => {
+    setPage(1);
+  }, [categoryId]);
   /*아이템 목록에 사용될 통신 */
   const {
     isLoading: isLoadingItem,
@@ -55,34 +58,14 @@ export default function ProductsList(props: ProductsListProps) {
       staleTime: 60 * 1000 * 5,
     },
   );
-  /*네비게이션에 사용될 카테고리 목록 통신 */
-  const {
-    isLoading: isLoadingCategory,
-    data: categories,
-    isError: isErrorCategory,
-  } = useQuery<CategoryType[], AxiosError>(
-    ['categories'],
-    async () => {
-      const res = await api.get('/category');
-      return res.data;
-    },
-    {
-      refetchOnWindowFocus: false,
-      staleTime: 60 * 1000 * 5,
-    },
-  );
-  useEffect(() => {
-    setPage(1);
-  }, [categoryId]);
+
   if (!categoryId) return <NotFound />;
-  if (isLoadingItem || isLoadingCategory) return <Loading />;
-  if (isErrorItem || isErrorCategory) return <NotFound />;
+  if (isLoadingItem) return <Loading />;
+  if (isErrorItem) return <NotFound />;
   return (
     <div className="max-w-screen-lg m-auto pb-32 min-w-[922px]">
-      {categories && (
-        <ProductsListNav postType={postType} categories={categories} />
-      )}
-      {products && categories && <ListByCategory items={products?.docs} />}
+      <ProductsListNav postType={postType} />
+      {products && <ListByCategory items={products?.docs} />}
       <Pagination
         page={page}
         setPage={setPage}
