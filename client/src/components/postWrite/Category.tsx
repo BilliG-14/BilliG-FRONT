@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import api from '../../api/customAxios';
 
 import { categoryStore, CategoryType } from './../../store/PostWriteStore';
+import Loading from 'components/Loading';
 
 export default function Category(props: CategoryType) {
   const { categoryId } = props;
@@ -11,15 +12,18 @@ export default function Category(props: CategoryType) {
   const categoryRef = useRef<HTMLSelectElement>(null);
 
   // 카테고리 받아오기
-  useQuery(['categories'], () => api.get('/category'), {
+  const { isLoading } = useQuery(['categories'], () => api.get('/category'), {
     refetchOnMount: 'always',
     refetchOnWindowFocus: false,
     staleTime: 60 * 1000 * 60,
     onSuccess: (res) => {
       setCategorys(res.data);
     },
-    onError: (err) => console.log('카테고리 에러', err),
   });
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   // 사용자가 선택한 카테고리만 필터
   function changecategory() {

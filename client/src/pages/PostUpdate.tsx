@@ -17,6 +17,7 @@ import ReservationDate from './../components/postWrite/ReservationDate';
 import { PostDataType, ServerHashTags } from './../store/PostReadStore';
 import Category from 'components/postWrite/Category';
 import UpdatedImageUpload from 'components/postWrite/UpdatedImageUpload';
+import Loading from 'components/Loading';
 
 export default function PostUpdate() {
   // 빌립니다 글쓰기
@@ -43,30 +44,36 @@ export default function PostUpdate() {
   /* 서버에서 해시태그가 object 형태로 들어와서 해시태그 이름만 배열로 담아야함  */
   const serverHashTagList: string[] = [];
 
-  useQuery(['userData'], () => api.get(`/product/${id}`), {
-    refetchOnMount: 'always',
-    refetchOnWindowFocus: false,
-    staleTime: 60 * 1000 * 60,
-    onSuccess: (data) => {
-      setPostData(data?.data[0]);
-      setFilteredCategory(data?.data[0].category._id);
-      setImgUrlList(data?.data[0].imgUrl);
-      setTitle(data?.data[0].title);
-      setPrice(data?.data[0].price);
-      setDescription(data?.data[0].description);
-      setTradeWay(
-        data?.data[0].tradeWay.direct,
-        data?.data[0].tradeWay.delivery,
-      );
-      /* 서버에서 해시태그가 object 형태로 들어와서 해시태그 이름만 배열로 담아야함  */
-      data?.data[0].hashtag.map((tag: ServerHashTags) =>
-        serverHashTagList.push(tag.name),
-      );
-      serverHashTags(serverHashTagList);
-      setReservationDate(data?.data[0].period.start, data?.data[0].period.end);
+  const { isLoading } = useQuery(
+    ['userData'],
+    () => api.get(`/product/${id}`),
+    {
+      refetchOnMount: 'always',
+      refetchOnWindowFocus: false,
+      staleTime: 60 * 1000 * 60,
+      onSuccess: (data) => {
+        setPostData(data?.data[0]);
+        setFilteredCategory(data?.data[0].category._id);
+        setImgUrlList(data?.data[0].imgUrl);
+        setTitle(data?.data[0].title);
+        setPrice(data?.data[0].price);
+        setDescription(data?.data[0].description);
+        setTradeWay(
+          data?.data[0].tradeWay.direct,
+          data?.data[0].tradeWay.delivery,
+        );
+        /* 서버에서 해시태그가 object 형태로 들어와서 해시태그 이름만 배열로 담아야함  */
+        data?.data[0].hashtag.map((tag: ServerHashTags) =>
+          serverHashTagList.push(tag.name),
+        );
+        serverHashTags(serverHashTagList);
+        setReservationDate(
+          data?.data[0].period.start,
+          data?.data[0].period.end,
+        );
+      },
     },
-    onError: (err) => console.log('데이터 가져오기 에러', err),
-  });
+  );
 
   // 글 업데이트
   function changeTitle(e: ChangeEvent<HTMLInputElement>) {
@@ -118,11 +125,12 @@ export default function PostUpdate() {
       onSuccess: (res) => {
         navigate(`/read/${res.data._id}`);
       },
-      onError: (error) => {
-        console.log(error);
-      },
     },
   );
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   // 등록하기 클릭 시 event
   function handleButtonClick(e: React.MouseEvent<HTMLButtonElement>) {

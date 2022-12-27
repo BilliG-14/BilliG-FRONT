@@ -15,6 +15,7 @@ import HashTagSection from '../components/postWrite/HashTag';
 import ImageUpload from '../components/postWrite/ImageUpload';
 import TradeWay from '../components/postWrite/TradeWay';
 import ReservationDate from './../components/postWrite/ReservationDate';
+import Loading from 'components/Loading';
 
 export default function BorrowWriting() {
   // 빌립니다 글쓰기
@@ -32,12 +33,15 @@ export default function BorrowWriting() {
 
   const navigate = useNavigate();
   // 사용자 가져오기
-  const { data } = useQuery(['userData'], () => api.get('/user/me'), {
-    refetchOnMount: 'always',
-    refetchOnWindowFocus: false,
-    staleTime: 60 * 1000 * 60,
-    onError: (err) => console.log(err),
-  });
+  const { data, isLoading } = useQuery(
+    ['userData'],
+    () => api.get('/user/me'),
+    {
+      refetchOnMount: 'always',
+      refetchOnWindowFocus: false,
+      staleTime: 60 * 1000 * 60,
+    },
+  );
 
   // 카테고리 가져오기
   const [categorys, setCategorys] = useState<CategoryType[]>([]);
@@ -49,7 +53,6 @@ export default function BorrowWriting() {
     refetchOnWindowFocus: false,
     staleTime: 60 * 1000 * 60,
     onSuccess: (res) => setCategorys(res.data),
-    onError: (err) => console.log(err),
   });
 
   // 사용자가 선택한 카테고리만 필터
@@ -81,11 +84,12 @@ export default function BorrowWriting() {
       onSuccess: (res) => {
         navigate(`/read/${res.data._id}`);
       },
-      onError: (error) => {
-        console.log(error);
-      },
     },
   );
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   // formData 넣기
   const formData = new FormData();
