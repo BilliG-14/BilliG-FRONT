@@ -9,10 +9,12 @@
       name="description"
       content="Web site created using create-react-app"
     />
-    <meta
+    <!-- <meta
       http-equiv="Content-Security-Policy"
       content="upgrade-insecure-requests"
-    />
+    /> -->
+    <!-- Referer-Policy -->
+    <meta name="referrer" content="no-referrer-when-downgrade" />
     <!-- google font -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -25,12 +27,12 @@
       src="https://kit.fontawesome.com/f39786afbf.js"
       crossorigin="anonymous"
     ></script>
+    <!-- kakaoMap -->
     <script
       type="text/javascript"
       src="//dapi.kakao.com/v2/maps/sdk.js?appkey=%REACT_APP_KAKAO_MAP_KEY%&libraries=services"
     ></script>
-
-    <title>React App</title>
+    <title>빌려주고 빌리는 BillG</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

@@ -12,7 +12,7 @@ export default function MyInfoSideBar() {
           내 정보
         </p>
         <ul className="text-center text-lg font-semibold">
-          <li className="h-10 flex items-center justify-start">
+          <li className="h-10 flex items-center justify-start hover:scale-105 hover:ease-in duration-300 hover:text-b-yellow">
             <Link to="/mypage">개인정보확인/수정</Link>
           </li>
         </ul>
@@ -23,7 +23,7 @@ export default function MyInfoSideBar() {
         </p>
         <ul className="text-center text-lg font-semibold">
           <li
-            className="h-10 flex items-center justify-start"
+            className="h-10 flex items-center justify-start hover:scale-105 hover:ease-in duration-300 hover:text-b-yellow"
             onClick={() => {
               client.invalidateQueries([
                 `giveList/1`,
@@ -35,7 +35,7 @@ export default function MyInfoSideBar() {
             <Link to="/mypage/lendlist">빌려주기 게시물 조회</Link>
           </li>
           <li
-            className="h-10 flex items-center justify-start"
+            className="h-10 flex items-center justify-start hover:scale-105 hover:ease-in duration-300 hover:text-b-yellow"
             onClick={() => {
               client.invalidateQueries([
                 `borrowList/1`,
@@ -49,7 +49,7 @@ export default function MyInfoSideBar() {
         </ul>
       </div>
       <div className="menu_box mb-5">
-        <p className="items-center justify-center text-2xl font-extrabold mb-1">
+        <p className="items-center justify-center text-2xl font-extrabold mb-3">
           내 거래
         </p>
         <ul className="text-center text-lg font-semibold">
@@ -57,7 +57,7 @@ export default function MyInfoSideBar() {
             <p>거래중인 물품</p>
           </li>
           <li
-            className="h-10 flex items-center justify-start"
+            className="h-10 flex items-center justify-start hover:scale-105 hover:ease-in duration-300 hover:text-b-yellow"
             onClick={() => {
               client.invalidateQueries([
                 `lendDealList/1`,
@@ -69,7 +69,7 @@ export default function MyInfoSideBar() {
             <Link to="/mypage/lenddeallist">빌려주기 조회</Link>
           </li>
           <li
-            className="h-10 flex items-center justify-start"
+            className="h-10 flex items-center justify-start mb-3 hover:scale-105 hover:ease-in duration-300 hover:text-b-yellow"
             onClick={() => {
               client.invalidateQueries([
                 `borrowDealList/1`,
@@ -84,7 +84,7 @@ export default function MyInfoSideBar() {
             <p>거래완료 물품</p>
           </li>
           <li
-            className="h-10 flex items-center justify-start"
+            className="h-10 flex items-center justify-start hover:scale-105 hover:ease-in duration-300 hover:text-b-yellow"
             onClick={() => {
               client.invalidateQueries([
                 `lendDoneList/1`,
@@ -96,7 +96,7 @@ export default function MyInfoSideBar() {
             <Link to="/mypage/donelendlist">빌려주기 완료 조회</Link>
           </li>
           <li
-            className="h-10 flex items-center justify-start"
+            className="h-10 flex items-center justify-start hover:scale-105 hover:ease-in duration-300 hover:text-b-yellow"
             onClick={() => {
               client.invalidateQueries([
                 `borrowDoneList/1`,
