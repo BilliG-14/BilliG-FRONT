@@ -30,9 +30,9 @@ function Chat() {
   }, []);
 
   return (
-    <div className="max-w-screen-lg mx-auto">
-      <div className="flex max-w-screen-lg mx-auto">
-        <div className="w-1/5">
+    <div className="max-w-screen-lg mx-auto h-full">
+      <div className="flex max-w-screen-lg mx-auto h-full">
+        <div className="w-1/5 h-full">
           <SidePanel
             key={userInfo && true}
             user={userInfo}

@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 /** 추후 any 바꾸기! */
 function UserPanel({ user }: any) {
   const navigate = useNavigate();
+  console.log('user', user.image);
   return (
     <div className="w-full h-full px-2">
       {/* Logo */}
@@ -18,8 +19,8 @@ function UserPanel({ user }: any) {
       <div className="flex mt-6 flex-col w-full px-6">
         <img
           // src={user && user.photoURL} // url은 추후 다시 ...
-          src="https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F9948F536603072310A" //user.data.image
-          className="w-32 h-32 rounded-full object-cover"
+          src={user && user.image}
+          className="w-32 h-32 rounded-full object-cover border border-solid border-gray-300 bg-white"
           alt="사용자이미지"
         />
         <div className="text-center mt-5 font-semibold text-lg">
