@@ -17,7 +17,6 @@ export default function UpdatedImageUpload(props: PropsType) {
   const { bringImgUrlList } = props;
   const { imgFiles, setImgFile } = imageUploadStore();
   const [previewImages, setPreviewFileImages] = useState<PreviewImg[]>([]);
-  const [serverPreviewImgs, setServerPreviewImgs] = useState<string[]>([]);
 
   // 서버에서 받아온 이미지들 프리뷰로 보여주기
   //   setServerPreviewImgs(bringImgUrlList);
@@ -25,21 +24,10 @@ export default function UpdatedImageUpload(props: PropsType) {
   // 이미지 갯수 제한(가장 우선)(구현완료), 이미지 크기 제한 구현 예정
   // 게시글을 볼 때 메인 이미지를 어떻게 정할것인지?
 
-  const s3url = useMutation((file: File) => api.post('/user/image', file), {
-    onSuccess: (res) => {
-      console.log(res);
-    },
-    onError: (error) => {
-      console.log(error);
-    },
-  });
-
   function imagePreview(e: React.ChangeEvent<HTMLInputElement>): void {
     const target = e.currentTarget;
     // 유사배열 객체를 Array로 변환
     const files = Array.from(target.files as FileList);
-    console.log(URL.createObjectURL(files[0]));
-    console.log(files);
 
     setPreviewFileImages([]);
 

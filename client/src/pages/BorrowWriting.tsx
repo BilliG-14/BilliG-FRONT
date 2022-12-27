@@ -15,6 +15,7 @@ import HashTagSection from '../components/postWrite/HashTag';
 import ImageUpload from '../components/postWrite/ImageUpload';
 import TradeWay from '../components/postWrite/TradeWay';
 import ReservationDate from './../components/postWrite/ReservationDate';
+import Loading from 'components/Loading';
 
 export default function BorrowWriting() {
   // 빌립니다 글쓰기
@@ -32,12 +33,15 @@ export default function BorrowWriting() {
 
   const navigate = useNavigate();
   // 사용자 가져오기
-  const { data } = useQuery(['userData'], () => api.get('/user/me'), {
-    refetchOnMount: 'always',
-    refetchOnWindowFocus: false,
-    staleTime: 60 * 1000 * 60,
-    onError: (err) => console.log(err),
-  });
+  const { data, isLoading } = useQuery(
+    ['userData'],
+    () => api.get('/user/me'),
+    {
+      refetchOnMount: 'always',
+      refetchOnWindowFocus: false,
+      staleTime: 60 * 1000 * 60,
+    },
+  );
 
   // 카테고리 가져오기
   const [categorys, setCategorys] = useState<CategoryType[]>([]);
@@ -49,7 +53,6 @@ export default function BorrowWriting() {
     refetchOnWindowFocus: false,
     staleTime: 60 * 1000 * 60,
     onSuccess: (res) => setCategorys(res.data),
-    onError: (err) => console.log(err),
   });
 
   // 사용자가 선택한 카테고리만 필터
@@ -59,6 +62,14 @@ export default function BorrowWriting() {
         (category) => category._id === categoryRef.current?.value,
       ),
     );
+  }
+
+  // 제목 글자수 제한
+  function checkWordsNumber(e: React.FocusEvent<HTMLInputElement>) {
+    if (e.currentTarget.value.length > 20) {
+      alert('상품명은 20자 이내로 입력 가능합니다.');
+      e.currentTarget.value = e.currentTarget.value.slice(0, 20);
+    }
   }
 
   // 서버로 post 보내기, useMutate 정의
@@ -73,11 +84,12 @@ export default function BorrowWriting() {
       onSuccess: (res) => {
         navigate(`/read/${res.data._id}`);
       },
-      onError: (error) => {
-        console.log(error);
-      },
     },
   );
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   // formData 넣기
   const formData = new FormData();
@@ -150,10 +162,11 @@ export default function BorrowWriting() {
               ))}
             </select>
             <input
+              onBlur={checkWordsNumber}
               ref={productNameRef}
               className="grow p-3 ml-2 w-9/12 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
               type="text"
-              placeholder="상품명"
+              placeholder="상품명은 20자까지만 입력 가능합니다."
             />
           </section>
 

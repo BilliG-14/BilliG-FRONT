@@ -16,15 +16,15 @@ export default function HashTagSection() {
     setHashTagInputText(tagInput);
   }
 
-  function handleTagSpaceBar(e: React.KeyboardEvent<HTMLInputElement>) {
-    if (!hashTags.includes(hashTagInputText) && hashTags.length < 5) {
-      if (e.key === 'Enter') {
+  function handleTagEnter(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === 'Enter') {
+      if (!hashTags.includes(hashTagInputText) && hashTags.length < 5) {
         setHashTags(hashTagInputText);
         setHashTagInputText('');
         return;
+      } else {
+        setHashTagInputText('');
       }
-    } else {
-      setHashTagInputText('');
     }
   }
 
@@ -46,7 +46,7 @@ export default function HashTagSection() {
             <input
               value={hashTagInputText}
               onChange={handleTextChange}
-              onKeyDown={handleTagSpaceBar}
+              onKeyDown={handleTagEnter}
               type="text"
               placeholder="태그를 입력해주세요"
               className="p-3 mr-4 w-[200px] h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
