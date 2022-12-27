@@ -22,7 +22,6 @@ function Chat({ chatService, baseURL }: any) {
   const setChatRoomsInfoData = async () => {
     /** 추후 any 바꾸기! */
     const chatRooms: any = await getChatRooms();
-    console.log(chatRooms);
     setChatRoomsInfo(chatRooms);
   };
   useEffect(() => {

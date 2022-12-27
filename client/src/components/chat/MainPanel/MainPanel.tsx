@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { io } from 'socket.io-client';
 import { useParams, useNavigate } from 'react-router-dom';
+import { getChatRoom } from '../getChatRoom';
 interface MessageInterface {
   sender: string;
   message: string;
@@ -54,26 +55,17 @@ function MainPanel({ user, chatRoomList }: any) {
     // });
   }, [currentRoom, messages]);
   //--------------------------------------------------
-  // useEffect(() => {
-  //   if (chatRoomList) {
-  //     chatRoomList.forEach((room: any) => {
-  //       if (room.title === currentRoom) {
-  //         setMessages(room.messages);
-  //       }
-  //     });
-  //   }
-  // }, [currentRoom, chatRoomList]);
+  useEffect(() => {
+    async function fetchData() {
+      if (roomId) {
+        const chatData = await getChatRoom(roomId);
+        const chatMessages = chatData.chats;
+        setMessages(chatMessages);
+      }
+    }
+    fetchData();
+  }, [roomId]);
 
-  // useEffect(() => {
-  //   if (messages) {
-  //     if (currentRoom === messages.sentRoom) {
-  //       setMessages((messages) => {
-  //         const newmsg = { sender: messages.sender, message: messages.message };
-  //         return [...messages, newmsg];
-  //       });
-  //     }
-  //   }
-  // }, [messages, currentRoom]);
   //--------------------------------------------------
 
   return (
