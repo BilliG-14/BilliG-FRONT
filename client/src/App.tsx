@@ -11,22 +11,15 @@ import BorrowWriting from './pages/BorrowWriting';
 import LendWriting from './pages/LendWriting';
 import SubmainLend from './pages/SubmainLend';
 import PostDetail from './pages/PostDetail';
-import Search from './pages/Search';
+import SearchLendPage from './pages/SearchLendPage';
 import MyPage from './pages/MyPage';
-import MyLendPostListPage from './pages/MyLendPostListPage';
-import MyBorrowPostListPage from './pages/MyBorrowPostListPage';
 import ScrollToTop from 'components/ScrollToTop';
 import { useIsLoginStore } from 'store/LoginJoinStore';
 import api from './api/customAxios';
-import MyPageEdit from './pages/MyPageEdit';
 import UserInformation from 'pages/UserInformation';
 import PostUpdate from './pages/PostUpdate';
 import SubmainBorrow from './pages/SubmainBorrow';
 import ProductsList from 'pages/ProductsList';
-import MyLendDealListPage from './pages/MyLendDealListPage';
-import MyBorrowDealListPage from './pages/MyBorrowDealListPage';
-import MyLendDoneListPage from './pages/MyLendDoneListPage';
-import MyBrorowDoneListPage from './pages/MyBrorowDoneListPage';
 import Notices from 'pages/Notices';
 import ReadNotice from 'pages/Notice';
 import NotFound from 'components/NotFound';
@@ -100,34 +93,12 @@ function App() {
               <Route path="/write/borrow" element={<BorrowWriting />} />
               <Route path="/submain/lend" element={<SubmainLend />} />
               <Route path="/submain/borrow" element={<SubmainBorrow />} />
-              <Route path="/search" element={<Search />} />
+              <Route path="/search/lend" element={<SearchLendPage />} />
               <Route path="/read/:id" element={<PostDetail />} />
               <Route path="/update/:id" element={<PostUpdate />} />
-              <Route path="/mypage" element={<MyPage />} />
+              <Route path="/mypage/*" element={<MyPage />} />
               <Route path="/notices" element={<Notices />} />
               <Route path="/notices/:id" element={<ReadNotice />} />
-              <Route path="/mypage/givelist" element={<MyLendPostListPage />} />
-              <Route
-                path="/mypage/borrowlist"
-                element={<MyBorrowPostListPage />}
-              />
-              <Route
-                path="/mypage/lenddeallist"
-                element={<MyLendDealListPage />}
-              />
-              <Route
-                path="/mypage/borrowdeallist"
-                element={<MyBorrowDealListPage />}
-              />
-              <Route path="/mypage/edit" element={<MyPageEdit />} />
-              <Route
-                path="/mypage/donegivelist"
-                element={<MyLendDoneListPage />}
-              />
-              <Route
-                path="/mypage/doneborrowlist"
-                element={<MyBrorowDoneListPage />}
-              />
               <Route path="/user/:id" element={<UserInformation />} />
               <Route
                 path="/products/lend/:categoryId"

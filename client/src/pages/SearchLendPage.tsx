@@ -1,18 +1,19 @@
-import SearchItemCard from '../components/searchPage/SearchItemCard';
-import Nav from '../components/nav/Nav';
-// import SearchBar from 'components/searchPage/SearchBar';
-import HashTag from 'components/tag/HashTag';
-import Footer from '../components/footer/Footer';
-import { useIsLoginStore } from 'store/LoginJoinStore';
-import TrueNav from '../components/nav/TrueNav';
+import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import api from '../api/customAxios';
-import { FiSearch } from 'react-icons/fi';
-import { useState } from 'react';
+import { useIsLoginStore } from 'store/LoginJoinStore';
+// components
+import SearchItemCard from '../components/searchPage/SearchItemCard';
+import HashTag from 'components/tag/HashTag';
+import Footer from '../components/footer/Footer';
+import TrueNav from '../components/nav/TrueNav';
 import { Item } from 'components/myinfo/MyLendPostList';
 import SearchItemCardSeleton from 'components/searchPage/SearchItemCard-skeleton';
+import Nav from '../components/nav/Nav';
+// icon
+import { FiSearch } from 'react-icons/fi';
 
-export default function Search() {
+export default function SearchLendPage() {
   const [searchWord, setSearchWord] = useState<string>('');
   const [items, setItems] = useState([]);
   const { isLogin } = useIsLoginStore();
@@ -82,6 +83,11 @@ export default function Search() {
               </li>
             ))}
           </ul>
+        </div>
+      </div>
+      <div>
+        <div className="text-2xl font-bold py-2 px-32 mb-1">
+          <span>빌려주기 게시물</span>
         </div>
       </div>
       {/* ItemCard */}
