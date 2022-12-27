@@ -12,6 +12,7 @@ import api from './../api/customAxios';
 import LendButtons from '../components/postDetail/LendButtons';
 import BorrowButtons from '../components/postDetail/BorrowButtons';
 import Map from 'components/postDetail/Map';
+import Loading from 'components/Loading';
 
 export default function PostDetail() {
   const navigate = useNavigate();
@@ -22,14 +23,16 @@ export default function PostDetail() {
   // 서버에서 get 하는 data state
   const [postData, setPostData] = useState<PostDataType>();
 
+  // 서브 사진 클릭하면 메인으로 올리는 state
+  const [mainImgUrl, setMainImgUrl] = useState('');
+
   // url id 받기
   const { id } = useParams();
 
-  useQuery(['postData'], () => api.get(`product/${id}`), {
+  const { isLoading } = useQuery(['postData'], () => api.get(`product/${id}`), {
     refetchOnMount: 'always',
     refetchOnWindowFocus: true,
     onSuccess: (res) => setPostData(res?.data[0]),
-    onError: () => console.log('error'),
   });
 
   // post 삭제하기, useMutate 정의
@@ -37,10 +40,11 @@ export default function PostDetail() {
     onSuccess: () => {
       navigate('/submain');
     },
-    onError: (error) => {
-      console.log(error);
-    },
   });
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   // 현재 상품 상태가 거래전(대여전)상태일때만 수정/삭제가 가능함.
   // 프로세스 : 거래전(0) - 거래중(1) - 대여완료(2) - 반납완료(3)
@@ -71,8 +75,6 @@ export default function PostDetail() {
   }
 
   // 서브 사진 클릭하면 메인으로 올리기
-  const [mainImgUrl, setMainImgUrl] = useState('');
-
   function changeMainImg(e: React.MouseEvent<HTMLImageElement>) {
     setMainImgUrl(e.currentTarget.src);
   }
@@ -247,7 +249,11 @@ export default function PostDetail() {
                       <div className="flex items-center">
                         <img
                           className="h-8 w-8 mr-2 rounded-full"
-                          src={postData?.author.image}
+                          src={
+                            postData?.author.image === ''
+                              ? '../img/default_user.png'
+                              : postData?.author.image
+                          }
                           alt="사용자 이미지"
                         />
 

@@ -108,12 +108,12 @@ module.exports = {
         },
         Marquee: {
           '0%': {
-            transform: 'translateX(0)'
+            transform: 'translateX(0)',
           },
           '100%': {
-            transform: 'translateX(-100%)'
+            transform: 'translateX(-100%)',
           },
-        }
+        },
       },
       animation: {
         'fade-in-150ms': 'fadeIn 150ms linear',
@@ -125,7 +125,7 @@ module.exports = {
         'center-to-lb': 'CenterToLeftBottom 500ms linear 1.2s both',
         'center-to-rb': 'CenterToRightBottom 500ms linear 1.4s both',
         'center-to-rt': 'CenterToRightTop 500ms linear 1.6s both',
-        'marquee': 'Marquee 52s linear infinite',
+        marquee: 'Marquee 52s linear infinite',
       },
     },
   },

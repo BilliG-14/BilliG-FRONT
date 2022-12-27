@@ -24,6 +24,7 @@ import ReadNotice from 'pages/Notice';
 // componets
 import ScrollToTop from 'components/ScrollToTop';
 import NotFound from 'components/NotFound';
+import Loading from 'components/Loading';
 import TrueNav from './components/nav/TrueNav';
 import Nav from './components/nav/Nav';
 
@@ -77,8 +78,7 @@ function App() {
     setIsLoadingTrue();
   }, [isLogin]);
 
-  if ((!isLoading && !isLogin) || (!isLoading && isLogin))
-    return <p>loading....</p>;
+  if ((!isLoading && !isLogin) || (!isLoading && isLogin)) return <Loading />;
 
   return (
     <React.Fragment>
