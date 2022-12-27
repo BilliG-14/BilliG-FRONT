@@ -2,12 +2,12 @@ import Nav from 'components/nav/Nav';
 import { apiReports, Notice } from 'components/admin/AdminNoticeSection';
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import MarkdownRenderer from '../components/MarkdownRenderer';
-import { createGlobalStyle } from 'styled-components';
 
 export default function ReadNotice() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const {
     isLoading,
     data: notice,
@@ -45,11 +45,20 @@ export default function ReadNotice() {
               <p className="text-base mt-2">
                 {new Date(notice.createdAt).toLocaleDateString()}
               </p>
-              <div className="mt-16 pb-32">
+              <div className="mt-16 pb-24">
                 <MarkdownRenderer content={notice.content} />
               </div>
             </div>
           )}
+        </div>
+        <div className="flex justify-center pb-20">
+          <button
+            className="px-2 py-1 text-lg rounded-md border-2 border-solid text-b-text-black font-semibold
+            hover:bg-b-yellow hover:text-white transition-colors hover:border-b-yellow"
+            onClick={() => navigate('/notices')}
+          >
+            목록으로
+          </button>
         </div>
       </div>
     </div>

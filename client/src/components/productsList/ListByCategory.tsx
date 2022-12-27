@@ -23,7 +23,7 @@ export default function ListByCategory(props: ListProps) {
       {chunkedItems.map((fourItems, i1) => (
         <div key={i1} className="w-full flex justify-start">
           {fourItems.map((item, i2) => {
-            return postType == 'lend' ? (
+            return postType === 'lend' ? (
               <SubmainLendItemCard
                 key={i2}
                 item={item}

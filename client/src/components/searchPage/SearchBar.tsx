@@ -6,7 +6,7 @@ export default function SearchBar() {
       <input
         type="text"
         placeholder="검색어를 입력해주세요..."
-        className="w-full text-xl max-w-3xl border-b border-solid border-b-yellow px-4 py-3"
+        className="w-full text-xl max-w-3xl border-b border-solid border-b-yellow px-4 py-3 focus:outline-none"
       />
       <button
         type="submit"
