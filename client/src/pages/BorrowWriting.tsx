@@ -1,189 +1,211 @@
+import { useState, useRef } from 'react';
+import { useQuery, useMutation } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
+import api from './../api/customAxios';
+
+import {
+  imageUploadStore,
+  tradeWayStore,
+  hashTagStore,
+  reservationStore,
+  CategoryType,
+} from './../store/PostWriteStore';
+
+import HashTagSection from '../components/postWrite/HashTag';
 import ImageUpload from '../components/postWrite/ImageUpload';
-import { useRef, useState } from 'react';
-import HashTagSection from '../components/postWrite/HashTagWrite';
-import PostStore from './../store/PostStore';
+import TradeWay from '../components/postWrite/TradeWay';
+import ReservationDate from './../components/postWrite/ReservationDate';
+import Loading from 'components/Loading';
 
 export default function BorrowWriting() {
-  // store에서 가져오는 state들
-  const { hashTags } = PostStore();
-
   // 빌립니다 글쓰기
-  const today = new Date()
-    .toLocaleDateString()
-    .replace(/\./g, '')
-    .replace(/\s/g, '-');
+  // store에서 가져오는 state들
+  const { hashTags } = hashTagStore();
+  const { imgFiles } = imageUploadStore();
+  const { tradeWay } = tradeWayStore();
+  const { reservationDate } = reservationStore();
 
   // Ref
   const productNameRef = useRef<HTMLInputElement>(null);
-  const priceDay = useRef<HTMLInputElement>(null);
-  const priceTime = useRef<HTMLInputElement>(null);
-  const period = useRef<HTMLInputElement>(null);
-  const category = useRef<HTMLSelectElement>(null);
+  const priceDayRef = useRef<HTMLInputElement>(null);
+  const categoryRef = useRef<HTMLSelectElement>(null);
+  const descriptionRef = useRef<HTMLTextAreaElement>(null);
 
-  // 등록하기 클릭 시
-  function handleButtonClick(e: React.MouseEvent<HTMLButtonElement>) {
-    e.preventDefault();
-    console.log(productNameRef.current?.value);
-    console.log(priceDay.current?.value);
-    console.log(priceTime.current?.value);
-    console.log(period.current?.value);
-    console.log(
-      category.current?.options[category.current?.selectedIndex].innerText,
+  const navigate = useNavigate();
+  // 사용자 가져오기
+  const { data, isLoading } = useQuery(
+    ['userData'],
+    () => api.get('/user/me'),
+    {
+      refetchOnMount: 'always',
+      refetchOnWindowFocus: false,
+      staleTime: 60 * 1000 * 60,
+    },
+  );
+
+  // 카테고리 가져오기
+  const [categorys, setCategorys] = useState<CategoryType[]>([]);
+  const [filteredCategory, setFilteredCategory] = useState<CategoryType[]>([]);
+
+  // 카테고리 받아오기
+  useQuery(['categories'], () => api.get('/category'), {
+    refetchOnMount: 'always',
+    refetchOnWindowFocus: false,
+    staleTime: 60 * 1000 * 60,
+    onSuccess: (res) => setCategorys(res.data),
+  });
+
+  // 사용자가 선택한 카테고리만 필터
+  function changecategory() {
+    setFilteredCategory(
+      categorys.filter(
+        (category) => category._id === categoryRef.current?.value,
+      ),
     );
-    console.log(hashTags);
-
-    console.log('file', file);
   }
 
-  // 업로드할 파일들을 담을 State!
-  const [file, setFile] = useState<FileList>();
+  // 제목 글자수 제한
+  function checkWordsNumber(e: React.FocusEvent<HTMLInputElement>) {
+    if (e.currentTarget.value.length > 20) {
+      alert('상품명은 20자 이내로 입력 가능합니다.');
+      e.currentTarget.value = e.currentTarget.value.slice(0, 20);
+    }
+  }
 
-  /**
-   * 파일 선택 onChangeHandler
-   * 해당 method에서는 업로드할 파일에대해서 validaion을 하고
-   * file state에 값을 할당한다
-   */
+  // 서버로 post 보내기, useMutate 정의
+  const postData = useMutation(
+    (formData: FormData) =>
+      api.post('/product', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }),
+    {
+      onSuccess: (res) => {
+        navigate(`/read/${res.data._id}`);
+      },
+    },
+  );
 
-  function fileUploadHandler(e: React.ChangeEvent<HTMLInputElement>) {
-    const target = e.currentTarget;
-    const files = target.files as FileList;
+  if (isLoading) {
+    return <Loading />;
+  }
 
-    if (files === undefined) {
+  // formData 넣기
+  const formData = new FormData();
+
+  // 업로드된 이미지 파일 넣기
+  imgFiles.forEach((imgFile) => formData.append('images', imgFile));
+
+  // 이미지 파일 제외한 나머지 data json 형식으로 넣기
+  const writeData = {
+    postType: 'borrow',
+    category: filteredCategory[0]?._id,
+    author: data?.data?._id,
+    title: productNameRef.current?.value,
+    description: descriptionRef.current?.value,
+    // lender: data?.data,
+    stateOfTransaction: 0,
+    address: data?.data?.address1,
+    price: {
+      priceDay: Number(priceDayRef.current?.value),
+    },
+    period: reservationDate,
+    tradeWay: tradeWay,
+    hashtag: hashTags,
+  };
+  formData.append('data', JSON.stringify(writeData));
+
+  // 등록하기 클릭 시 event
+  function handleButtonClick(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    if (filteredCategory.length === 0 || productNameRef.current?.value === '') {
+      alert('카테고리와 이름을 입력해주세요.');
+      return;
+    } else if (
+      !priceDayRef.current?.value ||
+      priceDayRef.current?.value === '0'
+    ) {
+      alert('요금을 입력해주세요.');
+      return;
+    } else if (reservationDate.start === '' || reservationDate.end === '') {
+      alert('예약기간을 입력해주세요.');
+      return;
+    } else if (descriptionRef.current?.value === '') {
+      alert('상세설명을 입력해주세요.');
+      return;
+    } else if (!tradeWay.delivery && !tradeWay.direct) {
+      alert('거래방법을 선택해주세요.');
       return;
     }
-
-    // validation을 정상적으로 통과한 File
-    setFile(files);
+    // 서버에 데이터 저장
+    postData.mutate(formData);
   }
 
   return (
     <div className="max-w-screen-lg mx-auto">
-      <div className="w-[800px] flex flex-col justify-center mx-auto text-b-text-black">
-        <div className="h-80">header</div>
-        <div className="mb-6 text-3xl">빌리기</div>
-        <form>
+      <div className="flex flex-col justify-center mx-auto text-b-text-black">
+        <div className="mb-6 text-3xl font-bold">빌리기</div>
+        <form className="w-[800px] mx-auto">
           {/* 상품명/카테고리 section */}
           <section className="flex mb-4">
             <select
-              ref={category}
+              onChange={changecategory}
+              ref={categoryRef}
               className="flex-none pl-3 w-1/6 h-10 border-solid border  border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2"
             >
-              <option value="1">카테고리</option>
-              <option value="2">IT/가전</option>
-              <option value="3">의류</option>
-              <option value="4">캠핑/레저</option>
-              <option value="5">완구/취미</option>
-              <option value="6">도서/음반</option>
+              <option>카테고리 설정</option>
+              {categorys.map((category) => (
+                <option key={category._id} value={category._id}>
+                  {category.name}
+                </option>
+              ))}
             </select>
             <input
+              onBlur={checkWordsNumber}
               ref={productNameRef}
-              id="productName"
               className="grow p-3 ml-2 w-9/12 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
               type="text"
-              placeholder="상품명"
+              placeholder="상품명은 20자까지만 입력 가능합니다."
             />
           </section>
-          {/* <ImageUpload /> */}
 
-          {/* 사진 등록 section
-          <section className="mb-4">
-            <input
-              onChange={fileUploadHandler}
-              type="file"
-              accept="image/jpeg,"
-              multiple
-              className="block w-full text-sm text-slate-500
-              file:mr-4 file:py-2 file:px-4
-              file:rounded-md file:border-0
-              file:text-sm file:font-semibold
-              cursor-pointer
-              file:bg-b-bg-gray file:text-b-text-black
-              hover:file:bg-gray-200
-              file:cursor-pointer"
-            />
-            <div>
-              사진등록시 사진 추가될 영역
-              <img alt="이미지" />
-            </div>
-          </section> */}
+          {/* 사진 업로드 component */}
+          <ImageUpload />
 
           {/* 요금 section */}
           <section className="flex items-center mb-4">
             <div className="w-[100px] p-3 text-center">요금</div>
             <input
-              ref={priceTime}
+              ref={priceDayRef}
               type="number"
-              className="appearance: none p-3 mx-2 w-60 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
+              className="p-3 mx-2 w-54 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
             />
-            <div className="mr-5">원/시간</div>
-            <input
-              ref={priceDay}
-              type="number"
-              className="p-3 mx-2 w-60 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
-            />
-            <span className="">원/일</span>
+            <span className="mr-9">원/일</span>
+            {/* 거래방법 section */}
+            <TradeWay />
           </section>
 
           {/* 빌리는 기간 section */}
-          <section className="mb-4 flex items-center">
-            <div className="w-[100px] p-3 text-center">예약기간</div>
-            <input
-              ref={period}
-              type="date"
-              min={today}
-              max="2099-12-31"
-              className="p-3 mx-2 w-60 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
-            />
-            <div>~</div>
-            <input
-              type="date"
-              min={today}
-              max="2099-12-31"
-              className="p-3 mx-2 w-60 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
-            />
-          </section>
+          <ReservationDate />
 
           {/* 상품 상세내용 section */}
           <section className="mb-4">
             <textarea
+              ref={descriptionRef}
               placeholder="사이즈, 색상 등 상세정보를 입력하면 좋아요!"
               className="p-3 w-full h-40 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
             />
           </section>
 
-          {/* 거래방법 section */}
-          <section className="mb-4 h-10 flex items-center">
-            <span className="w-[100px] p-3 text-center">거래방법</span>
-            <input
-              type="checkbox"
-              className="mr-2 appearance-none h-4 w-4 border rounded-md border-gray-300  bg-white checked:bg-b-yellow checked:border-b-yellow focus:outline-none transition duration-100 align-top cursor-pointer"
-            />
-            <span className="mr-7">직거래</span>
-            <input
-              type="checkbox"
-              className="mr-2 appearance-none h-4 w-4 border rounded-md border-gray-300  bg-white checked:bg-b-yellow checked:border-b-yellow focus:outline-none transition duration-100 align-top cursor-pointer"
-            />
-            <span>택배거래</span>
-          </section>
-
           {/* 해시태그 section */}
-          {/* <section className="mb-4 h-10 flex items-center">
-            <span className="w-[100px] p-3 text-center">해시태그</span>
-            <div>
-              <input
-                type="text"
-                placeholder="태그를 입력해주세요"
-                className="p-3 mr-4 w-40 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
-              />
-            </div>
-            <div> 해시태그 생기는 부분 </div>
-          </section> */}
           <HashTagSection />
 
           <section className="flex flex-col justify-center items-center">
             <button
+              type="button"
               onClick={handleButtonClick}
-              className="w-1/6 h-10 hover:text-white border border-b-yellow hover:bg-b-yellow focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+              className="px-5 py-2.5 mr-2 my-3 w-1/6 h-10 hover:text-white border border-b-yellow hover:bg-b-yellow focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm text-center transition duration-100"
             >
               등록하기
             </button>

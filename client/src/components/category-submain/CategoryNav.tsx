@@ -1,31 +1,36 @@
-import React, { MouseEvent } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import React from 'react';
+import axios from 'axios';
 
 export default function CategoryNav() {
-  const categoryList: { id: number; title: string }[] = [
-    { id: 1, title: 'IT기기' },
-    { id: 2, title: '생활가전' },
-    { id: 3, title: '캠핑/여행' },
-    { id: 4, title: '스포츠/레저' },
-    { id: 5, title: '완구/취미' },
-    { id: 6, title: '도서/음반' },
-  ];
+  const { isLoading, data: categories } = useQuery(
+    ['categories'],
+    async () => {
+      return axios.get(
+        'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/category',
+      );
+    },
+    { refetchOnWindowFocus: false, staleTime: 60 * 1000 * 60 },
+  );
 
   const handleClick = (e: React.MouseEvent<HTMLUListElement>) => {
     console.log(e);
   };
+
+  if (isLoading) return <p>Loading..</p>;
   return (
     <nav className="flex max-w-screen-lg h-16 border-b-2 border-solid border-gray-500 m-auto">
       <ul
         className="flex space-x-10 text-center items-center m-auto text-xl font-extrabold"
         onClick={handleClick}
       >
-        {categoryList.map((category) => {
+        {categories?.data.map((category: { _id: string; name: string }) => {
           return (
             <li
-              key={category.id}
+              key={category._id}
               className="hover:text-b-yellow hover:scale-125 ease-out duration-300"
             >
-              <a href="#">{category.title}</a>
+              <a href="#">{category.name}</a>
             </li>
           );
         })}

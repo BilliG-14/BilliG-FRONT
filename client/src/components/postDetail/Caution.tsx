@@ -1,7 +1,7 @@
 export default function Caution() {
   return (
     <>
-      <div>사용시 주의사항</div>
+      <div className="mt-[50px] font-semibold text-lg">주의사항</div>
       <div className="mt-3 p-3 w-full h-84 border bg-gray-200 text-b-b-text-black rounded-lg text-xs">
         <div className="font-extrabold">[시간 엄수]</div>
         <p>
@@ -18,7 +18,7 @@ export default function Caution() {
         <br />
         <div className="font-extrabold">[기타 주의사항]</div>
         <p>
-          1) 제품이 정상적으로 작동좌는지, 그 외 다른 이상은 없는지 빌려주시는
+          1) 제품이 정상적으로 작동하는지, 그 외 다른 이상은 없는지 빌려주시는
           분과 빌리는 분이 함께 꼼꼼하게 확인한 다음 거래를 시작하고 종료하세요.{' '}
           <br />
           2) 픽업 및 반납 현장에서 제품의 작동 상태나 사용 흔적 등을 동영상 및

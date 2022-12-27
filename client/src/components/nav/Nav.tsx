@@ -1,60 +1,103 @@
-import React from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useLoginJoinStore } from 'store/LoginJoinStore';
+// components
+import MenuButton from 'components/MenuButton/MenuButton';
+import WriteBtns from './WriteBtns';
+import GoWriteBtn from './GoWriteBtn';
+// react icons
 import { FiSearch } from 'react-icons/fi';
-
+import { FaClipboardList } from 'react-icons/fa';
+import { RiLoginCircleFill } from 'react-icons/ri';
+import { BsFillPersonPlusFill, BsFilePersonFill } from 'react-icons/bs';
 function Nav() {
+  const [onWriteBtn, setOnWriteBtn] = useState(false);
+  const [setSelectedJoin, setSelectedLogin] = useLoginJoinStore((state) => [
+    state.setSelectedJoin,
+    state.setSelectedLogin,
+  ]);
+
   const navigate = useNavigate();
-  const goHome = () => {
-    navigate('/');
-  };
   const goLogin = () => {
+    setSelectedLogin();
     navigate('/login');
   };
-  const goJoin = () => {
-    navigate('/join');
+  const goSignUp = () => {
+    setSelectedJoin();
+    navigate('/login');
   };
-  const goMyPage = () => {
-    navigate('/mypage');
+  const goMyPage = async () => {
+    navigate('/login');
   };
   const goSearch = () => {
     navigate('/search');
   };
+
   return (
-    <div className="flex justify-between pr-5 h-32">
-      <div>
-        <button
-          className="home  hover:text-b-yellow hover: ease-in-out duration-300"
-          onClick={goHome}
-        >
-          <h1 className="font-extrabold text-5xl mt-9">B illi G</h1>
-        </button>
-        {/* 위의 button과 h1태그를 지우고 여기에 빌리지 로고를 넣으면 됩니다! */}
-      </div>
+    <div className="flex justify-between pr-5 h-40 mt-1 select-none">
+      <MenuButton />
       <div className="flex flex-col justify-center">
-        <div className="flex justify-between items-center w-52 text-lg font-semibold">
-          <button
-            className="login hover:text-b-yellow hover: ease-in-out duration-300"
-            onClick={goLogin}
-          >
-            login
-          </button>
-          /
-          <button
-            className="join hover:text-b-yellow hover: ease-in-out duration-300"
-            onClick={goJoin}
-          >
-            join
-          </button>
-          /
-          <button
-            className="mypage hover:text-b-yellow hover: ease-in-out duration-300"
-            onClick={goMyPage}
-          >
-            myPage
-          </button>
+        <div className="flex justify-between items-center w-96 text-lg font-semibold">
+          <div>
+            <button
+              type="button"
+              className="signup flex hover:text-b-yellow hover:scale-110 ease-in-out duration-300"
+              onClick={goSignUp}
+            >
+              <span>
+                <BsFillPersonPlusFill className="text-xl mr-1" />
+              </span>
+              <span className="text-sm ">SIGN UP</span>
+            </button>
+          </div>
+          <div>
+            <button
+              type="button"
+              className="login flex hover:text-b-yellow hover:scale-110 ease-in-out duration-300"
+              onClick={goLogin}
+            >
+              <span>
+                <RiLoginCircleFill className="text-xl mr-1" />
+              </span>
+              <span className="text-sm">LOGIN</span>
+            </button>
+          </div>
+          <div>
+            <button
+              type="button"
+              className="mypage flex hover:text-b-yellow hover:scale-110 ease-in-out duration-300"
+              onClick={() => {
+                navigate('/notices');
+              }}
+            >
+              <span>
+                <FaClipboardList className="text-xl mr-1" />
+              </span>
+              <span className="text-sm">NOTICE</span>
+            </button>
+          </div>
+          <div>
+            <button
+              type="button"
+              className="mypage flex hover:text-b-yellow hover:scale-110 ease-in-out duration-300"
+              onClick={goMyPage}
+            >
+              <span>
+                <BsFilePersonFill className="text-xl mr-1" />
+              </span>
+              <span className="text-sm">MY PAGE</span>
+            </button>
+          </div>
         </div>
         <div className="flex justify-end text-3xl mt-5">
+          {onWriteBtn ? (
+            <WriteBtns setOnWriteBtn={setOnWriteBtn} />
+          ) : (
+            <GoWriteBtn setOnWriteBtn={setOnWriteBtn} />
+          )}
+
           <button
+            type="button"
             className="search hover:text-b-yellow hover: ease-in-out duration-300"
             onClick={goSearch}
           >

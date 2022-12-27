@@ -1,28 +1,33 @@
+import { Route, Routes } from 'react-router-dom';
+// components
 import MyInfoHeader from 'components/myinfo/MyInfoHeader';
-import Nav from '../components/nav/Nav';
 import MyInfoSideBar from '../components/myinfo/MyinfoSideBar';
+import MyinfoPage from 'components/myinfo/MyinfoPage';
+import MyLendPostList from '../components/myinfo/MyLendPostList';
+import MyBorrowPostList from '../components/myinfo/MyBorrowPostList';
+import EditMyinfoPage from '../components/myinfo/EditMyinfoPage';
+import MyLendDealList from '../components/myinfo/MyLendDealList';
+import MyBorrowDealList from '../components/myinfo/MyBorrowDealList';
+import MyLendDoneList from '../components/myinfo/MyLendDoneList';
+import MyBorrowDoneList from '../components/myinfo/MyBorrowDoneList';
 
 export default function MyPage() {
   return (
     <div className="h-full w-screen max-w-screen-lg m-auto">
-      <Nav />
       <MyInfoHeader />
       <section className="max-w-screen-lg h-full">
         <div className="flex h-full">
           <MyInfoSideBar />
-          <div className="w-4/5 p-12">
-            <section className="flex">
-              <div className="flex flex-col">
-                <img
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0AqtMahULe4ViGKzXbAr4C4hel5SGwfl7Pg&usqp=CAU"
-                  alt="조이현"
-                  className="rounded-full h-40 w-40 object-cover"
-                />
-                <button className="">이미지 업로드</button>
-                <button>기본 이미지</button>
-              </div>
-            </section>
-          </div>
+          <Routes>
+            <Route path="/" element={<MyinfoPage />} />
+            <Route path="/edit" element={<EditMyinfoPage />} />
+            <Route path="/lendlist" element={<MyLendPostList />} />
+            <Route path="/borrowlist" element={<MyBorrowPostList />} />
+            <Route path="/lenddeallist" element={<MyLendDealList />} />
+            <Route path="/borrowdeallist" element={<MyBorrowDealList />} />
+            <Route path="/donelendlist" element={<MyLendDoneList />} />
+            <Route path="/doneborrowlist" element={<MyBorrowDoneList />} />
+          </Routes>
         </div>
       </section>
     </div>
