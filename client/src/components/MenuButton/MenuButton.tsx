@@ -12,21 +12,21 @@ const MenuButton = () => {
         <Link to="/submain" className="owner">
           빌려주기
         </Link>
-        <img className="house1" src="../img/h1.png" alt="house1" />
+        <img className="house1" src="/img/h1.png" alt="house1" />
         <Link to="/submain/borrow" className="renter">
           빌리기
         </Link>
-        <img className="house2" src="../img/h2.png" alt="house2" />
+        <img className="house2" src="/img/h2.png" alt="house2" />
         <button
           className="home absolute ml-16 w-[49%] top-[-5px] z-10 transition ease-in-out hover:-translate-y--1 hover:scale-[1.1] duration-200"
           onClick={goHome}
         >
-          <object data="../img/billig_black.svg" type="">
+          <object data="/img/billig_black.svg" type="">
             {' '}
           </object>
         </button>
-        <img className="front" src="../img/front1.png" alt="" />
-        <img className="houses" src="../img/house.png" alt="vilage" />
+        <img className="front" src="/img/front1.png" alt="" />
+        <img className="houses" src="/img/house.png" alt="vilage" />
       </div>
     </div>
   );
