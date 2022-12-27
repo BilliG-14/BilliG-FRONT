@@ -1,22 +1,18 @@
 import DealTag from 'components/tag/DealTag';
-import { Item } from 'components/myinfo/MyLendPostList';
 import { useNavigate } from 'react-router-dom';
+import { PostDataType } from '../../store/PostReadStore';
 
-type BorrowItemProps = {
-  item: Item;
-  categoryName: string;
+type ItemProps = {
+  item: PostDataType;
 };
 
-export default function SubmainBorrowItemCard({
-  item,
-  categoryName,
-}: BorrowItemProps) {
-  const { title, imgUrl, address, hashtag, tradeWay, price, period } = item;
+export default function ListBorrowItemCard({ item }: ItemProps) {
+  const { title, imgUrl, address, tradeWay, price, period, category } = item;
   const navigate = useNavigate();
 
   return (
     <div
-      className="w-1/4 inline-block my-5 px-2.5 mx-4 rounded-lg bg-white cursor-pointer hover:scale-110  hover:ease-in transition-all duration-300"
+      className="w-[234px] inline-block my-5 px-2.5 mx-4 rounded-lg bg-white cursor-pointer hover:scale-110  hover:ease-in transition-all duration-300"
       onClick={() => {
         navigate(`/read/${item._id}`);
       }}
@@ -29,7 +25,7 @@ export default function SubmainBorrowItemCard({
               ? imgUrl[0]
               : `${process.env.PUBLIC_URL}/img/product_default.png`
           }
-          alt={hashtag[0] ? hashtag[0] : 'item'}
+          alt="m2 맥북"
         />
       </div>
       <div className="item_info my-2 text-left">
@@ -37,11 +33,13 @@ export default function SubmainBorrowItemCard({
           <p className="name h-12 mb-1 font-bold leading-6 underline underline-offset-4">
             {title}
           </p>
-          <p className="category mb-1 font-semibold text-sm">
-            {`${period.start} ~ ${period.end}`}
-          </p>
+          {period && (
+            <p className="category mb-1 font-semibold text-sm">
+              {`${period.start} ~ ${period.end}`}
+            </p>
+          )}
           <p className="category mb-1 text-b-text-darkgray text-sm">
-            {categoryName}
+            {category.name}
           </p>
           <p className="adress h-8 text-b-text-darkgray text-sm mb-1">
             {`📍 ${address}`}

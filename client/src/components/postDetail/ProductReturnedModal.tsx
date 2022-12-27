@@ -1,9 +1,11 @@
 import { useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import api from './../../api/customAxios';
 import { PostIdType } from 'store/PostReadStore';
 
 export function ProductReturnedModal(props: PostIdType) {
+  const queryClient = useQueryClient();
+
   // 거래완료->수령완료 상태 변경 함수
   // 게시글 id prop으로 받아오기
   const { postId, stateNumber } = props;
@@ -17,6 +19,7 @@ export function ProductReturnedModal(props: PostIdType) {
     {
       onSuccess: (res) => {
         alert('반납완료처리 되었습니다.');
+        queryClient.invalidateQueries(['postData']);
       },
       onError: (error) => {
         alert(`반납완료 처리 중 오류가 발생했습니다. ${error}`);

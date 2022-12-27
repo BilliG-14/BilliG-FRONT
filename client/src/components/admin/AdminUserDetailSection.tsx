@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import api from 'api/customAxios';
 import { AxiosError } from 'axios';
+import Loading from 'components/Loading';
 import ConfirmModal from 'components/Modal';
 import { useCallback, useState } from 'react';
 import useAdminPageStore from 'store/AdminPageStore';
@@ -55,7 +56,7 @@ export default function AdminUserDetailSection() {
     updateMutation.mutate({ suspension: !data.suspension });
   };
   if (isLoading) {
-    return <p>loading...</p>;
+    return <Loading />;
   }
   if (isError) {
     return <p>데이터를 불러오지 못했습니다</p>;

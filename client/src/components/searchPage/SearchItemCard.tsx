@@ -1,6 +1,7 @@
 import React from 'react';
 import DealTag from 'components/tag/DealTag';
 import { Item } from 'components/myinfo/MyLendPostList';
+import { useNavigate } from 'react-router-dom';
 
 interface SearchItemCardProp {
   item: Item;
@@ -8,8 +9,14 @@ interface SearchItemCardProp {
 
 export default function SearchItemCard({ item }: SearchItemCardProp) {
   const { title, address, imgUrl, hashtag, tradeWay, price } = item;
+  const navigate = useNavigate();
   return (
-    <li className="h-36 flex w-full justify-center py-3">
+    <li
+      className="h-36 flex w-full justify-center py-3 cursor-pointer hover:opacity-70"
+      onClick={() => {
+        window.open(`/read/${item._id}`, '_blank');
+      }}
+    >
       <div className="item_info flex w-2/3 border-b-2 border-solid border-b-yellow">
         <img
           src={

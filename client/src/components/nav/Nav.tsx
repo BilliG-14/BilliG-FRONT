@@ -7,6 +7,7 @@ import WriteBtns from './WriteBtns';
 import GoWriteBtn from './GoWriteBtn';
 // react icons
 import { FiSearch } from 'react-icons/fi';
+import { FaClipboardList } from 'react-icons/fa';
 import { RiLoginCircleFill } from 'react-icons/ri';
 import { BsFillPersonPlusFill, BsFilePersonFill } from 'react-icons/bs';
 function Nav() {
@@ -15,6 +16,7 @@ function Nav() {
     state.setSelectedJoin,
     state.setSelectedLogin,
   ]);
+
   const navigate = useNavigate();
   const goLogin = () => {
     setSelectedLogin();
@@ -35,7 +37,7 @@ function Nav() {
     <div className="flex justify-between pr-5 h-40 mt-1 select-none">
       <MenuButton />
       <div className="flex flex-col justify-center">
-        <div className="flex justify-between items-center w-72 text-lg font-semibold">
+        <div className="flex justify-between items-center w-96 text-lg font-semibold">
           <div>
             <button
               type="button"
@@ -45,7 +47,7 @@ function Nav() {
               <span>
                 <BsFillPersonPlusFill className="text-xl mr-1" />
               </span>
-              <span className="text-sm ">SING UP</span>
+              <span className="text-sm ">SIGN UP</span>
             </button>
           </div>
           <div>
@@ -58,6 +60,20 @@ function Nav() {
                 <RiLoginCircleFill className="text-xl mr-1" />
               </span>
               <span className="text-sm">LOGIN</span>
+            </button>
+          </div>
+          <div>
+            <button
+              type="button"
+              className="mypage flex hover:text-b-yellow hover:scale-110 ease-in-out duration-300"
+              onClick={() => {
+                navigate('/notices');
+              }}
+            >
+              <span>
+                <FaClipboardList className="text-xl mr-1" />
+              </span>
+              <span className="text-sm">NOTICE</span>
             </button>
           </div>
           <div>

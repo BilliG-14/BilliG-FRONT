@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useIsLoginStore, useLoginJoinStore } from 'store/LoginJoinStore';
+import { usePasswordEditStore } from 'store/MypageStore';
 
 export default function WriteBtns({
   setOnWriteBtn,
@@ -12,7 +13,7 @@ export default function WriteBtns({
     state.setSelectedLogin,
   ]);
   const { isLogin } = useIsLoginStore();
-
+  const { togglePwfalse } = usePasswordEditStore();
   const goLogin = () => {
     setSelectedLogin();
     navigate('/login');
@@ -33,6 +34,7 @@ export default function WriteBtns({
             goLogin();
             return;
           }
+          togglePwfalse();
           navigate('/write/lend');
         }}
       >
@@ -46,6 +48,7 @@ export default function WriteBtns({
             navigate('/login');
             return;
           }
+          togglePwfalse();
           navigate('/write/borrow');
         }}
       >

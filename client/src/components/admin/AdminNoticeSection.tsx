@@ -1,7 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import api from 'api/customAxios';
 import { AxiosError } from 'axios';
+import Loading from 'components/Loading';
 import ConfirmModal from 'components/Modal';
+import { NoticesPaginateType } from 'pages/Notices';
 import { useState } from 'react';
 import { useNoticePageStore } from 'store/AdminPageStore';
 import AdminNoticeHeader from './AdminNoticeHeader';
@@ -32,7 +34,7 @@ export interface CreatedNotice {
 const endPoint = 'notice';
 export const apiReports = {
   GETALL: async () => {
-    const { data } = await api.get(`/${endPoint}`);
+    const { data } = await api.get('notice?per=1000&page=1');
     return data;
   },
   GETONE: (id: string | undefined) => async () => {
@@ -64,13 +66,17 @@ function AdminNoticeList() {
   //공지글 읽어오기
   const {
     isLoading,
-    data: notices,
+    data: paginatedNotices,
     isError,
-  } = useQuery<Notice[], AxiosError>(['notices'], apiReports.GETALL, {
-    refetchOnWindowFocus: false,
-    retry: 0,
-    staleTime: 60 * 1000 * 60,
-  });
+  } = useQuery<NoticesPaginateType, AxiosError>(
+    ['notices'],
+    apiReports.GETALL,
+    {
+      refetchOnWindowFocus: false,
+      retry: 0,
+      staleTime: 60 * 1000 * 60,
+    },
+  );
   const updateMutation = useMutation(apiReports.UPDATE, {
     onSuccess: (_data) => {
       queryClient.invalidateQueries(['notices']);
@@ -81,9 +87,9 @@ function AdminNoticeList() {
       queryClient.invalidateQueries(['notices']);
     },
   });
+  if (isLoading) return <Loading />;
   return (
     <section className="w-full text-b-text-black p-2">
-      {isLoading && <p>데이터를 불러오는 중입니다</p>}
       {isError && <p>데이터를 불러오는 데 실패하였습니다.</p>}
       <table className="table-auto border-separate border-spacing-4 w-full">
         <thead className=" font-extrabold">
@@ -95,8 +101,8 @@ function AdminNoticeList() {
           </tr>
         </thead>
         <tbody className="font-semibold break-keep">
-          {notices &&
-            notices.map((notice) => (
+          {paginatedNotices &&
+            paginatedNotices.docs.map((notice) => (
               <tr key={notice._id} className="text-center">
                 <td className="w-36 py-2">
                   {new Date(notice.createdAt).toLocaleDateString()}
@@ -109,7 +115,7 @@ function AdminNoticeList() {
                     {notice.title}
                   </a>
                 </td>
-                <td className="w-36 py-2">{notice.writer.nickName}</td>
+                <td className="w-36 py-2">{notice.writer?.nickName}</td>
                 <td className="w-14 py-2">
                   <button
                     className="border-red-400 border-solid border-2 w-12 rounded-lg h-7 leading-7 text-red-400 after:content-['삭제'] shadow-lg hover:bg-red-400 hover:text-white"

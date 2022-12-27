@@ -45,9 +45,6 @@ export default function EditMyinfoPage() {
     {
       refetchOnWindowFocus: false,
       staleTime: 60 * 1000 * 5,
-      onSuccess: (data) => {
-        console.log(data);
-      },
     },
   );
   // * useMutation

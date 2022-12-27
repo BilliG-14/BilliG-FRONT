@@ -1,15 +1,18 @@
 import api from 'api/customAxios';
 import { AxiosError } from 'axios';
-import { Pagination } from 'components/Pagination';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Item } from 'components/myinfo/MyLendPostList';
-import ListByCategory from 'components/productsList/ListByCategory';
 import { useParams } from 'react-router-dom';
+import { CategoryType } from 'store/PostWriteStore';
+import { PostDataType } from '../store/PostReadStore';
+//컴포넌트
+import { Pagination } from 'components/Pagination';
+import ListByCategory from 'components/productsList/ListByCategory';
 import ProductsListNav from 'components/productsList/ProductsListNav';
-
+import Loading from 'components/Loading';
+import NotFound from 'components/NotFound';
 export type Products = {
-  docs: [Item];
+  docs: [PostDataType];
   totalPages: number;
   hasNextPage: boolean;
   hasPrevPage: boolean;
@@ -26,46 +29,43 @@ type ProductsListProps = {
 export default function ProductsList(props: ProductsListProps) {
   const { postType } = props;
   const { categoryId } = useParams();
-  const [categoryName, setCategoryName] = useState<string>('');
   const [page, setPage] = useState(1);
-  const endPoint = '/product/page';
   const per = 8;
+  useEffect(() => {
+    setPage(1);
+  }, [categoryId]);
+  /*아이템 목록에 사용될 통신 */
   const {
-    isLoading,
+    isLoading: isLoadingItem,
     data: products,
-    isError,
+    isError: isErrorItem,
   } = useQuery<Products, AxiosError>(
     [
-      `${endPoint}?category=${categoryId}&per=${per}&page=${page}&postType=${postType}`,
+      `product`,
+      `category=${categoryId}`,
+      `per=${per}`,
+      `page=${page}`,
+      `postType=${postType}`,
     ],
     async () => {
       const res = await api.get(
-        `${endPoint}?category=${categoryId}&per=${per}&page=${page}&postType=${postType}`,
+        `/product/page?category=${categoryId}&per=${per}&page=${page}&postType=${postType}`,
       );
       return res.data;
     },
     {
       refetchOnWindowFocus: false,
-      retry: 0,
-      staleTime: 60 * 1000 * 60,
+      staleTime: 60 * 1000 * 5,
     },
   );
-  if (isLoading) return <div className=""></div>;
+
+  if (!categoryId) return <NotFound />;
+  if (isLoadingItem) return <Loading />;
+  if (isErrorItem) return <NotFound />;
   return (
-    <div className="max-w-screen-lg m-auto pb-32">
-      <ProductsListNav
-        postType={postType}
-        currentCategoryId={categoryId ? categoryId : ''}
-        setCategoryName={setCategoryName}
-        setPage={setPage}
-      />
-      {products && (
-        <ListByCategory
-          items={products?.docs}
-          categoryName={categoryName}
-          postType={postType}
-        />
-      )}
+    <div className="max-w-screen-lg m-auto pb-32 min-w-[922px]">
+      <ProductsListNav postType={postType} />
+      {products && <ListByCategory items={products?.docs} />}
       <Pagination
         page={page}
         setPage={setPage}

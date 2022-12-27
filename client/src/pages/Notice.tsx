@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import MarkdownRenderer from '../components/MarkdownRenderer';
+import Loading from 'components/Loading';
 
 export default function ReadNotice() {
   const { id } = useParams();
@@ -17,6 +18,7 @@ export default function ReadNotice() {
     retry: 0, // 실패시 재호출 몇번 할지
     staleTime: 60 * 1000 * 60,
   });
+  if (isLoading) return <Loading />;
   return (
     <div className="w-screen m-auto">
       <div className="max-w-screen-lg mx-auto">
