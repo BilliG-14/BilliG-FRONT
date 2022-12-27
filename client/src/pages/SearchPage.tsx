@@ -45,15 +45,8 @@ export default function SearchPage() {
     {
       refetchOnWindowFocus: false,
       staleTime: 1000 * 60 * 5,
-      onSuccess: (data) => {
-        console.log(data);
-      },
-      onError: (error) => {
-        console.log(error);
-      },
     },
   );
-  console.log(radioStatus);
   if (isLoading) return <p>Loading...</p>;
   return (
     <div className="w-screen max-w-screen-lg relative m-auto">

@@ -31,7 +31,6 @@ export default function BorrowCategory() {
   const { isLoading, data: categories } = useQuery(
     ['categories'],
     async () => {
-      console.log('fetching...');
       return api.get('/category');
     },
     { refetchOnWindowFocus: false, staleTime: 60 * 1000 * 60 },

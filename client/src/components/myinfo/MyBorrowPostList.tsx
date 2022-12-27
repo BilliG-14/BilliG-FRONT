@@ -8,7 +8,7 @@ import { Pagination } from 'components/Pagination';
 export default function MyBorrowPostList() {
   const [page, setPage] = useState(1);
   const { isLoading, data: borrowList } = useQuery(
-    [`borrowList/${page}`],
+    [`borrowList/${page}`, `${localStorage.getItem('userId')}`],
     async () => {
       return api.get(
         `/product/page?author=${localStorage.getItem(

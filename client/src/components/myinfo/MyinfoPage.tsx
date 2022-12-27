@@ -24,12 +24,6 @@ export default function MyinfoPage() {
     {
       refetchOnWindowFocus: false,
       staleTime: 60 * 1000 * 5,
-      onSuccess: (data) => {
-        console.log(data);
-      },
-      onError: (error) => {
-        console.log(error);
-      },
     },
   );
 
