@@ -48,12 +48,6 @@ export default function ProductsList(props: ProductsListProps) {
       refetchOnWindowFocus: false,
       retry: 0,
       staleTime: 60 * 1000 * 60,
-      onSuccess: (_data) => {
-        console.log(_data);
-      },
-      onError: (e: Error) => {
-        console.log(e.message);
-      },
     },
   );
   if (isLoading) return <div className=""></div>;

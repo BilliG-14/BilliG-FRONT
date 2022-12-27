@@ -54,12 +54,6 @@ export default function AdminPostSection() {
       refetchOnWindowFocus: false,
       retry: 0, // 실패시 재호출 몇번 할지
       staleTime: 60 * 1000 * 60,
-      onSuccess: (_data) => {
-        console.log(_data);
-      },
-      onError: (e: Error) => {
-        console.log(e.message);
-      },
     },
   );
   const deleteMutation = useMutation(apiProduct.DELETE, {
@@ -67,9 +61,6 @@ export default function AdminPostSection() {
       queryClient.invalidateQueries([
         `${endPoint}/page?per=${per}&page=${page}`,
       ]);
-    },
-    onError: (error) => {
-      console.log(error);
     },
   });
   if (isLoading) {

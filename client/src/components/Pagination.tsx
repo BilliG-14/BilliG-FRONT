@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useCallback } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 type PagingProps = {
   page?: number; //현재의 페이지
   setPage: Dispatch<SetStateAction<number>>; //변경될 페이지를 만드는 useState 함수
