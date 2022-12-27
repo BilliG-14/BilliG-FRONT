@@ -77,7 +77,7 @@ export default function PostDetail() {
   function changeMainImg(e: React.MouseEvent<HTMLImageElement>) {
     setMainImgUrl(e.currentTarget.src);
   }
-
+  console.log(postData?.author.image === '');
   return (
     <div className="max-w-screen-lg mx-auto">
       <div className="flex flex-col justify-center mx-auto text-b-text-black">
@@ -248,7 +248,11 @@ export default function PostDetail() {
                       <div className="flex items-center">
                         <img
                           className="h-8 w-8 mr-2 rounded-full"
-                          src={postData?.author.image}
+                          src={
+                            postData?.author.image === ''
+                              ? '../img/default_user.png'
+                              : postData?.author.image
+                          }
                           alt="사용자 이미지"
                         />
 
