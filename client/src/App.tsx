@@ -27,8 +27,6 @@ import NotFound from 'components/NotFound';
 import Loading from 'components/Loading';
 import TrueNav from './components/nav/TrueNav';
 import Nav from './components/nav/Nav';
-import HttpClient from './service/http';
-import ChatService from './service/chat';
 import Chat from './components/chat/Chat';
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -52,10 +50,6 @@ function App() {
     setIsLoadingTrue,
     setIsLoadingFalse,
   } = useIsLoginStore();
-
-  const baseURL = process.env.REACT_APP_BASE_URL;
-  const httpClient = new HttpClient();
-  const chatService = new ChatService(httpClient);
 
   useEffect(() => {
     setIsLoadingFalse();
@@ -119,14 +113,8 @@ function App() {
                 path="/products/borrow/:categoryId"
                 element={<ProductsList postType="borrow" />}
               />
-              <Route
-                path="/chat"
-                element={<Chat chatService={chatService} baseURL={baseURL} />}
-              />
-              <Route
-                path="/chat/:roomId"
-                element={<Chat chatService={chatService} baseURL={baseURL} />}
-              />
+              <Route path="/chat" element={<Chat />} />
+              <Route path="/chat/:roomId" element={<Chat />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>

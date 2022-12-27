@@ -39,8 +39,8 @@ function ChatRoomList({ chatRoomList }: any) {
         key={room._id}
         className={
           room._id === activeChatRoomId
-            ? 'outline outline-1 outline-orange-600'
-            : ''
+            ? 'w-full h-14 pl-1 flex items-center cursor-pointer mb-5 bg-amber-300 rounded'
+            : 'w-full h-14 pl-1 flex items-center cursor-pointer mb-5'
         }
         onClick={() => changeChatRoom(room)}
       >
@@ -53,16 +53,15 @@ function ChatRoomList({ chatRoomList }: any) {
     ));
   return (
     <div className="mt-5 px-2">
-      <div className="relative w-full flex flex-col">
+      <div className="relative w-full h-full flex flex-col">
         <FaRegSmileWink className="mr-3 text-2xl mb-2" />
-        CHAT ROOMS
-        {/* ({chatRoomList.length}) */}
-        <FaPlus
+        CHAT ROOMS ({chatRoomList?.length})
+        {/* <FaPlus
           //   onClick={handleShow}
-          className="absolute right-0 cursor-pointer text-2xl"
-        />
+          className="absolute right-0 cursor-pointer text-2xl "
+        /> */}
         {/** 채팅방 목록 렌더링 */}
-        <ul className="list-none p-0">{renderChatRooms()}</ul>
+        <ul className="w-full h-full list-none mt-5">{renderChatRooms()}</ul>
       </div>
     </div>
   );

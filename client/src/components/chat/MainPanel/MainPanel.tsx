@@ -3,7 +3,7 @@ import { io } from 'socket.io-client';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getChatRoom } from '../getChatRoom';
 interface MessageInterface {
-  sender: string;
+  name: string;
   message: string;
 }
 
@@ -39,14 +39,12 @@ function MainPanel({ user, chatRoomList }: any) {
     }
     formRef?.current?.reset();
   };
-  useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
-  });
+
   useEffect(() => {
     socket.on(
       `message${currentRoom}`,
       ({ name, message }: { name: string; message: string }) => {
-        setMessages([...messages, { sender: name, message }]);
+        setMessages([...messages, { name, message }]);
       },
     );
 
@@ -65,35 +63,42 @@ function MainPanel({ user, chatRoomList }: any) {
     }
     fetchData();
   }, [roomId]);
-
   //--------------------------------------------------
 
+  useEffect(() => {
+    if (scrollRef) scrollRef?.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
   return (
-    <div className="pr-10 h-full w-full">
+    <div className="h-full w-full outline outline-1 outline-gray-200 relative">
       {currentRoom ? (
         <div className="h-full w-full ">
-          <div className="bg-white w-full h-4/5 border-solid outline-2 border-slate-200 rounded p-4 overflow-auto">
-            {messages.map(({ sender, message }, idx) => {
+          <div className="bg-white w-full h-4/5 p-4 overflow-y-scroll">
+            {messages.map(({ name, message }, idx) => {
               return (
                 <div
                   key={idx}
-                  className="my-4 w-full h-16 chat chat-end chat-header flex flex-col items-end justify-center"
+                  className={
+                    user?.nickName === name
+                      ? 'my-4 w-full h-16 chat chat-end chat-header flex flex-col items-end justify-center'
+                      : 'my-4 w-full h-16 chat chat-start chat-header flex flex-col items-start justify-center'
+                  }
                 >
-                  {sender}
+                  {name}
                   <div className="my-2 text-sm text-black bg-amber-200 p-2 chat-bubble">
                     {message}
+                    {/**  스크롤이 내려갈 자리*/}
+                    <div ref={scrollRef} />
                   </div>
                 </div>
               );
             })}
-            {/**  스크롤이 내려갈 자리*/}
-            <div ref={scrollRef} />
           </div>
 
           <div className="bg-b-bg-gray h-1/5 w-full">
             <form
               ref={formRef}
-              className=" w-full h-full inputform p-8 pt-2"
+              className=" w-full h-full inputform p-8 pt-5"
               onSubmit={onSubmit}
             >
               <input
@@ -105,7 +110,16 @@ function MainPanel({ user, chatRoomList }: any) {
           </div>
         </div>
       ) : (
-        <div>표시할 대화가 없습니다.</div>
+        <div className="w-full h-1/2 flex flex-col items-center justify-center pt-20 absolute top-20">
+          <img
+            className="w-2/5 mb-20 opacity-50"
+            src="/img/step2.png"
+            alt="채팅방 기본 이미지"
+          />
+          <div className="text-lg text-gray-800 font-medium">
+            표시할 대화가 없습니다. 채팅방을 선택해주세요!
+          </div>
+        </div>
       )}
     </div>
   );

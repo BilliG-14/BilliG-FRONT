@@ -3,9 +3,10 @@ import SidePanel from './SidePanel/SidePanel';
 import MainPanel from './MainPanel/MainPanel';
 import getUserInfo from './getUserInfo';
 import getChatRooms from './getChatRooms';
+import Footer from '../../components/footer/Footer';
 
 /** 추후 any 바꾸기! */
-function Chat({ chatService, baseURL }: any) {
+function Chat() {
   /** user 정보 가져오기 */
   const [userInfo, setUserInfo] = useState();
   const setUserInfoData = async () => {
@@ -29,21 +30,24 @@ function Chat({ chatService, baseURL }: any) {
   }, []);
 
   return (
-    <div className="flex max-w-screen-lg mx-auto">
-      <div className="w-1/5">
-        <SidePanel
-          key={userInfo && true}
-          user={userInfo}
-          chatRoomList={chatRoomsInfo}
-        />
+    <div className="max-w-screen-lg mx-auto">
+      <div className="flex max-w-screen-lg mx-auto">
+        <div className="w-1/5">
+          <SidePanel
+            key={userInfo && true}
+            user={userInfo}
+            chatRoomList={chatRoomsInfo}
+          />
+        </div>
+        <div className="w-4/5">
+          <MainPanel
+            key={userInfo && true}
+            user={userInfo}
+            chatRoomList={chatRoomsInfo}
+          />
+        </div>
       </div>
-      <div className="w-4/5">
-        <MainPanel
-          key={userInfo && true}
-          user={userInfo}
-          chatRoomList={chatRoomsInfo}
-        />
-      </div>
+      <Footer />
     </div>
   );
 }

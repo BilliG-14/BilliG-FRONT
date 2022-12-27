@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { IoIosChatboxes } from 'react-icons/io';
 import getUserInfo from '../getUserInfo';
+import { useNavigate } from 'react-router-dom';
 
 /** 추후 any 바꾸기! */
 function UserPanel({ user }: any) {
+  const navigate = useNavigate();
   return (
     <div className="w-full h-full px-2">
       {/* Logo */}
-      <h3 className="text-white text-2xl p-4">
-        <IoIosChatboxes className="text-4xl" /> BilliG Tok
-      </h3>
+      <div className="text-white text-2xl p-4">
+        <button onClick={() => navigate('/chat')}>
+          <IoIosChatboxes className="text-4xl" /> BilliG Tok
+        </button>
+      </div>
 
       <div className="flex mt-6 flex-col w-full px-6">
         <img
