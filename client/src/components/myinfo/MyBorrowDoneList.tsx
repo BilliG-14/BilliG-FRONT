@@ -3,6 +3,7 @@ import DoneItemCard from './DoneItemCard';
 import { useQuery } from '@tanstack/react-query';
 import api from '../../api/customAxios';
 import { Item } from 'components/myinfo/MyLendPostList';
+import { Pagination } from '../Pagination';
 
 export default function MyBorrowDoneList() {
   const [page, setPage] = useState(1);
@@ -35,6 +36,13 @@ export default function MyBorrowDoneList() {
       {borrowDoneList?.data.docs.map((item: Item) => (
         <DoneItemCard key={item._id} item={item} />
       ))}
+      <Pagination
+        page={page}
+        setPage={setPage}
+        totalPage={borrowDoneList?.data.totalPages}
+        hasNextPage={borrowDoneList?.data.hasNextPage}
+        hasPrevPage={borrowDoneList?.data.hasPrevPage}
+      />
     </div>
   );
 }
