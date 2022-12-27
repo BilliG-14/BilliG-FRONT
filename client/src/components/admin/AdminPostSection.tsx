@@ -3,7 +3,7 @@ import api from 'api/customAxios';
 import { AxiosError } from 'axios';
 import ConfirmModal from 'components/Modal';
 import { Pagination } from 'components/Pagination';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { PostDataType } from 'store/PostReadStore';
 
 //페이지네이션을 위한 타입
@@ -54,12 +54,6 @@ export default function AdminPostSection() {
       refetchOnWindowFocus: false,
       retry: 0, // 실패시 재호출 몇번 할지
       staleTime: 60 * 1000 * 60,
-      onSuccess: (_data) => {
-        console.log(_data);
-      },
-      onError: (e: Error) => {
-        console.log(e.message);
-      },
     },
   );
   const deleteMutation = useMutation(apiProduct.DELETE, {
@@ -67,9 +61,6 @@ export default function AdminPostSection() {
       queryClient.invalidateQueries([
         `${endPoint}/page?per=${per}&page=${page}`,
       ]);
-    },
-    onError: (error) => {
-      console.log(error);
     },
   });
   if (isLoading) {

@@ -10,7 +10,7 @@ const MenuButton = () => {
   return (
     <div className="mt-4">
       <div className="section mt-5 relative z-0">
-        <Link to="/submain/lend" className="owner">
+        <Link to="/submain" className="owner">
           빌려주기
         </Link>
         <img className="house1" src="../img/h1.png" alt="house1" />

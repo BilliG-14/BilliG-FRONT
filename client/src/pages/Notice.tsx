@@ -16,20 +16,10 @@ export default function ReadNotice() {
     refetchOnWindowFocus: false,
     retry: 0, // 실패시 재호출 몇번 할지
     staleTime: 60 * 1000 * 60,
-    onSuccess: (_data) => {
-      // 성공시 호출
-      console.log(_data);
-    },
-    onError: (e: Error) => {
-      console.log(e);
-    },
   });
-
-  console.log(notice);
   return (
     <div className="w-screen m-auto">
       <div className="max-w-screen-lg mx-auto">
-        <Nav />
         <div className="text-xl font-extrabold ml-10 mt-10">
           <p>공지사항</p>
         </div>

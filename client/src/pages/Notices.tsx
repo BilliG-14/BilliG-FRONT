@@ -1,6 +1,6 @@
 import Nav from 'components/nav/Nav';
 import { apiReports, Notice } from 'components/admin/AdminNoticeSection';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
 export default function Notices() {
@@ -12,19 +12,10 @@ export default function Notices() {
     refetchOnWindowFocus: false,
     retry: 0,
     staleTime: 60 * 1000 * 60,
-    onSuccess: (_data) => {
-      // 성공시 호출
-      console.log(_data);
-    },
-    onError: (e: Error) => {
-      console.log(e.message);
-    },
   });
-  console.log(notices);
   return (
     <div className="w-screen m-auto">
       <div className="max-w-screen-lg mx-auto">
-        <Nav />
         <div className="text-3xl font-extrabold ml-10 mt-10">
           <p>공지사항</p>
         </div>

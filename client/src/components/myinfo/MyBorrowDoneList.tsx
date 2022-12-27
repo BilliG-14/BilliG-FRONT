@@ -3,11 +3,12 @@ import DoneItemCard from './DoneItemCard';
 import { useQuery } from '@tanstack/react-query';
 import api from '../../api/customAxios';
 import { Item } from 'components/myinfo/MyLendPostList';
+import { Pagination } from '../Pagination';
 
 export default function MyBorrowDoneList() {
   const [page, setPage] = useState(1);
   const { isLoading, data: borrowDoneList } = useQuery(
-    [`borrowDoneList/${page}`],
+    [`borrowDoneList/${page}`, `${localStorage.getItem('userId')}`],
     async () => {
       return api.get(
         `/product/page?borrower=${localStorage.getItem(
@@ -18,13 +19,6 @@ export default function MyBorrowDoneList() {
     {
       refetchOnWindowFocus: false,
       staleTime: 60 * 1000 * 5,
-      retry: 1,
-      onSuccess: (data) => {
-        console.log(data);
-      },
-      onError: (error) => {
-        console.log(error);
-      },
     },
   );
 
@@ -35,6 +29,13 @@ export default function MyBorrowDoneList() {
       {borrowDoneList?.data.docs.map((item: Item) => (
         <DoneItemCard key={item._id} item={item} />
       ))}
+      <Pagination
+        page={page}
+        setPage={setPage}
+        totalPage={borrowDoneList?.data.totalPages}
+        hasNextPage={borrowDoneList?.data.hasNextPage}
+        hasPrevPage={borrowDoneList?.data.hasPrevPage}
+      />
     </div>
   );
 }

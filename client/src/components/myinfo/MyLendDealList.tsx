@@ -7,7 +7,7 @@ import { Pagination } from 'components/Pagination';
 export default function MyLendDealList() {
   const [page, setPage] = useState(1);
   const { isLoading, data: lendDealList } = useQuery(
-    [`lendDealList/${page}`],
+    [`lendDealList/${page}`, `${localStorage.getItem('userId')}`],
     async () => {
       return api.get(
         `/product/page?author=${localStorage.getItem(
@@ -18,13 +18,6 @@ export default function MyLendDealList() {
     {
       refetchOnWindowFocus: false,
       staleTime: 60 * 1000 * 5,
-      retry: 1,
-      onSuccess: (data) => {
-        console.log(data);
-      },
-      onError: (error) => {
-        console.log(error);
-      },
     },
   );
 

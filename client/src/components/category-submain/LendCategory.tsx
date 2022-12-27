@@ -32,7 +32,6 @@ export default function LendCategory() {
   const { isLoading, data: categories } = useQuery(
     ['categories'],
     async () => {
-      console.log('fetching...');
       return api.get('/category');
     },
     { refetchOnWindowFocus: false, staleTime: 60 * 1000 * 60 },
@@ -42,7 +41,7 @@ export default function LendCategory() {
   return (
     <div className="relative">
       <nav
-        className="flex max-w-screen-lg h-16 border-b-2 border-solid border-gray-500 m-auto"
+        className="flex max-w-screen-lg h-16 border-b-2 border-solid border-gray-500 m-auto z-50"
         ref={navRef}
       >
         <ul className="flex space-x-10 text-center items-center m-auto text-xl font-extrabold">

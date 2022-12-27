@@ -1,16 +1,8 @@
 import useAdminPageStore from 'store/AdminPageStore';
 
 export default function AdminSideBar() {
-  const {
-    showUserList,
-    showReport,
-    showUserDetail,
-    showNotice,
-    showPost,
-    showRental,
-    showHashTag,
-    showCategory,
-  } = useAdminPageStore();
+  const { showUserList, showReport, showNotice, showPost, showCategory } =
+    useAdminPageStore();
   return (
     <div className="w-1/5 h-[930px] p-4 bg-b-bg-gray select-none">
       <div className="menu_box mb-7">

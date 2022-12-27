@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import api from 'api/customAxios';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,15 +15,10 @@ export default function ProductsListNav(props: NavProps) {
   const { isLoading, data: categories } = useQuery(
     ['categories'],
     async () => {
-      console.log('fetching...');
       return api.get('/category');
     },
     { refetchOnWindowFocus: false, staleTime: 60 * 1000 * 60 },
   );
-
-  const handleClick = (e: React.MouseEvent<HTMLUListElement>) => {
-    console.log(e);
-  };
 
   if (isLoading) return <p>Loading..</p>;
   if (categories) {
@@ -35,10 +30,7 @@ export default function ProductsListNav(props: NavProps) {
   }
   return (
     <nav className="flex max-w-screen-lg h-16 border-b-2 border-solid border-gray-500 m-auto">
-      <ul
-        className="flex space-x-10 text-center items-center m-auto text-xl font-extrabold"
-        onClick={handleClick}
-      >
+      <ul className="flex space-x-10 text-center items-center m-auto text-xl font-extrabold">
         {categories?.data.map((category: { _id: string; name: string }) => {
           return (
             <li

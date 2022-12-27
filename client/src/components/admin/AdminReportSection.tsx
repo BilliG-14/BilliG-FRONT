@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import api from 'api/customAxios';
 import { AxiosError } from 'axios';
 import ConfirmModal from 'components/Modal';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 
 export type Report = {
   createdAt: string;
@@ -26,7 +26,7 @@ const apiReports = {
     return data;
   },
   DELETE: async (_id: string) => {
-    const { data } = await api.delete(`/${endPoint}/${_id}`);
+    await api.delete(`/${endPoint}/${_id}`);
   },
 };
 export default function AdminReportSection() {
@@ -37,24 +37,14 @@ export default function AdminReportSection() {
     ['reports'],
     apiReports.GET,
     {
-      refetchOnWindowFocus: false, // react-query는 사용자가 사용하는 윈도우가 다른 곳을 갔다가 다시 화면으로 돌아오면 이 함수를 재실행합니다. 그 재실행 여부 옵션 입니다.
+      refetchOnWindowFocus: false,
       retry: 0, // 실패시 재호출 몇번 할지
       staleTime: 60 * 1000 * 60,
-      onSuccess: (_data) => {
-        // 성공시 호출
-        console.log(_data);
-      },
-      onError: (e: Error) => {
-        console.log(e.message);
-      },
     },
   );
   const deleteMutation = useMutation(apiReports.DELETE, {
     onSuccess: (_data) => {
       queryClient.invalidateQueries(['reports']);
-    },
-    onError: (error) => {
-      console.log(error);
     },
   });
   if (isLoading) {
@@ -77,8 +67,16 @@ export default function AdminReportSection() {
         <tbody className="font-semibold">
           {data.map((report) => (
             <tr key={report._id} className="text-center">
-              <td>{report.reporter.name}</td>
-              <td className="text-red-500">{report.target.name}</td>
+              <td>
+                {report.reporter?.name
+                  ? report.reporter?.name
+                  : '존재하지 않는 계정'}
+              </td>
+              <td className="text-red-500">
+                {report?.target?.name
+                  ? report?.target?.name
+                  : '존재하지 않는 계정'}
+              </td>
               <td>{report.details}</td>
               <td className="w-14">
                 <button
@@ -92,7 +90,7 @@ export default function AdminReportSection() {
       </table>
       {targetReport && (
         <ConfirmModal
-          title={`${targetReport.reporter.name}님의 ${targetReport.target.name}신고내역을 삭제하시겠습니까?`}
+          title={`${targetReport.reporter?.name}님의 ${targetReport.target?.name}신고내역을 삭제하시겠습니까?`}
           yesColor="red-400"
           yesText="삭제"
           onClickToggleModal={() => setTargetReport(undefined)}

@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import ConfirmModal from 'components/Modal';
 import { useRef, useState } from 'react';
-import { createGlobalStyle } from 'styled-components';
 import { apiReports } from './AdminNoticeSection';
 export default function AdminNoticeWriting() {
   const titleRef = useRef<HTMLInputElement>(null);
@@ -29,9 +28,6 @@ export default function AdminNoticeWriting() {
     onSuccess: () => {
       // post요청 성공 시 category 맵핑된 useQuery api 함수를 실행
       queryClient.invalidateQueries(['notices']);
-    },
-    onError: (error) => {
-      console.log(error);
     },
   });
   return (

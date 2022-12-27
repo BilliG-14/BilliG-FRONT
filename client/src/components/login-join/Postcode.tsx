@@ -28,7 +28,6 @@ export default function Postcode() {
       }
       fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
     }
-    console.log(fullAddress, '   ', data.zonecode);
     setAddress({ postCode: data.zonecode, address1: fullAddress });
     joinFormState.setPostalCode(data.zonecode);
     joinFormState.setAddress1(data.address);

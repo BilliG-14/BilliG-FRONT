@@ -19,7 +19,7 @@ export default function MyInfoSideBar() {
         </p>
         <ul className="text-center text-lg font-semibold">
           <li className="h-10 flex items-center justify-start">
-            <Link to="/mypage/givelist">빌려주기 게시물 조회</Link>
+            <Link to="/mypage/lendlist">빌려주기 게시물 조회</Link>
           </li>
           <li className="h-10 flex items-center justify-start">
             <Link to="/mypage/borrowlist">빌리기 게시물 조회</Link>
@@ -44,7 +44,7 @@ export default function MyInfoSideBar() {
             <p>거래완료 물품</p>
           </li>
           <li className="h-10 flex items-center justify-start">
-            <Link to="/mypage/donegivelist">빌려주기 완료 조회</Link>
+            <Link to="/mypage/donelendlist">빌려주기 완료 조회</Link>
           </li>
           <li className="h-10 flex items-center justify-start">
             <Link to="/mypage/doneborrowlist">빌리기 완료 조회</Link>
