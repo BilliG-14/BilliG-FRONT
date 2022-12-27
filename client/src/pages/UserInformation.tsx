@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { RiAlarmWarningFill, RiCloseFill } from 'react-icons/ri';
 import { useState, useRef, useCallback } from 'react';
 import ConfirmModal from 'components/Modal';
+import Loading from 'components/Loading';
 
 type User = {
   _id: string;
@@ -56,29 +57,15 @@ export default function UserInformation() {
   const { id } = useParams();
   console.log(id);
   const { isLoading, data, isError } = useQuery<User, AxiosError>(
-    [`user/${id}`],
+    [`user`, id],
     apiUser.GET(id),
     {
       retry: 0, // 실패시 재호출 몇번 할지
       staleTime: 60 * 1000 * 60,
-      onSuccess: (_data) => {
-        // 성공시 호출
-        console.log('선택유저', _data);
-      },
-      onError: (e: Error) => {
-        console.log(e.message);
-      },
     },
   );
-  const createMutation = useMutation(apiReport.CREATE, {
-    onSuccess: (_data) => {
-      console.log(_data);
-    },
-    onError: (error) => {
-      console.log(error);
-    },
-  });
-  if (isLoading) return <p>로딩중입니다.</p>;
+  const createMutation = useMutation(apiReport.CREATE);
+  if (isLoading) return <Loading />;
   if (isError) return <div>회원정보를 불러올 수 없습니다.</div>;
   return (
     <>
