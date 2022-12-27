@@ -1,5 +1,5 @@
 import { useState, ChangeEvent } from 'react';
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import api from './../api/customAxios';
 
@@ -20,6 +20,8 @@ import UpdatedImageUpload from 'components/postWrite/UpdatedImageUpload';
 import Loading from 'components/Loading';
 
 export default function PostUpdate() {
+  const queryClient = useQueryClient();
+
   // 빌립니다 글쓰기
   // store에서 가져오는 state들
   const { hashTags, serverHashTags } = hashTagStore();
@@ -124,6 +126,7 @@ export default function PostUpdate() {
     {
       onSuccess: (res) => {
         navigate(`/read/${res.data._id}`);
+        queryClient.invalidateQueries(['postData']);
       },
     },
   );
