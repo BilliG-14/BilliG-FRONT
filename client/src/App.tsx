@@ -29,7 +29,10 @@ import TrueNav from './components/nav/TrueNav';
 import Nav from './components/nav/Nav';
 
 const GlobalStyle = createGlobalStyle`
-  ${reset}
+  ${reset};
+  body {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+  }
 `;
 
 const queryClient = new QueryClient();
