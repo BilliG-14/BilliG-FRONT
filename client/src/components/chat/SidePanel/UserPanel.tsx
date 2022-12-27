@@ -3,7 +3,7 @@ import { IoIosChatboxes } from 'react-icons/io';
 import getUserInfo from '../getUserInfo';
 
 /** 추후 any 바꾸기! */
-function UserPanel({ userInfo }: any) {
+function UserPanel({ user }: any) {
   return (
     <div className="w-full h-full px-2">
       {/* Logo */}
@@ -18,8 +18,9 @@ function UserPanel({ userInfo }: any) {
           className="w-32 h-32 rounded-full object-cover"
           alt="사용자이미지"
         />
-        <div className="mt-5 font-semibold text-lg">명륜진사메타몽</div>
-        {/* <div>{userInfo}</div> */}
+        <div className="text-center mt-5 font-semibold text-lg">
+          {user?.nickName}
+        </div>
       </div>
       <hr className="mt-2 w-full h-1 border-2 border-white" />
     </div>

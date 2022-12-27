@@ -16,6 +16,7 @@ function MainPanel({ user }: any) {
   const [currentRoom, setCurrentRoom] = useState('');
   const formRef = useRef<HTMLFormElement | null>(null);
   const textRef = useRef<HTMLInputElement | null>(null);
+
   const sendMessage = useCallback(
     (message: string, sentRoom: string) => {
       if (message && user?.nickName) {
@@ -42,9 +43,9 @@ function MainPanel({ user }: any) {
     socket.on(
       `message${currentRoom}`,
       ({ name, message }: { name: string; message: string }) => {
-        console.log('name: ', name);
-        console.log('message: ', message);
+        console.log('들가기전 .. messages: ', messages);
         setMessages([...messages, { sender: name, message }]);
+        console.log('들가고후 .. messages: ', messages);
       },
     );
 
@@ -52,6 +53,29 @@ function MainPanel({ user }: any) {
     //   setUsers(room);
     // });
   }, [currentRoom, messages]);
+  //--------------------------------------------------
+  //   const [myChatList, setMyChatList] = useState<MyChatListType[]>([]);
+  // useEffect(() => {
+  //   if (myChatList) {
+  //     myChatList.forEach((room) => {
+  //       if (room.title === currentRoom) {
+  //         setMessages(room.messages);
+  //       }
+  //     });
+  //   }
+  // }, [currentRoom, myChatList]);
+
+  // useEffect(() => {
+  //   if (message) {
+  //     if (currentRoom === message.sentRoom) {
+  //       setMessages((messages) => {
+  //         const newmsg = { sender: message.sender, message: message.message };
+  //         return [...messages, newmsg];
+  //       });
+  //     }
+  //   }
+  // }, [message, currentRoom]);
+  //--------------------------------------------------
 
   return (
     <div className="pr-10 h-full w-full">
@@ -60,15 +84,18 @@ function MainPanel({ user }: any) {
           <div className="bg-white w-full h-4/5 border-solid outline-2 border-slate-200 rounded p-4 overflow-auto">
             {messages.map(({ sender, message }, idx) => {
               return (
-                <h6 key={idx}>
-                  {sender}{' '}
-                  <span className="text-lg text-black bg-b-yellow">
+                <div
+                  key={idx}
+                  className="my-4 w-full h-16 chat chat-end chat-header flex flex-col items-end justify-center"
+                >
+                  {sender}
+                  <div className="my-2 text-sm text-black bg-amber-200 p-2 chat-bubble">
                     {message}
-                  </span>
-                </h6>
+                  </div>
+                </div>
               );
             })}
-            {/**  스크롤이 내려갈 자리, node는 div를 가리킴 */}
+            {/**  스크롤이 내려갈 자리*/}
             <div ref={scrollRef} />
           </div>
 
