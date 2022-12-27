@@ -61,7 +61,7 @@ export default function ProductsList(props: ProductsListProps) {
     data: categories,
     isError: isErrorCategory,
   } = useQuery<CategoryType[], AxiosError>(
-    ['category'],
+    ['categories'],
     async () => {
       const res = await api.get('/category');
       return res.data;
