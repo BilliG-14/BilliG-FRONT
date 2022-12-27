@@ -8,7 +8,7 @@ import ListByCategory from 'components/productsList/ListByCategory';
 import { useParams } from 'react-router-dom';
 import ProductsListNav from 'components/productsList/ProductsListNav';
 
-type Products = {
+export type Products = {
   docs: [Item];
   totalPages: number;
   hasNextPage: boolean;

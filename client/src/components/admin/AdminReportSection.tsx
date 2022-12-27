@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import api from 'api/customAxios';
 import { AxiosError } from 'axios';
 import ConfirmModal from 'components/Modal';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 
 export type Report = {
   createdAt: string;
@@ -26,7 +26,7 @@ const apiReports = {
     return data;
   },
   DELETE: async (_id: string) => {
-    const { data } = await api.delete(`/${endPoint}/${_id}`);
+    await api.delete(`/${endPoint}/${_id}`);
   },
 };
 export default function AdminReportSection() {
@@ -37,7 +37,7 @@ export default function AdminReportSection() {
     ['reports'],
     apiReports.GET,
     {
-      refetchOnWindowFocus: false, // react-query는 사용자가 사용하는 윈도우가 다른 곳을 갔다가 다시 화면으로 돌아오면 이 함수를 재실행합니다. 그 재실행 여부 옵션 입니다.
+      refetchOnWindowFocus: false,
       retry: 0, // 실패시 재호출 몇번 할지
       staleTime: 60 * 1000 * 60,
       onSuccess: (_data) => {

@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import ConfirmModal from 'components/Modal';
 import { useRef, useState } from 'react';
-import { createGlobalStyle } from 'styled-components';
 import { apiReports } from './AdminNoticeSection';
 export default function AdminNoticeWriting() {
   const titleRef = useRef<HTMLInputElement>(null);
