@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import api from 'api/customAxios';
 import { AxiosError } from 'axios';
 import ConfirmModal from 'components/Modal';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { useNoticePageStore } from 'store/AdminPageStore';
 import AdminNoticeHeader from './AdminNoticeHeader';
 import AdminNoticeWriting from './AdminNoticeWriting';
@@ -70,29 +70,15 @@ function AdminNoticeList() {
     refetchOnWindowFocus: false,
     retry: 0,
     staleTime: 60 * 1000 * 60,
-    onSuccess: (_data) => {
-      // 성공시 호출
-      console.log(_data);
-    },
-    onError: (e: Error) => {
-      console.log(e.message);
-    },
   });
   const updateMutation = useMutation(apiReports.UPDATE, {
     onSuccess: (_data) => {
-      console.log(_data);
       queryClient.invalidateQueries(['notices']);
-    },
-    onError: (error) => {
-      console.log(error);
     },
   });
   const deleteMutation = useMutation(apiReports.DELETE, {
     onSuccess: (_data) => {
       queryClient.invalidateQueries(['notices']);
-    },
-    onError: (error) => {
-      console.log(error);
     },
   });
   return (

@@ -1,7 +1,3 @@
-import {
-  SpeechBubbleLeft,
-  SpeechBubbleRight,
-} from 'components/main/SpeechBubble';
 import useScrollFadeIn from 'hooks/useScrollFadeIn';
 
 type WrapItemProps = {

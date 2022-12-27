@@ -29,9 +29,6 @@ export default function AdminNoticeWriting() {
       // post요청 성공 시 category 맵핑된 useQuery api 함수를 실행
       queryClient.invalidateQueries(['notices']);
     },
-    onError: (error) => {
-      console.log(error);
-    },
   });
   return (
     <div className="w-full">

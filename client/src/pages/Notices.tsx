@@ -12,15 +12,7 @@ export default function Notices() {
     refetchOnWindowFocus: false,
     retry: 0,
     staleTime: 60 * 1000 * 60,
-    onSuccess: (_data) => {
-      // 성공시 호출
-      console.log(_data);
-    },
-    onError: (e: Error) => {
-      console.log(e.message);
-    },
   });
-  console.log(notices);
   return (
     <div className="w-screen m-auto">
       <div className="max-w-screen-lg mx-auto">

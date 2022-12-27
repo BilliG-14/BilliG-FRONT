@@ -1,4 +1,3 @@
-import axios from 'axios';
 import ConfirmModal from 'components/Modal';
 import { FormEvent, useCallback, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -41,7 +40,6 @@ export function LoginForm() {
     <form
       onSubmit={handleSubmit}
       className="w-2/3 mt-24 mx-auto animate-fade-in-150ms"
-      action="http://localhost:8080"
     >
       <div className="w-full flex flex-col justify-center items-center">
         <input

@@ -40,21 +40,11 @@ export default function AdminReportSection() {
       refetchOnWindowFocus: false,
       retry: 0, // 실패시 재호출 몇번 할지
       staleTime: 60 * 1000 * 60,
-      onSuccess: (_data) => {
-        // 성공시 호출
-        console.log(_data);
-      },
-      onError: (e: Error) => {
-        console.log(e.message);
-      },
     },
   );
   const deleteMutation = useMutation(apiReports.DELETE, {
     onSuccess: (_data) => {
       queryClient.invalidateQueries(['reports']);
-    },
-    onError: (error) => {
-      console.log(error);
     },
   });
   if (isLoading) {

@@ -46,36 +46,21 @@ export default function AdminCategorySection() {
     {
       refetchOnWindowFocus: false,
       staleTime: 60 * 1000 * 60,
-      onSuccess: (_data) => {
-        console.log(_data);
-      },
-      onError: (e: Error) => {
-        console.log(e.message);
-      },
     },
   );
   const createMutation = useMutation(apiCategory.CREATE, {
     onSuccess: () => {
       queryClient.invalidateQueries(['categories']);
     },
-    onError: (error) => {
-      console.log(error);
-    },
   });
   const updateMutation = useMutation(apiCategory.UPDATE, {
     onSuccess: (_data) => {
       queryClient.invalidateQueries(['categories']);
     },
-    onError: (error) => {
-      console.log(error);
-    },
   });
   const deleteMutation = useMutation(apiCategory.DELETE, {
     onSuccess: (_data) => {
       queryClient.invalidateQueries(['categories']);
-    },
-    onError: (error) => {
-      console.log(error);
     },
   });
   /*버튼 클릭 시 실행할 함수 */
@@ -146,7 +131,6 @@ export default function AdminCategorySection() {
                             _id: category._id,
                             name: category.name,
                           };
-                          console.log(selectedCategory.current);
                           if (selectedDiv.current) {
                             selectedDiv.current.style.display = 'block';
                           }
@@ -213,7 +197,7 @@ export default function AdminCategorySection() {
             try {
               handleDelete(selectedCategory.current._id);
             } catch (error) {
-              console.log(error);
+              alert('카테고리 삭제에 실패하였습니다.');
             }
           }}
         />
