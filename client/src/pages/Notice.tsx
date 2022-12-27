@@ -29,7 +29,6 @@ export default function ReadNotice() {
   return (
     <div className="w-screen m-auto">
       <div className="max-w-screen-lg mx-auto">
-        <Nav />
         <div className="text-xl font-extrabold ml-10 mt-10">
           <p>공지사항</p>
         </div>

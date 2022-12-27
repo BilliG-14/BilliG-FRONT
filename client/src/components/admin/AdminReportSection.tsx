@@ -77,8 +77,16 @@ export default function AdminReportSection() {
         <tbody className="font-semibold">
           {data.map((report) => (
             <tr key={report._id} className="text-center">
-              <td>{report.reporter.name}</td>
-              <td className="text-red-500">{report.target.name}</td>
+              <td>
+                {report.reporter?.name
+                  ? report.reporter?.name
+                  : '존재하지 않는 계정'}
+              </td>
+              <td className="text-red-500">
+                {report?.target?.name
+                  ? report?.target?.name
+                  : '존재하지 않는 계정'}
+              </td>
               <td>{report.details}</td>
               <td className="w-14">
                 <button
@@ -92,7 +100,7 @@ export default function AdminReportSection() {
       </table>
       {targetReport && (
         <ConfirmModal
-          title={`${targetReport.reporter.name}님의 ${targetReport.target.name}신고내역을 삭제하시겠습니까?`}
+          title={`${targetReport.reporter?.name}님의 ${targetReport.target?.name}신고내역을 삭제하시겠습니까?`}
           yesColor="red-400"
           yesText="삭제"
           onClickToggleModal={() => setTargetReport(undefined)}

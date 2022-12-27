@@ -59,6 +59,6 @@ export default function AdminHashTagSection() {
           </ul>
         </div>
       </div>
-    </section >
+    </section>
   );
 }
