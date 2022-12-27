@@ -55,7 +55,6 @@ export default function UserInformation() {
   }, [isOpenModal]);
   /*get category */
   const { id } = useParams();
-  console.log(id);
   const { isLoading, data, isError } = useQuery<User, AxiosError>(
     [`user`, id],
     apiUser.GET(id),
@@ -66,7 +65,12 @@ export default function UserInformation() {
   );
   const createMutation = useMutation(apiReport.CREATE);
   if (isLoading) return <Loading />;
-  if (isError) return <div>회원정보를 불러올 수 없습니다.</div>;
+  if (isError)
+    return (
+      <div className="w-full text-center text-2xl pt-60">
+        회원정보를 불러올 수 없습니다.
+      </div>
+    );
   return (
     <>
       <div className="h-full w-screen max-w-screen-lg m-auto flex flex-col items-center">
