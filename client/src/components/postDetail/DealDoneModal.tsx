@@ -91,8 +91,18 @@ export default function DealDoneModal(props: PostIdType) {
   // 빌리려고 하는 유저(차용인) 등록
   function changeBorrowState() {
     if (userCheck) {
-      borrowerEdit.mutate(borrowerInformation);
-      setShowModal(false);
+      if (!startRef.current?.value || !endRef.current?.value) {
+        alert('기간 설정을 정확하게 해주세요.');
+        return;
+      } else {
+        borrowerEdit.mutate(borrowerInformation, {
+          onSuccess: (res) => {
+            setShowModal(false);
+            queryClient.invalidateQueries(['postData']);
+            console.log(res);
+          },
+        });
+      }
     } else {
       alert('유저 확인을 해주세요.');
     }
@@ -128,13 +138,14 @@ export default function DealDoneModal(props: PostIdType) {
       if (!startRef.current?.value || !endRef.current?.value) {
         alert('기간 설정을 정확하게 해주세요.');
         return;
+      } else {
+        lenderEdit.mutate(lenderInformation, {
+          onSuccess: () => {
+            setShowModal(false);
+            queryClient.invalidateQueries(['postData']);
+          },
+        });
       }
-      lenderEdit.mutate(lenderInformation, {
-        onSuccess: () => {
-          setShowModal(false);
-          queryClient.invalidateQueries(['postData']);
-        },
-      });
     } else {
       alert('유저 확인을 해주세요.');
     }
@@ -182,14 +193,14 @@ export default function DealDoneModal(props: PostIdType) {
                     대여완료 전 꼭 확인해주세요!
                   </p>
                   {postType === 'lend' ? (
-                    <p className="mb-6 text-[13px] leading-5 font-thin text-b-text-black">
+                    <p className="mb-6 text-[13px] leading-5 font-semibold text-b-text-black">
                       물품을 빌리려고 하는 유저에게 전달받은 이메일을 입력하여
                       <br />
                       빌리지의 유저인지 유저확인을 꼭 하신 후 대여완료 버튼을
                       눌러주세요!
                     </p>
                   ) : (
-                    <p className="mb-6 text-[13px] leading-5 font-thin text-b-text-black">
+                    <p className="mb-6 text-[13px] leading-5 font-semibold text-b-text-black">
                       물품을 대여해주는 유저에게 전달받은 이메일을 입력하여
                       <br />
                       빌리지의 유저인지 유저확인을 꼭 하신 후 대여완료 버튼을
@@ -219,7 +230,7 @@ export default function DealDoneModal(props: PostIdType) {
                   </div>
 
                   <div className="mt-4 mb-2">빌리는 기간 설정</div>
-                  <div className="flex mb-1 gap-3 items-center justify-around text-xs">
+                  <div className="flex mb-1 gap-3 items-center justify-around text-xs font-semibold">
                     <div>시작날짜</div>
                     <div>종료날짜</div>
                   </div>

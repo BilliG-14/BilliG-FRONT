@@ -17,7 +17,6 @@ import Loading from 'components/Loading';
 import { AxiosError } from 'axios';
 import NotFound from 'components/NotFound';
 import Footer from 'components/footer/Footer';
-import MarkdownRenderer from 'components/MarkdownRenderer';
 
 export default function PostDetail() {
   const navigate = useNavigate();
@@ -279,7 +278,7 @@ export default function PostDetail() {
                         />
 
                         <div className="flex-1 min-w-0">
-                          <p className="text-[12px] font-medium text-gray-900 mb-1">
+                          <p className="text-[12px] font-[600] text-gray-900 mb-1">
                             {postData?.author.nickName}
                           </p>
                           <p className="text-[8px] font-medium text-gray-400 ">

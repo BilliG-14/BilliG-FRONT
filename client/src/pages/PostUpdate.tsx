@@ -90,10 +90,6 @@ export default function PostUpdate() {
     setPrice(newPrice);
   }
 
-  function changeDescription(e: ChangeEvent<HTMLTextAreaElement>) {
-    setDescription(e.currentTarget.value);
-  }
-
   // 제목 글자수 제한
   function checkWordsNumber(e: React.FocusEvent<HTMLInputElement>) {
     if (e.currentTarget.value.length > 20) {
@@ -208,12 +204,6 @@ export default function PostUpdate() {
 
           {/* 상품 상세내용 section */}
           <section className="mb-4">
-            {/* <textarea
-              value={description}
-              onChange={changeDescription}
-              placeholder="사이즈, 색상 등 상세정보를 입력하면 좋아요!"
-              className="p-3 w-full h-40 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
-            /> */}
             <PostEditor />
           </section>
 

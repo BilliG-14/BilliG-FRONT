@@ -13,6 +13,7 @@ import { FiSearch } from 'react-icons/fi';
 import { FaRegSmileWink, FaClipboardList } from 'react-icons/fa';
 import { BsFilePersonFill } from 'react-icons/bs';
 import { RiLogoutCircleFill } from 'react-icons/ri';
+import Loading from 'components/Loading';
 
 function TrueNav() {
   const [onWriteBtn, setOnWriteBtn] = useState(false);
@@ -38,7 +39,7 @@ function TrueNav() {
     },
   );
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <Loading />;
 
   return (
     <div className="flex justify-between pr-5 h-40 mt-1 select-none">

@@ -30,7 +30,6 @@ export default function LendWriting() {
   const productNameRef = useRef<HTMLInputElement>(null);
   const priceDayRef = useRef<HTMLInputElement>(null);
   const categoryRef = useRef<HTMLSelectElement>(null);
-  const descriptionRef = useRef<HTMLTextAreaElement>(null);
 
   const navigate = useNavigate();
 
