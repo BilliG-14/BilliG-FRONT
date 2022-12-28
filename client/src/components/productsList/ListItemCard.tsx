@@ -7,12 +7,21 @@ type ItemProps = {
 };
 
 export default function ListBorrowItemCard({ item }: ItemProps) {
-  const { title, imgUrl, address, tradeWay, price, period, category } = item;
+  const {
+    title,
+    imgUrl,
+    address,
+    tradeWay,
+    price,
+    period,
+    category,
+    postType,
+  } = item;
   const navigate = useNavigate();
 
   return (
     <div
-      className="w-[234px] inline-block my-5 px-2.5 mx-4 rounded-lg bg-white cursor-pointer hover:scale-110  hover:ease-in transition-all duration-300"
+      className="w-[234px] inline-block my-5 px-2.5 mx-4 rounded-lg bg-white cursor-pointer hover:scale-110  hover:ease-in transition-all duration-300 shadow-md"
       onClick={() => {
         navigate(`/read/${item._id}`);
       }}
@@ -33,7 +42,7 @@ export default function ListBorrowItemCard({ item }: ItemProps) {
           <p className="name h-12 mb-1 font-bold leading-6 underline underline-offset-4">
             {title}
           </p>
-          {period && (
+          {period && postType === 'borrow' && (
             <p className="category mb-1 font-semibold text-sm">
               {`${period.start} ~ ${period.end}`}
             </p>

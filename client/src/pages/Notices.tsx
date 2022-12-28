@@ -3,6 +3,7 @@ import { apiReports, Notice } from 'components/admin/AdminNoticeSection';
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import Loading from 'components/Loading';
+import Footer from 'components/footer/Footer';
 
 export type NoticesPaginateType = {
   docs: [Notice];
@@ -33,7 +34,7 @@ export default function Notices() {
   );
   if (isLoading) return <Loading />;
   return (
-    <div className="w-screen m-auto">
+    <div className="w-screen m-auto relative pb-[100px] min-h-[85vh]">
       <div className="max-w-screen-lg mx-auto">
         <div className="text-3xl font-extrabold ml-10 mt-10">
           <p>공지사항</p>
@@ -63,6 +64,9 @@ export default function Notices() {
             </tbody>
           </table>
         </div>
+      </div>
+      <div className="w-full h-[100px] absolute bottom-0">
+        <Footer />
       </div>
     </div>
   );
