@@ -1,8 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 
 const axiosConfig: AxiosRequestConfig = {
-  baseURL: 'http://34.64.44.34:3003/',
-  // baseURL: process.env.REACT_APP_AWS_EC2,
+  baseURL: process.env.REACT_APP_AWS_EC2,
   headers: {
     'Content-Type': 'application/json',
   },
