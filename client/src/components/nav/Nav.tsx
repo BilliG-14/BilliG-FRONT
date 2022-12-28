@@ -27,6 +27,7 @@ function Nav() {
     navigate('/login');
   };
   const goMyPage = async () => {
+    setSelectedLogin();
     navigate('/login');
   };
   const goSearch = () => {
