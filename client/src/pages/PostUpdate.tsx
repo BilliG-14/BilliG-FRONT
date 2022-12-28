@@ -9,6 +9,7 @@ import {
   reservationStore,
   categoryStore,
   UpdateImageUploadStore,
+  descriptionStore,
 } from './../store/PostWriteStore';
 
 import HashTagSection from '../components/postWrite/HashTag';
@@ -19,6 +20,7 @@ import Category from 'components/postWrite/Category';
 import UpdatedImageUpload from 'components/postWrite/UpdatedImageUpload';
 import Loading from 'components/Loading';
 import Footer from 'components/footer/Footer';
+import PostEditor from 'components/postWrite/PostEditor';
 
 export default function PostUpdate() {
   const queryClient = useQueryClient();
@@ -30,6 +32,7 @@ export default function PostUpdate() {
   const { reservationDate, setReservationDate } = reservationStore();
   const { filteredCategory, setFilteredCategory } = categoryStore();
   const { imgUrlList, setImgUrlList } = UpdateImageUploadStore();
+  const { description, setDescription } = descriptionStore();
 
   const navigate = useNavigate();
 
@@ -42,7 +45,6 @@ export default function PostUpdate() {
   const [price, setPrice] = useState<{ priceDay: number }>({
     priceDay: 0,
   });
-  const [description, setDescription] = useState<string>('');
 
   /* 서버에서 해시태그가 object 형태로 들어와서 해시태그 이름만 배열로 담아야함  */
   const serverHashTagList: string[] = [];
@@ -206,12 +208,13 @@ export default function PostUpdate() {
 
           {/* 상품 상세내용 section */}
           <section className="mb-4">
-            <textarea
+            {/* <textarea
               value={description}
               onChange={changeDescription}
               placeholder="사이즈, 색상 등 상세정보를 입력하면 좋아요!"
               className="p-3 w-full h-40 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
-            />
+            /> */}
+            <PostEditor />
           </section>
 
           {/* 해시태그 component */}
