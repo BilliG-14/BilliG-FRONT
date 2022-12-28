@@ -9,22 +9,20 @@ import Loading from 'components/Loading';
 type NavProps = {
   postType: string;
 };
-type CategoriesResType = {
-  data: CategoryType[];
-};
+
 export default function ProductsListNav(props: NavProps) {
   const navigate = useNavigate();
   const { postType } = props;
   /*네비게이션에 사용될 카테고리 목록 통신 */
   const {
     isLoading,
-    data: categoriesRes,
+    data: categories,
     isError,
-  } = useQuery<CategoriesResType, AxiosError>(
+  } = useQuery<CategoryType[], AxiosError>(
     ['categories'],
     async () => {
       const res = await api.get('/category');
-      return res;
+      return res.data;
     },
     {
       refetchOnWindowFocus: false,
@@ -33,7 +31,7 @@ export default function ProductsListNav(props: NavProps) {
   );
   if (isLoading) return <Loading />;
   if (isError) return <NotFound />;
-  const categories = categoriesRes.data;
+
   return (
     <nav className="flex max-w-screen-lg h-16 border-b-2 border-solid border-gray-500 m-auto select-none">
       <ul className="flex space-x-10 text-center items-center m-auto text-xl font-extrabold">

@@ -50,22 +50,28 @@ export default function LendWriting() {
   );
 
   // 카테고리 가져오기
-  const [categorys, setCategorys] = useState<CategoryType[]>([]);
   const [filteredCategory, setFilteredCategory] = useState<CategoryType[]>([]);
 
   // 카테고리 받아오기
-  useQuery(['categories'], () => api.get('/category'), {
-    refetchOnMount: 'always',
-    refetchOnWindowFocus: false,
-    staleTime: 60 * 1000 * 60,
-    onSuccess: (res) => setCategorys(res.data),
-  });
+  const { data: categories } = useQuery(
+    ['categories'],
+    async () => {
+      const result = await api.get('/category');
+      return result.data;
+    },
+    {
+      refetchOnMount: 'always',
+      refetchOnWindowFocus: false,
+      staleTime: 60 * 1000 * 60,
+    },
+  );
 
   // 사용자가 선택한 카테고리만 필터
   function changecategory() {
     setFilteredCategory(
-      categorys.filter(
-        (category) => category._id === categoryRef.current?.value,
+      categories.filter(
+        (category: { _id: string; name: string }) =>
+          category._id === categoryRef.current?.value,
       ),
     );
   }
@@ -167,7 +173,7 @@ export default function LendWriting() {
                 className="flex-none pl-3 w-1/6 h-10 border-solid border  border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2"
               >
                 <option>카테고리 설정</option>
-                {categorys.map((category) => (
+                {categories.map((category: { _id: string; name: string }) => (
                   <option key={category._id} value={category._id}>
                     {category.name}
                   </option>
