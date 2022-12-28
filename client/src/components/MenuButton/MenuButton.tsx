@@ -16,6 +16,7 @@ const MenuButton = () => {
           to="/submain"
           className="owner"
           onClick={() => {
+            client.invalidateQueries(['categories']);
             client.invalidateQueries([
               'categoryLendItems/63a481d8e4222e88aa4ed713',
             ]);
@@ -43,6 +44,7 @@ const MenuButton = () => {
           to="/submain/borrow"
           className="renter"
           onClick={() => {
+            client.invalidateQueries(['categories']);
             client.invalidateQueries([
               'categoryBorrowItems/63a16ff71027a8c93f03ade6',
             ]);

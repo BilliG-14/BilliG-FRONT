@@ -20,7 +20,7 @@ export default function DoneItemCard({ item }: DoneItemtProps) {
   const navigate = useNavigate();
   return (
     <div
-      className="h-36 cursor-pointer opacity-70 hover:opacity-100 hover:bg-b-bg-gray"
+      className="h-44 cursor-pointer opacity-70 hover:opacity-100 hover:bg-b-bg-gray"
       onClick={() => {
         navigate(`/read/${item._id}`);
       }}
@@ -31,16 +31,20 @@ export default function DoneItemCard({ item }: DoneItemtProps) {
           <div className="w-4/5 pl-10">
             <p className="text-lg font-semibold mt-1">{title}</p>
             <ul>
-              <li className="mt-3">
+              <li className="mt-2">
                 <span>대여기간 : </span>
                 <span>{`${period.start} ~ `}</span>
                 <span>{`${period.end}`}</span>
               </li>
-              <li className="text-b-text-darkgray  mt-4 mb-1">
-                <span>거래지역 : </span>
-                <span className="mr-2">{`📍 ${address}`}</span>
-                {tradeWay.direct ? <DealTag deal="직거래" /> : null}
-                {tradeWay.delivery ? <DealTag deal="택배거래" /> : null}
+              <li className="flex flex-col text-b-text-darkgray mt-2">
+                <div className="mb-2">
+                  <span>거래지역 : </span>
+                  <span className="mr-2">{`📍 ${address}`}</span>
+                </div>
+                <div className="mt-2">
+                  {tradeWay.direct ? <DealTag deal="직거래" /> : null}
+                  {tradeWay.delivery ? <DealTag deal="택배거래" /> : null}
+                </div>
               </li>
             </ul>
           </div>

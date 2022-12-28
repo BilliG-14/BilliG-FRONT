@@ -24,7 +24,7 @@ export default function MyinfoPage() {
     isError,
     data: userInfo,
   } = useQuery(
-    ['userInfo'],
+    ['userInfo', `${localStorage.getItem('userId')}`],
     async () => {
       return api.get(`/user/${localStorage.getItem('userId')}`);
     },

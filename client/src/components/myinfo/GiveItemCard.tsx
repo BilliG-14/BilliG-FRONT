@@ -12,7 +12,7 @@ export default function GiveItemCard({ item }: GivePostProps) {
   const navigate = useNavigate();
   return (
     <div
-      className="h-36 cursor-pointer hover:opacity-70"
+      className="h-40 cursor-pointer hover:opacity-70"
       onClick={() => {
         navigate(`/read/${item._id}`);
       }}
@@ -23,7 +23,7 @@ export default function GiveItemCard({ item }: GivePostProps) {
           <div className="w-4/5 pl-10">
             <p className="text-lg font-semibold mt-1">{title}</p>
             <ul>
-              <li className="text-b-text-darkgray mt-4 mb-1">
+              <li className="text-b-text-darkgray mt-4 mb-3">
                 <span>거래지역 : </span>
                 <span>{`📍 ${address}`}</span>
               </li>

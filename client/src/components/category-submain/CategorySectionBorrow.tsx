@@ -27,7 +27,7 @@ export default function CategorySectionBorrow({
     [`categoryBorrowItems/${category._id}`],
     async () => {
       return api.get(
-        `/product/page?&postType=borrow&per=4&page=1&category=${category._id}`,
+        `/product/page?&postType=borrow&per=4&page=1&stateOfTransaction=0&category=${category._id}`,
       );
     },
     {
@@ -81,4 +81,7 @@ const bg: string[] = [
   'bg-b-bg-sec3',
   'bg-b-bg-sec4',
   'bg-b-bg-sec5',
+  'bg-b-bg-sec6',
+  'bg-b-bg-sec7',
+  'bg-b-bg-sec8',
 ];
