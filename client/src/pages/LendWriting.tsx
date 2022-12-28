@@ -15,6 +15,7 @@ import ImageUpload from '../components/postWrite/ImageUpload';
 import TradeWay from '../components/postWrite/TradeWay';
 import Loading from 'components/Loading';
 import Footer from 'components/footer/Footer';
+import PostEditor from 'components/postWrite/PostEditor';
 
 export default function LendWriting() {
   // 빌려드립니다 글쓰기
@@ -196,6 +197,7 @@ export default function LendWriting() {
               className="p-3 w-full h-40 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
             />
           </section>
+          <PostEditor />
 
           {/* 해시태그 section */}
           <HashTagSection />
