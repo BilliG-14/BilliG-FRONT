@@ -14,6 +14,7 @@ import HashTagSection from '../components/postWrite/HashTag';
 import ImageUpload from '../components/postWrite/ImageUpload';
 import TradeWay from '../components/postWrite/TradeWay';
 import Loading from 'components/Loading';
+import Footer from 'components/footer/Footer';
 
 export default function LendWriting() {
   // 빌려드립니다 글쓰기
@@ -145,7 +146,7 @@ export default function LendWriting() {
   return (
     <div className="max-w-screen-lg mx-auto">
       <div className="flex flex-col justify-center mx-auto text-b-text-black">
-        <div className="mb-6 text-3xl font-bold">빌려주기</div>
+        <div className="mt-8 mb-6 text-3xl font-bold">빌려주기</div>
         <form className="w-[800px] mx-auto">
           {/* 상품명/카테고리 section */}
           <section className="flex mb-4">
@@ -203,13 +204,14 @@ export default function LendWriting() {
             <button
               type="button"
               onClick={handleButtonClick}
-              className="w-1/6 h-10 hover:text-white border border-b-yellow hover:bg-b-yellow focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 my-3"
+              className="w-1/6 h-10 hover:text-white border border-b-yellow hover:bg-b-yellow  font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mt-3 mb-16 transition duration-100"
             >
               등록하기
             </button>
           </section>
         </form>
       </div>
+      <Footer />
     </div>
   );
 }
