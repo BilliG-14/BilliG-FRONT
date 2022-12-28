@@ -9,9 +9,11 @@ import SearchItemCardSeleton from 'components/searchPage/SearchItemCard-skeleton
 // icon
 import { FiSearch } from 'react-icons/fi';
 import { Pagination } from '../components/Pagination';
+import Loading from 'components/Loading';
 
 export default function SearchPage() {
   const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
   const [searchWord, setSearchWord] = useState<string>('');
   const [pagination, setPagination] = useState({
     totalPage: 1,
@@ -23,17 +25,24 @@ export default function SearchPage() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const searchItems = await api.get(
-      `/product/page?postType=${radioStatus}&per=10&page=1&hashtag=${searchWord}`,
-    );
+    if (!searchWord) return;
+    setLoading(true);
+    try {
+      const searchItems = await api.get(
+        `/product/page?postType=${radioStatus}&per=10&page=1&hashtag=${searchWord}`,
+      );
 
-    const { hasNextPage, hasPrevPage } = searchItems.data;
-    setItems(searchItems.data.docs);
-    setPagination({
-      totalPage: searchItems.data.totalPages,
-      hasNextPage,
-      hasPrevPage,
-    });
+      const { hasNextPage, hasPrevPage } = searchItems.data;
+      setItems(searchItems.data.docs);
+      setPagination({
+        totalPage: searchItems.data.totalPages,
+        hasNextPage,
+        hasPrevPage,
+      });
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const { isLoading, data: hashtags } = useQuery(
@@ -46,17 +55,7 @@ export default function SearchPage() {
       staleTime: 1000 * 60 * 5,
     },
   );
-  if (isLoading)
-    return (
-      <>
-        <ul>
-          <SearchItemCardSeleton />
-          <SearchItemCardSeleton />
-          <SearchItemCardSeleton />
-          <SearchItemCardSeleton />
-        </ul>
-      </>
-    );
+  if (isLoading) return <Loading />;
   return (
     <div className="w-screen max-w-screen-lg relative m-auto">
       {/* radio btn */}
@@ -123,7 +122,7 @@ export default function SearchPage() {
       </section>
       {/* ItemCard section*/}
       <section className="itemcard_section">
-        {items.length && (
+        {items.length > 0 && (
           <div>
             <div className="text-2xl font-bold py-2 px-32 mb-1">
               {radioStatus === 'lend' ? (
@@ -135,13 +134,21 @@ export default function SearchPage() {
           </div>
         )}
         <ul>
+          {loading && (
+            <ul>
+              <SearchItemCardSeleton />
+              <SearchItemCardSeleton />
+              <SearchItemCardSeleton />
+              <SearchItemCardSeleton />
+            </ul>
+          )}
           {items.length > 0
             ? items.map((item: Item) => (
                 <SearchItemCard key={item._id} item={item} />
               ))
             : null}
         </ul>
-        {items.length && (
+        {items.length > 0 && (
           <Pagination
             page={page}
             setPage={setPage}
