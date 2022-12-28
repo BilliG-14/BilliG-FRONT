@@ -5,6 +5,6 @@ export const getChatRoom = async (id: string) => {
     const chatInformation = await api.get(`/chat/${id}`);
     return chatInformation.data;
   } catch (error) {
-    console.log(error);
+    alert('채팅방 불러오기 실패하였습니다.');
   }
 };

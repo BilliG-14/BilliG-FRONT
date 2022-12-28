@@ -25,9 +25,12 @@ function ChatRoomList({ chatRoomList, socket }: any) {
 
   /** 채팅방 변경 */
   const changeChatRoom = (room: any) => {
-    /** 채팅방 이동 전 소켓 이벤트 삭제 */
-    socket.removeAllListeners(`message${activeChatRoomId}`);
-
+    try {
+      /** 채팅방 이동 전 소켓 이벤트 삭제 */
+      socket.removeAllListeners(`message${activeChatRoomId}`);
+    } catch (error) {
+      alert('소켓 통신이 정상적으로 이루어지지 않았습니다.');
+    }
     /** 현재 선택한 채팅방 정보 가져옴 */
     setActiveChatRoomId(room._id);
 

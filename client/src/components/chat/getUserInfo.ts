@@ -5,7 +5,7 @@ const getUserInfo = async () => {
     const userInformation = await api.get('/user/me');
     return userInformation;
   } catch (error) {
-    console.log(error);
+    alert('유저 정보 불러오기 실패하였습니다.');
   }
 };
 
