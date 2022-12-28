@@ -21,7 +21,7 @@ export default function BorrowItemCard({ item }: BorrowPostProps) {
   const navigate = useNavigate();
   return (
     <div
-      className="h-36 cursor-pointer hover:opacity-70"
+      className="h-40 cursor-pointer hover:opacity-70"
       onClick={() => {
         navigate(`/read/${item._id}`);
       }}
@@ -38,7 +38,7 @@ export default function BorrowItemCard({ item }: BorrowPostProps) {
                 <span>{`${period.start} ~ `}</span>
                 <span>{`${period.end}`}</span>
               </li>
-              <li className="text-b-text-darkgray mt-3 mb-1">
+              <li className="text-b-text-darkgray mt-3 mb-3">
                 <span>거래지역 : </span>
                 <span>{`📍 ${address}`}</span>
               </li>
