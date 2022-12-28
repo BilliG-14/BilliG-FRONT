@@ -6,7 +6,7 @@ import getChatRooms from './getChatRooms';
 import Footer from '../../components/footer/Footer';
 import { io } from 'socket.io-client';
 
-const socket = io('http://34.64.44.34:3003/chat', {
+const socket = io(`${process.env.REACT_APP_AWS_EC2}/chat`, {
   transports: ['websocket'],
 });
 
