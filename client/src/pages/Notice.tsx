@@ -6,6 +6,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import MarkdownRenderer from '../components/MarkdownRenderer';
 import Loading from 'components/Loading';
 import Footer from 'components/footer/Footer';
+import styled from 'styled-components';
 
 export default function ReadNotice() {
   const { id } = useParams();
