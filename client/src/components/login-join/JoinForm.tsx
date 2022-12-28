@@ -214,7 +214,7 @@ function JoinButton() {
       setValidMessage('주소를 다시 확인해주세요');
       return;
     }
-    const checkExistId = await api
+    const checkExistEmail = await api
       .post('checkEmail', { email: joinFormState.email })
       .then((res) => {
         return res.data;
@@ -222,7 +222,7 @@ function JoinButton() {
       .catch((error: Error) => {
         console.error(error);
       });
-    if (checkExistId?.userId) {
+    if (checkExistEmail?.userId) {
       setOpenModal(true);
       setValidMessage('이미 존재하는 이메일입니다.');
       return;
