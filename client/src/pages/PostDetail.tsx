@@ -318,7 +318,7 @@ export default function PostDetail() {
             <section>
               <div className="font-semibold text-lg">상세정보</div>
               <div
-                className="w-full h-40 mt-3 mb-12 p-3 rounded-lg"
+                className="w-full h-auto mt-3 mb-12 p-3 rounded-lg"
                 dangerouslySetInnerHTML={{ __html: postData?.description }}
               ></div>
               <div className="flex items-end gap-7">

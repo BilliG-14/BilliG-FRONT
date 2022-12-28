@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { descriptionStore } from 'store/PostWriteStore';
 
 export default function PostEditor() {
+  //   const { serverDescription } = props;
   const { description, setDescription } = descriptionStore();
 
   const editorRef = useRef<Editor>(null);
@@ -19,7 +20,7 @@ export default function PostEditor() {
     <>
       <StyleToastDiv>
         <Editor
-          initialValue={' '}
+          initialValue={description}
           placeholder="내용을 입력해 주세요"
           initialEditType="wysiwyg"
           hideModeSwitch={true}
