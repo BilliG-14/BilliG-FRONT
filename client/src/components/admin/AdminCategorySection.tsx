@@ -196,7 +196,9 @@ export default function AdminCategorySection() {
             try {
               handleDelete(selectedCategory.current._id);
             } catch (error) {
-              alert('카테고리 삭제에 실패하였습니다.');
+              alert(
+                '카테고리 삭제에 실패하였습니다. 상품이 등록된 경우 삭제할 수 없습니다',
+              );
             }
           }}
         />
