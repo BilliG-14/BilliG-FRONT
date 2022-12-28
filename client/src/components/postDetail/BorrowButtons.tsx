@@ -12,9 +12,13 @@ export default function BorrowButtons(props: PostIdType) {
     props;
   /** 채팅하기 클릭 시 작성자 고유id로 채팅방 생성 후 이동 */
   const handleOnclick = async () => {
-    await createChatRoom(authorId).then((res) =>
-      navigate(`/chat/${res?.data?._id}`),
-    );
+    if (loginedUserId) {
+      await createChatRoom(authorId).then((res) =>
+        navigate(`/chat/${res?.data?._id}`),
+      );
+    } else {
+      navigate('/login');
+    }
   };
   return (
     <>
