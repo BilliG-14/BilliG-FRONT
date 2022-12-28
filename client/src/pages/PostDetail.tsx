@@ -42,9 +42,6 @@ export default function PostDetail() {
       return res.data;
     },
     {
-      onSuccess: (res) => {
-        queryClient.invalidateQueries(['postData']);
-      },
       refetchOnMount: true,
       refetchOnWindowFocus: true,
       staleTime: 1000 * 60 * 5,
