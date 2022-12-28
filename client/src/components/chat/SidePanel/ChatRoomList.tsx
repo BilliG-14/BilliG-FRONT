@@ -59,7 +59,9 @@ function ChatRoomList({ chatRoomList, socket }: any) {
   return (
     <div className="mt-5 px-2 h-[550px]">
       <div className="relative w-full flex flex-col h-[450px]">
-        <FaRegSmileWink className="h-20 w-20 text-2xl mb-2" />
+        <div className="flex justify-start">
+          <FaRegSmileWink className="h-10 w-10 text-2xl mb-2" />
+        </div>
         <div className="mt-3 h-20 flex items-center">
           CHAT ROOMS ({chatRoomList?.length})
         </div>
