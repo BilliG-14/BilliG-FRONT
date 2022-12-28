@@ -41,6 +41,10 @@ export default function BorrowWriting() {
     ['userData'],
     () => api.get('/user/me'),
     {
+      onError: () => {
+        alert('사용자를 찾을 수 없습니다. \n로그인 화면으로 이동합니다.');
+        navigate('/login');
+      },
       refetchOnMount: 'always',
       refetchOnWindowFocus: false,
       staleTime: 60 * 1000 * 60,
@@ -87,6 +91,9 @@ export default function BorrowWriting() {
     {
       onSuccess: (res) => {
         navigate(`/read/${res.data._id}`);
+      },
+      onError: (err) => {
+        alert(`게시글을 등록하는 도중 오류가 생겼습니다. \n에러내용: ${err}`);
       },
     },
   );

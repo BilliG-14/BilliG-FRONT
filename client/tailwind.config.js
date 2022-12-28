@@ -128,7 +128,7 @@ module.exports = {
         'center-to-lb': 'CenterToLeftBottom 500ms linear 1.2s both',
         'center-to-rb': 'CenterToRightBottom 500ms linear 1.4s both',
         'center-to-rt': 'CenterToRightTop 500ms linear 1.6s both',
-        marquee: 'Marquee 52s linear infinite',
+        'marquee': 'Marquee 55s linear infinite',
       },
     },
   },

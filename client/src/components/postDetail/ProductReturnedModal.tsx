@@ -22,7 +22,7 @@ export function ProductReturnedModal(props: PostIdType) {
         queryClient.invalidateQueries(['postData']);
       },
       onError: (error) => {
-        alert(`반납완료 처리 중 오류가 발생했습니다. ${error}`);
+        alert(`반납완료 처리 중 오류가 발생했습니다. \n에러내용: ${error}`);
       },
     },
   );
