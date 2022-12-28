@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { io } from 'socket.io-client';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getChatRoom } from '../getChatRoom';
 interface MessageInterface {
@@ -7,12 +6,7 @@ interface MessageInterface {
   message: string;
 }
 
-const socket = io('http://34.64.44.34:3003/chat', {
-  transports: ['websocket'],
-});
-const baseURL = 'http://34.64.44.34:3003/';
-
-function MainPanel({ user, chatRoomList }: any) {
+function MainPanel({ user, chatRoomList, socket }: any) {
   const scrollRef = useRef<HTMLInputElement>(null);
   const [messages, setMessages] = useState<MessageInterface[]>([]);
   const [currentRoom, setCurrentRoom] = useState('');
@@ -47,7 +41,6 @@ function MainPanel({ user, chatRoomList }: any) {
         setMessages([...messages, { name, message }]);
       },
     );
-
     // socket.on('users', (room: any) => {
     //   setUsers(room);
     // });
@@ -64,7 +57,6 @@ function MainPanel({ user, chatRoomList }: any) {
     fetchData();
   }, [roomId]);
   //--------------------------------------------------
-
   useEffect(() => {
     if (scrollRef) scrollRef?.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);

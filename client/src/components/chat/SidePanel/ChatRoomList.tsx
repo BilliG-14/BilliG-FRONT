@@ -2,11 +2,6 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { FaRegSmileWink } from 'react-icons/fa';
 import { FaPlus } from 'react-icons/fa';
 import { useParams, useNavigate } from 'react-router-dom';
-import { io } from 'socket.io-client';
-
-const socket = io('http://34.64.44.34:3003/chat', {
-  transports: ['websocket'],
-});
 interface ChatMessageType {
   message?: string;
   sender?: string;
@@ -22,21 +17,23 @@ interface ChatRoomType {
   chats: [ChatMessageType];
 }
 
-function ChatRoomList({ chatRoomList }: any) {
+function ChatRoomList({ chatRoomList, socket }: any) {
   // url id 받기
   const { roomId } = useParams();
-  const [oldChatRoomId, setOldChatRoomId] = useState('');
   const [activeChatRoomId, setActiveChatRoomId]: any = useState(roomId);
   const navigate = useNavigate();
+
   /** 채팅방 변경 */
   const changeChatRoom = (room: any) => {
-    setOldChatRoomId(activeChatRoomId);
     /** 채팅방 이동 전 소켓 이벤트 삭제 */
-    socket.removeAllListeners(`message${oldChatRoomId}`);
+    socket.removeAllListeners(`message${activeChatRoomId}`);
+
     /** 현재 선택한 채팅방 정보 가져옴 */
     setActiveChatRoomId(room._id);
+
     navigate(`/chat/${room._id}`);
   };
+
   /**채팅방 목록 렌더링 */
   const renderChatRooms = () =>
     chatRoomList &&
