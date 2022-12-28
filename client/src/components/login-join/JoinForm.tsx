@@ -7,7 +7,7 @@ import { useLoginJoinStore } from '../../store/LoginJoinStore';
 
 export function JoinForm() {
   const joinFormState = useJoinFormStore();
-  const formClassName = 'w-2/3 mt-12 my-24 mx-auto animate-fade-in-150ms ';
+  const formClassName = 'w-2/3 mt-12 mb-12 mx-auto animate-fade-in-150ms ';
   const divClassName = 'w-full flex flex-col justify-center items-center ';
   const labelClassName =
     'block text-b-yellow font-bold text-lg w-full my-auto text-left mt-1 ';
