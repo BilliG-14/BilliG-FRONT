@@ -78,6 +78,9 @@ export default function PostUpdate() {
           data?.data[0].period.end,
         );
       },
+      onError: (err) => {
+        alert(`게시글을 불러오는 도중 오류가 생겼습니다. \n에러내용: ${err}`);
+      },
     },
   );
 
@@ -127,6 +130,9 @@ export default function PostUpdate() {
       onSuccess: (res) => {
         navigate(`/read/${res.data._id}`);
         queryClient.invalidateQueries(['postData']);
+      },
+      onError: (err) => {
+        alert(`게시글을 수정하는 도중 오류가 생겼습니다. \n에러내용: ${err}`);
       },
     },
   );

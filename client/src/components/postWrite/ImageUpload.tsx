@@ -50,43 +50,48 @@ export default function ImageUpload() {
   }
 
   return (
-    <section className="mb-4 flex flex-row ">
-      <label
-        htmlFor="fileUpload"
-        className="inline-block w-[70px] h-[70px] mr-5 text-center text-xs border-solid border border-gray-300 hover:border-gray-400 cursor-pointer rounded-lg"
-      >
-        <AiFillCamera className="w-6 h-6 mx-auto mt-3.5 mb-[2px]" />
-        <div className="text-gray-400">{imgFiles.length} / 3</div>
-      </label>
-      <input
-        onChange={imagePreview}
-        type="file"
-        id="fileUpload"
-        accept="image/*"
-        multiple
-        className="w-0 h-0 p-0 overflow-visible"
-      />
-      <div className="flex">
-        {previewImages.map((fileUrl, idx) => {
-          return (
-            <>
-              <img
-                key={fileUrl.URL}
-                alt="이미지"
-                src={fileUrl.URL}
-                className="w-[70px] h-[70px] border-solid border border-gray-300 rounded-lg"
-              />
-              <div
-                id={fileUrl.pictureName}
-                key={fileUrl.pictureName}
-                onClick={deleteImagehandler}
-                className="relative w-5 h-5 bg-b-text-black rounded-full right-3 text-white text-center text-sm cursor-pointer"
-              >
-                x
-              </div>
-            </>
-          );
-        })}
+    <section className="mb-2">
+      <p className="ml-2 mb-2 text-xs font-semibold">
+        ** 게시글을 등록하면 사진을 수정할 수 없으니 신중히 등록해주세요!
+      </p>
+      <div className="mb-4 flex flex-row">
+        <label
+          htmlFor="fileUpload"
+          className="inline-block w-[70px] h-[70px] mr-5 text-center text-xs border-solid border border-gray-300 hover:border-gray-400 cursor-pointer rounded-lg"
+        >
+          <AiFillCamera className="w-6 h-6 mx-auto mt-3.5 mb-[2px]" />
+          <div className="text-gray-400">{imgFiles.length} / 3</div>
+        </label>
+        <input
+          onChange={imagePreview}
+          type="file"
+          id="fileUpload"
+          accept="image/*"
+          multiple
+          className="w-0 h-0 p-0 overflow-visible"
+        />
+        <div className="flex">
+          {previewImages.map((fileUrl, idx) => {
+            return (
+              <>
+                <img
+                  key={fileUrl.URL}
+                  alt="이미지"
+                  src={fileUrl.URL}
+                  className="w-[70px] h-[70px] border-solid border border-gray-300 rounded-lg"
+                />
+                <div
+                  id={fileUrl.pictureName}
+                  key={fileUrl.pictureName}
+                  onClick={deleteImagehandler}
+                  className="relative w-5 h-5 bg-b-text-black rounded-full right-3 text-white text-center text-sm cursor-pointer"
+                >
+                  x
+                </div>
+              </>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

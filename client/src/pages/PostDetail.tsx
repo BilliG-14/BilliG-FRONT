@@ -43,6 +43,9 @@ export default function PostDetail() {
       return res.data;
     },
     {
+      onError: (err) => {
+        alert(`데이터를 불러올 수 없습니다. \n에러내용 : ${err}`);
+      },
       refetchOnMount: true,
       refetchOnWindowFocus: true,
       staleTime: 1000 * 60 * 5,
@@ -52,6 +55,7 @@ export default function PostDetail() {
   // post 삭제하기, useMutate 정의
   const deleteData = useMutation(() => api.delete(`/product/${id}`), {
     onSuccess: () => {
+      alert('삭제가 정상적으로 완료되었습니다.');
       navigate('/submain');
     },
   });
