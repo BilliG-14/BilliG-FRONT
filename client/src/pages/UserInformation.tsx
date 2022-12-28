@@ -99,7 +99,7 @@ export default function UserInformation() {
             <RiAlarmWarningFill className="" />
           </button>
         </div>
-        <p className="mt-8 border-b-yellow border-solid border-2 rounded-lg w-3/5 h-96 p-10 font-bold">
+        <p className="mt-8 border-b-yellow border-solid border-2 rounded w-3/5 h-96 p-10 font-bold">
           {data.intro ? data.intro : '아직 자기소개를 작성하지 않았습니다.'}
         </p>
         {openReport && (
