@@ -7,8 +7,8 @@ import {
   imageUploadStore,
   tradeWayStore,
   hashTagStore,
-  descriptionStore,
   CategoryType,
+  descriptionStore,
 } from './../store/PostWriteStore';
 
 import HashTagSection from '../components/postWrite/HashTag';
@@ -186,20 +186,17 @@ export default function LendWriting() {
               className="p-3 mx-2 w-54 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
             />
 
-            <span className="mr-9">원/일</span>
+            <span className="mr-9">
+              원<span className="text-[13px]"> /일</span>
+            </span>
             {/* 거래방법 section */}
             <TradeWay />
           </section>
 
           {/* 상품 상세내용 section */}
           <section className="mb-4">
-            <textarea
-              ref={descriptionRef}
-              placeholder="사이즈, 색상 등 상세정보를 입력하면 좋아요!"
-              className="p-3 w-full h-40 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
-            />
+            <PostEditor />
           </section>
-          <PostEditor />
 
           {/* 해시태그 section */}
           <HashTagSection />
