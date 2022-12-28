@@ -41,6 +41,7 @@ export default function ProductsList(props: ProductsListProps) {
     isLoading: isLoadingItem,
     data: products,
     isError: isErrorItem,
+    refetch,
   } = useQuery<Products, AxiosError>(
     [
       `product`,
@@ -59,6 +60,7 @@ export default function ProductsList(props: ProductsListProps) {
     {
       refetchOnWindowFocus: false,
       staleTime: 60 * 1000 * 5,
+      refetchOnMount: 'always',
     },
   );
 
