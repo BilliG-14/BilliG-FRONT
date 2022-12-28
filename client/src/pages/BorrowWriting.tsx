@@ -208,7 +208,7 @@ export default function BorrowWriting() {
             <button
               type="button"
               onClick={handleButtonClick}
-              className="px-5 py-2.5 mr-2 mt-3 mb-16 w-1/6 h-10 hover:text-white border border-b-yellow hover:bg-b-yellow focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm text-center transition duration-100"
+              className="px-5 py-2.5 mr-2 mt-3 mb-16 w-1/6 h-10 hover:text-white border border-b-yellow hover:bg-b-yellow font-medium rounded-lg text-sm text-center transition duration-100"
             >
               등록하기
             </button>
