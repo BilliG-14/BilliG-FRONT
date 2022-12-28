@@ -1,5 +1,3 @@
-// 우선 사용하지 않는 파일입니다 ㅠㅠ 곧 사용할 예정이니 이 파일은 무시하세요 (2022-12-21 민영)
-
 import React from 'react';
 import { FaPeopleArrows } from 'react-icons/fa';
 import { GoPackage } from 'react-icons/go';
