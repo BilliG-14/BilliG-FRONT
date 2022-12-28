@@ -58,7 +58,7 @@ function ChatRoomList({ chatRoomList, socket }: any) {
     ));
   return (
     <div className="mt-5 px-2">
-      <div className="relative w-full h-full flex flex-col">
+      <div className="relative w-full flex flex-col">
         <FaRegSmileWink className="mr-3 text-2xl mb-2" />
         CHAT ROOMS ({chatRoomList?.length})
         {/* <FaPlus
@@ -66,7 +66,9 @@ function ChatRoomList({ chatRoomList, socket }: any) {
           className="absolute right-0 cursor-pointer text-2xl "
         /> */}
         {/** 채팅방 목록 렌더링 */}
-        <ul className="w-full h-full list-none mt-5">{renderChatRooms()}</ul>
+        <ul className="w-full list-none mt-5 overflow-y-scroll">
+          {renderChatRooms()}
+        </ul>
       </div>
     </div>
   );
