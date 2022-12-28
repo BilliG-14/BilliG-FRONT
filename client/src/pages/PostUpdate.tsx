@@ -21,6 +21,7 @@ import UpdatedImageUpload from 'components/postWrite/UpdatedImageUpload';
 import Loading from 'components/Loading';
 import Footer from 'components/footer/Footer';
 import PostEditor from 'components/postWrite/PostEditor';
+import ChatIcon from './../components/chat-icon/ChatIcon';
 
 export default function PostUpdate() {
   const queryClient = useQueryClient();
@@ -225,6 +226,7 @@ export default function PostUpdate() {
       </div>
       <div className="w-full h-[70px] absolute bottom-0 flex flex-col justify-end">
         <Footer />
+        <ChatIcon />
       </div>
     </div>
   );

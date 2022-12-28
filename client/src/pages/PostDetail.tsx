@@ -17,6 +17,7 @@ import Loading from 'components/Loading';
 import { AxiosError } from 'axios';
 import NotFound from 'components/NotFound';
 import Footer from 'components/footer/Footer';
+import ChatIcon from 'components/chat-icon/ChatIcon';
 
 export default function PostDetail() {
   const navigate = useNavigate();
@@ -367,6 +368,7 @@ export default function PostDetail() {
         </div>
       </div>
       <div className="w-full h-[70px] absolute bottom-0 flex flex-col justify-end">
+        <ChatIcon />
         <Footer />
       </div>
     </div>

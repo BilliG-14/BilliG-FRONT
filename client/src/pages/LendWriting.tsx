@@ -17,6 +17,7 @@ import TradeWay from '../components/postWrite/TradeWay';
 import Loading from 'components/Loading';
 import Footer from 'components/footer/Footer';
 import PostEditor from 'components/postWrite/PostEditor';
+import ChatIcon from './../components/chat-icon/ChatIcon';
 
 export default function LendWriting() {
   // 빌려드립니다 글쓰기
@@ -215,6 +216,7 @@ export default function LendWriting() {
       </div>
       <div className="w-full h-[70px] absolute bottom-0 flex flex-col justify-end">
         <Footer />
+        <ChatIcon />
       </div>
     </div>
   );
