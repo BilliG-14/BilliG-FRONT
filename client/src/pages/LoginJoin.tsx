@@ -51,7 +51,7 @@ function LoginJoinHeader() {
 export default function LoginJoin() {
   const selectedLogin = useLoginJoinStore((state) => state.selectedLogin);
   return (
-    <div className="w-screen relative pb-[100px] min-h-[85vh]">
+    <div className="w-screen relative pb-[70px] min-h-[85vh]">
       <div className="max-w-screen-lg mx-auto">
         <div className="max-w-screen-sm mx-auto mt-4  max-h-[1000px]">
           <LoginJoinHeader />
@@ -60,7 +60,7 @@ export default function LoginJoin() {
           </div>
         </div>
       </div>
-      <div className="w-screen mx-auto h-[100px] absolute bottom-0">
+      <div className="w-screen mx-auto h-[70px] absolute bottom-0 flex flex-col justify-end">
         <Footer />
       </div>
     </div>

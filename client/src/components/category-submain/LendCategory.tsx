@@ -75,7 +75,11 @@ export default function LendCategory() {
           )}
         </ul>
       </nav>
-      <div>
+      <div className="w-screen max-w-screen-lg m-auto">
+        <div className="text-3xl font-bold py-2 px-2 my-1">
+          <span>카테고리별 상품 | </span>
+          <span className="text-blue-600">빌려주기</span>
+        </div>
         {/* category section */}
         {categories?.data.map(
           (category: { _id: string; name: string }, idx: number) => {

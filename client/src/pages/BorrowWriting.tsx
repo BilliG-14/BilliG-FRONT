@@ -9,6 +9,7 @@ import {
   hashTagStore,
   reservationStore,
   CategoryType,
+  descriptionStore,
 } from './../store/PostWriteStore';
 
 import HashTagSection from '../components/postWrite/HashTag';
@@ -17,6 +18,7 @@ import TradeWay from '../components/postWrite/TradeWay';
 import ReservationDate from './../components/postWrite/ReservationDate';
 import Loading from 'components/Loading';
 import Footer from 'components/footer/Footer';
+import PostEditor from 'components/postWrite/PostEditor';
 
 export default function BorrowWriting() {
   // 빌립니다 글쓰기
@@ -25,12 +27,12 @@ export default function BorrowWriting() {
   const { imgFiles } = imageUploadStore();
   const { tradeWay } = tradeWayStore();
   const { reservationDate } = reservationStore();
+  const { description } = descriptionStore();
 
   // Ref
   const productNameRef = useRef<HTMLInputElement>(null);
   const priceDayRef = useRef<HTMLInputElement>(null);
   const categoryRef = useRef<HTMLSelectElement>(null);
-  const descriptionRef = useRef<HTMLTextAreaElement>(null);
 
   const navigate = useNavigate();
   // 사용자 가져오기
@@ -104,8 +106,7 @@ export default function BorrowWriting() {
     category: filteredCategory[0]?._id,
     author: data?.data?._id,
     title: productNameRef.current?.value,
-    description: descriptionRef.current?.value,
-    // lender: data?.data,
+    description: description,
     stateOfTransaction: 0,
     address: data?.data?.address1,
     price: {
@@ -132,7 +133,7 @@ export default function BorrowWriting() {
     } else if (reservationDate.start === '' || reservationDate.end === '') {
       alert('예약기간을 입력해주세요.');
       return;
-    } else if (descriptionRef.current?.value === '') {
+    } else if (description === '') {
       alert('상세설명을 입력해주세요.');
       return;
     } else if (!tradeWay.delivery && !tradeWay.direct) {
@@ -194,11 +195,7 @@ export default function BorrowWriting() {
 
           {/* 상품 상세내용 section */}
           <section className="mb-4">
-            <textarea
-              ref={descriptionRef}
-              placeholder="사이즈, 색상 등 상세정보를 입력하면 좋아요!"
-              className="p-3 w-full h-40 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
-            />
+            <PostEditor />
           </section>
 
           {/* 해시태그 section */}

@@ -8,6 +8,7 @@ import {
   tradeWayStore,
   hashTagStore,
   CategoryType,
+  descriptionStore,
 } from './../store/PostWriteStore';
 
 import HashTagSection from '../components/postWrite/HashTag';
@@ -15,6 +16,7 @@ import ImageUpload from '../components/postWrite/ImageUpload';
 import TradeWay from '../components/postWrite/TradeWay';
 import Loading from 'components/Loading';
 import Footer from 'components/footer/Footer';
+import PostEditor from 'components/postWrite/PostEditor';
 
 export default function LendWriting() {
   // 빌려드립니다 글쓰기
@@ -22,12 +24,12 @@ export default function LendWriting() {
   const { hashTags } = hashTagStore();
   const { imgFiles } = imageUploadStore();
   const { tradeWay } = tradeWayStore();
+  const { description } = descriptionStore();
 
   // Ref
   const productNameRef = useRef<HTMLInputElement>(null);
   const priceDayRef = useRef<HTMLInputElement>(null);
   const categoryRef = useRef<HTMLSelectElement>(null);
-  const descriptionRef = useRef<HTMLTextAreaElement>(null);
 
   const navigate = useNavigate();
 
@@ -102,7 +104,7 @@ export default function LendWriting() {
     category: filteredCategory[0]?._id,
     author: data?.data?._id,
     title: productNameRef.current?.value,
-    description: descriptionRef.current?.value,
+    description: description,
     stateOfTransaction: 0,
     address: data?.data?.address1,
     price: {
@@ -132,7 +134,7 @@ export default function LendWriting() {
     ) {
       alert('요금을 입력해주세요.');
       return;
-    } else if (descriptionRef.current?.value === '') {
+    } else if (description === '') {
       alert('상세설명을 입력해주세요.');
       return;
     } else if (!tradeWay.delivery && !tradeWay.direct) {
@@ -183,18 +185,16 @@ export default function LendWriting() {
               className="p-3 mx-2 w-54 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
             />
 
-            <span className="mr-9">원/일</span>
+            <span className="mr-9">
+              원<span className="text-[13px]"> /일</span>
+            </span>
             {/* 거래방법 section */}
             <TradeWay />
           </section>
 
           {/* 상품 상세내용 section */}
           <section className="mb-4">
-            <textarea
-              ref={descriptionRef}
-              placeholder="사이즈, 색상 등 상세정보를 입력하면 좋아요!"
-              className="p-3 w-full h-40 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
-            />
+            <PostEditor />
           </section>
 
           {/* 해시태그 section */}

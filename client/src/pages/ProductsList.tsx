@@ -12,6 +12,7 @@ import ProductsListNav from 'components/productsList/ProductsListNav';
 import Loading from 'components/Loading';
 import NotFound from 'components/NotFound';
 import Footer from 'components/footer/Footer';
+import NoProducts from 'components/productsList/NoProducts';
 export type Products = {
   docs: [PostDataType];
   totalPages: number;
@@ -65,19 +66,22 @@ export default function ProductsList(props: ProductsListProps) {
   if (isLoadingItem) return <Loading />;
   if (isErrorItem) return <NotFound />;
   return (
-    <div className="w-screen relative pb-[70px] min-h-[85vh]">
-      <div className="max-w-screen-lg m-auto pb-24 min-w-[922px]">
+    <div className="w-screen relative pb-[70px] min-h-[90vh]">
+      <div className="max-w-screen-lg m-auto pb-16 min-w-[922px]">
         <ProductsListNav postType={postType} />
+        {products.totalDocs === 0 && <NoProducts />}
         {products && <ListByCategory items={products?.docs} />}
-        <Pagination
-          page={page}
-          setPage={setPage}
-          totalPage={products?.totalPages}
-          hasNextPage={products?.hasNextPage}
-          hasPrevPage={products?.hasPrevPage}
-        />
+        {products && (
+          <Pagination
+            page={page}
+            setPage={setPage}
+            totalPage={products?.totalPages}
+            hasNextPage={products?.hasNextPage}
+            hasPrevPage={products?.hasPrevPage}
+          />
+        )}
       </div>
-      <div className="w-full h-[70px] absolute bottom-0">
+      <div className="w-full h-[70px] absolute bottom-0 flex flex-col justify-end">
         <Footer />
       </div>
     </div>
