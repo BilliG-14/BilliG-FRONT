@@ -5,6 +5,8 @@ import { AxiosError } from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import MarkdownRenderer from '../components/MarkdownRenderer';
 import Loading from 'components/Loading';
+import Footer from 'components/footer/Footer';
+import styled from 'styled-components';
 
 export default function ReadNotice() {
   const { id } = useParams();
@@ -20,7 +22,7 @@ export default function ReadNotice() {
   });
   if (isLoading) return <Loading />;
   return (
-    <div className="w-screen m-auto">
+    <div className="w-screen m-auto relative pb-[70px] min-h-[85vh]">
       <div className="max-w-screen-lg mx-auto">
         <div className="text-xl font-extrabold ml-10 mt-10">
           <p>공지사항</p>
@@ -52,6 +54,9 @@ export default function ReadNotice() {
             목록으로
           </button>
         </div>
+      </div>
+      <div className="w-full h-[70px] absolute bottom-0 flex flex-col justify-end">
+        <Footer />
       </div>
     </div>
   );

@@ -6,6 +6,7 @@ import { RiAlarmWarningFill, RiCloseFill } from 'react-icons/ri';
 import { useState, useRef, useCallback } from 'react';
 import ConfirmModal from 'components/Modal';
 import Loading from 'components/Loading';
+import Footer from 'components/footer/Footer';
 
 type User = {
   _id: string;
@@ -72,8 +73,8 @@ export default function UserInformation() {
       </div>
     );
   return (
-    <>
-      <div className="h-full w-screen max-w-screen-lg m-auto flex flex-col items-center">
+    <div className="w-screen m-auto relative pb-[70px] min-h-[85vh]">
+      <div className="h-full w-screen max-w-screen-lg m-auto flex flex-col items-center mb-20">
         <div className="img_nick_intro flex mb-4 mt-8">
           <div className="mx-auto">
             <img
@@ -98,7 +99,7 @@ export default function UserInformation() {
             <RiAlarmWarningFill className="" />
           </button>
         </div>
-        <p className="mt-8 border-b-yellow border-solid border-2 rounded-lg w-3/5 h-96 p-10 font-bold">
+        <p className="mt-8 border-b-yellow border-solid border-2 rounded w-3/5 h-96 p-10 font-bold">
           {data.intro ? data.intro : '아직 자기소개를 작성하지 않았습니다.'}
         </p>
         {openReport && (
@@ -161,6 +162,9 @@ export default function UserInformation() {
           </div>
         )}
       </div>
-    </>
+      <div className="w-full h-[70px] absolute bottom-0 flex flex-col justify-end">
+        <Footer />
+      </div>
+    </div>
   );
 }

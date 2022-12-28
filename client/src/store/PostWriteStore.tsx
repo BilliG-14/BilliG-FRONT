@@ -34,6 +34,20 @@ export const categoryStore = create<CategoryState>((set) => ({
     })),
 }));
 
+// 상세설명 store
+interface DescriptionState {
+  description: string | undefined;
+  setDescription: (descriptions: string | undefined) => void;
+}
+
+export const descriptionStore = create<DescriptionState>((set) => ({
+  description: '',
+  setDescription: (descriptions) =>
+    set(() => ({
+      description: descriptions,
+    })),
+}));
+
 // 예약일 store
 interface ReservationState {
   reservationDate: {

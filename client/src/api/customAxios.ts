@@ -1,7 +1,9 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 
 const axiosConfig: AxiosRequestConfig = {
-  baseURL: process.env.REACT_APP_AWS_EC2,
+  // baseURL: process.env.REACT_APP_AWS_EC2,
+  // baseURL: 'http://34.64.44.34:3003/',
+  baseURL: 'http://kdt-sw3-team14.elicecoding.com/',
   headers: {
     'Content-Type': 'application/json',
   },

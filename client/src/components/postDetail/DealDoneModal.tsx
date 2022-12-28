@@ -151,7 +151,7 @@ export default function DealDoneModal(props: PostIdType) {
           setUserCheck(false);
         }}
       >
-        거래완료
+        거래하기
       </button>
       {showModal ? (
         <>

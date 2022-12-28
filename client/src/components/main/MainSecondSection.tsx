@@ -25,7 +25,7 @@ function WrapList() {
     >
       <WrapItem
         content="급하게 노트북이 필요할 때 빌려쓸 수 있어서 좋아요"
-        detail="온라인 회의를 하러 카페에 나왔는데, 노트북을 깜빡했어요. 다행히 빌리지를 통해 주변에서 노브북을 빌릴 수 있었습니다!"
+        detail="온라인 회의를 하러 카페에 나왔는데, 노트북을 깜빡했어요. 다행히 빌리지를 통해 주변에서 노트북을 빌릴 수 있었습니다!"
         imgsrc={`${process.env.PUBLIC_URL}/img/marquee1.jpg`}
       />
       <WrapItem

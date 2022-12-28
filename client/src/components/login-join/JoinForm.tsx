@@ -7,7 +7,7 @@ import { useLoginJoinStore } from '../../store/LoginJoinStore';
 
 export function JoinForm() {
   const joinFormState = useJoinFormStore();
-  const formClassName = 'w-2/3 mt-12 my-24 mx-auto animate-fade-in-150ms ';
+  const formClassName = 'w-2/3 mt-12 mb-12 mx-auto animate-fade-in-150ms ';
   const divClassName = 'w-full flex flex-col justify-center items-center ';
   const labelClassName =
     'block text-b-yellow font-bold text-lg w-full my-auto text-left mt-1 ';
@@ -124,6 +124,7 @@ export function JoinForm() {
           type="tel"
           className={inputClassName}
           defaultValue={joinFormState.phoneNumber}
+          onChange={autoHypen}
           onBlur={(e) => joinFormState.setPhoneNumber(e.currentTarget.value)}
         ></input>
         {joinFormState.phoneNumber &&
@@ -288,4 +289,9 @@ const checkPassword = (password: string) => {
   const PasswordPattern =
     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
   return PasswordPattern.test(password);
+};
+const autoHypen = (e: React.ChangeEvent<HTMLInputElement>) => {
+  e.currentTarget.value = e.currentTarget.value
+    .replace(/[^0-9]/g, '')
+    .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
 };
