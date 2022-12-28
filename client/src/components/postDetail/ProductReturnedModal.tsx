@@ -69,7 +69,7 @@ export function ProductReturnedModal(props: PostIdType) {
 
                 {/*body*/}
                 <div className="relative p-6 text-start">
-                  <p className="mb-4 text-[13px] leading-5 font-thin text-b-text-black">
+                  <p className="mb-4 text-[13px] leading-5 font-semibold text-b-text-black">
                     대여해주신 물품을 돌려받으셨나요? <br />
                     대여해주신 물품을 받으시고, 물품이 파손되거나 구성품이
                     분실되진 않았는지 확인해주세요. <br />
