@@ -81,4 +81,7 @@ const bg: string[] = [
   'bg-b-bg-sec3',
   'bg-b-bg-sec4',
   'bg-b-bg-sec5',
+  'bg-b-bg-sec6',
+  'bg-b-bg-sec7',
+  'bg-b-bg-sec8',
 ];
