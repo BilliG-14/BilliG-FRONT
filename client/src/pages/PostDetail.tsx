@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 import Caution from '../components/postDetail/Caution';
 import { PostDataType } from '../store/PostReadStore';
@@ -19,6 +19,7 @@ import Footer from 'components/footer/Footer';
 
 export default function PostDetail() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   // 현재 로그인 유저의 정보 가져오기
   const LoginUserId = localStorage.getItem('userId');
@@ -40,6 +41,9 @@ export default function PostDetail() {
       return res.data;
     },
     {
+      onSuccess: (res) => {
+        queryClient.invalidateQueries(['postData']);
+      },
       refetchOnMount: true,
       refetchOnWindowFocus: true,
       staleTime: 1000 * 60 * 5,
