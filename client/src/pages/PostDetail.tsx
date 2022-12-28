@@ -16,6 +16,7 @@ import Loading from 'components/Loading';
 import { AxiosError } from 'axios';
 import NotFound from 'components/NotFound';
 import Footer from 'components/footer/Footer';
+import MarkdownRenderer from 'components/MarkdownRenderer';
 
 export default function PostDetail() {
   const navigate = useNavigate();
@@ -316,12 +317,12 @@ export default function PostDetail() {
             <br />
             <section>
               <div className="font-semibold text-lg">상세정보</div>
-              <div className="w-full h-40 mt-3 mb-12 p-3 rounded-lg">
-                {postData?.description}
-              </div>
+              <div
+                className="w-full h-40 mt-3 mb-12 p-3 rounded-lg"
+                dangerouslySetInnerHTML={{ __html: postData?.description }}
+              ></div>
               <div className="flex items-end gap-7">
                 <div className="font-semibold text-lg leading-none">위치</div>
-
                 <div className="flex text-sm leading-none items-end">
                   <MdLocationOn className="w-5 h-5 mr-1 text-b-yellow" />
                   {postData?.author.address1}

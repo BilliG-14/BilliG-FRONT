@@ -7,6 +7,7 @@ import {
   imageUploadStore,
   tradeWayStore,
   hashTagStore,
+  descriptionStore,
   CategoryType,
 } from './../store/PostWriteStore';
 
@@ -23,6 +24,7 @@ export default function LendWriting() {
   const { hashTags } = hashTagStore();
   const { imgFiles } = imageUploadStore();
   const { tradeWay } = tradeWayStore();
+  const { description } = descriptionStore();
 
   // Ref
   const productNameRef = useRef<HTMLInputElement>(null);
@@ -103,7 +105,7 @@ export default function LendWriting() {
     category: filteredCategory[0]?._id,
     author: data?.data?._id,
     title: productNameRef.current?.value,
-    description: descriptionRef.current?.value,
+    description: description,
     stateOfTransaction: 0,
     address: data?.data?.address1,
     price: {
@@ -133,7 +135,7 @@ export default function LendWriting() {
     ) {
       alert('요금을 입력해주세요.');
       return;
-    } else if (descriptionRef.current?.value === '') {
+    } else if (description === '') {
       alert('상세설명을 입력해주세요.');
       return;
     } else if (!tradeWay.delivery && !tradeWay.direct) {

@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useRef } from 'react';
 
 // TOAST UI Editor import
 import '@toast-ui/editor/dist/toastui-editor.css';
 import { Editor } from '@toast-ui/react-editor';
-import styled, { createGlobalStyle } from 'styled-components';
+import styled from 'styled-components';
 import { descriptionStore } from 'store/PostWriteStore';
 
 export default function PostEditor() {
@@ -15,7 +15,6 @@ export default function PostEditor() {
     setDescription(editorRef.current?.getInstance().getHTML());
   }
 
-  console.log(description);
   return (
     <>
       <StyleToastDiv>
