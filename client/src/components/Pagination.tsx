@@ -48,7 +48,7 @@ export function Pagination({
         {numRange.map((p) => (
           <li key={p}>
             <button
-              className={`w-6 h-6 ${p === page ? 'text-b-yellow' : ''}`}
+              className={`w-8 h-6 mx-1 ${p === page ? 'text-b-yellow' : ''}`}
               onClick={() => setPage(p)}
             >
               {p}

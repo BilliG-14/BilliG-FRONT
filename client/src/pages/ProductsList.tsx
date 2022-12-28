@@ -11,6 +11,7 @@ import ListByCategory from 'components/productsList/ListByCategory';
 import ProductsListNav from 'components/productsList/ProductsListNav';
 import Loading from 'components/Loading';
 import NotFound from 'components/NotFound';
+import Footer from 'components/footer/Footer';
 export type Products = {
   docs: [PostDataType];
   totalPages: number;
@@ -46,10 +47,11 @@ export default function ProductsList(props: ProductsListProps) {
       `per=${per}`,
       `page=${page}`,
       `postType=${postType}`,
+      `stateOfTransaction=${0}`,
     ],
     async () => {
       const res = await api.get(
-        `/product/page?category=${categoryId}&per=${per}&page=${page}&postType=${postType}`,
+        `/product/page?category=${categoryId}&per=${per}&page=${page}&postType=${postType}&stateOfTransaction=${0}`,
       );
       return res.data;
     },
@@ -63,16 +65,21 @@ export default function ProductsList(props: ProductsListProps) {
   if (isLoadingItem) return <Loading />;
   if (isErrorItem) return <NotFound />;
   return (
-    <div className="max-w-screen-lg m-auto pb-32 min-w-[922px]">
-      <ProductsListNav postType={postType} />
-      {products && <ListByCategory items={products?.docs} />}
-      <Pagination
-        page={page}
-        setPage={setPage}
-        totalPage={products?.totalPages}
-        hasNextPage={products?.hasNextPage}
-        hasPrevPage={products?.hasPrevPage}
-      />
+    <div className="w-screen relative pb-[70px] min-h-[85vh]">
+      <div className="max-w-screen-lg m-auto pb-24 min-w-[922px]">
+        <ProductsListNav postType={postType} />
+        {products && <ListByCategory items={products?.docs} />}
+        <Pagination
+          page={page}
+          setPage={setPage}
+          totalPage={products?.totalPages}
+          hasNextPage={products?.hasNextPage}
+          hasPrevPage={products?.hasPrevPage}
+        />
+      </div>
+      <div className="w-full h-[70px] absolute bottom-0">
+        <Footer />
+      </div>
     </div>
   );
 }
