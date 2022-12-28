@@ -281,7 +281,9 @@ export default function PostDetail() {
                               {postData?.author.nickName}
                             </p>
                             <p className="text-[8px] font-medium text-gray-400 ">
-                              {postData?.author.address1}
+                              {postData?.author.address1.length > 23
+                                ? `${postData?.author.address1.slice(0, 22)}...`
+                                : postData?.author.address1}
                             </p>
                           </div>
                         </div>
@@ -317,7 +319,7 @@ export default function PostDetail() {
               <section>
                 <div className="font-semibold text-lg">상세정보</div>
                 <DetailDiv
-                  className="w-full h-auto mt-3 mb-12 p-3 rounded-lg"
+                  className="w-full min-h-[300px] h-auto mt-3 mb-12 p-3 rounded-lg"
                   dangerouslySetInnerHTML={{ __html: postData?.description }}
                 />
                 <div className="flex items-end gap-7">
