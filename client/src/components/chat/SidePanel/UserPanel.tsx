@@ -16,7 +16,6 @@ function UserPanel({ user }: any) {
 
       <div className="flex mt-6 flex-col w-full px-6">
         <img
-          // src={user && user.image} // url은 추후 다시 ...
           src={user && user.image}
           className="w-32 h-32 rounded-full object-cover border border-solid border-gray-300 bg-white"
           alt="사용자이미지"

@@ -6,6 +6,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import MarkdownRenderer from '../components/MarkdownRenderer';
 import Loading from 'components/Loading';
 import Footer from 'components/footer/Footer';
+import styled from 'styled-components';
 
 export default function ReadNotice() {
   const { id } = useParams();
@@ -54,7 +55,7 @@ export default function ReadNotice() {
           </button>
         </div>
       </div>
-      <div className="w-full h-[70px] absolute bottom-0">
+      <div className="w-full h-[70px] absolute bottom-0 flex flex-col justify-end">
         <Footer />
       </div>
     </div>

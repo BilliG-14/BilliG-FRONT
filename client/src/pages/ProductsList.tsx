@@ -65,8 +65,8 @@ export default function ProductsList(props: ProductsListProps) {
   if (isLoadingItem) return <Loading />;
   if (isErrorItem) return <NotFound />;
   return (
-    <div className="w-screen relative pb-[70px] min-h-[85vh]">
-      <div className="max-w-screen-lg m-auto pb-24 min-w-[922px]">
+    <div className="w-screen relative pb-[70px] min-h-[90vh]">
+      <div className="max-w-screen-lg m-auto pb-16 min-w-[922px]">
         <ProductsListNav postType={postType} />
         {products && <ListByCategory items={products?.docs} />}
         <Pagination
@@ -77,7 +77,7 @@ export default function ProductsList(props: ProductsListProps) {
           hasPrevPage={products?.hasPrevPage}
         />
       </div>
-      <div className="w-full h-[70px] absolute bottom-0">
+      <div className="w-full h-[70px] absolute bottom-0 flex flex-col justify-end">
         <Footer />
       </div>
     </div>
