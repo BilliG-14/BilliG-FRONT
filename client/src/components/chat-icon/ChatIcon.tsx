@@ -2,8 +2,15 @@ import { BsFillChatFill } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 function ChatIcon() {
   const navigate = useNavigate();
+
+  // 현재 로그인 유저의 정보 가져오기
+  const LoginUserId = localStorage.getItem('userId');
   const goChat = () => {
-    navigate('/chat');
+    if (LoginUserId) {
+      navigate('/chat');
+    } else {
+      navigate('/login');
+    }
   };
   return (
     <div className="max-w-screen-lg mx-auto flex justify-end px-14 fixed">

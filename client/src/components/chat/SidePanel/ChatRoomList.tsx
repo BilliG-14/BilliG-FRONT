@@ -25,9 +25,12 @@ function ChatRoomList({ chatRoomList, socket }: any) {
 
   /** 채팅방 변경 */
   const changeChatRoom = (room: any) => {
-    /** 채팅방 이동 전 소켓 이벤트 삭제 */
-    socket.removeAllListeners(`message${activeChatRoomId}`);
-
+    try {
+      /** 채팅방 이동 전 소켓 이벤트 삭제 */
+      socket.removeAllListeners(`message${activeChatRoomId}`);
+    } catch (error) {
+      alert('소켓 통신이 정상적으로 이루어지지 않았습니다.');
+    }
     /** 현재 선택한 채팅방 정보 가져옴 */
     setActiveChatRoomId(room._id);
 
@@ -59,7 +62,9 @@ function ChatRoomList({ chatRoomList, socket }: any) {
   return (
     <div className="mt-5 px-2 h-[550px]">
       <div className="relative w-full flex flex-col h-[450px]">
-        <FaRegSmileWink className="h-20 w-20 text-2xl mb-2" />
+        <div className="flex justify-start">
+          <FaRegSmileWink className="h-10 w-10 text-2xl mb-2" />
+        </div>
         <div className="mt-3 h-20 flex items-center">
           CHAT ROOMS ({chatRoomList?.length})
         </div>
