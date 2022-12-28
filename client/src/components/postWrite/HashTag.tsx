@@ -48,7 +48,8 @@ export default function HashTagSection() {
               onChange={handleTextChange}
               onKeyDown={handleTagEnter}
               type="text"
-              placeholder="태그를 입력해주세요"
+              maxLength={10}
+              placeholder="10자까지 입력 가능"
               className="p-3 mr-4 w-[200px] h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
             />
           </div>
@@ -63,7 +64,7 @@ export default function HashTagSection() {
             <div
               onClick={deleteHashTag}
               key={tag}
-              className="bg-b-yellow hover:bg-gray-200 text-white h-9 mr-2 py-2 px-4 rounded-full cursor-pointer transition duration-75"
+              className="font-[400] bg-b-yellow hover:bg-gray-200 text-white h-9 mr-2 py-2 px-4 rounded-full cursor-pointer transition duration-75"
             >
               {tag}
             </div>

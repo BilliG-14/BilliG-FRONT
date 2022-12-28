@@ -18,6 +18,7 @@ import { PostDataType, ServerHashTags } from './../store/PostReadStore';
 import Category from 'components/postWrite/Category';
 import UpdatedImageUpload from 'components/postWrite/UpdatedImageUpload';
 import Loading from 'components/Loading';
+import Footer from 'components/footer/Footer';
 
 export default function PostUpdate() {
   const queryClient = useQueryClient();
@@ -165,7 +166,7 @@ export default function PostUpdate() {
   return (
     <div className="max-w-screen-lg mx-auto">
       <div className="flex flex-col justify-center mx-auto text-b-text-black">
-        <div className="mb-6 text-3xl font-bold">
+        <div className="mt-8 mb-6 text-3xl font-bold">
           {postData?.postType === 'lend' ? '빌려주기' : '빌리기'}
         </div>
         <form className="w-[800px] mx-auto">
@@ -220,13 +221,14 @@ export default function PostUpdate() {
             <button
               type="button"
               onClick={handleButtonClick}
-              className="w-1/6 h-10 hover:text-white border border-b-yellow hover:bg-b-yellow focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 my-3 transition duration-100"
+              className="w-1/6 h-10 hover:text-white border border-b-yellow hover:bg-b-yellow font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mt-3 mb-16 transition duration-100"
             >
               수정하기
             </button>
           </section>
         </form>
       </div>
+      <Footer />
     </div>
   );
 }
