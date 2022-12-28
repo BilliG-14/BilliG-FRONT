@@ -170,7 +170,7 @@ function JoinButton() {
     address1: joinFormState.address1,
     address2: joinFormState.address2,
   };
-  const handleClick: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+  const handleClick: React.MouseEventHandler<HTMLButtonElement> = async (e) => {
     e.preventDefault();
     if (!joinFormState.name || checkSpaceAndSpecial(joinFormState.name)) {
       setOpenModal(true);
@@ -214,8 +214,20 @@ function JoinButton() {
       setValidMessage('주소를 다시 확인해주세요');
       return;
     }
-
-    api
+    const checkExistId = await api
+      .post('checkEmail', { email: joinFormState.email })
+      .then((res) => {
+        return res.data;
+      })
+      .catch((error: Error) => {
+        console.error(error);
+      });
+    if (checkExistId?.userId) {
+      setOpenModal(true);
+      setValidMessage('이미 존재하는 이메일입니다.');
+      return;
+    }
+    await api
       .post('register', join)
       .then(() => {
         setOpenSuccessModal(true);
