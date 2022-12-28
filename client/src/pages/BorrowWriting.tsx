@@ -19,6 +19,7 @@ import ReservationDate from './../components/postWrite/ReservationDate';
 import Loading from 'components/Loading';
 import Footer from 'components/footer/Footer';
 import PostEditor from 'components/postWrite/PostEditor';
+import ChatIcon from './../components/chat-icon/ChatIcon';
 
 export default function BorrowWriting() {
   // 빌립니다 글쓰기
@@ -145,74 +146,79 @@ export default function BorrowWriting() {
   }
 
   return (
-    <div className="max-w-screen-lg mx-auto">
-      <div className="flex flex-col justify-center mx-auto text-b-text-black">
-        <div className="mt-8 mb-6 text-3xl font-bold">빌리기</div>
-        <form className="w-[800px] mx-auto">
-          {/* 상품명/카테고리 section */}
-          <section className="flex mb-4">
-            <select
-              onChange={changecategory}
-              ref={categoryRef}
-              className="flex-none pl-3 w-1/6 h-10 border-solid border  border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2"
-            >
-              <option>카테고리 설정</option>
-              {categorys.map((category) => (
-                <option key={category._id} value={category._id}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
-            <input
-              onBlur={checkWordsNumber}
-              ref={productNameRef}
-              className="grow p-3 ml-2 w-9/12 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
-              type="text"
-              placeholder="상품명은 20자까지만 입력 가능합니다."
-            />
-          </section>
+    <div className="w-screen m-auto relative pb-[70px] min-h-[85vh]">
+      <div className="max-w-screen-lg mx-auto">
+        <div className="flex flex-col justify-center mx-auto text-b-text-black">
+          <div className="mt-8 mb-6 text-3xl font-bold">빌리기</div>
+          <form className="w-[800px] mx-auto">
+            {/* 상품명/카테고리 section */}
+            <section className="flex mb-4">
+              <select
+                onChange={changecategory}
+                ref={categoryRef}
+                className="flex-none pl-3 w-1/6 h-10 border-solid border  border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2"
+              >
+                <option>카테고리 설정</option>
+                {categorys.map((category) => (
+                  <option key={category._id} value={category._id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+              <input
+                onBlur={checkWordsNumber}
+                ref={productNameRef}
+                className="grow p-3 ml-2 w-9/12 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
+                type="text"
+                placeholder="상품명은 20자까지만 입력 가능합니다."
+              />
+            </section>
 
-          {/* 사진 업로드 component */}
-          <ImageUpload />
+            {/* 사진 업로드 component */}
+            <ImageUpload />
 
-          {/* 요금 section */}
-          <section className="flex items-center mb-4">
-            <div className="w-[100px] p-3 text-center">요금</div>
-            <input
-              ref={priceDayRef}
-              type="number"
-              className="p-3 mx-2 w-54 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
-            />
-            <span className="mr-9">
-              원<span className="text-[13px]"> /일</span>
-            </span>
-            {/* 거래방법 section */}
-            <TradeWay />
-          </section>
+            {/* 요금 section */}
+            <section className="flex items-center mb-4">
+              <div className="w-[100px] p-3 text-center">요금</div>
+              <input
+                ref={priceDayRef}
+                type="number"
+                className="p-3 mx-2 w-54 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
+              />
+              <span className="mr-9">
+                원<span className="text-[13px]"> /일</span>
+              </span>
+              {/* 거래방법 section */}
+              <TradeWay />
+            </section>
 
-          {/* 빌리는 기간 section */}
-          <ReservationDate />
+            {/* 빌리는 기간 section */}
+            <ReservationDate />
 
-          {/* 상품 상세내용 section */}
-          <section className="mb-4">
-            <PostEditor />
-          </section>
+            {/* 상품 상세내용 section */}
+            <section className="mb-4">
+              <PostEditor />
+            </section>
 
-          {/* 해시태그 section */}
-          <HashTagSection />
+            {/* 해시태그 section */}
+            <HashTagSection />
 
-          <section className="flex flex-col justify-center items-center">
-            <button
-              type="button"
-              onClick={handleButtonClick}
-              className="px-5 py-2.5 mr-2 mt-3 mb-16 w-1/6 h-10 hover:text-white border border-b-yellow hover:bg-b-yellow font-medium rounded-lg text-sm text-center transition duration-100"
-            >
-              등록하기
-            </button>
-          </section>
-        </form>
+            <section className="flex flex-col justify-center items-center">
+              <button
+                type="button"
+                onClick={handleButtonClick}
+                className="px-5 py-2.5 mr-2 mt-3 mb-16 w-1/6 h-10 hover:text-white border border-b-yellow hover:bg-b-yellow font-medium rounded-lg text-sm text-center transition duration-100"
+              >
+                등록하기
+              </button>
+            </section>
+          </form>
+        </div>
       </div>
-      <Footer />
+      <div className="w-full h-[70px] absolute bottom-0 flex flex-col justify-end">
+        <Footer />
+        <ChatIcon />
+      </div>
     </div>
   );
 }

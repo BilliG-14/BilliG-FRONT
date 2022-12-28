@@ -64,7 +64,7 @@ export function ProductReceiveButton(props: PostIdType) {
 
                 {/*body*/}
                 <div className="relative p-6 text-start">
-                  <p className="mb-4 text-[13px] leading-5 font-thin text-b-text-black">
+                  <p className="mb-4 text-[13px] leading-5 font-semibold text-b-text-black">
                     대여물품을 수령하셨나요? <br />
                     반드시 대여물품을 수령하신 후에 아래의 [수령완료] 버튼을
                     눌러주세요!
