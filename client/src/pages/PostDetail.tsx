@@ -111,6 +111,10 @@ export default function PostDetail() {
           {!postData ? (
             <div className="h-[500px] text-center text-sm mt-10">
               잘못된 페이지이거나 삭제된 게시글입니다.
+              <br />
+              <button className="mt-6 py-1.5 px-3 font-bold bg-slate-300 hover:bg-slate-400 rounded transition duration-100">
+                메인 페이지로 이동
+              </button>
             </div>
           ) : (
             <>
