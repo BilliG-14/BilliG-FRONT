@@ -19,7 +19,7 @@ export default function PostEditor() {
     <>
       <StyleToastDiv className="mt-5">
         <Editor
-          initialValue={description ? description : ''}
+          initialValue={description ? description : ' '}
           placeholder="내용을 입력해 주세요"
           initialEditType="wysiwyg"
           hideModeSwitch={true}
@@ -28,7 +28,8 @@ export default function PostEditor() {
             // 툴바 옵션 설정
             ['heading', 'bold', 'italic', 'strike'],
             ['hr', 'quote'],
-            ['table', 'link'],
+            ['ul', 'ol'],
+            ['link'],
           ]}
           ref={editorRef}
           onChange={handleEditorValue}

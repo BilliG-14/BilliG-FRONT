@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import styled from 'styled-components';
 
 import Caution from '../components/postDetail/Caution';
 import { PostDataType } from '../store/PostReadStore';
@@ -317,10 +318,10 @@ export default function PostDetail() {
             <br />
             <section>
               <div className="font-semibold text-lg">상세정보</div>
-              <div
+              <DetailDiv
                 className="w-full h-auto mt-3 mb-12 p-3 rounded-lg"
                 dangerouslySetInnerHTML={{ __html: postData?.description }}
-              ></div>
+              />
               <div className="flex items-end gap-7">
                 <div className="font-semibold text-lg leading-none">위치</div>
                 <div className="flex text-sm leading-none items-end">
@@ -369,3 +370,74 @@ export default function PostDetail() {
     </div>
   );
 }
+
+const DetailDiv = styled.div`
+  line-height: 0.8;
+  & h1 {
+    font-size: 2em;
+    font-weight: bolder;
+    line-height: 1;
+  }
+  & h2 {
+    font-size: 1.5em;
+    font-weight: bolder;
+    line-height: 1;
+  }
+  & h3 {
+    font-size: 1.17em;
+    font-weight: bolder;
+    line-height: 1;
+  }
+  & h4 {
+    font-size: 1em;
+    font-weight: bolder;
+    line-height: 1;
+  }
+  & h5 {
+    font-size: 0.83em;
+    font-weight: bolder;
+    line-height: 1;
+  }
+  & h6 {
+    font-size: 0.67em;
+    font-weight: bolder;
+    line-height: 1;
+  }
+  & strong {
+    font-weight: bold;
+  }
+  & p {
+    display: block;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 0;
+    margin-right: 0;
+    line-height: 1;
+  }
+  em {
+    font-style: italic;
+  }
+  li {
+    display: list-item;
+  }
+
+  ul {
+    display: block;
+    list-style-type: disc;
+    margin-top: 1em;
+    margin-bottom: 1 em;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 40px;
+  }
+  a:link,
+  a:visited {
+    color: (internal value);
+    text-decoration: underline;
+    cursor: auto;
+  }
+  a:link:active,
+  a:visited:active {
+    color: (internal value);
+  }
+`;
