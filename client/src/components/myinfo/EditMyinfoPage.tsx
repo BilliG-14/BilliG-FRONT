@@ -66,7 +66,6 @@ export default function EditMyinfoPage() {
     setImgSrc(URL.createObjectURL(e.target.files[0]));
     img1Ref.current?.classList.add('hidden');
     img2Ref.current?.classList.remove('hidden');
-
     const formData = new FormData();
     formData.append('image', e.target.files[0]);
     const imageUrl = await api.patch('user/image', formData, {
@@ -81,6 +80,9 @@ export default function EditMyinfoPage() {
   const onDeleteImg = () => {
     URL.revokeObjectURL(imgSrc);
     setImgSrc(`${process.env.PUBLIC_URL}/img/default_user.png`);
+    setImagePath(`${process.env.PUBLIC_URL}/img/default_user.png`);
+    img1Ref.current?.classList.add('hidden');
+    img2Ref.current?.classList.remove('hidden');
   };
 
   const onUploadImgBtnClick = () => {
@@ -110,13 +112,13 @@ export default function EditMyinfoPage() {
             src={image ? image : imgSrc}
             alt={name}
             ref={img1Ref}
-            className="rounded-full h-32 w-32 object-cover mb-5"
+            className="img rounded-full h-32 w-32 object-cover mb-5"
           />
           <img
             src={imgSrc}
             alt={name}
             ref={img2Ref}
-            className="rounded-full h-32 w-32 object-cover mb-5 hidden"
+            className="preview rounded-full h-32 w-32 object-cover mb-5 hidden"
           />
           <input
             id="profileImg"
@@ -222,7 +224,7 @@ export default function EditMyinfoPage() {
             const updateData: UpdateInfo = {
               nickName: nicknameRef.current?.value,
               intro: introRef.current?.value,
-              image: imagePath || image,
+              image: imagePath,
               phoneNumber: phoneRef.current?.value,
               address1: address1Ref.current?.value,
               address2: address2Ref.current?.value,

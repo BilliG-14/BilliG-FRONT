@@ -67,7 +67,6 @@ export default function SearchPage() {
             type="radio"
             checked={radioStatus === 'lend'}
             onChange={() => {
-              console.log('a');
               setRadioStatus('lend');
               setItems([]);
             }}

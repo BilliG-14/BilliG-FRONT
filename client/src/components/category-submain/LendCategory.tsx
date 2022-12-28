@@ -39,10 +39,11 @@ export default function LendCategory() {
     async () => {
       return api.get('/category');
     },
-    { refetchOnWindowFocus: false, staleTime: 60 * 1000 * 60 },
+    { refetchOnWindowFocus: false, staleTime: 1000 * 60 * 5 },
   );
 
   if (isLoading) return <Loading />;
+
   return (
     <div className="relative">
       <nav
