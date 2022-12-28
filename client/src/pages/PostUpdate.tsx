@@ -162,66 +162,70 @@ export default function PostUpdate() {
   }
 
   return (
-    <div className="max-w-screen-lg mx-auto">
-      <div className="flex flex-col justify-center mx-auto text-b-text-black">
-        <div className="mt-8 mb-6 text-3xl font-bold">
-          {postData?.postType === 'lend' ? '빌려주기' : '빌리기'}
+    <div className="w-screen m-auto relative pb-[70px] min-h-[85vh]">
+      <div className="max-w-screen-lg mx-auto">
+        <div className="flex flex-col justify-center mx-auto text-b-text-black">
+          <div className="mt-8 mb-6 text-3xl font-bold">
+            {postData?.postType === 'lend' ? '빌려주기' : '빌리기'}
+          </div>
+          <form className="w-[800px] mx-auto">
+            {/* 상품명/카테고리 section */}
+            <section className="flex mb-4">
+              <Category categoryId={postData?.category._id} />
+              <input
+                value={title}
+                onChange={changeTitle}
+                onBlur={checkWordsNumber}
+                id="productName"
+                className="grow p-3 ml-2 w-9/12 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
+                type="text"
+                placeholder="상품명은 20자까지만 입력 가능합니다."
+              />
+            </section>
+
+            {/* 사진 component */}
+            <UpdatedImageUpload bringImgUrlList={imgUrlList} />
+
+            {/* 요금 section */}
+            <section className="flex items-center mb-4">
+              <div className="w-[100px] p-3 text-center">요금</div>
+              <input
+                value={price.priceDay}
+                onChange={changePriceDay}
+                type="number"
+                className="p-3 mx-2 w-54 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
+              />
+              <span className="mr-9">원/일</span>
+              {/* 거래방법 section */}
+              <TradeWay />
+            </section>
+
+            {/* 빌리는 기간 section */}
+            {postData?.postType === 'lend' ? null : <ReservationDate />}
+
+            {/* 상품 상세내용 section */}
+            <section className="mb-4">
+              <PostEditor />
+            </section>
+
+            {/* 해시태그 component */}
+            <HashTagSection />
+
+            <section className="flex flex-col justify-center items-center">
+              <button
+                type="button"
+                onClick={handleButtonClick}
+                className="w-1/6 h-10 hover:text-white border border-b-yellow hover:bg-b-yellow font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mt-3 mb-16 transition duration-100"
+              >
+                수정하기
+              </button>
+            </section>
+          </form>
         </div>
-        <form className="w-[800px] mx-auto">
-          {/* 상품명/카테고리 section */}
-          <section className="flex mb-4">
-            <Category categoryId={postData?.category._id} />
-            <input
-              value={title}
-              onChange={changeTitle}
-              onBlur={checkWordsNumber}
-              id="productName"
-              className="grow p-3 ml-2 w-9/12 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
-              type="text"
-              placeholder="상품명은 20자까지만 입력 가능합니다."
-            />
-          </section>
-
-          {/* 사진 component */}
-          <UpdatedImageUpload bringImgUrlList={imgUrlList} />
-
-          {/* 요금 section */}
-          <section className="flex items-center mb-4">
-            <div className="w-[100px] p-3 text-center">요금</div>
-            <input
-              value={price.priceDay}
-              onChange={changePriceDay}
-              type="number"
-              className="p-3 mx-2 w-54 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
-            />
-            <span className="mr-9">원/일</span>
-            {/* 거래방법 section */}
-            <TradeWay />
-          </section>
-
-          {/* 빌리는 기간 section */}
-          {postData?.postType === 'lend' ? null : <ReservationDate />}
-
-          {/* 상품 상세내용 section */}
-          <section className="mb-4">
-            <PostEditor />
-          </section>
-
-          {/* 해시태그 component */}
-          <HashTagSection />
-
-          <section className="flex flex-col justify-center items-center">
-            <button
-              type="button"
-              onClick={handleButtonClick}
-              className="w-1/6 h-10 hover:text-white border border-b-yellow hover:bg-b-yellow font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mt-3 mb-16 transition duration-100"
-            >
-              수정하기
-            </button>
-          </section>
-        </form>
       </div>
-      <Footer />
+      <div className="w-full h-[70px] absolute bottom-0 flex flex-col justify-end">
+        <Footer />
+      </div>
     </div>
   );
 }
