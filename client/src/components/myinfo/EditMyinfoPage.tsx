@@ -38,7 +38,7 @@ export default function EditMyinfoPage() {
     isError,
     data: userInfo,
   } = useQuery(
-    ['userInfo'],
+    ['userInfo', `${localStorage.getItem('userId')}`],
     async () => {
       return api.get(`/user/${localStorage.getItem('userId')}`);
     },
@@ -50,13 +50,16 @@ export default function EditMyinfoPage() {
   // * useMutation
   const client = useQueryClient();
   const updateUserInfoMutation = useMutation(
-    ['userInfo'],
+    ['userInfo', `${localStorage.getItem('userId')}`],
     async (updateData: UpdateInfo) => {
       await api.patch(`user`, updateData);
     },
     {
       onSuccess: () => {
-        client.invalidateQueries(['userInfo']);
+        client.invalidateQueries([
+          'userInfo',
+          `${localStorage.getItem('userId')}`,
+        ]);
       },
     },
   );
