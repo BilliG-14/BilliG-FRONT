@@ -18,7 +18,7 @@ export default function AdminMain() {
   );
   if (isLoading) return <Loading />;
   return (
-    <div className="w-screen m-auto relative pb-[100px] min-h-[85vh]">
+    <div className="w-screen m-auto relative pb-[70px] min-h-[85vh]">
       <div className="h-full w-screen max-w-screen-lg m-auto">
         {userInfo && userInfo.data.role === 'admin' ? (
           <div>
@@ -34,7 +34,7 @@ export default function AdminMain() {
           <NotFound />
         )}
       </div>
-      <div className="w-full h-[100px] absolute bottom-0">
+      <div className="w-full h-[70px] absolute bottom-0">
         <Footer />
       </div>
     </div>
