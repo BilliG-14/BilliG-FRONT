@@ -15,6 +15,7 @@ import Map from 'components/postDetail/Map';
 import Loading from 'components/Loading';
 import { AxiosError } from 'axios';
 import NotFound from 'components/NotFound';
+import Footer from 'components/footer/Footer';
 
 export default function PostDetail() {
   const navigate = useNavigate();
@@ -96,7 +97,7 @@ export default function PostDetail() {
   return (
     <div className="max-w-screen-lg mx-auto">
       <div className="flex flex-col justify-center mx-auto text-b-text-black">
-        <div className="mb-6 text-3xl font-bold">
+        <div className="mt-8 mb-6 text-3xl font-bold">
           {postData?.postType === 'lend' ? (
             <Link to="/submain">빌려주기</Link>
           ) : (
@@ -329,7 +330,7 @@ export default function PostDetail() {
             </section>
 
             {/* 게시글 footer - 목록/수정/삭제 button (게시글의 작성자일때만 수정/삭제 버튼이 보임) */}
-            <section className="flex justify-between my-5">
+            <section className="flex justify-between mt-5 my-9">
               <Link
                 to={
                   postData?.postType === 'lend' ? '/submain' : '/submain/borrow'
@@ -359,6 +360,7 @@ export default function PostDetail() {
           </>
         )}
       </div>
+      <Footer />
     </div>
   );
 }
