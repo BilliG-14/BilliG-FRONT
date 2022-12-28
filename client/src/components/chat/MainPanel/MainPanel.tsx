@@ -62,10 +62,10 @@ function MainPanel({ user, chatRoomList, socket }: any) {
   }, [messages]);
 
   return (
-    <div className="h-full w-full outline outline-1 outline-gray-200 relative">
+    <div className="h-full w-full outline outline-1 outline-gray-200 relative rounded-r-lg">
       {currentRoom ? (
         <div className="h-full w-full ">
-          <div className="bg-white w-full h-4/5 p-4 overflow-y-scroll">
+          <div className="bg-[#75BC89] w-full h-[800px] p-4 overflow-y-scroll">
             {messages.map(({ name, message }, idx) => {
               return (
                 <div
@@ -87,7 +87,7 @@ function MainPanel({ user, chatRoomList, socket }: any) {
             })}
           </div>
 
-          <div className="bg-b-bg-gray h-1/5 w-full">
+          <div className="bg-b-bg-gray h-[100px] w-full">
             <form
               ref={formRef}
               className=" w-full h-full inputform p-8 pt-5"
@@ -95,7 +95,7 @@ function MainPanel({ user, chatRoomList, socket }: any) {
             >
               <input
                 ref={textRef}
-                className="w-11/12 h-1/5 textInput outline outline-1 outline-slate-200 rounded-3xl p-2 pl-5"
+                className="w-11/12 h-[30px] textInput outline outline-1 outline-slate-200 rounded-3xl p-2 pl-5"
                 type="text"
               />
             </form>
