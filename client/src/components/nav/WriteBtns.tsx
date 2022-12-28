@@ -28,7 +28,7 @@ export default function WriteBtns({
       }}
     >
       <button
-        className="text-xl font-bold hover:text-b-yellow hover:ease-in-out hover: duration-300 mr-2"
+        className="text-xl font-bold hover:text-b-yellow hover:ease-in-out hover: duration-300 mr-4"
         onClick={() => {
           if (!isLogin) {
             goLogin();
