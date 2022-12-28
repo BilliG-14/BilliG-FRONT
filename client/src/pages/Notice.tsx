@@ -54,7 +54,7 @@ export default function ReadNotice() {
           </button>
         </div>
       </div>
-      <div className="w-full h-[70px] absolute bottom-0">
+      <div className="w-full h-[70px] absolute bottom-0 flex flex-col justify-end">
         <Footer />
       </div>
     </div>
