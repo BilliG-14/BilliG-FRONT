@@ -31,16 +31,24 @@ export default function MyLendDealList() {
 
   return (
     <div className="w-4/5 p-12">
-      {lendDealList?.data.docs.map((item: Item) => (
-        <GiveItemCard key={item._id} item={item} />
-      ))}
-      <Pagination
-        page={page}
-        setPage={setPage}
-        totalPage={lendDealList?.data.totalPages}
-        hasNextPage={lendDealList?.data.hasNextPage}
-        hasPrevPage={lendDealList?.data.hasPrevPage}
-      />
+      {lendDealList?.data.docs.length > 0 ? (
+        lendDealList?.data.docs.map((item: Item) => (
+          <GiveItemCard key={item._id} item={item} />
+        ))
+      ) : (
+        <div className="flex items-center justify-center h-1/2 text-xl font-bold">
+          <p>게시물이 존재하지 않습니다.</p>
+        </div>
+      )}
+      {lendDealList?.data.docs.length > 0 && (
+        <Pagination
+          page={page}
+          setPage={setPage}
+          totalPage={lendDealList?.data.totalPages}
+          hasNextPage={lendDealList?.data.hasNextPage}
+          hasPrevPage={lendDealList?.data.hasPrevPage}
+        />
+      )}
     </div>
   );
 }

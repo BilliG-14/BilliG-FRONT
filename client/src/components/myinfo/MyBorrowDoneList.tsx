@@ -33,16 +33,24 @@ export default function MyBorrowDoneList() {
 
   return (
     <div className="w-4/5 p-12">
-      {borrowDoneList?.data.docs.map((item: Item) => (
-        <DoneItemCard key={item._id} item={item} />
-      ))}
-      <Pagination
-        page={page}
-        setPage={setPage}
-        totalPage={borrowDoneList?.data.totalPages}
-        hasNextPage={borrowDoneList?.data.hasNextPage}
-        hasPrevPage={borrowDoneList?.data.hasPrevPage}
-      />
+      {borrowDoneList?.data.docs.length > 0 ? (
+        borrowDoneList?.data.docs.map((item: Item) => (
+          <DoneItemCard key={item._id} item={item} />
+        ))
+      ) : (
+        <div className="flex items-center justify-center h-1/2 text-xl font-bold">
+          <p>게시물이 존재하지 않습니다.</p>
+        </div>
+      )}
+      {borrowDoneList?.data.docs.length > 0 && (
+        <Pagination
+          page={page}
+          setPage={setPage}
+          totalPage={borrowDoneList?.data.totalPages}
+          hasNextPage={borrowDoneList?.data.hasNextPage}
+          hasPrevPage={borrowDoneList?.data.hasPrevPage}
+        />
+      )}
     </div>
   );
 }
