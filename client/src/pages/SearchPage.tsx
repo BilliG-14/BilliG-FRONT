@@ -4,13 +4,11 @@ import api from '../api/customAxios';
 // components
 import SearchItemCard from '../components/searchPage/SearchItemCard';
 import HashTag from 'components/tag/HashTag';
-import Footer from '../components/footer/Footer';
 import { Item } from 'components/myinfo/MyLendPostList';
 import SearchItemCardSeleton from 'components/searchPage/SearchItemCard-skeleton';
 // icon
 import { FiSearch } from 'react-icons/fi';
 import { Pagination } from '../components/Pagination';
-import Loading from '../components/Loading';
 
 export default function SearchPage() {
   const [page, setPage] = useState(1);
@@ -48,7 +46,17 @@ export default function SearchPage() {
       staleTime: 1000 * 60 * 5,
     },
   );
-  if (isLoading) return <Loading />;
+  if (isLoading)
+    return (
+      <>
+        <ul>
+          <SearchItemCardSeleton />
+          <SearchItemCardSeleton />
+          <SearchItemCardSeleton />
+          <SearchItemCardSeleton />
+        </ul>
+      </>
+    );
   return (
     <div className="w-screen max-w-screen-lg relative m-auto">
       {/* radio btn */}
@@ -115,38 +123,34 @@ export default function SearchPage() {
       </section>
       {/* ItemCard section*/}
       <section className="itemcard_section">
-        <div>
-          <div className="text-2xl font-bold py-2 px-32 mb-1">
-            {radioStatus === 'lend' ? (
-              <span>빌려주기 게시물</span>
-            ) : (
-              <span>빌리기 게시물</span>
-            )}
+        {items.length && (
+          <div>
+            <div className="text-2xl font-bold py-2 px-32 mb-1">
+              {radioStatus === 'lend' ? (
+                <span>빌려주기 게시물</span>
+              ) : (
+                <span>빌리기 게시물</span>
+              )}
+            </div>
           </div>
-        </div>
+        )}
         <ul>
-          {items.length > 0 ? (
-            items.map((item: Item) => (
-              <SearchItemCard key={item._id} item={item} />
-            ))
-          ) : (
-            <ul>
-              <SearchItemCardSeleton />
-              <SearchItemCardSeleton />
-              <SearchItemCardSeleton />
-              <SearchItemCardSeleton />
-            </ul>
-          )}
+          {items.length > 0
+            ? items.map((item: Item) => (
+                <SearchItemCard key={item._id} item={item} />
+              ))
+            : null}
         </ul>
-        <Pagination
-          page={page}
-          setPage={setPage}
-          totalPage={pagination.totalPage}
-          hasNextPage={pagination.hasNextPage}
-          hasPrevPage={pagination.hasPrevPage}
-        />
+        {items.length && (
+          <Pagination
+            page={page}
+            setPage={setPage}
+            totalPage={pagination.totalPage}
+            hasNextPage={pagination.hasNextPage}
+            hasPrevPage={pagination.hasPrevPage}
+          />
+        )}
       </section>
-      <Footer />
     </div>
   );
 }
