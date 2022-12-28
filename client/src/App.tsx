@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { createGlobalStyle } from 'styled-components';
@@ -27,7 +27,7 @@ import NotFound from 'components/NotFound';
 import Loading from 'components/Loading';
 import TrueNav from './components/nav/TrueNav';
 import Nav from './components/nav/Nav';
-
+import Chat from './components/chat/Chat';
 const GlobalStyle = createGlobalStyle`
   ${reset};
   body {
@@ -116,6 +116,8 @@ function App() {
                 path="/products/borrow/:categoryId"
                 element={<ProductsList postType="borrow" />}
               />
+              <Route path="/chat" element={<Chat />} />
+              <Route path="/chat/:roomId" element={<Chat />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>

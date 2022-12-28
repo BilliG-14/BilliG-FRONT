@@ -3,12 +3,11 @@ import MainSecondSection from 'components/main/MainSecondSection';
 import MainThirdSection from 'components/main/MainThirdSection';
 import MainButton from 'components/main/MainButton';
 import ScrollTopButton from 'components/ScrollTopButton';
-import { useRef } from 'react';
+import Footer from 'components/footer/Footer';
 
 export default function Main() {
-  const mainDivRef = useRef<HTMLDivElement>(null);
   return (
-    <div ref={mainDivRef} className="w-screen h-screen mx-auto ">
+    <div className="w-screen h-screen mx-auto">
       <MainFirstSection />
       <MainSecondSection />
       <MainThirdSection />
@@ -16,6 +15,7 @@ export default function Main() {
         <MainButton content="물품 빌리러 가기" path="/submain" />
         <MainButton content="물품 빌려주러 가기" path="/submain/borrow" />
       </div>
+      <Footer />
       <ScrollTopButton />
     </div>
   );
