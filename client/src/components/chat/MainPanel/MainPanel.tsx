@@ -103,8 +103,8 @@ function MainPanel({ user, chatRoomList, socket }: any) {
                   key={idx}
                   className={
                     user?.nickName === name
-                      ? 'my-8 w-full p-1 h-auto chat chat-end chat-header flex flex-col items-end justify-center'
-                      : 'my-8 w-full p-1 h-auto chat chat-start chat-header flex flex-col items-start justify-center'
+                      ? 'my-2 w-full p-1 h-auto chat chat-end chat-header flex flex-col items-end justify-center'
+                      : 'my-2 w-full p-1 h-auto chat chat-start chat-header flex flex-col items-start justify-center'
                   }
                 >
                   {name}
