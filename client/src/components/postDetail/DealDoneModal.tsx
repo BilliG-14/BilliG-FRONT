@@ -96,10 +96,9 @@ export default function DealDoneModal(props: PostIdType) {
         return;
       } else {
         borrowerEdit.mutate(borrowerInformation, {
-          onSuccess: (res) => {
+          onSuccess: () => {
             setShowModal(false);
             queryClient.invalidateQueries(['postData']);
-            console.log(res);
           },
         });
       }

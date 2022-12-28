@@ -30,19 +30,17 @@ export default function LendCategory() {
     };
   }, []);
 
-  const {
-    isLoading,
-    isError,
-    data: categories,
-  } = useQuery(
+  const { isLoading, isError, data } = useQuery(
     ['categories'],
     async () => {
-      return api.get('/category');
+      const result = await api.get('/category');
+      return result.data;
     },
-    { refetchOnWindowFocus: false, staleTime: 60 * 1000 * 60 },
+    { refetchOnWindowFocus: false, staleTime: 1000 * 60 * 5 },
   );
 
   if (isLoading) return <Loading />;
+
   return (
     <div className="relative">
       <nav
@@ -51,28 +49,26 @@ export default function LendCategory() {
       >
         <ul className="flex space-x-10 text-center items-center m-auto text-xl font-extrabold">
           {/* category nav */}
-          {categories?.data.map(
-            (category: { _id: string; name: string }, idx: number) => {
-              return (
-                <li
-                  key={category._id}
-                  className="hover:text-b-yellow hover:scale-125 ease-out duration-300"
+          {data.map((category: { _id: string; name: string }, idx: number) => {
+            return (
+              <li
+                key={category._id}
+                className="hover:text-b-yellow hover:scale-125 ease-out duration-300"
+              >
+                <p
+                  className="cursor-pointer"
+                  onClick={() => {
+                    sectionRef.current[idx]?.scrollIntoView({
+                      behavior: 'smooth',
+                      block: 'center',
+                    });
+                  }}
                 >
-                  <p
-                    className="cursor-pointer"
-                    onClick={() => {
-                      sectionRef.current[idx]?.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'center',
-                      });
-                    }}
-                  >
-                    {category.name}
-                  </p>
-                </li>
-              );
-            },
-          )}
+                  {category.name}
+                </p>
+              </li>
+            );
+          })}
         </ul>
       </nav>
       <div className="w-screen max-w-screen-lg m-auto">
@@ -81,18 +77,16 @@ export default function LendCategory() {
           <span className="text-blue-600">빌려주기</span>
         </div>
         {/* category section */}
-        {categories?.data.map(
-          (category: { _id: string; name: string }, idx: number) => {
-            return (
-              <CategorySectionLend
-                key={category._id}
-                idx={idx}
-                category={category}
-                sectionRef={(el) => (sectionRef.current[idx] = el)}
-              />
-            );
-          },
-        )}
+        {data.map((category: { _id: string; name: string }, idx: number) => {
+          return (
+            <CategorySectionLend
+              key={category._id}
+              idx={idx}
+              category={category}
+              sectionRef={(el) => (sectionRef.current[idx] = el)}
+            />
+          );
+        })}
       </div>
     </div>
   );

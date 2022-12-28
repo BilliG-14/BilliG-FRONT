@@ -34,7 +34,10 @@ module.exports = {
         'b-bg-sec2': '#CE8467',
         'b-bg-sec3': '#D5CB8E',
         'b-bg-sec4': '#909FA6',
-        'b-bg-sec5': '#857FB3',
+        'b-bg-sec5': '#709FB0',
+        'b-bg-sec6': '#FDAE84',
+        'b-bg-sec7': '#E9DCCD',
+        'b-bg-sec8': '#D1A827',
       },
       keyframes: {
         fadeIn: {
@@ -125,7 +128,7 @@ module.exports = {
         'center-to-lb': 'CenterToLeftBottom 500ms linear 1.2s both',
         'center-to-rb': 'CenterToRightBottom 500ms linear 1.4s both',
         'center-to-rt': 'CenterToRightTop 500ms linear 1.6s both',
-        marquee: 'Marquee 52s linear infinite',
+        'marquee': 'Marquee 55s linear infinite',
       },
     },
   },

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import api from '../../api/customAxios';
 import { useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useIsLoginStore } from 'store/LoginJoinStore';
 import { usePasswordEditStore } from 'store/MypageStore';
 // components
@@ -20,8 +20,10 @@ function TrueNav() {
   const navigate = useNavigate();
   const { setIsLoginFalse } = useIsLoginStore();
   const { togglePwfalse } = usePasswordEditStore();
+  const client = useQueryClient();
 
   const handleLogout = async () => {
+    api.post('/logout');
     setIsLoginFalse();
     localStorage.removeItem('userId');
     localStorage.removeItem('token');
@@ -76,6 +78,10 @@ function TrueNav() {
               type="button"
               className="mypage flex hover:text-b-yellow hover:scale-110 ease-in-out duration-300"
               onClick={() => {
+                client.invalidateQueries([
+                  'userInfo',
+                  `${localStorage.getItem('userId')}`,
+                ]);
                 togglePwfalse();
                 navigate('/notices');
               }}

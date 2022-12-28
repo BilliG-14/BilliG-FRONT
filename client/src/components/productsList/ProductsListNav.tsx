@@ -42,7 +42,7 @@ export default function ProductsListNav(props: NavProps) {
             return (
               <li
                 key={category._id}
-                className="hover:text-b-yellow hover:scale-125 ease-out duration-300"
+                className="hover:text-b-yellow hover:scale-125 ease-out duration-300 cursor-pointer"
               >
                 <p
                   onClick={() => {

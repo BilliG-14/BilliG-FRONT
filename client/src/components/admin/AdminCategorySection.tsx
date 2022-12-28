@@ -4,6 +4,7 @@ import { AxiosError } from 'axios';
 import Loading from 'components/Loading';
 import ConfirmModal from 'components/Modal';
 import { useCallback, useRef, useState } from 'react';
+import { message } from '../../../node_modules/@toast-ui/chart/dist/esm/message';
 
 type Category = {
   _id: string;
@@ -63,6 +64,10 @@ export default function AdminCategorySection() {
     onSuccess: (_data) => {
       queryClient.invalidateQueries(['categories']);
     },
+    onError: (error: Error) => {
+      console.log(error);
+      alert(error);
+    },
   });
   /*버튼 클릭 시 실행할 함수 */
   const handleCreate = useCallback(
@@ -78,7 +83,11 @@ export default function AdminCategorySection() {
   );
   const handleDelete = useCallback(
     (categoryId: string) => {
-      deleteMutation.mutate(categoryId);
+      try {
+        deleteMutation.mutate(categoryId);
+      } catch (error) {
+        alert(error);
+      }
     },
     [deleteMutation],
   );
@@ -89,6 +98,10 @@ export default function AdminCategorySection() {
     [updateMutation],
   );
   if (isLoading) return <Loading />;
+  if (isError)
+    return (
+      <div className="py-32 font-extrabold text-3xl">에러가 발생하였습니다</div>
+    );
   return (
     <section className="w-full text-b-text-black p-2">
       <div className="w-2/3 mx-auto mt-12">
@@ -196,7 +209,7 @@ export default function AdminCategorySection() {
             try {
               handleDelete(selectedCategory.current._id);
             } catch (error) {
-              alert('카테고리 삭제에 실패하였습니다.');
+              console.log(error);
             }
           }}
         />

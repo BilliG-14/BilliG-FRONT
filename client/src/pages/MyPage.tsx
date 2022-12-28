@@ -10,7 +10,6 @@ import MyLendDealList from '../components/myinfo/MyLendDealList';
 import MyBorrowDealList from '../components/myinfo/MyBorrowDealList';
 import MyLendDoneList from '../components/myinfo/MyLendDoneList';
 import MyBorrowDoneList from '../components/myinfo/MyBorrowDoneList';
-import Footer from '../components/footer/Footer';
 
 export default function MyPage() {
   return (

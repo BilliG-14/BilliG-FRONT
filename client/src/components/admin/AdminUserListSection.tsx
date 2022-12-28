@@ -44,7 +44,7 @@ export default function AdminUserListSection() {
     return <p>데이터를 불러오지 못했습니다</p>;
   }
   return (
-    <section className="w-full text-b-text-black p-2">
+    <section className="w-full text-b-text-black p-2  h-[85vh] overflow-y-auto">
       <table className="table-auto border-separate border-spacing-4 w-full">
         <thead className=" font-extrabold">
           <tr>
@@ -53,7 +53,7 @@ export default function AdminUserListSection() {
             <th>닉네임</th>
             <th>전화번호</th>
             <th>권한</th>
-            <th>상세보기</th>
+            <th>조회</th>
           </tr>
         </thead>
         <tbody className="font-semibold">
