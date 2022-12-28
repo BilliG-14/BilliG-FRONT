@@ -8,7 +8,7 @@ type WrapItemProps = {
 function WrapItem(props: WrapItemProps) {
   const { content, imgsrc, detail } = props;
   return (
-    <div className="w-1/5 min-w-[270px] h-[400px] bg-b-text-brightgray rounded-3xl overflow-hidden break-keep">
+    <div className="w-[318px] h-[400px] bg-b-text-brightgray rounded-3xl overflow-hidden break-keep">
       <img src={imgsrc} alt="" className="object-cover w-full h-1/2" />
       <p className="text-xl h-14 text-black mx-5 mt-5 mb-3 font-bold flex items-center">
         {content}
@@ -21,7 +21,7 @@ function WrapList() {
   return (
     <div
       id="wrap"
-      className="w-1/2 flex flex-nowrap justify-around gap-5 animate-marquee"
+      className="w-auto flex flex-nowrap justify-start gap-5 animate-marquee"
     >
       <WrapItem
         content="급하게 노트북이 필요할 때 빌려쓸 수 있어서 좋아요"
@@ -68,15 +68,12 @@ export default function MainSecondSection() {
         id="marquee_container"
         className="w-screen overflow-hidden relative h-[420px] mt-20"
       >
-        <div id="marquee_inner" className="w-[200%] absolute flex gap-5">
+        <div id="marquee_inner" className="w-[300%] absolute flex gap-5">
+          <WrapList />
           <WrapList />
           <WrapList />
         </div>
       </div>
-      {/* <SpeechBubbleLeft content="너무 비싸서 사는 건 부담이에요" />
-        <SpeechBubbleRight content="안쓰는 걸 빌려주고 돈을 벌어요!" />
-        <SpeechBubbleLeft content="환경오염을 줄이고 싶어요" />
-        <SpeechBubbleRight content="필요한 사람에게 대여해줄래요!" /> */}
     </section>
   );
 }

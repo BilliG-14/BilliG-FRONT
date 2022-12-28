@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import api from '../api/customAxios';
 // components
 import SearchItemCard from '../components/searchPage/SearchItemCard';
@@ -66,7 +66,10 @@ export default function SearchPage() {
             name="lend"
             type="radio"
             checked={radioStatus === 'lend'}
-            onChange={() => setRadioStatus('lend')}
+            onChange={() => {
+              setRadioStatus('lend');
+              setItems([]);
+            }}
             className="mr-1"
           ></input>
           <label htmlFor="lend">빌려주기</label>
@@ -77,7 +80,10 @@ export default function SearchPage() {
             name="borrow"
             type="radio"
             checked={radioStatus === 'borrow'}
-            onChange={() => setRadioStatus('borrow')}
+            onChange={() => {
+              setRadioStatus('borrow');
+              setItems([]);
+            }}
             className="mr-1"
           ></input>
           <label htmlFor="lend">빌리기</label>
@@ -142,11 +148,15 @@ export default function SearchPage() {
               <SearchItemCardSeleton />
             </ul>
           )}
-          {items.length > 0
-            ? items.map((item: Item) => (
-                <SearchItemCard key={item._id} item={item} />
-              ))
-            : null}
+          {items.length > 0 ? (
+            items.map((item: Item) => (
+              <SearchItemCard key={item._id} item={item} />
+            ))
+          ) : (
+            <div className="flex flex-col items-center justify-center h-96 text-xl font-bold">
+              <p>원하는 상품을 검색해보세요.</p>
+            </div>
+          )}
         </ul>
         {items.length > 0 && (
           <Pagination
