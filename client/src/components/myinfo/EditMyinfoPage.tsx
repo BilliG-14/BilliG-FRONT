@@ -227,7 +227,7 @@ export default function EditMyinfoPage() {
             const updateData: UpdateInfo = {
               nickName: nicknameRef.current?.value,
               intro: introRef.current?.value,
-              image: imagePath,
+              image: imagePath || image,
               phoneNumber: phoneRef.current?.value,
               address1: address1Ref.current?.value,
               address2: address2Ref.current?.value,

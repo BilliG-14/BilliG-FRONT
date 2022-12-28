@@ -106,7 +106,6 @@ export default function BorrowWriting() {
   if (isLoading) {
     return <Loading />;
   }
-  console.log(categories);
   // formData 넣기
   const formData = new FormData();
 
