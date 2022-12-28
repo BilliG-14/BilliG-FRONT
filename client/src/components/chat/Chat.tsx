@@ -6,7 +6,7 @@ import getChatRooms from './getChatRooms';
 import Footer from '../../components/footer/Footer';
 import { io } from 'socket.io-client';
 
-const socket = io(`${process.env.REACT_APP_AWS_EC2}/chat`, {
+const socket = io('http://kdt-sw3-team14.elicecoding.com/chat', {
   transports: ['websocket'],
 });
 
