@@ -31,16 +31,24 @@ export default function MyLendPostList() {
 
   return (
     <div className="w-4/5 p-12">
-      {giveList?.data.docs.map((item: Item) => (
-        <GiveItemCard key={item._id} item={item} />
-      ))}
-      <Pagination
-        page={page}
-        setPage={setPage}
-        totalPage={giveList?.data.totalPages}
-        hasNextPage={giveList?.data.hasNextPage}
-        hasPrevPage={giveList?.data.hasPrevPage}
-      />
+      {giveList?.data.docs.length > 0 ? (
+        giveList?.data.docs.map((item: Item) => (
+          <GiveItemCard key={item._id} item={item} />
+        ))
+      ) : (
+        <div className="flex items-center justify-center h-1/2 text-xl font-bold">
+          <p>게시물이 존재하지 않습니다.</p>
+        </div>
+      )}
+      {giveList?.data.docs.length > 0 && (
+        <Pagination
+          page={page}
+          setPage={setPage}
+          totalPage={giveList?.data.totalPages}
+          hasNextPage={giveList?.data.hasNextPage}
+          hasPrevPage={giveList?.data.hasPrevPage}
+        />
+      )}
     </div>
   );
 }
