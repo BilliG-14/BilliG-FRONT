@@ -5,7 +5,7 @@ const getChatRooms = async () => {
     const chatInformation = await api.get('/chat');
     return chatInformation.data;
   } catch (error) {
-    console.log(error);
+    alert('채팅방 목록 불러오기 실패하였습니다.');
   }
 };
 

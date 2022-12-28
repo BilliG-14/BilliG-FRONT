@@ -9,7 +9,6 @@ import { io } from 'socket.io-client';
 const socket = io('http://kdt-sw3-team14.elicecoding.com/chat', {
   transports: ['websocket'],
 });
-
 /** 추후 any 바꾸기! */
 function Chat() {
   /** user 정보 가져오기 */

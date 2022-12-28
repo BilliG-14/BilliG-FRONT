@@ -45,15 +45,16 @@ function MainPanel({ user, chatRoomList, socket }: any) {
     formRef?.current?.reset();
   };
   useEffect(() => {
-    socket.on(
-      `message${currentRoom}`,
-      ({ name, message }: { name: string; message: string }) => {
-        setMessages([...messages, { name, message }]);
-      },
-    );
-    // socket.on('users', (room: any) => {
-    //   setUsers(room);
-    // });
+    try {
+      socket.on(
+        `message${currentRoom}`,
+        ({ name, message }: { name: string; message: string }) => {
+          setMessages([...messages, { name, message }]);
+        },
+      );
+    } catch (error) {
+      alert('소켓 통신이 정상적으로 이루어지지 않았습니다.');
+    }
   }, [currentRoom, messages]);
   //--------------------------------------------------
   useEffect(() => {
