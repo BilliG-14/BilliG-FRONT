@@ -18,7 +18,7 @@ export default function MyLendPostList() {
       return api.get(
         `/product/page?author=${localStorage.getItem(
           'userId',
-        )}&postType=lend&per=10&page=${page}&stateOfTransaction=0`,
+        )}&postType=lend&per=8&page=${page}&stateOfTransaction=0`,
       );
     },
     {

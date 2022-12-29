@@ -11,8 +11,8 @@ export default function SubmainPage() {
     <div>
       <Carousels />
       <Routes>
-        <Route path="/" element={<LendCategory />} />
-        <Route path="/borrow" element={<BorrowCategory />} />
+        <Route path="/" element={<BorrowCategory />} />
+        <Route path="/borrow" element={<LendCategory />} />
       </Routes>
       <ChatIcon />
       <Footer />

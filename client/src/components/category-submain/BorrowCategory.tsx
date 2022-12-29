@@ -77,8 +77,7 @@ export default function BorrowCategory() {
       </nav>
       <div className="w-screen max-w-screen-lg m-auto">
         <div className="text-3xl font-bold py-2 px-2 my-1">
-          <span>카테고리별 상품 | </span>
-          <span className="text-red-600">빌리기</span>
+          <span className="text-red-600">물건이 필요한 회원을 찾아보세요</span>
         </div>
         {/* category section */}
         {categories.map(

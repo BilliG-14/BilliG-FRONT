@@ -19,9 +19,9 @@ export default function MyBorrowDealList() {
     [`borrowDealList/${page}`, `${localStorage.getItem('userId')}`],
     async () => {
       return api.get(
-        `/product/page?author=${localStorage.getItem(
+        `/product/page?borrower=${localStorage.getItem(
           'userId',
-        )}&postType=borrow&per=10&page=${page}&stateOfTransaction=1,2`,
+        )}&per=8&page=${page}&stateOfTransaction=1,2`,
       );
     },
     {
