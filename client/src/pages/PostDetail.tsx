@@ -165,7 +165,7 @@ export default function PostDetail() {
                         ? postData?.imgUrl[0]
                         : mainImgUrl
                     }
-                    className="w-[410px] h-[410px]"
+                    className="w-[410px] h-[410px] object-contain"
                     alt="메인 사진"
                   />
                   <div className="flex justify-center gap-1">
@@ -174,7 +174,7 @@ export default function PostDetail() {
                         onMouseOver={changeMainImg}
                         key={idx}
                         src={url}
-                        className="w-16 h-16 mt-3 border border-solid border-gray-300"
+                        className="w-16 h-16 mt-3 border border-solid border-gray-300 object-contain"
                         alt="원하는 제품 사진"
                       />
                     ))}

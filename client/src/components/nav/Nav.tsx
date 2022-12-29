@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useLoginJoinStore } from 'store/LoginJoinStore';
+import { useIsLoginStore, useLoginJoinStore } from 'store/LoginJoinStore';
 // components
 import MenuButton from 'components/MenuButton/MenuButton';
 import WriteBtns from './WriteBtns';
@@ -16,7 +16,7 @@ function Nav() {
     state.setSelectedJoin,
     state.setSelectedLogin,
   ]);
-
+  const { isLogin } = useIsLoginStore();
   const navigate = useNavigate();
   const goLogin = () => {
     setSelectedLogin();
@@ -91,11 +91,11 @@ function Nav() {
           </div>
         </div>
         <div className="flex justify-end text-3xl mt-5">
-          {onWriteBtn ? (
+          {/* {onWriteBtn ? (
             <WriteBtns setOnWriteBtn={setOnWriteBtn} />
           ) : (
             <GoWriteBtn setOnWriteBtn={setOnWriteBtn} />
-          )}
+          )} */}
 
           <button
             type="button"

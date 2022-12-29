@@ -117,6 +117,7 @@ export default function LendWriting() {
     postType: 'lend',
     category: filteredCategory[0]?._id,
     author: data?.data?._id,
+    lender: data?.data?._id,
     title: productNameRef.current?.value,
     description: description,
     stateOfTransaction: 0,

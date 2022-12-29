@@ -20,7 +20,7 @@ export default function MyBorrowPostList() {
       return api.get(
         `/product/page?author=${localStorage.getItem(
           'userId',
-        )}&postType=borrow&per=10&page=${page}&stateOfTransaction=0`,
+        )}&postType=borrow&per=8&page=${page}&stateOfTransaction=0`,
       );
     },
     {

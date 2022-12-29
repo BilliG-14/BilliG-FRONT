@@ -18,9 +18,9 @@ export default function MyLendDoneList() {
     [`lendDoneList/${page}`, `${localStorage.getItem('userId')}`],
     async () => {
       return api.get(
-        `/product/page?author=${localStorage.getItem(
+        `/product/page?lender=${localStorage.getItem(
           'userId',
-        )}&postType=lend&per=10&page=${page}&stateOfTransaction=3`,
+        )}&per=8&page=${page}&stateOfTransaction=3`,
       );
     },
     {

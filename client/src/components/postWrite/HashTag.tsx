@@ -17,9 +17,13 @@ export default function HashTagSection() {
   }
 
   function handleTagEnter(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.nativeEvent.isComposing) {
+      // isComposing 이 true 이면
+      return; // 조합 중이므로 동작을 막는다.
+    }
     if (e.key === 'Enter') {
       if (!hashTags.includes(hashTagInputText) && hashTags.length < 5) {
-        setHashTags(hashTagInputText);
+        setHashTags(`${hashTagInputText} `);
         setHashTagInputText('');
         return;
       } else {
@@ -66,7 +70,7 @@ export default function HashTagSection() {
               key={tag}
               className="font-[400] bg-b-yellow hover:bg-gray-200 text-white h-9 mr-2 py-2 px-4 rounded-full cursor-pointer transition duration-75"
             >
-              {tag}
+              {tag.trim()}
             </div>
           ))}
         </div>
