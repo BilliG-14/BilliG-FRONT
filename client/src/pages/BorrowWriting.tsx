@@ -117,6 +117,7 @@ export default function BorrowWriting() {
     postType: 'borrow',
     category: filteredCategory[0]?._id,
     author: data?.data?._id,
+    borrower: data?.data?._id,
     title: productNameRef.current?.value,
     description: description,
     stateOfTransaction: 0,
