@@ -6,7 +6,7 @@ import getChatRooms from './getChatRooms';
 import Footer from '../../components/footer/Footer';
 import { io } from 'socket.io-client';
 
-const socket = io('http://kdt-sw3-team14.elicecoding.com/chat', {
+const socket = io('http://34.64.44.34:3003/chat', {
   transports: ['websocket'],
 });
 /** 추후 any 바꾸기! */
