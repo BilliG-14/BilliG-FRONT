@@ -21,7 +21,11 @@ export default function SubmainLendItemCard({
       }}
     >
       <div className="pic w-full h-40 mb-2 p-2 flex items-center justify-center">
-        <img className=" w-full h-full" src={imgUrl[0]} alt="m2 맥북" />
+        <img
+          className=" w-full h-full object-contain"
+          src={imgUrl[0]}
+          alt="m2 맥북"
+        />
       </div>
       <div className="item_info my-2 text-left">
         <div className="title ">

@@ -28,7 +28,7 @@ export default function ListBorrowItemCard({ item }: ItemProps) {
     >
       <div className="pic w-full h-40 mb-2 p-2 flex items-center justify-center">
         <img
-          className=" w-full h-full"
+          className=" w-full h-full object-contain"
           src={
             imgUrl[0]
               ? imgUrl[0]

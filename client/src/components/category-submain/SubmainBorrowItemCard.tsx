@@ -21,7 +21,7 @@ export default function SubmainBorrowItemCard({
         navigate(`/read/${item._id}`);
       }}
     >
-      <div className="pic w-full h-40 mb-2 p-2 flex items-center justify-center">
+      <div className="pic w-full h-40 mb-2 p-2 flex items-center justify-center object-contain">
         <img
           className=" w-full h-full"
           src={
