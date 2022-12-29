@@ -78,7 +78,7 @@ export default function ImageUpload() {
                   key={fileUrl.URL}
                   alt="이미지"
                   src={fileUrl.URL}
-                  className="w-[70px] h-[70px] border-solid border border-gray-300 rounded-lg"
+                  className="w-[70px] h-[70px] border-solid border border-gray-300 rounded-lg object-contain"
                 />
                 <div
                   id={fileUrl.pictureName}
