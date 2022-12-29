@@ -22,7 +22,7 @@ export default function UpdatedImageUpload(props: PropsType) {
                 key={idx}
                 alt="이미지"
                 src={fileUrl}
-                className="w-[70px] h-[70px] mr-3 border-solid border border-gray-300 rounded-lg"
+                className="w-[70px] h-[70px] mr-3 border-solid border border-gray-300 rounded-lg object-contain"
               />
             </>
           );
