@@ -355,7 +355,7 @@ UI 작성 (figma)
 | :high_brightness: 오승연 | 프론트엔드 개발      |
 | :snowflake: 권규리       | 프론트엔드 개발      |
 | :fire: 손병진            | 백엔드 개발          |
-| :hocho: 유의석           | 백엔드 개발          |
+| :hammer: 유의석           | 백엔드 개발          |
 
 <br/>
 
