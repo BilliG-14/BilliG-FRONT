@@ -128,7 +128,7 @@ function MainPanel({ user, chatRoomList, socket }: any) {
               <div className="flex items-center">
                 <textarea
                   ref={textRef}
-                  className="w-11/12 h-[30px] textInput outline outline-1 outline-slate-200 rounded-3xl p-2 pl-5"
+                  className="w-11/12 h-[30px] textInput outline outline-1 outline-slate-200 rounded-3xl p-2 pl-5 resize-none"
                   // type="text"
                   onKeyDown={pressEnter}
                   onChange={checkItemChangeHandler}
