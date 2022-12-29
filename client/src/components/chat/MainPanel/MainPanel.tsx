@@ -74,10 +74,10 @@ function MainPanel({ user, chatRoomList, socket }: any) {
 
   /** shift + Enter 줄바꿈 */
   const pressEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    // if (e.nativeEvent.isComposing) {
-    //   // isComposing 이 true 이면
-    //   return; // 조합 중이므로 동작을 막는다.
-    // }
+    if (e.nativeEvent.isComposing) {
+      // isComposing 이 true 이면
+      return; // 조합 중이므로 동작을 막는다.
+    }
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       onSubmitButton();
