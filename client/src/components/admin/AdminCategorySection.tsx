@@ -5,24 +5,7 @@ import Loading from 'components/Loading';
 import ConfirmModal from 'components/Modal';
 import { useCallback, useRef, useState } from 'react';
 import { CategoryType } from '../../types/categoryType';
-/*Category CRUD */
-const endPoint = 'category';
-const apiCategory = {
-  GET: async () => {
-    const { data } = await api.get(`${endPoint}`);
-    return data;
-  },
-  CREATE: async (catogoryName: string) => {
-    const { data } = await api.post(`/${endPoint}`, { name: catogoryName });
-    return data;
-  },
-  UPDATE: async ({ _id, name }: CategoryType) => {
-    await api.patch(`${endPoint}/${_id}`, { name: name });
-  },
-  DELETE: async (_id: string) => {
-    await api.delete(`${endPoint}/${_id}`);
-  },
-};
+import { apiCategory } from 'api/category-api';
 
 export default function AdminCategorySection() {
   const queryClient = useQueryClient();
