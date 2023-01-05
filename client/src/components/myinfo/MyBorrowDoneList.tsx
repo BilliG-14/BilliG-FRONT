@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 // Type
-import { GetItemType } from 'types/productType';
+import { PostDataType } from 'types/productType';
 // components
 import { Pagination } from '../Pagination';
 import Loading from '../Loading';
@@ -30,7 +30,7 @@ export default function MyBorrowDoneList() {
   return (
     <div className="w-4/5 p-12">
       {borrowDoneList?.data.docs.length > 0 ? (
-        borrowDoneList?.data.docs.map((item: GetItemType) => (
+        borrowDoneList?.data.docs.map((item: PostDataType) => (
           <ItemCard key={item._id} type="done" item={item} />
         ))
       ) : (

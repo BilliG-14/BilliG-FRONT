@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import api from '../../api/customAxios';
 import { useNavigate } from 'react-router-dom';
 import Loading from '../Loading';
-import { GetItemType } from 'types/productType';
+import { PostDataType } from 'types/productType';
 
 type ItemListProps = {
   category: { _id: string; name: string };
@@ -57,7 +57,7 @@ export default function CategorySectionLend({
           </button>
         </header>
         <div className="flex justify-center">
-          {categoryLendItems?.data.docs.map((item: GetItemType) => (
+          {categoryLendItems?.data.docs.map((item: PostDataType) => (
             <SubmainLendItemCard
               key={item._id}
               item={item}

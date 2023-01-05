@@ -1,11 +1,11 @@
 import DealTag from 'components/tag/DealTag';
 import DealStepTag from '../tag/DealStepTag';
 import { useNavigate } from 'react-router-dom';
-import { GetItemType } from 'types/productType';
+import { PostDataType } from 'types/productType';
 import DoneTag from '../tag/DoneTag';
 
 interface BorrowPostProps {
-  item: GetItemType;
+  item: PostDataType;
   type: string;
 }
 
@@ -40,8 +40,8 @@ export default function ItemCard({ item, type }: BorrowPostProps) {
               {type === 'borrow' || type === 'done' ? (
                 <li className="mt-1">
                   <span>대여기간 : </span>
-                  <span>{`${period.start} ~ `}</span>
-                  <span>{`${period.end}`}</span>
+                  <span>{`${period?.start} ~ `}</span>
+                  <span>{`${period?.end}`}</span>
                 </li>
               ) : null}
               <li className="text-b-text-darkgray mt-3 mb-3">

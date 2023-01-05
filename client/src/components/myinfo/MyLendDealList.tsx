@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 // type
-import { GetItemType } from 'types/productType';
+import { PostDataType } from 'types/productType';
 // components
 import { Pagination } from 'components/Pagination';
 import Loading from '../Loading';
@@ -31,7 +31,7 @@ export default function MyLendDealList() {
   return (
     <div className="w-4/5 p-12">
       {lendDealList?.data.docs.length > 0 ? (
-        lendDealList?.data.docs.map((item: GetItemType) => (
+        lendDealList?.data.docs.map((item: PostDataType) => (
           <ItemCard key={item._id} type="lend" item={item} />
         ))
       ) : (
