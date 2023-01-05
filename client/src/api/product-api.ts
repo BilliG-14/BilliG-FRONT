@@ -18,15 +18,16 @@ export const getPostDetail = async (id: string | undefined) => {
   }
 };
 
-// * 빌리기 거래 목록
+// * 거래중, 거래완료 목록
 export const getDealList = async (
   target: string,
   page: number,
   stateOfTransaction: string,
+  postType?: string,
 ) => {
   return api.get(
-    `/product/page?${target}=${localStorage.getItem(
-      'userId',
-    )}&per=8&page=${page}&stateOfTransaction=${stateOfTransaction}`,
+    `/product/page?${target}=${localStorage.getItem('userId')}${
+      postType ? `&postType=${postType}` : ''
+    }&per=8&page=${page}&stateOfTransaction=${stateOfTransaction}`,
   );
 };

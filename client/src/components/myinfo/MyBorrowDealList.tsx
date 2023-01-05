@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
-import api from '../../api/customAxios';
+import { useQuery } from '@tanstack/react-query';
 // type
 import { Item } from './MyLendPostList';
 // components
@@ -26,7 +25,6 @@ export default function MyBorrowDealList() {
       staleTime: 60 * 1000 * 5,
     },
   );
-  // * useMutation
   if (isLoading) return <Loading />;
   return (
     <div className="w-4/5 p-12">

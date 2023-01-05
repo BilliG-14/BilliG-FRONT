@@ -1,26 +1,23 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import api from '../../api/customAxios';
 // components
 import GiveItemCard from './GiveItemCard';
 import { Pagination } from 'components/Pagination';
 import Loading from '../Loading';
+import { getDealList } from '../../api/product-api';
 
 export default function MyLendPostList() {
   const [page, setPage] = useState(1);
+  const target = 'author';
+  const stateOfTransaction = '0';
+  const postType = 'lend';
   const {
     isLoading,
     isError,
     data: giveList,
   } = useQuery(
     [`giveList/${page}`, `${localStorage.getItem('userId')}`],
-    async () => {
-      return api.get(
-        `/product/page?author=${localStorage.getItem(
-          'userId',
-        )}&postType=lend&per=8&page=${page}&stateOfTransaction=0`,
-      );
-    },
+    async () => getDealList(target, page, stateOfTransaction, postType),
     {
       refetchOnWindowFocus: false,
       staleTime: 60 * 1000 * 5,

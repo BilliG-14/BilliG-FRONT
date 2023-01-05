@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import api from '../../api/customAxios';
 // components
 import { Pagination } from 'components/Pagination';
 import GiveItemCard from './GiveItemCard';
