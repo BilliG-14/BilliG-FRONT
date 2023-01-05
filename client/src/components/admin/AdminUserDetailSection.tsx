@@ -116,9 +116,13 @@ export default function AdminUserDetailSection() {
           </button>
           {isOpenSuspendModal && (
             <ConfirmModal
-              title="이 계정을 정지할까요?"
+              title={
+                user.suspension
+                  ? '이 계정을 정지해제할까요?'
+                  : '이 계정을 정지할까요?'
+              }
               content={`${user.nickName}`}
-              yesText="정지"
+              yesText="예"
               yesColor="red-400"
               onClickToggleModal={onClickSuspendModal}
               onClickYes={() => handleSuspend()}
