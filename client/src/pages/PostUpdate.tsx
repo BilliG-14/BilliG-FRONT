@@ -78,9 +78,6 @@ export default function PostUpdate() {
           data?.data[0].period.end,
         );
       },
-      onError: (err) => {
-        alert(`게시글을 불러오는 도중 오류가 생겼습니다. \n에러내용: ${err}`);
-      },
     },
   );
 
