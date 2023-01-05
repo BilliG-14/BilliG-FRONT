@@ -68,7 +68,7 @@ export default function AdminUserListSection() {
                 <td>{user.role}</td>
                 <td className="w-14">
                   <button
-                    className="border-b-yellow border-solid border-2 w-12 rounded-lg h-7 leading-7 text-b-yellow shadow-lg hover:bg-b-yellow hover:text-white"
+                    className="border-b-yellow border-solid border-2 w-12 rounded-lg py-1 text-b-yellow shadow-lg hover:bg-b-yellow hover:text-white"
                     onClick={() => {
                       setSelectedUserId(user._id);
                     }}

@@ -90,7 +90,7 @@ export default function AdminCategorySection() {
             ref={elemCreateInput}
           />
           <button
-            className="w-1/6 h-10 hover:text-white border-2 text-b-text-black border-b-yellow hover:bg-b-yellow focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm"
+            className="w-1/6 h-10 hover:text-white border-2 text-b-yellow font-bold border-b-yellow hover:bg-b-yellow focus:outline-none focus:ring-4 focus:ring-blue-300 rounded-lg text-sm"
             onClick={() => {
               const newCategoryName = elemCreateInput.current?.value;
               if (!newCategoryName) {

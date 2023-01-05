@@ -4,7 +4,7 @@ export default function AdminSideBar() {
   const { showUserList, showReport, showNotice, showPost, showCategory } =
     useAdminPageStore();
   return (
-    <div className="w-1/5 min-h-[85vh] p-4 bg-b-bg-gray select-none">
+    <div className="w-1/5 min-w-[168px] min-h-[85vh] p-4 bg-b-bg-gray select-none">
       <div className="menu_box mb-7">
         <p className="items-center justify-center text-xl font-extrabold mb-1">
           회원 관리
