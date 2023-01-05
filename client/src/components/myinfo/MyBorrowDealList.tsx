@@ -1,15 +1,17 @@
 import { useState } from 'react';
-import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
-import api from '../../api/customAxios';
+import { useQuery } from '@tanstack/react-query';
 // type
-import { Item } from './MyLendPostList';
+import { GetItemType } from 'types/productType';
 // components
 import BorrowItemCard from './BorrowItemCard';
 import { Pagination } from 'components/Pagination';
 import Loading from '../Loading';
+import { getDealList } from '../../api/product-api';
 
 export default function MyBorrowDealList() {
   const [page, setPage] = useState(1);
+  const target = 'borrower';
+  const stateOfTransaction = '1,2';
   // * useQuery
   const {
     isLoading,
@@ -17,24 +19,17 @@ export default function MyBorrowDealList() {
     data: borrowDealList,
   } = useQuery(
     [`borrowDealList/${page}`, `${localStorage.getItem('userId')}`],
-    async () => {
-      return api.get(
-        `/product/page?borrower=${localStorage.getItem(
-          'userId',
-        )}&per=8&page=${page}&stateOfTransaction=1,2`,
-      );
-    },
+    async () => getDealList(target, page, stateOfTransaction),
     {
       refetchOnWindowFocus: false,
       staleTime: 60 * 1000 * 5,
     },
   );
-  // * useMutation
   if (isLoading) return <Loading />;
   return (
     <div className="w-4/5 p-12">
       {borrowDealList?.data.docs.length > 0 ? (
-        borrowDealList?.data.docs.map((item: Item) => (
+        borrowDealList?.data.docs.map((item: GetItemType) => (
           <BorrowItemCard key={item._id} item={item} />
         ))
       ) : (

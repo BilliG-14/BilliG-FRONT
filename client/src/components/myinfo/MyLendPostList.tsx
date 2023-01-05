@@ -1,26 +1,24 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import api from '../../api/customAxios';
 // components
 import GiveItemCard from './GiveItemCard';
 import { Pagination } from 'components/Pagination';
 import Loading from '../Loading';
+import { getDealList } from '../../api/product-api';
+import { GetItemType } from 'types/productType';
 
 export default function MyLendPostList() {
   const [page, setPage] = useState(1);
+  const target = 'author';
+  const stateOfTransaction = '0';
+  const postType = 'lend';
   const {
     isLoading,
     isError,
     data: giveList,
   } = useQuery(
     [`giveList/${page}`, `${localStorage.getItem('userId')}`],
-    async () => {
-      return api.get(
-        `/product/page?author=${localStorage.getItem(
-          'userId',
-        )}&postType=lend&per=8&page=${page}&stateOfTransaction=0`,
-      );
-    },
+    async () => getDealList(target, page, stateOfTransaction, postType),
     {
       refetchOnWindowFocus: false,
       staleTime: 60 * 1000 * 5,
@@ -32,7 +30,7 @@ export default function MyLendPostList() {
   return (
     <div className="w-4/5 p-12">
       {giveList?.data.docs.length > 0 ? (
-        giveList?.data.docs.map((item: Item) => (
+        giveList?.data.docs.map((item: GetItemType) => (
           <GiveItemCard key={item._id} item={item} />
         ))
       ) : (
@@ -52,21 +50,3 @@ export default function MyLendPostList() {
     </div>
   );
 }
-
-export type Item = {
-  address: string;
-  author: string;
-  category: string;
-  createdAt: string;
-  description: string;
-  hashtag: string[];
-  imgUrl: string[];
-  period: { start: string; end: string };
-  postType: string;
-  price: { priceDay: number; priceTime: number };
-  stateOfTransaction: number;
-  title: string;
-  tradeWay: { direct: boolean; delivery: boolean };
-  updateAt: string;
-  _id: string;
-};

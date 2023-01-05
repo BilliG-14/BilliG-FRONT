@@ -1,10 +1,10 @@
 import DealTag from 'components/tag/DealTag';
 import DoneTag from 'components/tag/DoneTag';
-import { Item } from 'components/myinfo/MyLendPostList';
 import { useNavigate } from 'react-router-dom';
+import { GetItemType } from 'types/productType';
 
 interface DoneItemtProps {
-  item: Item;
+  item: GetItemType;
 }
 
 export default function DoneItemCard({ item }: DoneItemtProps) {
