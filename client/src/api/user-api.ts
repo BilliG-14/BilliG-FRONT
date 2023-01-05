@@ -1,9 +1,10 @@
 import api from './customAxios';
+
 import { UpdateUserType } from 'types/userType';
-export const getUserInfo = async () => {
+export const getMyInfo = async () => {
   try {
     const userInformation = await api.get('/user/me');
-    return userInformation;
+    return userInformation.data;
   } catch (error) {
     alert('유저 정보 불러오기 실패하였습니다.');
   }

@@ -40,24 +40,6 @@ export type PostDataType = {
   updatedAt: string;
 };
 
-export type GetItemType = {
-  address: string;
-  author: string;
-  category: string;
-  createdAt: string;
-  description: string;
-  hashtag: string[];
-  imgUrl: string[];
-  period: { start: string; end: string };
-  postType: string;
-  price: { priceDay: number; priceTime: number };
-  stateOfTransaction: number;
-  title: string;
-  tradeWay: { direct: boolean; delivery: boolean };
-  updateAt: string;
-  _id: string;
-};
-
 export type UserType = {
   image: string;
   suspension: boolean;

@@ -1,13 +1,14 @@
 import api from './customAxios';
 
-export const getUserInformation = async () => {
-  try {
-    const userInformation = await api.get('/user/me');
-    return userInformation;
-  } catch (err) {
-    alert('사용자를 찾을 수 없습니다. \n로그인 화면으로 이동합니다.');
-  }
-};
+// 아래 글작성시 onError로 테스트 해봐주세요.
+// export const getUserInformation = async () => {
+//   try {
+//     const userInformation = await api.get('/user/me');
+//     return userInformation;
+//   } catch (err) {
+//     alert('사용자를 찾을 수 없습니다. \n로그인 화면으로 이동합니다.');
+//   }
+// };
 
 export const getPostDetail = async (id: string | undefined) => {
   try {
@@ -25,9 +26,11 @@ export const getDealList = async (
   stateOfTransaction: string,
   postType?: string,
 ) => {
-  return api.get(
+  const res = await api.get(
     `/product/page?${target}=${localStorage.getItem('userId')}${
       postType ? `&postType=${postType}` : ''
     }&per=8&page=${page}&stateOfTransaction=${stateOfTransaction}`,
   );
+
+  return res.data;
 };

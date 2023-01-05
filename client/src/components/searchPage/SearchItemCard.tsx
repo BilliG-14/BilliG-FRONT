@@ -1,8 +1,8 @@
 import DealTag from 'components/tag/DealTag';
-import { GetItemType } from 'types/productType';
+import { PostDataType } from 'types/productType';
 
 interface SearchItemCardProp {
-  item: GetItemType;
+  item: PostDataType;
 }
 
 export default function SearchItemCard({ item }: SearchItemCardProp) {
@@ -21,7 +21,7 @@ export default function SearchItemCard({ item }: SearchItemCardProp) {
               ? imgUrl[0]
               : `${process.env.PUBLIC_URL}/product_default.png`
           }
-          alt={hashtag[0] ? hashtag[0] : 'item'}
+          alt={hashtag[0] ? hashtag[0].name : 'item'}
           className="w-24 h-24 m-auto"
         />
         <div className="w-4/5 p-3 pl-10">
@@ -40,10 +40,6 @@ export default function SearchItemCard({ item }: SearchItemCardProp) {
           {tradeWay.delivery ? <DealTag deal="택배거래" /> : null}
         </div>
         <div className="price text-right mt-1">
-          {/* <p className="per_time mb-2">
-            <span className="font-semibold"> {`5,000 원`}</span>
-            <span className="text-xs"> / 시간</span>
-          </p> */}
           <p className="per_day">
             <span className="font-semibold">
               {`${price.priceDay.toLocaleString('ko-KR')} 원`}
