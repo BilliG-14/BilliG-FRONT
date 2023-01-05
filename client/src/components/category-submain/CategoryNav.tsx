@@ -1,15 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import axios from 'axios';
+import { getCategories } from 'api/category-api';
 
 export default function CategoryNav() {
   const { isLoading, data: categories } = useQuery(
     ['categories'],
-    async () => {
-      return axios.get(
-        'https://port-0-village-dpuqy925lbn63gyo.gksl2.cloudtype.app/category',
-      );
-    },
+    getCategories,
     { refetchOnWindowFocus: false, staleTime: 60 * 1000 * 60 },
   );
 

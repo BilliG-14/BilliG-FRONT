@@ -20,6 +20,7 @@ export type UserType = {
   role: string;
   createdAt: string;
   updatedAt?: string;
+  intro: string;
 };
 
 export type UpdateUserType = {
