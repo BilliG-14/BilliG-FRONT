@@ -4,8 +4,8 @@ import Loading from 'components/Loading';
 import ConfirmModal from 'components/Modal';
 import { useCallback, useState } from 'react';
 import useAdminPageStore from 'store/AdminPageStore';
-import { UserType } from '../../types/userType';
-import { apiUser, getUserById } from '../../api/user-api';
+import { UserType } from 'types/userType';
+import { apiUser, getUserById } from 'api/user-api';
 
 export default function AdminUserDetailSection() {
   const queryClient = useQueryClient();
@@ -22,13 +22,14 @@ export default function AdminUserDetailSection() {
     ['userInfo', selectedUserId],
     getUserById(selectedUserId),
     {
-      retry: 0, // 실패시 재호출 몇번 할지
+      retry: 0,
       staleTime: 60 * 1000 * 60,
     },
   );
+  /*회원 정보 수정 */
   const updateMutation = useMutation(apiUser.UPDATE(selectedUserId), {
     onSuccess: () => {
-      queryClient.invalidateQueries(['user', selectedUserId]);
+      queryClient.invalidateQueries(['userInfo', selectedUserId]);
     },
   });
   const handleSuspend = () => {

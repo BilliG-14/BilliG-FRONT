@@ -1,5 +1,4 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import api from 'api/customAxios';
 import { AxiosError } from 'axios';
 import { useParams } from 'react-router-dom';
 import { RiAlarmWarningFill, RiCloseFill } from 'react-icons/ri';
@@ -8,17 +7,9 @@ import ConfirmModal from 'components/Modal';
 import Loading from 'components/Loading';
 import Footer from 'components/footer/Footer';
 import { UserType } from 'types/userType';
-import { apiUser } from 'api/user-api';
-import { NewReportType } from 'types/reportType';
 import { getUserById } from '../api/user-api';
-
-/*Report CRUD */
-const apiReport = {
-  CREATE: async (newReport: NewReportType) => {
-    const { data } = await api.post(`/report`, newReport);
-    return data;
-  },
-};
+import { apiReports } from 'api/report-api';
+import RecentPosts from 'components/userInfo/\bRecentPosts';
 
 export default function UserInformation() {
   // url id 받기
@@ -40,7 +31,8 @@ export default function UserInformation() {
     retry: 0, // 실패시 재호출 몇번 할지
     staleTime: 60 * 1000 * 60,
   });
-  const createMutation = useMutation(apiReport.CREATE, {
+  /*신고 */
+  const createMutation = useMutation(apiReports.CREATE, {
     onSuccess: () => {
       queryClient.invalidateQueries(['reports']);
     },
@@ -53,41 +45,47 @@ export default function UserInformation() {
       </div>
     );
   return (
-    <div className="w-screen relative pb-[70px] min-h-[85vh]">
-      <div className="max-w-screen-lg mb-20 mx-auto">
+    <div className="w-screen relative pb-[70px] min-h-[76vh]">
+      <div className="max-w-screen-lg mx-auto">
         <div
           id-="img_nick_intro"
-          className="flex mb-4 mt-8 w-[790px] mx-auto border-gray-200 border-solid border rounded-lg items-center"
+          className="mb-4 mt-8 p-1 w-[790px] mx-auto border-gray-200 border-solid border rounded-lg"
         >
-          <img
-            src={
-              user.image
-                ? user.image
-                : `${process.env.PUBLIC_URL}/img/default_user.png`
-            }
-            alt="사용자 이미지"
-            className="rounded-full h-28 w-28 object-cover m-2"
-          />
-          <div className="flex flex-col ml-4 ">
-            <div className="mb-1">
-              <span className="font-bold text-xl">{user.nickName}</span>
-              <button
-                className="text-xl text-red-500 hover:text-2xl"
-                onClick={() => {
-                  setOpenReport(true);
-                }}
-              >
-                <RiAlarmWarningFill className="" />
-              </button>
+          <div className="flex items-center">
+            <img
+              src={
+                user.image
+                  ? user.image
+                  : `${process.env.PUBLIC_URL}/img/default_user.png`
+              }
+              alt="사용자 이미지"
+              className="rounded-full h-28 w-28 object-cover m-2"
+            />
+            <div className="flex flex-col ml-4 ">
+              <div className="mb-1">
+                <span className="font-bold text-xl">{user.nickName}</span>
+                <button
+                  className="text-xl text-red-500 hover:text-2xl"
+                  onClick={() => {
+                    setOpenReport(true);
+                  }}
+                >
+                  <RiAlarmWarningFill className="" />
+                </button>
+              </div>
+              <p className=" text-sm text-gray-500">
+                신고 당한 횟수 : {user.reports.length}
+              </p>
             </div>
-            <p className=" text-sm text-gray-500">
-              신고 횟수 : {user.reports.length}
-            </p>
           </div>
+          <p className="px-4 py-2 text-b-text-black text-base">
+            {user.intro ? user.intro : '아직 자기소개를 작성하지 않았습니다.'}
+          </p>
         </div>
-        <p className="mt-8 border-b-yellow border-solid border-2 rounded w-3/5 h-96 p-10 font-bold">
-          {user.intro ? user.intro : '아직 자기소개를 작성하지 않았습니다.'}
-        </p>
+        <div id="post" className="w-[790px] mx-auto p-2">
+          <p className="font-bold text-lg">{user.nickName}님의 최근 게시물</p>
+          <RecentPosts userId={user._id} />
+        </div>
         {openReport && (
           <div className="fixed w-screen h-screen left-0 top-0 flex justify-center items-center">
             <div className="bg-white w-1/3 h-[400px] z-20 rounded-2xl p-8 relative">
