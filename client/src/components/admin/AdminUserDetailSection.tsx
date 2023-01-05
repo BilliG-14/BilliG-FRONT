@@ -19,7 +19,7 @@ export default function AdminUserDetailSection() {
     data: user,
     isError,
   } = useQuery<UserType, AxiosError>(
-    ['user', selectedUserId],
+    ['userInfo', selectedUserId],
     getUserById(selectedUserId),
     {
       retry: 0, // 실패시 재호출 몇번 할지

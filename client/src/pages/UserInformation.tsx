@@ -9,17 +9,15 @@ import Loading from 'components/Loading';
 import Footer from 'components/footer/Footer';
 import { UserType } from 'types/userType';
 import { apiUser } from 'api/user-api';
+import { NewReportType } from 'types/reportType';
+import { getUserById } from '../api/user-api';
 
 /*Report CRUD */
 const apiReport = {
-  CREATE: async (newReport: NewReport) => {
+  CREATE: async (newReport: NewReportType) => {
     const { data } = await api.post(`/report`, newReport);
     return data;
   },
-};
-type NewReport = {
-  details: string | undefined;
-  target: string;
 };
 
 export default function UserInformation() {
@@ -34,14 +32,14 @@ export default function UserInformation() {
   }, [isOpenModal]);
   /*get category */
   const { id } = useParams();
-  const { isLoading, data, isError } = useQuery<UserType, AxiosError>(
-    [`user`, id],
-    apiUser.GET(id),
-    {
-      retry: 0, // 실패시 재호출 몇번 할지
-      staleTime: 60 * 1000 * 60,
-    },
-  );
+  const {
+    isLoading,
+    data: user,
+    isError,
+  } = useQuery<UserType, AxiosError>(['userInfo', id], getUserById(id), {
+    retry: 0, // 실패시 재호출 몇번 할지
+    staleTime: 60 * 1000 * 60,
+  });
   const createMutation = useMutation(apiReport.CREATE, {
     onSuccess: () => {
       queryClient.invalidateQueries(['reports']);
@@ -55,34 +53,40 @@ export default function UserInformation() {
       </div>
     );
   return (
-    <div className="w-screen m-auto relative pb-[70px] min-h-[85vh]">
-      <div className="h-full w-screen max-w-screen-lg m-auto flex flex-col items-center mb-20">
-        <div className="img_nick_intro flex mb-4 mt-8">
-          <div className="mx-auto">
-            <img
-              src={
-                data.image
-                  ? data.image
-                  : `${process.env.PUBLIC_URL}/img/default_user.png`
-              }
-              alt="사용자 이미지"
-              className="rounded-full h-48 w-48 object-cover mb-5"
-            />
+    <div className="w-screen relative pb-[70px] min-h-[85vh]">
+      <div className="max-w-screen-lg mb-20 mx-auto">
+        <div
+          id-="img_nick_intro"
+          className="flex mb-4 mt-8 w-[790px] mx-auto border-gray-200 border-solid border rounded-lg items-center"
+        >
+          <img
+            src={
+              user.image
+                ? user.image
+                : `${process.env.PUBLIC_URL}/img/default_user.png`
+            }
+            alt="사용자 이미지"
+            className="rounded-full h-28 w-28 object-cover m-2"
+          />
+          <div className="flex flex-col ml-4 ">
+            <div className="mb-1">
+              <span className="font-bold text-xl">{user.nickName}</span>
+              <button
+                className="text-xl text-red-500 hover:text-2xl"
+                onClick={() => {
+                  setOpenReport(true);
+                }}
+              >
+                <RiAlarmWarningFill className="" />
+              </button>
+            </div>
+            <p className=" text-sm text-gray-500">
+              신고 횟수 : {user.reports.length}
+            </p>
           </div>
         </div>
-        <div className="w-full mx-auto flex justify-center">
-          <span className="font-extrabold text-3xl">{data.nickName}</span>
-          <button
-            className="text-xl text-red-500 hover:text-2xl"
-            onClick={() => {
-              setOpenReport(true);
-            }}
-          >
-            <RiAlarmWarningFill className="" />
-          </button>
-        </div>
         <p className="mt-8 border-b-yellow border-solid border-2 rounded w-3/5 h-96 p-10 font-bold">
-          {data.intro ? data.intro : '아직 자기소개를 작성하지 않았습니다.'}
+          {user.intro ? user.intro : '아직 자기소개를 작성하지 않았습니다.'}
         </p>
         {openReport && (
           <div className="fixed w-screen h-screen left-0 top-0 flex justify-center items-center">
@@ -96,7 +100,7 @@ export default function UserInformation() {
                 <RiCloseFill />
               </button>
               <div className="w-full text-2xl font-extrabold">
-                <span className="text-b-yellow mr-1">{data.nickName}</span>
+                <span className="text-b-yellow mr-1">{user.nickName}</span>
                 <span>님 신고하기</span>
               </div>
               <div className="w-full mt-7 text-xl font-extrabold">
@@ -119,13 +123,13 @@ export default function UserInformation() {
                 </button>
                 {isOpenModal && (
                   <ConfirmModal
-                    title={`${data.nickName}님을 정말 신고합니까?`}
+                    title={`${user.nickName}님을 정말 신고합니까?`}
                     content={`허위 신고의 경우 서비스 이용이 제한 될 수 있습니다.`}
                     yesColor="red-400"
                     yesText="신고"
                     onClickYes={() => {
                       createMutation.mutate({
-                        target: data._id,
+                        target: user._id,
                         details: textAreaRef.current?.value,
                       });
                       alert('신고가 접수되었습니다.');
