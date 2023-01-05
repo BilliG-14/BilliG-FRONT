@@ -52,12 +52,6 @@ export default function SubmainBorrowItemCard({
           {tradeWay.delivery ? <DealTag deal="택배거래" /> : null}
         </div>
         <div className="price text-right">
-          {/* <p className="per_time mb-2">
-            <span className="font-semibold">
-              {`${price.priceTime.toLocaleString('ko-KR')}원`}
-            </span>
-            <span className="text-xs"> / 시간</span>
-          </p> */}
           <p className="per_day">
             <span className="font-semibold">{`${price.priceDay.toLocaleString(
               'ko-KR',
