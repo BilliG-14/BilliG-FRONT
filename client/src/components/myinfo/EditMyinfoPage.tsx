@@ -4,6 +4,7 @@ import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import api from '../../api/customAxios';
 import { useNavigate } from 'react-router-dom';
 import Loading from '../Loading';
+import { getUserInfoByuserId } from 'api/user-api';
 
 export default function EditMyinfoPage() {
   // * image state
@@ -39,9 +40,7 @@ export default function EditMyinfoPage() {
     data: userInfo,
   } = useQuery(
     ['userInfo', `${localStorage.getItem('userId')}`],
-    async () => {
-      return api.get(`/user/${localStorage.getItem('userId')}`);
-    },
+    () => getUserInfoByuserId(),
     {
       refetchOnWindowFocus: false,
       staleTime: 60 * 1000 * 5,
@@ -105,7 +104,7 @@ export default function EditMyinfoPage() {
     phoneNumber,
     address1,
     address2,
-  } = userInfo?.data;
+  } = userInfo;
 
   return (
     <div className="w-4/5 p-12">

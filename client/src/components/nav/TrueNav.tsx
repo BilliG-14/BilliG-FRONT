@@ -14,6 +14,7 @@ import { FaRegSmileWink, FaClipboardList } from 'react-icons/fa';
 import { BsFilePersonFill } from 'react-icons/bs';
 import { RiLogoutCircleFill } from 'react-icons/ri';
 import Loading from 'components/Loading';
+import { getUserInfoByuserId } from 'api/user-api';
 
 function TrueNav() {
   const [onWriteBtn, setOnWriteBtn] = useState(false);
@@ -33,9 +34,7 @@ function TrueNav() {
 
   const { isLoading, data: userInfo } = useQuery(
     ['userInfo', `${localStorage.getItem('userId')}`],
-    async () => {
-      return api.get(`/user/${localStorage.getItem('userId')}`);
-    },
+    async () => getUserInfoByuserId(),
     {
       refetchOnWindowFocus: false,
     },
@@ -56,7 +55,7 @@ function TrueNav() {
               <span>
                 <FaRegSmileWink className="text-xl mr-1" />
               </span>
-              <span className="text-sm">{`${userInfo?.data.nickName} 님`}</span>
+              <span className="text-sm">{`${userInfo?.nickName} 님`}</span>
             </button>
           </div>
           <div>

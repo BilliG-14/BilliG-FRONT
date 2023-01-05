@@ -12,7 +12,6 @@ export const getUserInfo = async () => {
 export const getUserInfoByuserId = async () => {
   try {
     const res = await api.get(`/user/${localStorage.getItem('userId')}`);
-    console.log(res.data);
     return res.data;
   } catch (error) {
     console.log(error);
