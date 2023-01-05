@@ -8,15 +8,8 @@ import ConfirmModal from 'components/Modal';
 import Loading from 'components/Loading';
 import Footer from 'components/footer/Footer';
 import { UserType } from 'types/userType';
-/*User CRUD */
-const apiUser = {
-  GET: (id: string | undefined) => {
-    return async () => {
-      const { data } = await api.get(`user/${id}`);
-      return data;
-    };
-  },
-};
+import { apiUser } from 'api/user-api';
+
 /*Report CRUD */
 const apiReport = {
   CREATE: async (newReport: NewReport) => {
