@@ -47,6 +47,7 @@ export default function MyinfoPage() {
     address2,
     reports,
   } = userInfo;
+  console.log(userInfo);
   return (
     <div className="w-4/5 p-12">
       <section className="img_nick_intro flex mb-4">
@@ -55,7 +56,7 @@ export default function MyinfoPage() {
             src={
               image ? image : `${process.env.PUBLIC_URL}/img/default_user.png`
             }
-            alt="조이현"
+            alt={nickName}
             className="rounded-full h-32 w-32 object-cover mb-5"
           />
         </div>
@@ -106,7 +107,7 @@ export default function MyinfoPage() {
             <h3>제재횟수</h3>
           </div>
           <div className="w-full flex items-center justify-start text-base leading-normal">
-            {`${reports.length} 회`}
+            {`${reports?.length} 회`}
           </div>
         </div>
       </section>
