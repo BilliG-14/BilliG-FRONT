@@ -35,5 +35,5 @@ export default function AdminMainSection() {
     }
   })(section);
 
-  return <section className="w-full">{showSection}</section>;
+  return <section className="w-full min-w-[836px]">{showSection}</section>;
 }
