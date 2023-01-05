@@ -3,10 +3,10 @@ import { useQuery } from '@tanstack/react-query';
 // Type
 import { GetItemType } from 'types/productType';
 // componets
-import DoneItemCard from './DoneItemCard';
 import { Pagination } from '../Pagination';
 import Loading from '../Loading';
 import { getDealList } from '../../api/product-api';
+import ItemCard from './ItemCard';
 
 export default function MyLendDoneList() {
   const [page, setPage] = useState(1);
@@ -32,7 +32,7 @@ export default function MyLendDoneList() {
     <div className="w-4/5 p-12">
       {lendDoneList?.data.docs.length > 0 ? (
         lendDoneList?.data.docs.map((item: GetItemType) => (
-          <DoneItemCard key={item._id} item={item} />
+          <ItemCard key={item._id} type="done" item={item} />
         ))
       ) : (
         <div className="flex items-center justify-center h-1/2 text-xl font-bold">

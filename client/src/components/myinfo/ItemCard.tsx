@@ -1,7 +1,8 @@
 import DealTag from 'components/tag/DealTag';
-import { useNavigate } from 'react-router-dom';
 import DealStepTag from '../tag/DealStepTag';
+import { useNavigate } from 'react-router-dom';
 import { GetItemType } from 'types/productType';
+import DoneTag from '../tag/DoneTag';
 
 interface BorrowPostProps {
   item: GetItemType;
@@ -36,7 +37,7 @@ export default function ItemCard({ item, type }: BorrowPostProps) {
           <div className="w-4/5 pl-10">
             <p className="text-lg font-semibold mt-1">{title}</p>
             <ul>
-              {type === 'borrow' ? (
+              {type === 'borrow' || type === 'done' ? (
                 <li className="mt-1">
                   <span>대여기간 : </span>
                   <span>{`${period.start} ~ `}</span>
@@ -51,6 +52,7 @@ export default function ItemCard({ item, type }: BorrowPostProps) {
                 {stateOfTransaction === 1 || stateOfTransaction === 2 ? (
                   <DealStepTag stateOfTransaction={stateOfTransaction} />
                 ) : null}
+                {stateOfTransaction === 3 ? <DoneTag /> : null}
               </li>
             </ul>
           </div>
