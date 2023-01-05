@@ -17,3 +17,16 @@ export const getPostDetail = async (id: string | undefined) => {
     alert(`게시글을 불러올 수 없습니다. \n에러내용 : ${error}`);
   }
 };
+
+// * 빌리기 거래 목록
+export const getDealList = async (
+  target: string,
+  page: number,
+  stateOfTransaction: string,
+) => {
+  return api.get(
+    `/product/page?${target}=${localStorage.getItem(
+      'userId',
+    )}&per=8&page=${page}&stateOfTransaction=${stateOfTransaction}`,
+  );
+};

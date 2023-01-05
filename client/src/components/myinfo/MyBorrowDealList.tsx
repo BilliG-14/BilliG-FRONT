@@ -7,9 +7,12 @@ import { Item } from './MyLendPostList';
 import BorrowItemCard from './BorrowItemCard';
 import { Pagination } from 'components/Pagination';
 import Loading from '../Loading';
+import { getDealList } from '../../api/product-api';
 
 export default function MyBorrowDealList() {
   const [page, setPage] = useState(1);
+  const target = 'borrower';
+  const stateOfTransaction = '1,2';
   // * useQuery
   const {
     isLoading,
@@ -17,13 +20,7 @@ export default function MyBorrowDealList() {
     data: borrowDealList,
   } = useQuery(
     [`borrowDealList/${page}`, `${localStorage.getItem('userId')}`],
-    async () => {
-      return api.get(
-        `/product/page?borrower=${localStorage.getItem(
-          'userId',
-        )}&per=8&page=${page}&stateOfTransaction=1,2`,
-      );
-    },
+    async () => getDealList(target, page, stateOfTransaction),
     {
       refetchOnWindowFocus: false,
       staleTime: 60 * 1000 * 5,

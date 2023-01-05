@@ -7,22 +7,19 @@ import { Item } from 'components/myinfo/MyLendPostList';
 import { Pagination } from '../Pagination';
 import DoneItemCard from './DoneItemCard';
 import Loading from '../Loading';
+import { getDealList } from '../../api/product-api';
 
 export default function MyBorrowDoneList() {
   const [page, setPage] = useState(1);
+  const target = 'borrower';
+  const stateOfTransaction = '3';
   const {
     isLoading,
     isError,
     data: borrowDoneList,
   } = useQuery(
     [`borrowDoneList/${page}`, `${localStorage.getItem('userId')}`],
-    async () => {
-      return api.get(
-        `/product/page?borrower=${localStorage.getItem(
-          'userId',
-        )}&per=8&page=${page}&stateOfTransaction=3`,
-      );
-    },
+    async () => getDealList(target, page, stateOfTransaction),
     {
       refetchOnWindowFocus: false,
       staleTime: 60 * 1000 * 5,
