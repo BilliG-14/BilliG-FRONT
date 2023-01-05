@@ -2,9 +2,9 @@ import { useRef, useState, useEffect } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
 import './category.css';
-import api from '../../api/customAxios';
 import CategorySectionLend from './CategorySectionLend';
 import Loading from '../Loading';
+import { getCategories } from 'api/category-api';
 
 export default function LendCategory() {
   const [scrollEvent, setScrollEvent] = useState(false);
@@ -30,14 +30,10 @@ export default function LendCategory() {
     };
   }, []);
 
-  const { isLoading, isError, data } = useQuery(
-    ['categories'],
-    async () => {
-      const result = await api.get('/category');
-      return result.data;
-    },
-    { refetchOnWindowFocus: false, staleTime: 1000 * 60 * 5 },
-  );
+  const { isLoading, isError, data } = useQuery(['categories'], getCategories, {
+    refetchOnWindowFocus: false,
+    staleTime: 1000 * 60 * 5,
+  });
 
   if (isLoading) return <Loading />;
 

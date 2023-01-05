@@ -24,5 +24,7 @@ export const getCategories = async () => {
   try {
     const data = await apiCategory.GET();
     return data;
-  } catch (error) {}
+  } catch (error) {
+    console.error(error);
+  }
 };

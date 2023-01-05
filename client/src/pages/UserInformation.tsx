@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import api from 'api/customAxios';
 import { AxiosError } from 'axios';
 import { useParams } from 'react-router-dom';
@@ -7,23 +7,7 @@ import { useState, useRef, useCallback } from 'react';
 import ConfirmModal from 'components/Modal';
 import Loading from 'components/Loading';
 import Footer from 'components/footer/Footer';
-
-type User = {
-  _id: string;
-  name: string;
-  image: string;
-  nickName: string;
-  email: string;
-  password: string;
-  phoneNumber: string;
-  postalCode: string;
-  address1: string;
-  address2: string;
-  reports: Array<any>;
-  suspension: boolean;
-  intro: string;
-};
-
+import { UserType } from 'types/userType';
 /*User CRUD */
 const apiUser = {
   GET: (id: string | undefined) => {
@@ -47,6 +31,7 @@ type NewReport = {
 
 export default function UserInformation() {
   // url id 받기
+  const queryClient = useQueryClient();
   const [openReport, setOpenReport] = useState(false);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
@@ -56,7 +41,7 @@ export default function UserInformation() {
   }, [isOpenModal]);
   /*get category */
   const { id } = useParams();
-  const { isLoading, data, isError } = useQuery<User, AxiosError>(
+  const { isLoading, data, isError } = useQuery<UserType, AxiosError>(
     [`user`, id],
     apiUser.GET(id),
     {
@@ -64,7 +49,11 @@ export default function UserInformation() {
       staleTime: 60 * 1000 * 60,
     },
   );
-  const createMutation = useMutation(apiReport.CREATE);
+  const createMutation = useMutation(apiReport.CREATE, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['reports']);
+    },
+  });
   if (isLoading) return <Loading />;
   if (isError)
     return (

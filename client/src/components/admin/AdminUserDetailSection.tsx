@@ -25,7 +25,7 @@ export default function AdminUserDetailSection() {
     setOpenSuspendModal(!isOpenSuspendModal);
   }, [isOpenSuspendModal]);
   const { isLoading, data, isError } = useQuery<UserType, AxiosError>(
-    [`user/${selectedUserId}`],
+    ['user', selectedUserId],
     apiUser.GET(selectedUserId),
     {
       retry: 0, // 실패시 재호출 몇번 할지
@@ -34,7 +34,7 @@ export default function AdminUserDetailSection() {
   );
   const updateMutation = useMutation(apiUser.UPDATE(selectedUserId), {
     onSuccess: (_data) => {
-      queryClient.invalidateQueries([`user/${selectedUserId}`]);
+      queryClient.invalidateQueries(['user', selectedUserId]);
     },
   });
   const handleSuspend = () => {
