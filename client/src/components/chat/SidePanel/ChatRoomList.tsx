@@ -1,9 +1,15 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState } from 'react';
 import { FaRegSmileWink } from 'react-icons/fa';
-import { FaPlus } from 'react-icons/fa';
 import { useParams, useNavigate } from 'react-router-dom';
-
-function ChatRoomList({ chatRoomList, socket }: any) {
+import { ChatRoomType } from 'types/chatType';
+import { Socket } from 'socket.io-client';
+function ChatRoomList({
+  chatRoomList,
+  socket,
+}: {
+  chatRoomList: ChatRoomType[];
+  socket: Socket;
+}) {
   // url id 받기
   const { roomId } = useParams();
   const [activeChatRoomId, setActiveChatRoomId]: any = useState(roomId);

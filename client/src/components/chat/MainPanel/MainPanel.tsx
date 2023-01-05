@@ -1,15 +1,14 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { getChatRoom } from '../../../api/chat-api';
-import { MessageInterface } from '../../../types/chatType';
-function MainPanel({ user, chatRoomList, socket }: any) {
+import { useParams } from 'react-router-dom';
+import { getChatRoom } from 'api/chat-api';
+import { MessageType } from 'types/chatType';
+import { UserType } from 'types/userType';
+function MainPanel({ user, socket }: { user: UserType; socket: any }) {
   const scrollRef = useRef<HTMLInputElement>(null);
-  const [messages, setMessages] = useState<MessageInterface[]>([]);
+  const [messages, setMessages] = useState<MessageType[]>([]);
   const [currentRoom, setCurrentRoom] = useState('');
   const formRef = useRef<HTMLFormElement | null>(null);
   const textRef = useRef<HTMLTextAreaElement | null>(null);
-  /**  유저 입력 값을 넣을 변수*/
-  const [checkItemContent, setCheckItemContent] = useState('');
   /** 줄 수를 계산해서 저장할 변수*/
   const [textareaHeight, setTextareaHeight] = useState(0);
   const [isSubmit, setIsSubmit] = useState(false);
@@ -82,11 +81,12 @@ function MainPanel({ user, chatRoomList, socket }: any) {
   /** 줄바꿈에 따른 textArea 높이 자동 조절
    사용자 입력 값이 변경될 때마다 checkItemContent에 저장하고
    엔터('\n') 개수를 세서 textareaHeight에 저장*/
-  const checkItemChangeHandler = (e: any) => {
+  const checkItemChangeHandler = (
+    e: React.ChangeEvent<HTMLTextAreaElement>,
+  ) => {
     const arrayLength = e.target.value.split('\n').length;
     if (arrayLength < 4) {
       setTextareaHeight(arrayLength - 1);
-      setCheckItemContent(e.target.value);
     }
   };
   return (
