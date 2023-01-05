@@ -6,7 +6,7 @@ type ItemProps = {
   item: PostDataType;
 };
 
-export default function ListBorrowItemCard({ item }: ItemProps) {
+export default function ListItemCard({ item }: ItemProps) {
   const {
     title,
     imgUrl,
