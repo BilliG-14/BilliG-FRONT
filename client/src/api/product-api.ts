@@ -18,7 +18,7 @@ export const getPostDetail = async (id: string | undefined) => {
   }
 };
 
-// * 거래중, 거래완료 목록
+// * 게시물 ,거래중, 거래완료 조회 api (myInfo)
 export const getDealList = async (
   target: string,
   page: number,
