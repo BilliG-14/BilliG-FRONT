@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 // type
 import { GetItemType } from 'types/productType';
 // components
-import BorrowItemCard from './BorrowItemCard';
+import ItemCard from './ItemCard';
 import { Pagination } from 'components/Pagination';
 import Loading from '../Loading';
 import { getDealList } from '../../api/product-api';
@@ -12,7 +12,7 @@ export default function MyBorrowDealList() {
   const [page, setPage] = useState(1);
   const target = 'borrower';
   const stateOfTransaction = '1,2';
-  // * useQuery
+
   const {
     isLoading,
     isError,
@@ -25,12 +25,14 @@ export default function MyBorrowDealList() {
       staleTime: 60 * 1000 * 5,
     },
   );
+
   if (isLoading) return <Loading />;
+
   return (
     <div className="w-4/5 p-12">
       {borrowDealList?.data.docs.length > 0 ? (
         borrowDealList?.data.docs.map((item: GetItemType) => (
-          <BorrowItemCard key={item._id} item={item} />
+          <ItemCard key={item._id} type="borrow" item={item} />
         ))
       ) : (
         <div className="flex items-center justify-center h-1/2 text-xl font-bold">

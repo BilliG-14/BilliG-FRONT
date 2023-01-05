@@ -1,16 +1,18 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+// type
+import { GetItemType } from 'types/productType';
 // components
 import { Pagination } from 'components/Pagination';
-import GiveItemCard from './GiveItemCard';
 import Loading from '../Loading';
 import { getDealList } from '../../api/product-api';
-import { GetItemType } from 'types/productType';
+import ItemCard from './ItemCard';
 
 export default function MyLendDealList() {
   const [page, setPage] = useState(1);
   const target = 'lender';
   const stateOfTransaction = '1,2';
+
   const {
     isLoading,
     isError,
@@ -30,7 +32,7 @@ export default function MyLendDealList() {
     <div className="w-4/5 p-12">
       {lendDealList?.data.docs.length > 0 ? (
         lendDealList?.data.docs.map((item: GetItemType) => (
-          <GiveItemCard key={item._id} item={item} />
+          <ItemCard key={item._id} type="lend" item={item} />
         ))
       ) : (
         <div className="flex items-center justify-center h-1/2 text-xl font-bold">

@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 // components
-import GiveItemCard from './GiveItemCard';
 import { Pagination } from 'components/Pagination';
 import Loading from '../Loading';
 import { getDealList } from '../../api/product-api';
 import { GetItemType } from 'types/productType';
+import ItemCard from './ItemCard';
 
 export default function MyLendPostList() {
   const [page, setPage] = useState(1);
@@ -31,7 +31,7 @@ export default function MyLendPostList() {
     <div className="w-4/5 p-12">
       {giveList?.data.docs.length > 0 ? (
         giveList?.data.docs.map((item: GetItemType) => (
-          <GiveItemCard key={item._id} item={item} />
+          <ItemCard key={item._id} type="lend" item={item} />
         ))
       ) : (
         <div className="flex items-center justify-center h-1/2 text-xl font-bold">
