@@ -1,26 +1,23 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import api from '../../api/customAxios';
 // components
 import { Pagination } from 'components/Pagination';
 import GiveItemCard from './GiveItemCard';
 import Loading from '../Loading';
+import { getDealList } from '../../api/product-api';
+import { GetItemType } from 'types/productType';
 
 export default function MyLendDealList() {
   const [page, setPage] = useState(1);
+  const target = 'lender';
+  const stateOfTransaction = '1,2';
   const {
     isLoading,
     isError,
     data: lendDealList,
   } = useQuery(
     [`lendDealList/${page}`, `${localStorage.getItem('userId')}`],
-    async () => {
-      return api.get(
-        `/product/page?lender=${localStorage.getItem(
-          'userId',
-        )}&per=8&page=${page}&stateOfTransaction=1,2`,
-      );
-    },
+    async () => getDealList(target, page, stateOfTransaction),
     {
       refetchOnWindowFocus: false,
       staleTime: 60 * 1000 * 5,
@@ -32,7 +29,7 @@ export default function MyLendDealList() {
   return (
     <div className="w-4/5 p-12">
       {lendDealList?.data.docs.length > 0 ? (
-        lendDealList?.data.docs.map((item: Item) => (
+        lendDealList?.data.docs.map((item: GetItemType) => (
           <GiveItemCard key={item._id} item={item} />
         ))
       ) : (
@@ -52,21 +49,3 @@ export default function MyLendDealList() {
     </div>
   );
 }
-
-export type Item = {
-  address: string;
-  author: string;
-  category: string;
-  createdAt: string;
-  description: string;
-  hashtag: string[];
-  imgUrl: string[];
-  period: { start: string; end: string };
-  postType: string;
-  price: { priceDay: number; priceTime: number };
-  stateOfTransaction: number;
-  title: string;
-  tradeWay: { direct: boolean; delivery: boolean };
-  updateAt: string;
-  _id: string;
-};

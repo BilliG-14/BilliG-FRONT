@@ -1,28 +1,25 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import api from '../../api/customAxios';
 // Type
-import { Item } from 'components/myinfo/MyLendPostList';
+import { GetItemType } from 'types/productType';
 // componets
 import DoneItemCard from './DoneItemCard';
 import { Pagination } from '../Pagination';
 import Loading from '../Loading';
+import { getDealList } from '../../api/product-api';
 
 export default function MyLendDoneList() {
   const [page, setPage] = useState(1);
+  const target = 'lender';
+  const stateOfTransaction = '3';
+
   const {
     isLoading,
     isError,
     data: lendDoneList,
   } = useQuery(
     [`lendDoneList/${page}`, `${localStorage.getItem('userId')}`],
-    async () => {
-      return api.get(
-        `/product/page?lender=${localStorage.getItem(
-          'userId',
-        )}&per=8&page=${page}&stateOfTransaction=3`,
-      );
-    },
+    async () => getDealList(target, page, stateOfTransaction),
     {
       refetchOnWindowFocus: false,
       staleTime: 60 * 1000 * 5,
@@ -34,7 +31,7 @@ export default function MyLendDoneList() {
   return (
     <div className="w-4/5 p-12">
       {lendDoneList?.data.docs.length > 0 ? (
-        lendDoneList?.data.docs.map((item: Item) => (
+        lendDoneList?.data.docs.map((item: GetItemType) => (
           <DoneItemCard key={item._id} item={item} />
         ))
       ) : (
