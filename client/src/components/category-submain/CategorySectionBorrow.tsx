@@ -2,10 +2,10 @@ import React from 'react';
 import { HiArrowRight } from 'react-icons/hi';
 import { useQuery } from '@tanstack/react-query';
 import api from '../../api/customAxios';
-import { Item } from 'components/myinfo/MyLendPostList';
 import SubmainBorrowItemCard from './SubmainBorrowItemCard';
 import { useNavigate } from 'react-router-dom';
 import Loading from '../Loading';
+import { PostDataType } from 'types/productType';
 
 type ItemListProps = {
   category: { _id: string; name: string };
@@ -61,7 +61,7 @@ export default function CategorySectionBorrow({
           </button>
         </header>
         <div className="flex justify-center">
-          {categoryBorrowItems?.data.docs.map((item: Item) => (
+          {categoryBorrowItems?.data.docs.map((item: PostDataType) => (
             <SubmainBorrowItemCard
               key={item._id}
               item={item}

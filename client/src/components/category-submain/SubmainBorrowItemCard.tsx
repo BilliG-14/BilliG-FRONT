@@ -1,9 +1,9 @@
 import DealTag from 'components/tag/DealTag';
-import { Item } from 'components/myinfo/MyLendPostList';
 import { useNavigate } from 'react-router-dom';
+import { PostDataType } from 'types/productType';
 
 type BorrowItemProps = {
-  item: Item;
+  item: PostDataType;
   categoryName: string;
 };
 
@@ -29,7 +29,7 @@ export default function SubmainBorrowItemCard({
               ? imgUrl[0]
               : `${process.env.PUBLIC_URL}/img/product_default.png`
           }
-          alt={hashtag[0] ? hashtag[0] : 'item'}
+          alt={hashtag[0] ? hashtag[0].name : 'item'}
         />
       </div>
       <div className="item_info my-2 text-left">
@@ -38,7 +38,7 @@ export default function SubmainBorrowItemCard({
             {title}
           </p>
           <p className="category mb-1 font-semibold text-sm">
-            {`${period.start} ~ ${period.end}`}
+            {`${period?.start} ~ ${period?.end}`}
           </p>
           <p className="category mb-1 text-b-text-darkgray text-sm">
             {categoryName}

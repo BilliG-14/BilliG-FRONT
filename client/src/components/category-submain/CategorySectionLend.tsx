@@ -3,9 +3,9 @@ import SubmainLendItemCard from './SubmainLendItemCard';
 import { HiArrowRight } from 'react-icons/hi';
 import { useQuery } from '@tanstack/react-query';
 import api from '../../api/customAxios';
-import { Item } from 'components/myinfo/MyLendPostList';
 import { useNavigate } from 'react-router-dom';
 import Loading from '../Loading';
+import { PostDataType } from 'types/productType';
 
 type ItemListProps = {
   category: { _id: string; name: string };
@@ -57,7 +57,7 @@ export default function CategorySectionLend({
           </button>
         </header>
         <div className="flex justify-center">
-          {categoryLendItems?.data.docs.map((item: Item) => (
+          {categoryLendItems?.data.docs.map((item: PostDataType) => (
             <SubmainLendItemCard
               key={item._id}
               item={item}

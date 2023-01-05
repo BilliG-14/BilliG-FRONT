@@ -5,7 +5,6 @@ import {
 } from '../../store/MypageStore';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import api from '../../api/customAxios';
 import { getUserInfoByuserId } from '../../api/user-api';
 
 // components
@@ -47,7 +46,7 @@ export default function MyinfoPage() {
     address2,
     reports,
   } = userInfo;
-  console.log(userInfo);
+
   return (
     <div className="w-4/5 p-12">
       <section className="img_nick_intro flex mb-4">

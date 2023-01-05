@@ -17,3 +17,19 @@ export const getPostDetail = async (id: string | undefined) => {
     alert(`게시글을 불러올 수 없습니다. \n에러내용 : ${error}`);
   }
 };
+
+// * 게시물 ,거래중, 거래완료 조회 api (myInfo)
+export const getDealList = async (
+  target: string,
+  page: number,
+  stateOfTransaction: string,
+  postType?: string,
+) => {
+  const res = await api.get(
+    `/product/page?${target}=${localStorage.getItem('userId')}${
+      postType ? `&postType=${postType}` : ''
+    }&per=8&page=${page}&stateOfTransaction=${stateOfTransaction}`,
+  );
+
+  return res.data;
+};

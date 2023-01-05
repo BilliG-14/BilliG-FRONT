@@ -1,4 +1,3 @@
-import React from 'react';
 import { useDeleteUserStore } from '../../store/MypageStore';
 
 export default function DeleteUser() {

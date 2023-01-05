@@ -1,15 +1,17 @@
 import { useState } from 'react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import api from '../api/customAxios';
 // components
 import SearchItemCard from '../components/searchPage/SearchItemCard';
 import HashTag from 'components/tag/HashTag';
-import { Item } from 'components/myinfo/MyLendPostList';
 import SearchItemCardSeleton from 'components/searchPage/SearchItemCard-skeleton';
 // icon
 import { FiSearch } from 'react-icons/fi';
 import { Pagination } from '../components/Pagination';
 import Loading from 'components/Loading';
+// type
+import { PostDataType } from 'types/productType';
+import { HashtagType } from 'types/hashtagType';
 
 export default function SearchPage() {
   const [page, setPage] = useState(1);
@@ -118,7 +120,7 @@ export default function SearchPage() {
         </div>
         <div className="w-3/4 h-20 m-auto border">
           <ul className="flex">
-            {hashtags?.data.map((tag: Tag) => (
+            {hashtags?.data.map((tag: HashtagType) => (
               <li key={tag._id}>
                 <HashTag name={tag.name} />
               </li>
@@ -149,7 +151,7 @@ export default function SearchPage() {
             </ul>
           )}
           {items.length > 0 ? (
-            items.map((item: Item) => (
+            items.map((item: PostDataType) => (
               <SearchItemCard key={item._id} item={item} />
             ))
           ) : (
@@ -171,12 +173,3 @@ export default function SearchPage() {
     </div>
   );
 }
-
-type Tag = {
-  _id: string;
-  createdAt: string;
-  updatedAt: string;
-  mentions: number;
-  recentMentions: number;
-  name: string;
-};
