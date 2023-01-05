@@ -10,7 +10,7 @@ import {
   CategoryType,
   descriptionStore,
 } from './../store/PostWriteStore';
-import { getUserInformation } from './../api/product-api';
+import { getUserInfo } from './../api/user-api';
 
 import HashTagSection from '../components/postWrite/HashTag';
 import ImageUpload from '../components/postWrite/ImageUpload';
@@ -37,18 +37,15 @@ export default function LendWriting() {
   const navigate = useNavigate();
 
   // 사용자 가져오기
-  const { data, isLoading } = useQuery(
-    ['userData'],
-    () => getUserInformation(),
-    {
-      onError: () => {
-        navigate('/login');
-      },
-      refetchOnMount: 'always',
-      refetchOnWindowFocus: false,
-      staleTime: 60 * 1000 * 60,
+  const { data, isLoading } = useQuery(['userData'], () => getUserInfo(), {
+    onError: () => {
+      alert('사용자를 찾을 수 없습니다. \n로그인 화면으로 이동합니다.');
+      navigate('/login');
     },
-  );
+    refetchOnMount: 'always',
+    refetchOnWindowFocus: false,
+    staleTime: 60 * 1000 * 60,
+  });
 
   // 카테고리 가져오기
   const [filteredCategory, setFilteredCategory] = useState<CategoryType[]>([]);
