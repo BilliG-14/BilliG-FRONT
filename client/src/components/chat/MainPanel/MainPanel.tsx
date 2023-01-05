@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getChatRoom } from '../../../api/getChatRoom';
+import { getChatRoom } from '../../../api/chat-api';
 import { MessageInterface } from '../../../types/chatType';
 function MainPanel({ user, chatRoomList, socket }: any) {
   const scrollRef = useRef<HTMLInputElement>(null);

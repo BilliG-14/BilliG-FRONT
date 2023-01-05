@@ -18,6 +18,7 @@ import { AxiosError } from 'axios';
 import NotFound from 'components/NotFound';
 import Footer from 'components/footer/Footer';
 import ChatIcon from 'components/chat-icon/ChatIcon';
+import { getPostDetail } from 'api/product-api';
 
 export default function PostDetail() {
   const navigate = useNavigate();
@@ -38,14 +39,8 @@ export default function PostDetail() {
     isError,
   } = useQuery<PostDataType[], AxiosError>(
     ['postData', id],
-    async () => {
-      const res = await api.get(`/product/${id}`);
-      return res.data;
-    },
+    () => getPostDetail(id),
     {
-      onError: (err) => {
-        alert(`데이터를 불러올 수 없습니다. \n에러내용 : ${err}`);
-      },
       refetchOnMount: true,
       refetchOnWindowFocus: true,
       staleTime: 1000 * 60 * 5,

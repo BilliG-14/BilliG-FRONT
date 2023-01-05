@@ -10,6 +10,7 @@ import {
   CategoryType,
   descriptionStore,
 } from './../store/PostWriteStore';
+import { getUserInformation } from './../api/product-api';
 
 import HashTagSection from '../components/postWrite/HashTag';
 import ImageUpload from '../components/postWrite/ImageUpload';
@@ -18,6 +19,7 @@ import Loading from 'components/Loading';
 import Footer from 'components/footer/Footer';
 import PostEditor from 'components/postWrite/PostEditor';
 import ChatIcon from './../components/chat-icon/ChatIcon';
+import { getCategories } from 'api/category-api';
 
 export default function LendWriting() {
   // 빌려드립니다 글쓰기
@@ -37,10 +39,9 @@ export default function LendWriting() {
   // 사용자 가져오기
   const { data, isLoading } = useQuery(
     ['userData'],
-    () => api.get('/user/me'),
+    () => getUserInformation(),
     {
       onError: () => {
-        alert('사용자를 찾을 수 없습니다. \n로그인 화면으로 이동합니다.');
         navigate('/login');
       },
       refetchOnMount: 'always',
@@ -53,18 +54,11 @@ export default function LendWriting() {
   const [filteredCategory, setFilteredCategory] = useState<CategoryType[]>([]);
 
   // 카테고리 받아오기
-  const { data: categories } = useQuery(
-    ['categories'],
-    async () => {
-      const result = await api.get('/category');
-      return result.data;
-    },
-    {
-      refetchOnMount: 'always',
-      refetchOnWindowFocus: false,
-      staleTime: 60 * 1000 * 60,
-    },
-  );
+  const { data: categories } = useQuery(['categories'], getCategories, {
+    refetchOnMount: 'always',
+    refetchOnWindowFocus: false,
+    staleTime: 60 * 1000 * 60,
+  });
 
   // 사용자가 선택한 카테고리만 필터
   function changecategory() {

@@ -4,6 +4,7 @@ import api from '../../api/customAxios';
 
 import { categoryStore, CategoryType } from './../../store/PostWriteStore';
 import Loading from 'components/Loading';
+import { getCategories } from 'api/category-api';
 
 export default function Category(props: CategoryType) {
   const { categoryId } = props;
@@ -14,10 +15,7 @@ export default function Category(props: CategoryType) {
   // 카테고리 받아오기
   const { isLoading, data: categories } = useQuery(
     ['categories'],
-    async () => {
-      const result = await api.get('/category');
-      return result.data;
-    },
+    getCategories,
     {
       refetchOnMount: 'always',
       refetchOnWindowFocus: false,
