@@ -1,7 +1,7 @@
 import DealDoneModal from './DealDoneModal';
 import { ProductReturnedModal } from './ProductReturnedModal';
 import { PostIdType } from '../../types/productType';
-import { createChatRoom } from '../chat/createChatRoom';
+import { createChatRoom } from '../../api/chat-api';
 import { ProductReceiveButton } from './ProductReceiveModal';
 import { useNavigate } from 'react-router-dom';
 
