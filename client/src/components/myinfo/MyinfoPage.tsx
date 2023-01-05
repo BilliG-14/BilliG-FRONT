@@ -5,7 +5,6 @@ import {
 } from '../../store/MypageStore';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import api from '../../api/customAxios';
 import { getUserInfoByuserId } from '../../api/user-api';
 
 // components

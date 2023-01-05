@@ -1,4 +1,3 @@
-import React from 'react';
 import { usePasswordEditStore } from 'store/MypageStore';
 
 export default function ChangePassword() {

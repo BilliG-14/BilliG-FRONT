@@ -1,5 +1,5 @@
 import ConfirmModal from 'components/Modal';
-import React, { FormEvent, useCallback, useRef, useState } from 'react';
+import { FormEvent, useCallback, useRef, useState } from 'react';
 import { useDeleteUserStore } from '../../store/MypageStore';
 import api from '../../api/customAxios';
 import { useNavigate } from 'react-router-dom';

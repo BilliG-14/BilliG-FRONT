@@ -1,4 +1,3 @@
-import React from 'react';
 import DealTag from 'components/tag/DealTag';
 import { useNavigate } from 'react-router-dom';
 import DealStepTag from '../tag/DealStepTag';
