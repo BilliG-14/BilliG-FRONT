@@ -1,13 +1,15 @@
 import DealTag from 'components/tag/DealTag';
-import { useNavigate } from 'react-router-dom';
 import DealStepTag from '../tag/DealStepTag';
-import { GetItemType } from 'types/productType';
+import { useNavigate } from 'react-router-dom';
+import { PostDataType } from 'types/productType';
+import DoneTag from '../tag/DoneTag';
 
 interface BorrowPostProps {
-  item: GetItemType;
+  item: PostDataType;
+  type: string;
 }
 
-export default function BorrowItemCard({ item }: BorrowPostProps) {
+export default function ItemCard({ item, type }: BorrowPostProps) {
   const {
     title,
     address,
@@ -29,18 +31,19 @@ export default function BorrowItemCard({ item }: BorrowPostProps) {
         <div className="item_info flex w-4/5 border-b-2 border-solid border-gray-300">
           <img
             src={imgUrl[0]}
-            alt="m2 맥북"
+            alt={title}
             className="w-24 h-24 object-contain"
           />
           <div className="w-4/5 pl-10">
             <p className="text-lg font-semibold mt-1">{title}</p>
             <ul>
-              <li className="mt-1">
-                <span>대여기간 : </span>
-                {/* {period.time && <span>{`${period.time} 시간`}</span>} */}
-                <span>{`${period.start} ~ `}</span>
-                <span>{`${period.end}`}</span>
-              </li>
+              {type === 'borrow' || type === 'done' ? (
+                <li className="mt-1">
+                  <span>대여기간 : </span>
+                  <span>{`${period?.start} ~ `}</span>
+                  <span>{`${period?.end}`}</span>
+                </li>
+              ) : null}
               <li className="text-b-text-darkgray mt-3 mb-3">
                 <span>거래지역 : </span>
                 <span>{`📍 ${address}`}</span>
@@ -49,6 +52,7 @@ export default function BorrowItemCard({ item }: BorrowPostProps) {
                 {stateOfTransaction === 1 || stateOfTransaction === 2 ? (
                   <DealStepTag stateOfTransaction={stateOfTransaction} />
                 ) : null}
+                {stateOfTransaction === 3 ? <DoneTag /> : null}
               </li>
             </ul>
           </div>
@@ -58,13 +62,7 @@ export default function BorrowItemCard({ item }: BorrowPostProps) {
             {tradeWay.direct ? <DealTag deal="직거래" /> : null}
             {tradeWay.delivery ? <DealTag deal="택배거래" /> : null}
           </div>
-          <div className="price text-right mt-1">
-            {/* <p className="per_time mb-2">
-              <span className="font-semibold">{`${price.priceTime.toLocaleString(
-                'ko-KR',
-              )} 원`}</span>
-              <span className="text-xs"> / 시간</span>
-            </p> */}
+          <div className="price mt-1">
             <p className="per_day">
               <span className="font-semibold">{`${price.priceDay.toLocaleString(
                 'ko-KR',

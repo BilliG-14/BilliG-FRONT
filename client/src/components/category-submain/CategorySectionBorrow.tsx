@@ -5,7 +5,7 @@ import api from '../../api/customAxios';
 import SubmainBorrowItemCard from './SubmainBorrowItemCard';
 import { useNavigate } from 'react-router-dom';
 import Loading from '../Loading';
-import { GetItemType } from 'types/productType';
+import { PostDataType } from 'types/productType';
 
 type ItemListProps = {
   category: { _id: string; name: string };
@@ -61,7 +61,7 @@ export default function CategorySectionBorrow({
           </button>
         </header>
         <div className="flex justify-center">
-          {categoryBorrowItems?.data.docs.map((item: GetItemType) => (
+          {categoryBorrowItems?.data.docs.map((item: PostDataType) => (
             <SubmainBorrowItemCard
               key={item._id}
               item={item}

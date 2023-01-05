@@ -46,7 +46,7 @@ export default function MyinfoPage() {
     address2,
     reports,
   } = userInfo;
-  console.log(userInfo);
+
   return (
     <div className="w-4/5 p-12">
       <section className="img_nick_intro flex mb-4">

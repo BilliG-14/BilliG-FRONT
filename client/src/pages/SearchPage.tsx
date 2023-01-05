@@ -10,7 +10,7 @@ import { FiSearch } from 'react-icons/fi';
 import { Pagination } from '../components/Pagination';
 import Loading from 'components/Loading';
 // type
-import { GetItemType } from 'types/productType';
+import { PostDataType } from 'types/productType';
 import { HashtagType } from 'types/hashtagType';
 
 export default function SearchPage() {
@@ -151,7 +151,7 @@ export default function SearchPage() {
             </ul>
           )}
           {items.length > 0 ? (
-            items.map((item: GetItemType) => (
+            items.map((item: PostDataType) => (
               <SearchItemCard key={item._id} item={item} />
             ))
           ) : (

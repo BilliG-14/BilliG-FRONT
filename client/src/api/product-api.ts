@@ -25,9 +25,11 @@ export const getDealList = async (
   stateOfTransaction: string,
   postType?: string,
 ) => {
-  return api.get(
+  const res = await api.get(
     `/product/page?${target}=${localStorage.getItem('userId')}${
       postType ? `&postType=${postType}` : ''
     }&per=8&page=${page}&stateOfTransaction=${stateOfTransaction}`,
   );
+
+  return res.data;
 };
