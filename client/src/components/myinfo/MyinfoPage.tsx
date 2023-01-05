@@ -56,7 +56,7 @@ export default function MyinfoPage() {
             src={
               image ? image : `${process.env.PUBLIC_URL}/img/default_user.png`
             }
-            alt="조이현"
+            alt={nickName}
             className="rounded-full h-32 w-32 object-cover mb-5"
           />
         </div>
