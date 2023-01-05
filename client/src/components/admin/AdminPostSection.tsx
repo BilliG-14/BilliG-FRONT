@@ -5,7 +5,7 @@ import Loading from 'components/Loading';
 import ConfirmModal from 'components/Modal';
 import { Pagination } from 'components/Pagination';
 import { useState } from 'react';
-import { PostDataType } from 'store/PostReadStore';
+import { PostDataType } from '../../types/productType';
 
 //페이지네이션을 위한 타입
 export type PostsPaginateType = {

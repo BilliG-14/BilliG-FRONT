@@ -1,13 +1,5 @@
 import { useEffect, useState } from 'react';
-
-interface ResultType {
-  x: number;
-  y: number;
-}
-
-interface AddressType {
-  address: string;
-}
+import { ResultType, AddressType } from 'types/productType';
 
 export default function Map(props: AddressType) {
   const { address } = props;

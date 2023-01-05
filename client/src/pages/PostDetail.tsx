@@ -4,7 +4,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import styled from 'styled-components';
 
 import Caution from '../components/postDetail/Caution';
-import { PostDataType } from '../store/PostReadStore';
+import { PostDataType } from '../types/productType';
 // import TradeWayTag from '../components/tag/TradeWayTag';
 import { FaPeopleArrows } from 'react-icons/fa';
 import { GoPackage } from 'react-icons/go';

@@ -6,6 +6,8 @@ import {
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import api from '../../api/customAxios';
+import { getUserInfoByuserId } from '../../api/user-api';
+
 // components
 import ChangePassword from './ChangePassword';
 import ChangePawsswordForm from './ChangePawsswordForm';
@@ -25,9 +27,7 @@ export default function MyinfoPage() {
     data: userInfo,
   } = useQuery(
     ['userInfo', `${localStorage.getItem('userId')}`],
-    async () => {
-      return api.get(`/user/${localStorage.getItem('userId')}`);
-    },
+    () => getUserInfoByuserId(),
     {
       refetchOnWindowFocus: false,
       staleTime: 60 * 1000 * 5,
@@ -46,7 +46,7 @@ export default function MyinfoPage() {
     address1,
     address2,
     reports,
-  } = userInfo?.data;
+  } = userInfo;
   return (
     <div className="w-4/5 p-12">
       <section className="img_nick_intro flex mb-4">

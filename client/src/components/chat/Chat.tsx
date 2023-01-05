@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import SidePanel from './SidePanel/SidePanel';
 import MainPanel from './MainPanel/MainPanel';
-import getUserInfo from './getUserInfo';
-import getChatRooms from './getChatRooms';
-import Footer from '../../components/footer/Footer';
+import { getUserInfo } from '../../api/user-api';
+import getChatRooms from '../../api/getChatRooms';
 import { io } from 'socket.io-client';
 
 const socket = io('http://34.64.44.34:3003/chat', {

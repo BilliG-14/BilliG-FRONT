@@ -1,4 +1,4 @@
-import api from '../../api/customAxios';
+import api from './customAxios';
 
 const getUserInfo = async () => {
   try {

@@ -3,19 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import api from 'api/customAxios';
 import useAdminPageStore from 'store/AdminPageStore';
 import Loading from 'components/Loading';
-type User = {
-  _id: string;
-  email?: string;
-  nickName?: string;
-  name?: string;
-  phoneNumber?: string;
-  postalCode?: string;
-  address1?: string;
-  address2?: string;
-  createdAt: string;
-  updatedAt?: string;
-  role: string;
-};
+import { UserType } from '../../types/userType';
 
 const apiUsers = {
   GET: async () => {
@@ -28,7 +16,7 @@ export default function AdminUserListSection() {
   const setSelectedUserId = useAdminPageStore(
     (state) => state.setSelectedUserId,
   );
-  const { isLoading, data, isError } = useQuery<User[], AxiosError>(
+  const { isLoading, data, isError } = useQuery<UserType[], AxiosError>(
     ['users'],
     apiUsers.GET,
     {

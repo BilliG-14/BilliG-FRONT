@@ -1,7 +1,7 @@
 import { useState, useRef, ChangeEvent } from 'react';
 import api from '../../api/customAxios';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { UserInformationPostType, PostIdType } from 'store/PostReadStore';
+import { UserInformationPostType, PostIdType } from 'types/productType';
 import { reservationStore } from 'store/PostWriteStore';
 
 export default function DealDoneModal(props: PostIdType) {

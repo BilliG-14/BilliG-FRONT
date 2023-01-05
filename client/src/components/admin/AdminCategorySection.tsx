@@ -4,35 +4,12 @@ import { AxiosError } from 'axios';
 import Loading from 'components/Loading';
 import ConfirmModal from 'components/Modal';
 import { useCallback, useRef, useState } from 'react';
-import { message } from '../../../node_modules/@toast-ui/chart/dist/esm/message';
-
-type Category = {
-  _id: string;
-  name: string;
-};
-
-/*Category CRUD */
-const endPoint = 'category';
-const apiCategory = {
-  GET: async () => {
-    const { data } = await api.get(`${endPoint}`);
-    return data;
-  },
-  CREATE: async (catogoryName: string) => {
-    const { data } = await api.post(`/${endPoint}`, { name: catogoryName });
-    return data;
-  },
-  UPDATE: async ({ _id, name }: Category) => {
-    await api.patch(`${endPoint}/${_id}`, { name: name });
-  },
-  DELETE: async (_id: string) => {
-    await api.delete(`${endPoint}/${_id}`);
-  },
-};
+import { CategoryType } from '../../types/categoryType';
+import { apiCategory } from 'api/category-api';
 
 export default function AdminCategorySection() {
   const queryClient = useQueryClient();
-  const selectedCategory = useRef<Category>({ _id: '', name: '' });
+  const selectedCategory = useRef<CategoryType>({ _id: '', name: '' });
   const selectedDiv = useRef<HTMLDivElement>(null);
   const elemCreateInput = useRef<HTMLInputElement>(null);
   const elemUpdateInput = useRef<HTMLInputElement>(null);
@@ -42,7 +19,7 @@ export default function AdminCategorySection() {
     setOpenModal(!isOpenModal);
   }, [isOpenModal]);
   /*get category */
-  const { isLoading, data, isError } = useQuery<Category[], AxiosError>(
+  const { isLoading, data, isError } = useQuery<CategoryType[], AxiosError>(
     ['categories'],
     apiCategory.GET,
     {

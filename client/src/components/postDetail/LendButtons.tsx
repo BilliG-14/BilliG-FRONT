@@ -1,6 +1,6 @@
 import DealDoneModal from './DealDoneModal';
 import { ProductReturnedModal } from './ProductReturnedModal';
-import { PostIdType } from './../../store/PostReadStore';
+import { PostIdType } from './../../types/productType';
 import { createChatRoom } from '../chat/createChatRoom';
 import { ProductReceiveButton } from './ProductReceiveModal';
 import { useNavigate } from 'react-router-dom';

@@ -1,5 +1,5 @@
 import Nav from 'components/nav/Nav';
-import { apiReports, Notice } from 'components/admin/AdminNoticeSection';
+import { apiNotice } from 'components/admin/AdminNoticeSection';
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -7,7 +7,7 @@ import MarkdownRenderer from '../components/MarkdownRenderer';
 import Loading from 'components/Loading';
 import Footer from 'components/footer/Footer';
 import styled from 'styled-components';
-
+import { NoticeType } from '../types/noticeType';
 export default function ReadNotice() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -15,11 +15,15 @@ export default function ReadNotice() {
     isLoading,
     data: notice,
     isError,
-  } = useQuery<Notice, AxiosError>([`notices/${id}`], apiReports.GETONE(id), {
-    refetchOnWindowFocus: false,
-    retry: 0, // 실패시 재호출 몇번 할지
-    staleTime: 60 * 1000 * 60,
-  });
+  } = useQuery<NoticeType, AxiosError>(
+    [`notices/${id}`],
+    apiNotice.GETONE(id),
+    {
+      refetchOnWindowFocus: false,
+      retry: 0, // 실패시 재호출 몇번 할지
+      staleTime: 60 * 1000 * 60,
+    },
+  );
   if (isLoading) return <Loading />;
   return (
     <div className="w-screen m-auto relative pb-[70px] min-h-[85vh]">

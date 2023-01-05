@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import ConfirmModal from 'components/Modal';
 import { useRef, useState } from 'react';
-import { apiReports } from './AdminNoticeSection';
+import { apiNotice } from './AdminNoticeSection';
 export default function AdminNoticeWriting() {
   const titleRef = useRef<HTMLInputElement>(null);
   const contentRef = useRef<HTMLTextAreaElement>(null);
@@ -24,9 +24,8 @@ export default function AdminNoticeWriting() {
     titleRef.current.value = '';
     contentRef.current.value = '';
   };
-  const createMutation = useMutation(apiReports.CREATE, {
+  const createMutation = useMutation(apiNotice.CREATE, {
     onSuccess: () => {
-      // post요청 성공 시 category 맵핑된 useQuery api 함수를 실행
       queryClient.invalidateQueries(['notices']);
     },
   });

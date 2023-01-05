@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { createGlobalStyle } from 'styled-components';
-import { useIsLoginStore } from 'store/LoginJoinStore';
 import reset from 'styled-reset';
+import { useIsLoginStore } from 'store/LoginJoinStore';
 import api from './api/customAxios';
 // pages
 import Main from 'pages/Main';
@@ -28,6 +28,7 @@ import Loading from 'components/Loading';
 import TrueNav from './components/nav/TrueNav';
 import Nav from './components/nav/Nav';
 import Chat from './components/chat/Chat';
+
 const GlobalStyle = createGlobalStyle`
   ${reset};
   body {

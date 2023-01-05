@@ -5,27 +5,13 @@ import Loading from 'components/Loading';
 import ConfirmModal from 'components/Modal';
 import { useCallback, useState } from 'react';
 import useAdminPageStore from 'store/AdminPageStore';
-type User = {
-  _id: string;
-  name: string;
-  image: string;
-  nickName: string;
-  email: string;
-  password: string;
-  phoneNumber: string;
-  postalCode: string;
-  address1: string;
-  address2: string;
-  reports: Array<any>;
-  suspension: boolean;
-};
-
+import { UserType, UpdateUserType } from '../../types/userType';
 const apiUser = {
   GET: (id: string) => async () => {
     const res = await api.get(`user/${id}`);
     return res.data;
   },
-  UPDATE: (id: string) => async (data: any) => {
+  UPDATE: (id: string) => async (data: UpdateUserType) => {
     const res = await api.patch(`user/${id}`, data);
     return res.data;
   },
@@ -38,7 +24,7 @@ export default function AdminUserDetailSection() {
   const onClickSuspendModal = useCallback(() => {
     setOpenSuspendModal(!isOpenSuspendModal);
   }, [isOpenSuspendModal]);
-  const { isLoading, data, isError } = useQuery<User, AxiosError>(
+  const { isLoading, data, isError } = useQuery<UserType, AxiosError>(
     [`user/${selectedUserId}`],
     apiUser.GET(selectedUserId),
     {
