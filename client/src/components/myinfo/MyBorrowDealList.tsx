@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 // type
-import { Item } from './MyLendPostList';
+import { GetItemType } from 'types/productType';
 // components
 import BorrowItemCard from './BorrowItemCard';
 import { Pagination } from 'components/Pagination';
@@ -29,7 +29,7 @@ export default function MyBorrowDealList() {
   return (
     <div className="w-4/5 p-12">
       {borrowDealList?.data.docs.length > 0 ? (
-        borrowDealList?.data.docs.map((item: Item) => (
+        borrowDealList?.data.docs.map((item: GetItemType) => (
           <BorrowItemCard key={item._id} item={item} />
         ))
       ) : (

@@ -1,10 +1,10 @@
 import DealTag from 'components/tag/DealTag';
-import { Item } from './MyLendPostList';
 import { useNavigate } from 'react-router-dom';
 import DealStepTag from 'components/tag/DealStepTag';
+import { GetItemType } from 'types/productType';
 
 interface GivePostProps {
-  item: Item;
+  item: GetItemType;
 }
 
 export default function GiveItemCard({ item }: GivePostProps) {

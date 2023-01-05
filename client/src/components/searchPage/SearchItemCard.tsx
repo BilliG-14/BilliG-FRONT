@@ -1,15 +1,12 @@
-import React from 'react';
 import DealTag from 'components/tag/DealTag';
-import { Item } from 'components/myinfo/MyLendPostList';
-import { useNavigate } from 'react-router-dom';
+import { GetItemType } from 'types/productType';
 
 interface SearchItemCardProp {
-  item: Item;
+  item: GetItemType;
 }
 
 export default function SearchItemCard({ item }: SearchItemCardProp) {
   const { title, address, imgUrl, hashtag, tradeWay, price } = item;
-  const navigate = useNavigate();
   return (
     <li
       className="h-36 flex w-full justify-center py-3 cursor-pointer hover:opacity-70"

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 // Type
-import { Item } from 'components/myinfo/MyLendPostList';
+import { GetItemType } from 'types/productType';
 // componets
 import DoneItemCard from './DoneItemCard';
 import { Pagination } from '../Pagination';
@@ -31,7 +31,7 @@ export default function MyLendDoneList() {
   return (
     <div className="w-4/5 p-12">
       {lendDoneList?.data.docs.length > 0 ? (
-        lendDoneList?.data.docs.map((item: Item) => (
+        lendDoneList?.data.docs.map((item: GetItemType) => (
           <DoneItemCard key={item._id} item={item} />
         ))
       ) : (

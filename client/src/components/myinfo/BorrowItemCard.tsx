@@ -1,11 +1,11 @@
 import React from 'react';
 import DealTag from 'components/tag/DealTag';
-import { Item } from './MyLendPostList';
 import { useNavigate } from 'react-router-dom';
 import DealStepTag from '../tag/DealStepTag';
+import { GetItemType } from 'types/productType';
 
 interface BorrowPostProps {
-  item: Item;
+  item: GetItemType;
 }
 
 export default function BorrowItemCard({ item }: BorrowPostProps) {
