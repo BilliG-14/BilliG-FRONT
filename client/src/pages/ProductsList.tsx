@@ -3,8 +3,7 @@ import { AxiosError } from 'axios';
 import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
-import { CategoryType } from 'store/PostWriteStore';
-import { PostDataType } from '../store/PostReadStore';
+import { PostDataType } from '../types/productType';
 //컴포넌트
 import { Pagination } from 'components/Pagination';
 import ListByCategory from 'components/productsList/ListByCategory';

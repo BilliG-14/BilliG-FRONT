@@ -1,4 +1,4 @@
-import { CategoryType } from 'store/PostWriteStore';
+import { CategoryType } from '../../types/categoryType';
 import { useNavigate } from 'react-router-dom';
 import { AxiosError } from 'axios';
 import api from 'api/customAxios';

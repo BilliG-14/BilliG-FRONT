@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import api from './../../api/customAxios';
-import { PostIdType } from 'store/PostReadStore';
+import { PostIdType } from 'types/productType';
 
 export function ProductReceiveButton(props: PostIdType) {
   const queryClient = useQueryClient();

@@ -15,7 +15,7 @@ import {
 import HashTagSection from '../components/postWrite/HashTag';
 import TradeWay from '../components/postWrite/TradeWay';
 import ReservationDate from './../components/postWrite/ReservationDate';
-import { PostDataType, ServerHashTags } from './../store/PostReadStore';
+import { PostDataType, ServerHashTags } from './../types/productType';
 import Category from 'components/postWrite/Category';
 import UpdatedImageUpload from 'components/postWrite/UpdatedImageUpload';
 import Loading from 'components/Loading';

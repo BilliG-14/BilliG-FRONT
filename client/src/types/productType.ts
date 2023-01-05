@@ -1,4 +1,4 @@
-export interface PostDataType {
+export type PostDataType = {
   _id: string;
   imgUrl: string[];
   postType: string;
@@ -38,9 +38,9 @@ export interface PostDataType {
   ];
   createdAt: string;
   updatedAt: string;
-}
+};
 
-export interface UserType {
+export type UserType = {
   image: string;
   suspension: boolean;
   role: string;
@@ -56,9 +56,9 @@ export interface UserType {
   updatedAt: string;
   __v: number;
   reports: [];
-}
+};
 
-export interface PostIdType {
+export type PostIdType = {
   postType: string;
   postId: string | undefined;
   stateNumber: number;
@@ -66,9 +66,9 @@ export interface PostIdType {
   authorId?: string;
   lenderId?: string | undefined;
   borrowerId?: string | undefined;
-}
+};
 
-export interface UserInformationPostType {
+export type UserInformationPostType = {
   lender?: string;
   borrower?: string;
   stateOfTransaction: number;
@@ -76,14 +76,34 @@ export interface UserInformationPostType {
     start: string | undefined;
     end: string | undefined;
   };
-}
+};
 
 // 서버 해시태그 타입
-export interface ServerHashTags {
+export type ServerHashTags = {
   createdAt: string;
   mentions: number;
   name: string;
   updatedAt: string;
   __v: number;
   _id: string;
-}
+};
+
+// 상품 상세 지도의 주소 좌표관련 타입
+export type ResultType = {
+  x: number;
+  y: number;
+};
+
+export type AddressType = {
+  address: string;
+};
+
+// 글 작성 시 업로드한 이미지 프리뷰 타입
+export type PreviewImg = {
+  pictureName: string;
+  URL: string;
+};
+
+export type PropsType = {
+  bringImgUrlList: string[];
+};

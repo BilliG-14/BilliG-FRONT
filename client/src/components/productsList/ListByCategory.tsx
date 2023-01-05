@@ -1,5 +1,5 @@
 import ListItemCard from './ListItemCard';
-import { PostDataType } from '../../store/PostReadStore';
+import { PostDataType } from '../../types/productType';
 type ListProps = {
   items: PostDataType[];
 };

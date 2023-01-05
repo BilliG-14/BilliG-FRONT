@@ -1,12 +1,12 @@
 import Nav from 'components/nav/Nav';
-import { apiReports, Notice } from 'components/admin/AdminNoticeSection';
+import { apiNotice } from 'components/admin/AdminNoticeSection';
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import Loading from 'components/Loading';
 import Footer from 'components/footer/Footer';
-
+import { NoticeType } from 'types/noticeType';
 export type NoticesPaginateType = {
-  docs: [Notice];
+  docs: [NoticeType];
   totalPages: number;
   hasNextPage: boolean;
   hasPrevPage: boolean;
@@ -23,15 +23,11 @@ export default function Notices() {
     isLoading,
     data: noticesPaginate,
     isError,
-  } = useQuery<NoticesPaginateType, AxiosError>(
-    ['notices'],
-    apiReports.GETALL,
-    {
-      refetchOnWindowFocus: false,
-      retry: 0,
-      staleTime: 60 * 1000 * 60,
-    },
-  );
+  } = useQuery<NoticesPaginateType, AxiosError>(['notices'], apiNotice.GETALL, {
+    refetchOnWindowFocus: false,
+    retry: 0,
+    staleTime: 60 * 1000 * 60,
+  });
   if (isLoading) return <Loading />;
   return (
     <div className="w-screen m-auto relative pb-[70px] min-h-[85vh]">

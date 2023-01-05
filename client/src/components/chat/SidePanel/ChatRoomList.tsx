@@ -2,20 +2,6 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { FaRegSmileWink } from 'react-icons/fa';
 import { FaPlus } from 'react-icons/fa';
 import { useParams, useNavigate } from 'react-router-dom';
-interface ChatMessageType {
-  message?: string;
-  sender?: string;
-}
-
-interface ChatRoomType {
-  _id: string;
-  another: {
-    _id: string;
-    nickName: string;
-    name: string;
-  };
-  chats: [ChatMessageType];
-}
 
 function ChatRoomList({ chatRoomList, socket }: any) {
   // url id 받기

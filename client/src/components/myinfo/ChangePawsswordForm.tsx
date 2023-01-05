@@ -2,12 +2,7 @@ import ConfirmModal from 'components/Modal';
 import { useCallback, useRef, useState } from 'react';
 import { usePasswordEditStore } from 'store/MypageStore';
 import api from '../../api/customAxios';
-
-type PwType = {
-  currentPassword: string;
-  newPassword: string;
-  confirmPassword: string;
-};
+import { PwType } from 'types/userType';
 
 export default function ChangePawsswordForm() {
   const [passwords, setPasswords] = useState<PwType>({
