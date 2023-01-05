@@ -3,13 +3,8 @@ import { Route, Routes } from 'react-router-dom';
 import MyInfoHeader from 'components/myinfo/MyInfoHeader';
 import MyInfoSideBar from '../components/myinfo/MyinfoSideBar';
 import MyinfoPage from 'components/myinfo/MyinfoPage';
-import MyLendPostList from '../components/myinfo/MyLendPostList';
-import MyBorrowPostList from '../components/myinfo/MyBorrowPostList';
 import EditMyinfoPage from '../components/myinfo/EditMyinfoPage';
-import MyLendDealList from '../components/myinfo/MyLendDealList';
-import MyBorrowDealList from '../components/myinfo/MyBorrowDealList';
-import MyLendDoneList from '../components/myinfo/MyLendDoneList';
-import MyBorrowDoneList from '../components/myinfo/MyBorrowDoneList';
+import MyPostDealList from '../components/myinfo/MyPostDealList';
 
 export default function MyPage() {
   return (
@@ -21,12 +16,68 @@ export default function MyPage() {
           <Routes>
             <Route path="/" element={<MyinfoPage />} />
             <Route path="/edit" element={<EditMyinfoPage />} />
-            <Route path="/lendlist" element={<MyLendPostList />} />
-            <Route path="/borrowlist" element={<MyBorrowPostList />} />
-            <Route path="/lenddeallist" element={<MyLendDealList />} />
-            <Route path="/borrowdeallist" element={<MyBorrowDealList />} />
-            <Route path="/donelendlist" element={<MyLendDoneList />} />
-            <Route path="/doneborrowlist" element={<MyBorrowDoneList />} />
+            <Route
+              path="/lendlist"
+              element={
+                <MyPostDealList
+                  param="lendList"
+                  target="author"
+                  stateOfTransaction="0"
+                  postType="lend"
+                />
+              }
+            />
+            <Route
+              path="/borrowlist"
+              element={
+                <MyPostDealList
+                  param="borrowList"
+                  target="author"
+                  stateOfTransaction="0"
+                  postType="borrow"
+                />
+              }
+            />
+            <Route
+              path="/lenddeallist"
+              element={
+                <MyPostDealList
+                  param="lendDealList"
+                  target="lender"
+                  stateOfTransaction="1,2"
+                />
+              }
+            />
+            <Route
+              path="/borrowdeallist"
+              element={
+                <MyPostDealList
+                  param="borrowDealList"
+                  target="borrower"
+                  stateOfTransaction="1,2"
+                />
+              }
+            />
+            <Route
+              path="/donelendlist"
+              element={
+                <MyPostDealList
+                  param="lendDoneList"
+                  target="lender"
+                  stateOfTransaction="3"
+                />
+              }
+            />
+            <Route
+              path="/doneborrowlist"
+              element={
+                <MyPostDealList
+                  param="borrowDoneList"
+                  target="borrower"
+                  stateOfTransaction="3"
+                />
+              }
+            />
           </Routes>
         </div>
       </section>

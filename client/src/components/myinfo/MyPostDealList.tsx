@@ -1,25 +1,31 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { getDealList } from '../../api/product-api';
 // type
 import { PostDataType } from 'types/productType';
 // components
 import ItemCard from './ItemCard';
-import { Pagination } from 'components/Pagination';
 import Loading from '../Loading';
-import { getDealList } from '../../api/product-api';
+import { Pagination } from 'components/Pagination';
 
-export default function MyBorrowDealList() {
+interface MyPostDealListProps {
+  param: string;
+  target: string;
+  stateOfTransaction: string;
+  postType?: string;
+}
+
+export default function MyPostDealList({
+  param,
+  target,
+  stateOfTransaction,
+  postType,
+}: MyPostDealListProps) {
   const [page, setPage] = useState(1);
-  const target = 'borrower';
-  const stateOfTransaction = '1,2';
 
-  const {
-    isLoading,
-    isError,
-    data: borrowDealList,
-  } = useQuery(
-    [`borrowDealList/${page}`, `${localStorage.getItem('userId')}`],
-    async () => getDealList(target, page, stateOfTransaction),
+  const { isLoading, isError, data } = useQuery(
+    [`${param}/${page}`, `${localStorage.getItem('userId')}`],
+    async () => getDealList(target, page, stateOfTransaction, postType),
     {
       refetchOnWindowFocus: false,
       staleTime: 60 * 1000 * 5,
@@ -27,11 +33,11 @@ export default function MyBorrowDealList() {
   );
 
   if (isLoading) return <Loading />;
-
+  console.log(data);
   return (
     <div className="w-4/5 p-12">
-      {borrowDealList?.data.docs.length > 0 ? (
-        borrowDealList?.data.docs.map((item: PostDataType) => (
+      {data?.docs.length > 0 ? (
+        data?.docs.map((item: PostDataType) => (
           <ItemCard key={item._id} type="borrow" item={item} />
         ))
       ) : (
@@ -39,13 +45,13 @@ export default function MyBorrowDealList() {
           <p>게시물이 존재하지 않습니다.</p>
         </div>
       )}
-      {borrowDealList?.data.docs.length > 0 && (
+      {data?.length > 0 && (
         <Pagination
           page={page}
           setPage={setPage}
-          totalPage={borrowDealList?.data.totalPages}
-          hasNextPage={borrowDealList?.data.hasNextPage}
-          hasPrevPage={borrowDealList?.data.hasPrevPage}
+          totalPage={data?.totalPages}
+          hasNextPage={data?.hasNextPage}
+          hasPrevPage={data?.hasPrevPage}
         />
       )}
     </div>
