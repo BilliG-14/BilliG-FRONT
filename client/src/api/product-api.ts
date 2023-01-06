@@ -34,3 +34,14 @@ export const getDealList = async (
 
   return res.data;
 };
+/*특정 유저가 올린 게시물 api (userInfo)*/
+export const getPostByUserId = async (
+  userId: string,
+  page: number,
+  stateOfTransaction: string,
+) => {
+  const res = await api.get(
+    `/product/page?author=${userId}&per=3&page=${page}&stateOfTransaction=${stateOfTransaction}`,
+  );
+  return res.data;
+};

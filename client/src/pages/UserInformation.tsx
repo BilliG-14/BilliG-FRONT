@@ -82,8 +82,8 @@ export default function UserInformation() {
             {user.intro ? user.intro : '아직 자기소개를 작성하지 않았습니다.'}
           </p>
         </div>
-        <div id="post" className="w-[790px] mx-auto p-2">
-          <p className="font-bold text-lg">{user.nickName}님의 최근 게시물</p>
+        <div id="post" className="w-[800px] mx-auto">
+          <p className="ml-2 font-bold text-lg">{user.nickName}님의 게시물</p>
           <RecentPosts userId={user._id} />
         </div>
         {openReport && (

@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 // components
 import { Pagination } from 'components/Pagination';
 import Loading from '../Loading';
-import { getDealList } from '../../api/product-api';
+import { getPostByUserId } from '../../api/product-api';
 import { PostDataType } from 'types/productType';
 import ListItemCard from 'components/productsList/ListItemCard';
 
@@ -13,7 +13,6 @@ interface RecentPostsProps {
 
 export default function RecentPosts({ userId }: RecentPostsProps) {
   const [page, setPage] = useState(1);
-  const target = 'author';
   const stateOfTransaction = '0,1,2,3';
   const {
     isLoading,
@@ -21,7 +20,7 @@ export default function RecentPosts({ userId }: RecentPostsProps) {
     data: postList,
   } = useQuery(
     [`postList/${page}`, userId],
-    async () => getDealList(target, page, stateOfTransaction),
+    async () => getPostByUserId(userId, page, stateOfTransaction),
     {
       refetchOnWindowFocus: false,
       staleTime: 60 * 1000 * 5,
@@ -29,11 +28,16 @@ export default function RecentPosts({ userId }: RecentPostsProps) {
   );
 
   if (isLoading) return <Loading />;
-
+  if (isError)
+    return (
+      <p className="flex justify-center font-bold text-lg">
+        게시물을 불러올 수 없습니다.
+      </p>
+    );
   return (
     <div className="w-full">
-      {postList?.data.docs.length > 0 ? (
-        postList?.data.docs.map((item: PostDataType) => (
+      {postList.docs.length > 0 ? (
+        postList.docs.map((item: PostDataType) => (
           <ListItemCard key={item._id} item={item} />
         ))
       ) : (
@@ -41,15 +45,17 @@ export default function RecentPosts({ userId }: RecentPostsProps) {
           <p>게시물이 존재하지 않습니다.</p>
         </div>
       )}
-      {postList?.data.docs.length > 0 && (
-        <Pagination
-          page={page}
-          setPage={setPage}
-          totalPage={postList?.data.totalPages}
-          hasNextPage={postList?.data.hasNextPage}
-          hasPrevPage={postList?.data.hasPrevPage}
-        />
-      )}
+      <div className="flex justify-center mt-3 mb-6">
+        {postList?.docs.length > 0 && (
+          <Pagination
+            page={page}
+            setPage={setPage}
+            totalPage={postList.totalPages}
+            hasNextPage={postList.hasNextPage}
+            hasPrevPage={postList.hasPrevPage}
+          />
+        )}
+      </div>
     </div>
   );
 }
