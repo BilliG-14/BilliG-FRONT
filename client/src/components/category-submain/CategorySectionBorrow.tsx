@@ -1,11 +1,11 @@
 import React from 'react';
-import { HiArrowRight } from 'react-icons/hi';
 import { useQuery } from '@tanstack/react-query';
-import api from '../../api/customAxios';
-import SubmainBorrowItemCard from './SubmainBorrowItemCard';
 import { useNavigate } from 'react-router-dom';
-import Loading from '../Loading';
+import api from '../../api/customAxios';
 import { PostDataType } from 'types/productType';
+import Loading from '../Loading';
+import SubmainItemCard from './SubmainItemCard';
+import { HiArrowRight } from 'react-icons/hi';
 
 type ItemListProps = {
   category: { _id: string; name: string };
@@ -62,9 +62,10 @@ export default function CategorySectionBorrow({
         </header>
         <div className="flex justify-center">
           {categoryBorrowItems?.data.docs.map((item: PostDataType) => (
-            <SubmainBorrowItemCard
+            <SubmainItemCard
               key={item._id}
               item={item}
+              type="borrow"
               categoryName={category.name}
             />
           ))}
