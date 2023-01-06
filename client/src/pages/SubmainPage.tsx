@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import ChatIcon from '../components/chat-icon/ChatIcon';
 import Footer from '../components/footer/Footer';
 import SubmainCategory from '../components/category-submain/SubmainCategory';
-import CarouselS from '../components/category-submain/CarouselS';
+import CarouselS from '../components/category-submain/Carousels';
 
 export default function SubmainPage() {
   return (
