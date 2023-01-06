@@ -108,12 +108,12 @@ export const UpdateImageUploadStore = create<UpdateImageUploadState>((set) => ({
 
 // 요금 store
 interface PriceState {
-  price: number;
+  price: number | undefined;
   setPrice: (price: number) => void;
 }
 
 export const priceStore = create<PriceState>((set) => ({
-  price: 0,
+  price: undefined,
   setPrice: (price) =>
     set(() => ({
       price,
