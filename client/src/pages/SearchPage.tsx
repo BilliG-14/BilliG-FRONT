@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import api from '../api/customAxios';
 // components
@@ -47,7 +47,7 @@ export default function SearchPage() {
     }
   };
 
-  const { isLoading, data: hashtags } = useQuery(
+  const { isError, data: hashtags } = useQuery(
     ['hashtags'],
     async () => {
       return api.get(`/hashtag/popular?products=50&hashtags=10`);
@@ -55,9 +55,10 @@ export default function SearchPage() {
     {
       refetchOnWindowFocus: false,
       staleTime: 1000 * 60 * 5,
+      suspense: true,
     },
   );
-  if (isLoading) return <Loading />;
+
   return (
     <div className="w-screen max-w-screen-lg relative m-auto">
       {/* radio btn */}
@@ -120,11 +121,13 @@ export default function SearchPage() {
         </div>
         <div className="w-3/4 h-20 m-auto border">
           <ul className="flex">
-            {hashtags?.data.map((tag: HashtagType) => (
-              <li key={tag._id}>
-                <HashTag name={tag.name} />
-              </li>
-            ))}
+            <Suspense fallback={<Loading />}>
+              {hashtags?.data.map((tag: HashtagType) => (
+                <li key={tag._id}>
+                  <HashTag name={tag.name} />
+                </li>
+              ))}
+            </Suspense>
           </ul>
         </div>
       </section>

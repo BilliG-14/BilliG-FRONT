@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
@@ -95,32 +95,34 @@ function App() {
             </div>
             {/* ScrollToTop : navigate했을 때, 스크롤 위치가 그대로 적용되는 문제 방지*/}
             <ScrollToTop />
-            <Routes>
-              <Route path="/" element={<Main />} />
-              <Route path="/submain/*" element={<SubmainPage />} />
-              <Route path="/mypage/*" element={<MyPage />} />
-              <Route path="/login" element={<LoginJoin />} />
-              <Route path="/admin" element={<AdminMain />} />
-              <Route path="/write/lend" element={<LendWriting />} />
-              <Route path="/write/borrow" element={<BorrowWriting />} />
-              <Route path="/search" element={<SearchPage />} />
-              <Route path="/read/:id" element={<PostDetail />} />
-              <Route path="/update/:id" element={<PostUpdate />} />
-              <Route path="/notices" element={<Notices />} />
-              <Route path="/notices/:id" element={<ReadNotice />} />
-              <Route path="/user/:id" element={<UserInformation />} />
-              <Route
-                path="/products/lend/:categoryId"
-                element={<ProductsList postType="lend" />}
-              />
-              <Route
-                path="/products/borrow/:categoryId"
-                element={<ProductsList postType="borrow" />}
-              />
-              <Route path="/chat" element={<Chat />} />
-              <Route path="/chat/:roomId" element={<Chat />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+            <Suspense fallback={<Loading />}>
+              <Routes>
+                <Route path="/" element={<Main />} />
+                <Route path="/submain/*" element={<SubmainPage />} />
+                <Route path="/mypage/*" element={<MyPage />} />
+                <Route path="/login" element={<LoginJoin />} />
+                <Route path="/admin" element={<AdminMain />} />
+                <Route path="/write/lend" element={<LendWriting />} />
+                <Route path="/write/borrow" element={<BorrowWriting />} />
+                <Route path="/search" element={<SearchPage />} />
+                <Route path="/read/:id" element={<PostDetail />} />
+                <Route path="/update/:id" element={<PostUpdate />} />
+                <Route path="/notices" element={<Notices />} />
+                <Route path="/notices/:id" element={<ReadNotice />} />
+                <Route path="/user/:id" element={<UserInformation />} />
+                <Route
+                  path="/products/lend/:categoryId"
+                  element={<ProductsList postType="lend" />}
+                />
+                <Route
+                  path="/products/borrow/:categoryId"
+                  element={<ProductsList postType="borrow" />}
+                />
+                <Route path="/chat" element={<Chat />} />
+                <Route path="/chat/:roomId" element={<Chat />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
           </BrowserRouter>
         </div>
         <ReactQueryDevtools initialIsOpen={false} />
