@@ -14,12 +14,12 @@ export default function Slide({ idx, card, PrevSlide, NextSlide }: SlideProps) {
     <>
       <div
         key={idx}
-        className="w-[1535px] h-[435px] flex-none object-contain relative"
+        className="h-[435px] 2xl:w-[1535px] xl:w-[1280px] lg:w-[1024px] md:w-[768px] sm:w-[640px] flex-none relative"
       >
         <img
           src={`${process.env.PUBLIC_URL}/img/carousel${idx + 1}.png`}
           alt="IT"
-          className="w-full h-full cursor-pointer"
+          className="w-full h-full cursor-pointer object-contain"
           onClick={() => {
             navigate(`${card}`);
           }}
