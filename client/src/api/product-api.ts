@@ -34,3 +34,26 @@ export const getDealList = async (
 
   return res.data;
 };
+/*특정 유저가 올린 게시물 api (userInfo)*/
+export const getPostByUserId = async (
+  userId: string,
+  page: number,
+  stateOfTransaction: string,
+) => {
+  const res = await api.get(
+    `/product/page?author=${userId}&per=3&page=${page}&stateOfTransaction=${stateOfTransaction}`,
+  );
+  return res.data;
+};
+/*카테고리별 게시물 조회 api(products list) */
+export const getPostByCategory = async (
+  categoryId: string | undefined,
+  per: number,
+  page: number,
+  postType: string,
+) => {
+  const res = await api.get(
+    `/product/page?category=${categoryId}&per=${per}&page=${page}&postType=${postType}&stateOfTransaction=${0}`,
+  );
+  return res.data;
+};

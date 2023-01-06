@@ -12,6 +12,7 @@ import Loading from 'components/Loading';
 import NotFound from 'components/NotFound';
 import Footer from 'components/footer/Footer';
 import NoProducts from 'components/productsList/NoProducts';
+import { getPostByCategory } from '../api/product-api';
 export type Products = {
   docs: [PostDataType];
   totalPages: number;
@@ -40,7 +41,6 @@ export default function ProductsList(props: ProductsListProps) {
     isLoading: isLoadingItem,
     data: products,
     isError: isErrorItem,
-    refetch,
   } = useQuery<Products, AxiosError>(
     [
       `product`,
@@ -51,10 +51,7 @@ export default function ProductsList(props: ProductsListProps) {
       `stateOfTransaction=${0}`,
     ],
     async () => {
-      const res = await api.get(
-        `/product/page?category=${categoryId}&per=${per}&page=${page}&postType=${postType}&stateOfTransaction=${0}`,
-      );
-      return res.data;
+      return getPostByCategory(categoryId, per, page, postType);
     },
     {
       refetchOnWindowFocus: false,
