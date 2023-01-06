@@ -25,7 +25,6 @@
     "@types/react-router-dom": "^5.3.3",
     "@types/styled-components": "^5.1.26",
     "axios": "1.2.1",
-    "daisyui": "^2.43.2",
     "kakao.maps.d.ts": "^0.1.33",
     "postcss-loader": "^7.0.2",
     "react": "^18.2.0",
