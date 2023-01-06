@@ -10,7 +10,7 @@ import {
   CategoryType,
   descriptionStore,
 } from './../store/PostWriteStore';
-import { getUserInfo } from './../api/user-api';
+import { getMyInfo } from './../api/user-api';
 
 import HashTagSection from '../components/postWrite/HashTag';
 import ImageUpload from '../components/postWrite/ImageUpload';
@@ -37,7 +37,7 @@ export default function LendWriting() {
   const navigate = useNavigate();
 
   // 사용자 가져오기
-  const { data, isLoading } = useQuery(['userData'], () => getUserInfo(), {
+  const { data, isLoading } = useQuery(['userData'], () => getMyInfo(), {
     onError: () => {
       alert('사용자를 찾을 수 없습니다. \n로그인 화면으로 이동합니다.');
       navigate('/login');

@@ -26,7 +26,7 @@ export default function MyInfoSideBar() {
             className="h-10 flex items-center justify-start hover:scale-105 hover:ease-in duration-300 hover:text-b-yellow"
             onClick={() => {
               client.invalidateQueries([
-                `giveList/1`,
+                `lendList/1`,
                 `${localStorage.getItem('userId')}`,
               ]);
               togglePwfalse();

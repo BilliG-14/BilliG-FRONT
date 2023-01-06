@@ -1,11 +1,11 @@
 import { useRef, useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import './category.css';
-import CategorySectionBorrow from './CategorySectionBorrow';
-import Loading from '../Loading';
 import { getCategories } from 'api/category-api';
+import './category.css';
+import CategorySection from './CategorySection';
+import Loading from '../Loading';
 
-export default function BorrowCategory() {
+export default function SubmainCategory({ type }: { type: string }) {
   const [scrollEvent, setScrollEvent] = useState(false);
   const navRef = useRef<HTMLElement | null>(null);
   const sectionRef = useRef<HTMLElement[] | null[]>([]);
@@ -73,14 +73,21 @@ export default function BorrowCategory() {
       </nav>
       <div className="w-screen max-w-screen-lg m-auto">
         <div className="text-3xl font-bold py-2 px-2 my-1">
-          <span className="text-red-600">물건이 필요한 회원을 찾아보세요</span>
+          {type === 'borrow' ? (
+            <span className="text-red-600">
+              물건이 필요한 회원을 찾아보세요
+            </span>
+          ) : (
+            <span className="text-blue-600">필요한 물건을 찾아보세요</span>
+          )}
         </div>
         {/* category section */}
         {categories.map(
           (category: { _id: string; name: string }, idx: number) => {
             return (
-              <CategorySectionBorrow
+              <CategorySection
                 key={category._id}
+                type={type}
                 idx={idx}
                 category={category}
                 sectionRef={(el) => (sectionRef.current[idx] = el)}
