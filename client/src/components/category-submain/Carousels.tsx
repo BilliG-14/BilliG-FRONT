@@ -1,81 +1,55 @@
-import { useNavigate } from 'react-router-dom';
+import { useRef, useState, useEffect } from 'react';
+import Slide from './Slide';
 
-export default function Carousels() {
-  const navigate = useNavigate();
+const TOTAL_SLIDES = 3;
+
+export default function CarouselS() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const slideRef = useRef<HTMLDivElement | null>(null);
+
+  const NextSlide = () => {
+    if (currentSlide >= TOTAL_SLIDES) {
+      setCurrentSlide(0);
+    } else {
+      setCurrentSlide(currentSlide + 1);
+    }
+  };
+
+  const PrevSlide = () => {
+    if (currentSlide === 0) {
+      setCurrentSlide(TOTAL_SLIDES);
+    } else {
+      setCurrentSlide(currentSlide - 1);
+    }
+  };
+
+  useEffect(() => {
+    if (slideRef.current != null) {
+      slideRef.current.style.transition = 'all 0.5s ease-in-out';
+      slideRef.current.style.transform = `translateX(-${currentSlide}00%)`;
+    }
+  }, [currentSlide]);
+
   return (
-    <div className="carousel max-w-screen-2xl h-2/5 m-auto">
-      <div id="slide1" className="carousel-item relative w-full">
-        <img
-          src={`${process.env.PUBLIC_URL}/img/carousel1.png`}
-          alt="IT"
-          className="w-full cursor-pointer"
-          onClick={() => {
-            navigate('/products/lend/63a16fcf1027a8c93f03addc');
-          }}
-        />
-        <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-          <a href="#slide4" className="btn btn-circle">
-            ❮
-          </a>
-          <a href="#slide2" className="btn btn-circle">
-            ❯
-          </a>
-        </div>
-      </div>
-      <div id="slide2" className="carousel-item relative w-full">
-        <img
-          src={`${process.env.PUBLIC_URL}/img/carousel2.png`}
-          alt="camping"
-          className="w-full cursor-pointer"
-          onClick={() => {
-            navigate('/products/lend/63a16fe01027a8c93f03ade0');
-          }}
-        />
-        <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-          <a href="#slide1" className="btn btn-circle">
-            ❮
-          </a>
-          <a href="#slide3" className="btn btn-circle">
-            ❯
-          </a>
-        </div>
-      </div>
-      <div id="slide3" className="carousel-item relative w-full">
-        <img
-          src={`${process.env.PUBLIC_URL}/img/carousel3.png`}
-          alt="ski"
-          className="w-full cursor-pointer"
-          onClick={() => {
-            navigate('/products/lend/63a16fe91027a8c93f03ade2');
-          }}
-        />
-        <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-          <a href="#slide2" className="btn btn-circle">
-            ❮
-          </a>
-          <a href="#slide4" className="btn btn-circle">
-            ❯
-          </a>
-        </div>
-      </div>
-      <div id="slide4" className="carousel-item relative w-full">
-        <img
-          src={`${process.env.PUBLIC_URL}/img/carousel4.png`}
-          alt="insurance"
-          className="w-full cursor-pointer"
-          onClick={() => {
-            navigate('/notices/63a99800bceda7b05ae793de');
-          }}
-        />
-        <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-          <a href="#slide3" className="btn btn-circle">
-            ❮
-          </a>
-          <a href="#slide1" className="btn btn-circle">
-            ❯
-          </a>
-        </div>
+    <div className="w-[1535px] h-[435px] m-auto overflow-hidden bg-gray-400">
+      <div ref={slideRef} className="flex">
+        {url.map((card, idx) => (
+          <Slide
+            key={idx}
+            idx={idx}
+            card={card}
+            PrevSlide={PrevSlide}
+            NextSlide={NextSlide}
+          />
+        ))}
       </div>
     </div>
   );
 }
+
+const url = [
+  '/products/lend/63a16fcf1027a8c93f03addc',
+  '/products/lend/63a16fe01027a8c93f03ade0',
+  '/products/lend/63a16fe91027a8c93f03ade2',
+  '/notices/63a99800bceda7b05ae793de',
+];
