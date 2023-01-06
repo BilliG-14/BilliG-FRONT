@@ -1,18 +1,17 @@
 import { Route, Routes } from 'react-router-dom';
 // components
-import Carousels from 'components/category-submain/Carousels';
 import ChatIcon from '../components/chat-icon/ChatIcon';
 import Footer from '../components/footer/Footer';
-import BorrowCategory from '../components/category-submain/BorrowCategory';
-import LendCategory from '../components/category-submain/LendCategory';
+import SubmainCategory from '../components/category-submain/SubmainCategory';
+import CarouselS from '../components/category-submain/Carousels';
 
 export default function SubmainPage() {
   return (
     <div>
-      <Carousels />
+      <CarouselS />
       <Routes>
-        <Route path="/" element={<BorrowCategory />} />
-        <Route path="/borrow" element={<LendCategory />} />
+        <Route path="/" element={<SubmainCategory type="borrow" />} />
+        <Route path="/borrow" element={<SubmainCategory type="lend" />} />
       </Routes>
       <ChatIcon />
       <Footer />
