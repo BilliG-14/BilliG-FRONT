@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Pagination } from 'components/Pagination';
 import Loading from '../Loading';
 import { getDealList } from '../../api/product-api';
-import { GetItemType, PostDataType } from 'types/productType';
+import { PostDataType } from 'types/productType';
 import ListItemCard from 'components/productsList/ListItemCard';
 
 interface RecentPostsProps {
