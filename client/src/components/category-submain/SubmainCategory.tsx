@@ -5,7 +5,7 @@ import './category.css';
 import CategorySection from './CategorySection';
 import Loading from '../Loading';
 
-export default function BorrowCategory() {
+export default function SubmainCategory({ type }: { type: string }) {
   const [scrollEvent, setScrollEvent] = useState(false);
   const navRef = useRef<HTMLElement | null>(null);
   const sectionRef = useRef<HTMLElement[] | null[]>([]);
@@ -73,7 +73,13 @@ export default function BorrowCategory() {
       </nav>
       <div className="w-screen max-w-screen-lg m-auto">
         <div className="text-3xl font-bold py-2 px-2 my-1">
-          <span className="text-red-600">물건이 필요한 회원을 찾아보세요</span>
+          {type === 'borrow' ? (
+            <span className="text-red-600">
+              물건이 필요한 회원을 찾아보세요
+            </span>
+          ) : (
+            <span className="text-blue-600">필요한 물건을 찾아보세요</span>
+          )}
         </div>
         {/* category section */}
         {categories.map(
@@ -81,7 +87,7 @@ export default function BorrowCategory() {
             return (
               <CategorySection
                 key={category._id}
-                type="borrow"
+                type={type}
                 idx={idx}
                 category={category}
                 sectionRef={(el) => (sectionRef.current[idx] = el)}
