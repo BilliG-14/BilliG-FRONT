@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import api from './../api/customAxios';
@@ -10,6 +10,8 @@ import {
   categoryStore,
   UpdateImageUploadStore,
   descriptionStore,
+  titleStore,
+  priceStore,
 } from './../store/PostWriteStore';
 
 import HashTagSection from '../components/postWrite/HashTag';
@@ -22,6 +24,8 @@ import Loading from 'components/Loading';
 import Footer from 'components/footer/Footer';
 import PostEditor from 'components/postWrite/PostEditor';
 import ChatIcon from './../components/chat-icon/ChatIcon';
+import Title from 'components/postWrite/Title';
+import Price from 'components/postWrite/Price';
 
 export default function PostUpdate() {
   const queryClient = useQueryClient();
@@ -34,6 +38,8 @@ export default function PostUpdate() {
   const { filteredCategory, setFilteredCategory } = categoryStore();
   const { imgUrlList, setImgUrlList } = UpdateImageUploadStore();
   const { description, setDescription } = descriptionStore();
+  const { title, setTitle } = titleStore();
+  const { price, setPrice } = priceStore();
 
   const navigate = useNavigate();
 
@@ -41,11 +47,8 @@ export default function PostUpdate() {
   const { id } = useParams();
 
   // 상품 가져오기
+  // const [price, setPrice] = useState(0);
   const [postData, setPostData] = useState<PostDataType>();
-  const [title, setTitle] = useState<string>('');
-  const [price, setPrice] = useState<{ priceDay: number }>({
-    priceDay: 0,
-  });
 
   /* 서버에서 해시태그가 object 형태로 들어와서 해시태그 이름만 배열로 담아야함  */
   const serverHashTagList: string[] = [];
@@ -62,13 +65,12 @@ export default function PostUpdate() {
         setFilteredCategory(data?.data[0].category._id);
         setImgUrlList(data?.data[0].imgUrl);
         setTitle(data?.data[0].title);
-        setPrice(data?.data[0].price);
+        setPrice(data?.data[0].price.priceDay);
         setDescription(data?.data[0].description);
         setTradeWay(
           data?.data[0].tradeWay.direct,
           data?.data[0].tradeWay.delivery,
         );
-        /* 서버에서 해시태그가 object 형태로 들어와서 해시태그 이름만 배열로 담아야함  */
         data?.data[0].hashtag.map((tag: ServerHashTags) =>
           serverHashTagList.push(tag.name),
         );
@@ -81,48 +83,23 @@ export default function PostUpdate() {
     },
   );
 
-  // 글 업데이트
-  function changeTitle(e: ChangeEvent<HTMLInputElement>) {
-    setTitle(e.currentTarget.value);
-  }
-
   function changePriceDay(e: ChangeEvent<HTMLInputElement>) {
-    const newPrice = { ...price, priceDay: Number(e.currentTarget?.value) };
-    setPrice(newPrice);
+    setPrice(Number(e.currentTarget?.value));
   }
 
-  // 제목 글자수 제한
-  function checkWordsNumber(e: React.FocusEvent<HTMLInputElement>) {
-    if (e.currentTarget.value.length > 20) {
-      alert('상품명은 20자 이내로 입력 가능합니다.');
-      e.currentTarget.value = e.currentTarget.value.slice(0, 20);
-    }
-  }
+  const editData = {
+    category: filteredCategory,
+    title: title,
+    description: description,
+    price: { priceDay: price },
+    period: reservationDate,
+    tradeWay: tradeWay,
+    hashtag: hashTags,
+  };
 
   // 서버로 post 보내기, useMutate 정의
   const updatedPostData = useMutation(
-    () =>
-      api.patch(
-        `/product/${id}`,
-        postData?.postType === 'lend'
-          ? {
-              category: filteredCategory,
-              title: title,
-              description: description,
-              price: price,
-              tradeWay: tradeWay,
-              hashtag: hashTags,
-            }
-          : {
-              category: filteredCategory,
-              title: title,
-              description: description,
-              price: price,
-              period: reservationDate,
-              tradeWay: tradeWay,
-              hashtag: hashTags,
-            },
-      ),
+    () => api.patch(`/product/${id}`, editData),
     {
       onSuccess: (res) => {
         navigate(`/read/${res.data._id}`);
@@ -144,7 +121,7 @@ export default function PostUpdate() {
     if (filteredCategory === '카테고리 설정' || title === '') {
       alert('카테고리와 이름을 입력해주세요.');
       return;
-    } else if (!price.priceDay) {
+    } else if (!price) {
       alert('요금을 입력해주세요.');
       return;
     } else if (!description) {
@@ -176,15 +153,7 @@ export default function PostUpdate() {
             {/* 상품명/카테고리 section */}
             <section className="flex mb-4">
               <Category categoryId={postData?.category._id} />
-              <input
-                value={title}
-                onChange={changeTitle}
-                onBlur={checkWordsNumber}
-                id="productName"
-                className="grow p-3 ml-2 w-9/12 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
-                type="text"
-                placeholder="상품명은 20자까지만 입력 가능합니다."
-              />
+              <Title />
             </section>
 
             {/* 사진 component */}
@@ -192,14 +161,7 @@ export default function PostUpdate() {
 
             {/* 요금 section */}
             <section className="flex items-center mb-4">
-              <div className="w-[100px] p-3 text-center">요금</div>
-              <input
-                value={price.priceDay}
-                onChange={changePriceDay}
-                type="number"
-                className="p-3 mx-2 w-54 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
-              />
-              <span className="mr-9">원/일</span>
+              <Price />
               {/* 거래방법 section */}
               <TradeWay />
             </section>
