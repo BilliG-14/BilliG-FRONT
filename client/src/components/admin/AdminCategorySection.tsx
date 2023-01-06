@@ -113,8 +113,8 @@ export default function AdminCategorySection() {
                 {data?.map((category) => {
                   return (
                     <li key={category._id} className="hover:text-b-yellow mb-1">
-                      <a
-                        href="#!"
+                      <p
+                        className="cursor-pointer"
                         onClick={() => {
                           selectedCategory.current = {
                             _id: category._id,
@@ -130,7 +130,7 @@ export default function AdminCategorySection() {
                         }}
                       >
                         {category.name}
-                      </a>
+                      </p>
                     </li>
                   );
                 })}
