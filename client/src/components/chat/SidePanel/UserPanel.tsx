@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { IoIosChatboxes } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
+import { UserType } from 'types/userType';
 
-/** 추후 any 바꾸기! */
-function UserPanel({ user }: any) {
+function UserPanel({ user }: { user: UserType }) {
   const navigate = useNavigate();
   return (
     <div className="w-full h-full px-2">
