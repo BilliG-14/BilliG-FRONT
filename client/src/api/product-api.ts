@@ -45,3 +45,15 @@ export const getPostByUserId = async (
   );
   return res.data;
 };
+/*카테고리별 게시물 조회 api(products list) */
+export const getPostByCategory = async (
+  categoryId: string | undefined,
+  per: number,
+  page: number,
+  postType: string,
+) => {
+  const res = await api.get(
+    `/product/page?category=${categoryId}&per=${per}&page=${page}&postType=${postType}&stateOfTransaction=${0}`,
+  );
+  return res.data;
+};
