@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, Suspense } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getCategories } from 'api/category-api';
 import './category.css';
@@ -29,16 +29,16 @@ export default function SubmainCategory({ type }: { type: string }) {
     };
   }, []);
 
-  const {
-    isLoading,
-    isError,
-    data: categories,
-  } = useQuery(['categories'], getCategories, {
-    refetchOnWindowFocus: false,
-    staleTime: 60 * 1000 * 60,
-  });
+  const { isError, data: categories } = useQuery(
+    ['categories'],
+    getCategories,
+    {
+      refetchOnWindowFocus: false,
+      staleTime: 60 * 1000 * 60,
+      suspense: true,
+    },
+  );
 
-  if (isLoading) return <Loading />;
   return (
     <div className="relative">
       <nav
@@ -47,28 +47,30 @@ export default function SubmainCategory({ type }: { type: string }) {
       >
         <ul className="flex space-x-10 text-center items-center m-auto text-xl font-extrabold">
           {/* category nav */}
-          {categories.map(
-            (category: { _id: string; name: string }, idx: number) => {
-              return (
-                <li
-                  key={category._id}
-                  className="hover:text-b-yellow hover:scale-125 ease-out duration-300"
-                >
-                  <p
-                    className="cursor-pointer"
-                    onClick={() => {
-                      sectionRef.current[idx]?.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'center',
-                      });
-                    }}
+          <Suspense fallback={<Loading />}>
+            {categories.map(
+              (category: { _id: string; name: string }, idx: number) => {
+                return (
+                  <li
+                    key={category._id}
+                    className="hover:text-b-yellow hover:scale-125 ease-out duration-300"
                   >
-                    {category.name}
-                  </p>
-                </li>
-              );
-            },
-          )}
+                    <p
+                      className="cursor-pointer"
+                      onClick={() => {
+                        sectionRef.current[idx]?.scrollIntoView({
+                          behavior: 'smooth',
+                          block: 'center',
+                        });
+                      }}
+                    >
+                      {category.name}
+                    </p>
+                  </li>
+                );
+              },
+            )}
+          </Suspense>
         </ul>
       </nav>
       <div className="w-screen max-w-screen-lg m-auto">
@@ -82,19 +84,21 @@ export default function SubmainCategory({ type }: { type: string }) {
           )}
         </div>
         {/* category section */}
-        {categories.map(
-          (category: { _id: string; name: string }, idx: number) => {
-            return (
-              <CategorySection
-                key={category._id}
-                type={type}
-                idx={idx}
-                category={category}
-                sectionRef={(el) => (sectionRef.current[idx] = el)}
-              />
-            );
-          },
-        )}
+        <Suspense fallback={<Loading />}>
+          {categories.map(
+            (category: { _id: string; name: string }, idx: number) => {
+              return (
+                <CategorySection
+                  key={category._id}
+                  type={type}
+                  idx={idx}
+                  category={category}
+                  sectionRef={(el) => (sectionRef.current[idx] = el)}
+                />
+              );
+            },
+          )}
+        </Suspense>
       </div>
     </div>
   );

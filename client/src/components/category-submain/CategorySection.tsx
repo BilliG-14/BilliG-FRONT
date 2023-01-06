@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import api from '../../api/customAxios';
@@ -21,7 +21,8 @@ export default function CategorySection({
   sectionRef,
 }: ItemListProps) {
   const navigate = useNavigate();
-  const { isLoading, isError, data } = useQuery(
+
+  const { isError, data } = useQuery(
     [`category${type}Items/${category._id}`],
     async () => {
       const res = await api.get(
@@ -34,8 +35,6 @@ export default function CategorySection({
       staleTime: 60 * 1000 * 60,
     },
   );
-
-  if (isLoading) return <Loading />;
 
   return (
     <section
@@ -60,14 +59,16 @@ export default function CategorySection({
           </button>
         </header>
         <div className="flex justify-center">
-          {data.docs.map((item: PostDataType) => (
-            <SubmainItemCard
-              key={item._id}
-              item={item}
-              type={type}
-              categoryName={category.name}
-            />
-          ))}
+          <Suspense fallback={<Loading />}>
+            {data?.docs.map((item: PostDataType) => (
+              <SubmainItemCard
+                key={item._id}
+                item={item}
+                type={type}
+                categoryName={category.name}
+              />
+            ))}
+          </Suspense>
         </div>
       </div>
     </section>

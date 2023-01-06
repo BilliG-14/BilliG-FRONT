@@ -3,7 +3,7 @@ import Slide from './Slide';
 
 const TOTAL_SLIDES = 3;
 
-export default function CarouselS() {
+export default function Carousels() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const slideRef = useRef<HTMLDivElement | null>(null);
 
