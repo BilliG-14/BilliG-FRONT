@@ -9,8 +9,11 @@ import {
   hashTagStore,
   CategoryType,
   descriptionStore,
+  titleStore,
+  priceStore,
 } from './../store/PostWriteStore';
 import { getMyInfo } from './../api/user-api';
+import { getCategories } from 'api/category-api';
 
 import HashTagSection from '../components/postWrite/HashTag';
 import ImageUpload from '../components/postWrite/ImageUpload';
@@ -19,7 +22,8 @@ import Loading from 'components/Loading';
 import Footer from 'components/footer/Footer';
 import PostEditor from 'components/postWrite/PostEditor';
 import ChatIcon from './../components/chat-icon/ChatIcon';
-import { getCategories } from 'api/category-api';
+import Title from 'components/postWrite/Title';
+import Price from 'components/postWrite/Price';
 
 export default function LendWriting() {
   // 빌려드립니다 글쓰기
@@ -28,14 +32,13 @@ export default function LendWriting() {
   const { imgFiles } = imageUploadStore();
   const { tradeWay } = tradeWayStore();
   const { description } = descriptionStore();
+  const { title } = titleStore();
+  const { price } = priceStore();
 
   // Ref
-  const productNameRef = useRef<HTMLInputElement>(null);
-  const priceDayRef = useRef<HTMLInputElement>(null);
   const categoryRef = useRef<HTMLSelectElement>(null);
 
   const navigate = useNavigate();
-
   // 사용자 가져오기
   const { data, isLoading } = useQuery(['userData'], () => getMyInfo(), {
     onError: () => {
@@ -67,14 +70,6 @@ export default function LendWriting() {
     );
   }
 
-  // 제목 글자수 제한
-  function checkWordsNumber(e: React.FocusEvent<HTMLInputElement>) {
-    if (e.currentTarget.value.length > 20) {
-      alert('상품명은 20자 이내로 입력 가능합니다.');
-      e.currentTarget.value = e.currentTarget.value.slice(0, 20);
-    }
-  }
-
   // 서버로 post 보내기, useMutate 정의
   const postData = useMutation(
     (formData: FormData) =>
@@ -96,7 +91,6 @@ export default function LendWriting() {
   if (isLoading) {
     return <Loading />;
   }
-
   // formData 넣기
   const formData = new FormData();
 
@@ -107,14 +101,14 @@ export default function LendWriting() {
   const writeData = {
     postType: 'lend',
     category: filteredCategory[0]?._id,
-    author: data?.data?._id,
-    lender: data?.data?._id,
-    title: productNameRef.current?.value,
+    author: data?._id,
+    lender: data?._id,
+    title: title,
     description: description,
     stateOfTransaction: 0,
-    address: data?.data?.address1,
+    address: data?.address1,
     price: {
-      priceDay: Number(priceDayRef.current?.value),
+      priceDay: price,
     },
     tradeWay: tradeWay,
     hashtag: hashTags,
@@ -128,16 +122,13 @@ export default function LendWriting() {
   // 등록하기 클릭 시 event
   function handleButtonClick(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    if (filteredCategory.length === 0 || productNameRef.current?.value === '') {
+    if (filteredCategory.length === 0 || title === '') {
       alert('카테고리와 이름을 입력해주세요.');
       return;
     } else if (imgFiles.length === 0) {
       alert('상품 사진을 등록해주세요. 3장까지 등록가능합니다.');
       return;
-    } else if (
-      !priceDayRef.current?.value ||
-      priceDayRef.current?.value === '0'
-    ) {
+    } else if (!price || price === 0) {
       alert('요금을 입력해주세요.');
       return;
     } else if (description === '') {
@@ -171,13 +162,7 @@ export default function LendWriting() {
                   </option>
                 ))}
               </select>
-              <input
-                onBlur={checkWordsNumber}
-                ref={productNameRef}
-                className="grow p-3 ml-2 w-9/12 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
-                type="text"
-                placeholder="상품명은 20자까지만 입력 가능합니다."
-              />
+              <Title />
             </section>
 
             {/* 사진 등록 section */}
@@ -185,16 +170,7 @@ export default function LendWriting() {
 
             {/* 요금 section */}
             <section className="flex items-center mb-4">
-              <div className="w-[100px] p-3 text-center">요금</div>
-              <input
-                ref={priceDayRef}
-                type="number"
-                className="p-3 mx-2 w-54 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
-              />
-
-              <span className="mr-9">
-                원<span className="text-[13px]"> /일</span>
-              </span>
+              <Price />
               {/* 거래방법 section */}
               <TradeWay />
             </section>
