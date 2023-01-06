@@ -9,7 +9,7 @@ import Footer from 'components/footer/Footer';
 import { UserType } from 'types/userType';
 import { getUserById } from '../api/user-api';
 import { apiReports } from 'api/report-api';
-import RecentPosts from 'components/userInfo/\bRecentPosts';
+import RecentPosts from 'components/userInfo/RecentPosts';
 
 export default function UserInformation() {
   // url id 받기
