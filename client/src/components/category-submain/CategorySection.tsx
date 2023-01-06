@@ -1,30 +1,33 @@
 import React from 'react';
-import SubmainLendItemCard from './SubmainLendItemCard';
-import { HiArrowRight } from 'react-icons/hi';
 import { useQuery } from '@tanstack/react-query';
-import api from '../../api/customAxios';
 import { useNavigate } from 'react-router-dom';
-import Loading from '../Loading';
+import api from '../../api/customAxios';
 import { PostDataType } from 'types/productType';
+import Loading from '../Loading';
+import SubmainItemCard from './SubmainItemCard';
+import { HiArrowRight } from 'react-icons/hi';
 
 type ItemListProps = {
+  type: string;
   category: { _id: string; name: string };
   idx: number;
   sectionRef: React.ForwardedRef<HTMLElement | null>;
 };
 
-export default function CategorySectionLend({
+export default function CategorySection({
+  type,
   category,
   idx,
   sectionRef,
 }: ItemListProps) {
   const navigate = useNavigate();
-  const { isLoading, data: categoryLendItems } = useQuery(
-    [`categoryLendItems/${category._id}`],
+  const { isLoading, isError, data } = useQuery(
+    [`category${type}Items/${category._id}`],
     async () => {
-      return api.get(
-        `/product/page?&postType=lend&per=4&page=1&stateOfTransaction=0&category=${category._id}`,
+      const res = await api.get(
+        `/product/page?&postType=${type}&per=4&page=1&stateOfTransaction=0&category=${category._id}`,
       );
+      return res.data;
     },
     {
       refetchOnWindowFocus: false,
@@ -47,7 +50,7 @@ export default function CategorySectionLend({
           <button
             className="flex justify-center items-center text-white text-lg font-extrabold hover:scale-125 ease-out duration-300"
             onClick={() => {
-              navigate(`/products/lend/${category._id}`);
+              navigate(`/products/${type}/${category._id}`);
             }}
           >
             <span className="mr-1">더보기</span>
@@ -57,10 +60,11 @@ export default function CategorySectionLend({
           </button>
         </header>
         <div className="flex justify-center">
-          {categoryLendItems?.data.docs.map((item: PostDataType) => (
-            <SubmainLendItemCard
+          {data.docs.map((item: PostDataType) => (
+            <SubmainItemCard
               key={item._id}
               item={item}
+              type={type}
               categoryName={category.name}
             />
           ))}
