@@ -1,9 +1,9 @@
 import { useRef, useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import './category.css';
-import CategorySectionBorrow from './CategorySectionBorrow';
-import Loading from '../Loading';
 import { getCategories } from 'api/category-api';
+import './category.css';
+import CategorySection from './CategorySection';
+import Loading from '../Loading';
 
 export default function BorrowCategory() {
   const [scrollEvent, setScrollEvent] = useState(false);
@@ -79,8 +79,9 @@ export default function BorrowCategory() {
         {categories.map(
           (category: { _id: string; name: string }, idx: number) => {
             return (
-              <CategorySectionBorrow
+              <CategorySection
                 key={category._id}
+                type="borrow"
                 idx={idx}
                 category={category}
                 sectionRef={(el) => (sectionRef.current[idx] = el)}

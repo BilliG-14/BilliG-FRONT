@@ -8,27 +8,26 @@ import SubmainItemCard from './SubmainItemCard';
 import { HiArrowRight } from 'react-icons/hi';
 
 type ItemListProps = {
+  type: string;
   category: { _id: string; name: string };
   idx: number;
   sectionRef: React.ForwardedRef<HTMLElement | null>;
 };
 
-export default function CategorySectionBorrow({
+export default function CategorySection({
+  type,
   category,
   idx,
   sectionRef,
 }: ItemListProps) {
   const navigate = useNavigate();
-  const {
-    isLoading,
-    isError,
-    data: categoryBorrowItems,
-  } = useQuery(
-    [`categoryBorrowItems/${category._id}`],
+  const { isLoading, isError, data } = useQuery(
+    [`category${type}Items/${category._id}`],
     async () => {
-      return api.get(
-        `/product/page?&postType=borrow&per=4&page=1&stateOfTransaction=0&category=${category._id}`,
+      const res = await api.get(
+        `/product/page?&postType=${type}&per=4&page=1&stateOfTransaction=0&category=${category._id}`,
       );
+      return res.data;
     },
     {
       refetchOnWindowFocus: false,
@@ -51,7 +50,7 @@ export default function CategorySectionBorrow({
           <button
             className="flex justify-center items-center text-white text-lg font-extrabold hover:scale-125 ease-out duration-300"
             onClick={() => {
-              navigate(`/products/borrow/${category._id}`);
+              navigate(`/products/${type}/${category._id}`);
             }}
           >
             <span className="mr-1">더보기</span>
@@ -61,11 +60,11 @@ export default function CategorySectionBorrow({
           </button>
         </header>
         <div className="flex justify-center">
-          {categoryBorrowItems?.data.docs.map((item: PostDataType) => (
+          {data.docs.map((item: PostDataType) => (
             <SubmainItemCard
               key={item._id}
               item={item}
-              type="borrow"
+              type={type}
               categoryName={category.name}
             />
           ))}
