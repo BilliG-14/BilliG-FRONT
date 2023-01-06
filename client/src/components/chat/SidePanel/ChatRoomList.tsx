@@ -12,11 +12,13 @@ function ChatRoomList({
 }) {
   // url id 받기
   const { roomId } = useParams();
-  const [activeChatRoomId, setActiveChatRoomId]: any = useState(roomId);
+  const [activeChatRoomId, setActiveChatRoomId] = useState<string | undefined>(
+    roomId,
+  );
   const navigate = useNavigate();
 
   /** 채팅방 변경 */
-  const changeChatRoom = (room: any) => {
+  const changeChatRoom = (room: ChatRoomType) => {
     try {
       /** 채팅방 이동 전 소켓 이벤트 삭제 */
       socket.removeAllListeners(`message${activeChatRoomId}`);
@@ -25,7 +27,6 @@ function ChatRoomList({
     }
     /** 현재 선택한 채팅방 정보 가져옴 */
     setActiveChatRoomId(room._id);
-
     navigate(`/chat/${room._id}`);
   };
 
@@ -34,7 +35,7 @@ function ChatRoomList({
     chatRoomList &&
     chatRoomList.length > 0 &&
     /** chatRooms의 타입을 정해줍시다! */
-    chatRoomList.map((room: any) => (
+    chatRoomList.map((room: ChatRoomType) => (
       <li
         key={room._id}
         className={
@@ -46,11 +47,11 @@ function ChatRoomList({
       >
         # {room.another.nickName}님의 채팅방
         {/* <span className="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full ">
-          채팅 알림 아이콘
-           {getNotificationCount(room)}
+         {getNotificationCount(room)} 
         </span> */}
       </li>
     ));
+
   return (
     <div className="mt-5 px-2 h-[550px]">
       <div className="relative w-full flex flex-col h-[450px]">

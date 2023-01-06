@@ -3,8 +3,10 @@ import { useParams } from 'react-router-dom';
 import { getChatRoom } from 'api/chat-api';
 import { MessageType } from 'types/chatType';
 import { UserType } from 'types/userType';
-function MainPanel({ user, socket }: { user: UserType; socket: any }) {
+import { Socket } from 'socket.io-client';
+function MainPanel({ user, socket }: { user: UserType; socket: Socket }) {
   const scrollRef = useRef<HTMLInputElement>(null);
+  const inputOpenImageRef = useRef<HTMLInputElement>(null);
   const [messages, setMessages] = useState<MessageType[]>([]);
   const [currentRoom, setCurrentRoom] = useState('');
   const formRef = useRef<HTMLFormElement | null>(null);
@@ -89,6 +91,16 @@ function MainPanel({ user, socket }: { user: UserType; socket: any }) {
       setTextareaHeight(arrayLength - 1);
     }
   };
+
+  /**이미지 업로드 */
+  const handleOpenImageRef = () => {
+    inputOpenImageRef?.current?.click();
+  };
+  const handleUploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // const file = e.target.files[0];
+    // console.log(e.target.files[0]);
+  };
+
   return (
     <div className="h-full w-full outline outline-1 outline-gray-200 relative rounded-r-lg">
       {currentRoom ? (
@@ -139,6 +151,20 @@ function MainPanel({ user, socket }: { user: UserType; socket: any }) {
                 >
                   전송
                 </button>
+                <button
+                  onClick={handleOpenImageRef}
+                  className="message-form-button"
+                  style={{ width: '100%' }}
+                >
+                  UPLOAD
+                </button>
+                <input
+                  accept="image/jpeg, image/png"
+                  style={{ display: 'none' }}
+                  type="file"
+                  ref={inputOpenImageRef}
+                  onChange={handleUploadImage}
+                />
               </div>
             </form>
           </div>
