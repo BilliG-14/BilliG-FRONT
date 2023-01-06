@@ -103,7 +103,21 @@ interface UpdateImageUploadState {
 
 export const UpdateImageUploadStore = create<UpdateImageUploadState>((set) => ({
   imgUrlList: [],
-  setImgUrlList: (urlList) => set((state) => ({ imgUrlList: urlList })),
+  setImgUrlList: (imgUrl) => set(() => ({ imgUrlList: imgUrl })),
+}));
+
+// 요금 store
+interface PriceState {
+  price: number;
+  setPrice: (price: number) => void;
+}
+
+export const priceStore = create<PriceState>((set) => ({
+  price: 0,
+  setPrice: (price) =>
+    set(() => ({
+      price,
+    })),
 }));
 
 // 거래방법 store

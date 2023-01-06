@@ -13,7 +13,6 @@ export default function Title() {
 
   function changeTitle(e: React.ChangeEvent<HTMLInputElement>) {
     setTitle(e.currentTarget.value);
-    console.log(e.currentTarget.value);
   }
 
   return (
