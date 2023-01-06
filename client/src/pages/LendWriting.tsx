@@ -9,8 +9,10 @@ import {
   hashTagStore,
   CategoryType,
   descriptionStore,
+  titleStore,
 } from './../store/PostWriteStore';
 import { getMyInfo } from './../api/user-api';
+import { getCategories } from 'api/category-api';
 
 import HashTagSection from '../components/postWrite/HashTag';
 import ImageUpload from '../components/postWrite/ImageUpload';
@@ -19,7 +21,7 @@ import Loading from 'components/Loading';
 import Footer from 'components/footer/Footer';
 import PostEditor from 'components/postWrite/PostEditor';
 import ChatIcon from './../components/chat-icon/ChatIcon';
-import { getCategories } from 'api/category-api';
+import Title from 'components/postWrite/Title';
 
 export default function LendWriting() {
   // 빌려드립니다 글쓰기
@@ -28,9 +30,9 @@ export default function LendWriting() {
   const { imgFiles } = imageUploadStore();
   const { tradeWay } = tradeWayStore();
   const { description } = descriptionStore();
+  const { title } = titleStore();
 
   // Ref
-  const productNameRef = useRef<HTMLInputElement>(null);
   const priceDayRef = useRef<HTMLInputElement>(null);
   const categoryRef = useRef<HTMLSelectElement>(null);
 
@@ -107,12 +109,12 @@ export default function LendWriting() {
   const writeData = {
     postType: 'lend',
     category: filteredCategory[0]?._id,
-    author: data?.data?._id,
-    lender: data?.data?._id,
-    title: productNameRef.current?.value,
+    author: data?._id,
+    lender: data?._id,
+    title: title,
     description: description,
     stateOfTransaction: 0,
-    address: data?.data?.address1,
+    address: data?.address1,
     price: {
       priceDay: Number(priceDayRef.current?.value),
     },
@@ -128,7 +130,7 @@ export default function LendWriting() {
   // 등록하기 클릭 시 event
   function handleButtonClick(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    if (filteredCategory.length === 0 || productNameRef.current?.value === '') {
+    if (filteredCategory.length === 0 || title === '') {
       alert('카테고리와 이름을 입력해주세요.');
       return;
     } else if (imgFiles.length === 0) {
@@ -171,13 +173,7 @@ export default function LendWriting() {
                   </option>
                 ))}
               </select>
-              <input
-                onBlur={checkWordsNumber}
-                ref={productNameRef}
-                className="grow p-3 ml-2 w-9/12 h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
-                type="text"
-                placeholder="상품명은 20자까지만 입력 가능합니다."
-              />
+              <Title />
             </section>
 
             {/* 사진 등록 section */}

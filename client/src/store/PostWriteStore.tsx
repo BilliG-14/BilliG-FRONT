@@ -34,6 +34,20 @@ export const categoryStore = create<CategoryState>((set) => ({
     })),
 }));
 
+// 제목 store
+interface TitleState {
+  title: string | undefined;
+  setTitle: (title: string | undefined) => void;
+}
+
+export const titleStore = create<TitleState>((set) => ({
+  title: '',
+  setTitle: (title) =>
+    set(() => ({
+      title,
+    })),
+}));
+
 // 상세설명 store
 interface DescriptionState {
   description: string | undefined;
