@@ -5,7 +5,6 @@ import { getDealList } from '../../api/product-api';
 import { PostDataType } from 'types/productType';
 // components
 import ItemCard from './ItemCard';
-import Loading from '../Loading';
 import { Pagination } from 'components/Pagination';
 
 interface MyPostDealListProps {
@@ -23,17 +22,16 @@ export default function MyPostDealList({
 }: MyPostDealListProps) {
   const [page, setPage] = useState(1);
 
-  const { isLoading, isError, data } = useQuery(
+  const { data } = useQuery(
     [`${param}/${page}`, `${localStorage.getItem('userId')}`],
     async () => getDealList(target, page, stateOfTransaction, postType),
     {
       refetchOnWindowFocus: false,
       staleTime: 60 * 1000 * 5,
+      suspense: true,
     },
   );
 
-  if (isLoading) return <Loading />;
-  console.log(data);
   return (
     <div className="w-4/5 p-12">
       {data?.docs.length > 0 ? (

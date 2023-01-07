@@ -12,7 +12,6 @@ import ChangePassword from './ChangePassword';
 import ChangePawsswordForm from './ChangePawsswordForm';
 import DeleteUser from './DeleteUser';
 import DeleteUserForm from './DeleteUserForm';
-import Loading from '../Loading';
 
 export default function MyinfoPage() {
   const { toggleIntro } = useMyinfoEditStore();
@@ -20,11 +19,7 @@ export default function MyinfoPage() {
   const { isDeleteUser } = useDeleteUserStore();
   const { togglePwfalse } = usePasswordEditStore();
   const navigate = useNavigate();
-  const {
-    isLoading,
-    isError,
-    data: userInfo,
-  } = useQuery(
+  const { data: userInfo } = useQuery(
     ['userInfo', `${localStorage.getItem('userId')}`],
     () => getUserInfoByuserId(),
     {
@@ -32,8 +27,6 @@ export default function MyinfoPage() {
       staleTime: 60 * 1000 * 5,
     },
   );
-
-  if (isLoading) return <Loading />;
 
   const {
     name,
