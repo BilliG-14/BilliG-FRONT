@@ -107,3 +107,24 @@ export type PreviewImg = {
 export type PropsType = {
   bringImgUrlList: string[];
 };
+
+export type WriteDataType = {
+  postType: string;
+  category: string | undefined;
+  author: string | undefined;
+  lender?: string | undefined;
+  borrower?: string | undefined;
+  title: string | undefined;
+  description: string | undefined;
+  stateOfTransaction: number;
+  address: string | undefined;
+  price: {
+    priceDay: number | undefined;
+  };
+  tradeWay: { direct: boolean | undefined; delivery: boolean | undefined };
+  hashtag: string[];
+  period: {
+    start: string | undefined;
+    end: string | undefined;
+  };
+};
