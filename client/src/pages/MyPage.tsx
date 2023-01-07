@@ -2,9 +2,11 @@ import { Route, Routes } from 'react-router-dom';
 // components
 import MyInfoHeader from 'components/myinfo/MyInfoHeader';
 import MyInfoSideBar from '../components/myinfo/MyinfoSideBar';
-import MyinfoPage from 'components/myinfo/MyinfoPage';
-import EditMyinfoPage from '../components/myinfo/EditMyinfoPage';
-import MyPostDealList from '../components/myinfo/MyPostDealList';
+import { lazy } from 'react';
+
+const MyinfoPage = lazy(() => import('components/myinfo/MyinfoPage'));
+const EditMyinfoPage = lazy(() => import('components/myinfo/EditMyinfoPage'));
+const MyPostDealList = lazy(() => import('components/myinfo/MyPostDealList'));
 
 export default function MyPage() {
   return (
