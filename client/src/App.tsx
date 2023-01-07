@@ -6,20 +6,6 @@ import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 import { useIsLoginStore } from 'store/LoginJoinStore';
 import api from './api/customAxios';
-// pages
-// import Main from 'pages/Main';
-// import LoginJoin from './pages/LoginJoin';
-// import AdminMain from './pages/AdminMain';
-// import BorrowWriting from './pages/BorrowWriting';
-// import LendWriting from './pages/LendWriting';
-// import PostDetail from './pages/PostDetail';
-// import SearchPage from './pages/SearchPage';
-// import MyPage from './pages/MyPage';
-// import UserInformation from 'pages/UserInformation';
-// import PostUpdate from './pages/PostUpdate';
-// import ProductsList from 'pages/ProductsList';
-// import Notices from 'pages/Notices';
-// import ReadNotice from 'pages/Notice';
 // componets
 import ScrollToTop from 'components/ScrollToTop';
 import NotFound from 'components/NotFound';
@@ -28,12 +14,12 @@ import TrueNav from './components/nav/TrueNav';
 import Nav from './components/nav/Nav';
 import Chat from './components/chat/Chat';
 
+// pages
 const Main = lazy(() => import('./pages/Main'));
 const MyPage = lazy(() => import('./pages/MyPage'));
 const SubmainPage = lazy(() => import('./pages/SubmainPage'));
 const ProductsList = lazy(() => import('./pages/ProductsList'));
-const LendWriting = lazy(() => import('./pages/LendWriting'));
-const BorrowWriting = lazy(() => import('./pages/BorrowWriting'));
+const Writing = lazy(() => import('./pages/Writing'));
 const PostUpdate = lazy(() => import('./pages/PostUpdate'));
 const PostDetail = lazy(() => import('./pages/PostDetail'));
 const SearchPage = lazy(() => import('./pages/SearchPage'));
@@ -104,8 +90,7 @@ function App() {
                 <Route path="/mypage/*" element={<MyPage />} />
                 <Route path="/login" element={<LoginJoin />} />
                 <Route path="/admin" element={<AdminMain />} />
-                <Route path="/write/lend" element={<LendWriting />} />
-                <Route path="/write/borrow" element={<BorrowWriting />} />
+                <Route path="/write" element={<Writing />} />
                 <Route path="/search" element={<SearchPage />} />
                 <Route path="/read/:id" element={<PostDetail />} />
                 <Route path="/update/:id" element={<PostUpdate />} />

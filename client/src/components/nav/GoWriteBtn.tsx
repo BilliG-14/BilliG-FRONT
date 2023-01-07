@@ -1,18 +1,12 @@
-import React, { Dispatch, SetStateAction } from 'react';
-
-export default function GoWriteBtn({
-  setOnWriteBtn,
-}: {
-  setOnWriteBtn: Dispatch<SetStateAction<boolean>>;
-}) {
+import { useNavigate } from 'react-router-dom';
+export default function GoWriteBtn() {
+  const navigate = useNavigate();
   return (
     <div className="mr-5">
       <button
-        className="text-xl font-bold hover:text-b-yellow hover:ease-in hover:opacity-0 duration-300"
-        onMouseOver={() => {
-          setTimeout(() => {
-            setOnWriteBtn((prev) => !prev);
-          }, 400);
+        className="text-xl font-bold hover:text-b-yellow hover:ease-in duration-300"
+        onClick={() => {
+          navigate('/write');
         }}
       >
         물품 등록하기

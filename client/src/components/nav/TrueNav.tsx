@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import api from '../../api/customAxios';
 import { useNavigate } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
@@ -6,7 +5,6 @@ import { useIsLoginStore } from 'store/LoginJoinStore';
 import { usePasswordEditStore } from 'store/MypageStore';
 // components
 import GoWriteBtn from './GoWriteBtn';
-import WriteBtns from './WriteBtns';
 import MenuButton from 'components/MenuButton/MenuButton';
 // react icons
 import { FiSearch } from 'react-icons/fi';
@@ -17,7 +15,6 @@ import Loading from 'components/Loading';
 import { getUserInfoByuserId } from 'api/user-api';
 
 function TrueNav() {
-  const [onWriteBtn, setOnWriteBtn] = useState(false);
   const navigate = useNavigate();
   const { setIsLoginFalse } = useIsLoginStore();
   const { togglePwfalse } = usePasswordEditStore();
@@ -105,11 +102,7 @@ function TrueNav() {
           </div>
         </div>
         <div className="flex justify-end text-3xl mt-5">
-          {onWriteBtn ? (
-            <WriteBtns setOnWriteBtn={setOnWriteBtn} />
-          ) : (
-            <GoWriteBtn setOnWriteBtn={setOnWriteBtn} />
-          )}
+          <GoWriteBtn />
           <button
             type="button"
             className="search hover:text-b-yellow hover: ease-in-out duration-300"
