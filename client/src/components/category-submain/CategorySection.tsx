@@ -1,11 +1,9 @@
-import React, { Suspense } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import api from '../../api/customAxios';
 import { PostDataType } from 'types/productType';
-import Loading from '../Loading';
-import SubmainItemCard from './SubmainItemCard';
 import { HiArrowRight } from 'react-icons/hi';
+import SubmainItemCard from './SubmainItemCard';
 
 type ItemListProps = {
   type: string;
@@ -59,16 +57,14 @@ export default function CategorySection({
           </button>
         </header>
         <div className="flex justify-center">
-          <Suspense fallback={<Loading />}>
-            {data?.docs.map((item: PostDataType) => (
-              <SubmainItemCard
-                key={item._id}
-                item={item}
-                type={type}
-                categoryName={category.name}
-              />
-            ))}
-          </Suspense>
+          {data?.docs.map((item: PostDataType) => (
+            <SubmainItemCard
+              key={item._id}
+              item={item}
+              type={type}
+              categoryName={category.name}
+            />
+          ))}
         </div>
       </div>
     </section>

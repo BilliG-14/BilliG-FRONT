@@ -5,6 +5,7 @@ import api from '../../api/customAxios';
 import { useNavigate } from 'react-router-dom';
 import Loading from '../Loading';
 import { getUserInfoByuserId } from 'api/user-api';
+import { UpdateInfo } from 'types/userType';
 
 export default function EditMyinfoPage() {
   // * image state
@@ -12,15 +13,6 @@ export default function EditMyinfoPage() {
     `${process.env.PUBLIC_URL}/img/default_user.png`,
   );
   const [imagePath, setImagePath] = useState('');
-
-  type UpdateInfo = {
-    nickName: string | undefined;
-    intro: string | undefined;
-    image: string | undefined;
-    phoneNumber: string | undefined;
-    address1: string | undefined;
-    address2: string | undefined;
-  };
 
   // * Ref
   const imgRef = useRef<HTMLInputElement | null>(null);

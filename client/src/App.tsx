@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from 'react';
+import React, { lazy, Suspense, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
@@ -17,7 +17,6 @@ import SearchPage from './pages/SearchPage';
 import MyPage from './pages/MyPage';
 import UserInformation from 'pages/UserInformation';
 import PostUpdate from './pages/PostUpdate';
-import SubmainPage from './pages/SubmainPage';
 import ProductsList from 'pages/ProductsList';
 import Notices from 'pages/Notices';
 import ReadNotice from 'pages/Notice';
@@ -28,6 +27,8 @@ import Loading from 'components/Loading';
 import TrueNav from './components/nav/TrueNav';
 import Nav from './components/nav/Nav';
 import Chat from './components/chat/Chat';
+
+const SubmainPage = lazy(() => import('./pages/SubmainPage'));
 
 const GlobalStyle = createGlobalStyle`
   ${reset};
@@ -46,20 +47,11 @@ declare global {
 }
 
 function App() {
-  const {
-    isLogin,
-    isLoading,
-    setIsLoginTrue,
-    setIsLoginFalse,
-    setIsLoadingTrue,
-    setIsLoadingFalse,
-  } = useIsLoginStore();
+  const { isLogin, setIsLoginTrue, setIsLoginFalse } = useIsLoginStore();
 
   useEffect(() => {
-    setIsLoadingFalse();
     const token = localStorage.getItem('token');
     if (!token) {
-      setIsLoadingTrue();
       return;
     }
 
@@ -79,10 +71,7 @@ function App() {
     };
 
     getUserInfo();
-    setIsLoadingTrue();
   }, [isLogin]);
-
-  if ((!isLoading && !isLogin) || (!isLoading && isLogin)) return <Loading />;
 
   return (
     <React.Fragment>
