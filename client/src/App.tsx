@@ -10,8 +10,7 @@ import api from './api/customAxios';
 import Main from 'pages/Main';
 import LoginJoin from './pages/LoginJoin';
 import AdminMain from './pages/AdminMain';
-import BorrowWriting from './pages/BorrowWriting';
-import LendWriting from './pages/LendWriting';
+import Writing from './pages/Writing';
 import PostDetail from './pages/PostDetail';
 import SearchPage from './pages/SearchPage';
 import MyPage from './pages/MyPage';
@@ -101,8 +100,7 @@ function App() {
               <Route path="/mypage/*" element={<MyPage />} />
               <Route path="/login" element={<LoginJoin />} />
               <Route path="/admin" element={<AdminMain />} />
-              <Route path="/write/lend" element={<LendWriting />} />
-              <Route path="/write/borrow" element={<BorrowWriting />} />
+              <Route path="/write" element={<Writing />} />
               <Route path="/search" element={<SearchPage />} />
               <Route path="/read/:id" element={<PostDetail />} />
               <Route path="/update/:id" element={<PostUpdate />} />
