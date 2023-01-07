@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface SlideProps {
@@ -17,7 +16,7 @@ export default function Slide({ idx, card, PrevSlide, NextSlide }: SlideProps) {
         className="h-[435px] 2xl:w-[1535px] xl:w-[1280px] lg:w-[1024px] md:w-[768px] sm:w-[640px] flex-none relative"
       >
         <img
-          src={`${process.env.PUBLIC_URL}/img/carousel${idx + 1}.png`}
+          src={`${process.env.PUBLIC_URL}/img/carousel${idx + 1}.webp`}
           alt="IT"
           className="w-full h-full cursor-pointer object-contain"
           onClick={() => {
