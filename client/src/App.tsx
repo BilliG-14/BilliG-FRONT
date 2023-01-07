@@ -7,19 +7,19 @@ import reset from 'styled-reset';
 import { useIsLoginStore } from 'store/LoginJoinStore';
 import api from './api/customAxios';
 // pages
-import Main from 'pages/Main';
-import LoginJoin from './pages/LoginJoin';
-import AdminMain from './pages/AdminMain';
-import BorrowWriting from './pages/BorrowWriting';
-import LendWriting from './pages/LendWriting';
-import PostDetail from './pages/PostDetail';
-import SearchPage from './pages/SearchPage';
-import MyPage from './pages/MyPage';
-import UserInformation from 'pages/UserInformation';
-import PostUpdate from './pages/PostUpdate';
-import ProductsList from 'pages/ProductsList';
-import Notices from 'pages/Notices';
-import ReadNotice from 'pages/Notice';
+// import Main from 'pages/Main';
+// import LoginJoin from './pages/LoginJoin';
+// import AdminMain from './pages/AdminMain';
+// import BorrowWriting from './pages/BorrowWriting';
+// import LendWriting from './pages/LendWriting';
+// import PostDetail from './pages/PostDetail';
+// import SearchPage from './pages/SearchPage';
+// import MyPage from './pages/MyPage';
+// import UserInformation from 'pages/UserInformation';
+// import PostUpdate from './pages/PostUpdate';
+// import ProductsList from 'pages/ProductsList';
+// import Notices from 'pages/Notices';
+// import ReadNotice from 'pages/Notice';
 // componets
 import ScrollToTop from 'components/ScrollToTop';
 import NotFound from 'components/NotFound';
@@ -28,7 +28,20 @@ import TrueNav from './components/nav/TrueNav';
 import Nav from './components/nav/Nav';
 import Chat from './components/chat/Chat';
 
+const Main = lazy(() => import('./pages/Main'));
+const MyPage = lazy(() => import('./pages/MyPage'));
 const SubmainPage = lazy(() => import('./pages/SubmainPage'));
+const ProductsList = lazy(() => import('./pages/ProductsList'));
+const LendWriting = lazy(() => import('./pages/LendWriting'));
+const BorrowWriting = lazy(() => import('./pages/BorrowWriting'));
+const PostUpdate = lazy(() => import('./pages/PostUpdate'));
+const PostDetail = lazy(() => import('./pages/PostDetail'));
+const SearchPage = lazy(() => import('./pages/SearchPage'));
+const LoginJoin = lazy(() => import('./pages/LoginJoin'));
+const AdminMain = lazy(() => import('./pages/AdminMain'));
+const Notices = lazy(() => import('./pages/Notices'));
+const ReadNotice = lazy(() => import('./pages/Notice'));
+const UserInformation = lazy(() => import('./pages/UserInformation'));
 
 const GlobalStyle = createGlobalStyle`
   ${reset};
