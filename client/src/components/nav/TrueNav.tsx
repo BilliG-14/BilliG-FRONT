@@ -33,6 +33,7 @@ function TrueNav() {
     async () => getMyInfo(),
     {
       refetchOnWindowFocus: false,
+      useErrorBoundary: true,
     },
   );
 

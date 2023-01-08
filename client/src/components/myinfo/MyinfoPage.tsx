@@ -25,6 +25,8 @@ export default function MyinfoPage() {
     {
       refetchOnWindowFocus: false,
       staleTime: 60 * 1000 * 5,
+      useErrorBoundary: true,
+      suspense: true,
     },
   );
 

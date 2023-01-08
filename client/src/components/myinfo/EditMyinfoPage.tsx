@@ -26,16 +26,14 @@ export default function EditMyinfoPage() {
   const navigate = useNavigate();
 
   // * useQuery
-  const {
-    isLoading,
-    isError,
-    data: userInfo,
-  } = useQuery(
+  const { data: userInfo } = useQuery(
     ['userInfo', `${localStorage.getItem('userId')}`],
     () => getUserInfoByuserId(),
     {
       refetchOnWindowFocus: false,
       staleTime: 60 * 1000 * 5,
+      useErrorBoundary: true,
+      suspense: true,
     },
   );
   // * useMutation
@@ -86,7 +84,6 @@ export default function EditMyinfoPage() {
     imgRef.current?.click();
   };
 
-  if (isLoading) return <Loading />;
   const {
     name,
     email,

@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useEffect } from 'react';
+import React, { lazy, Suspense, useEffect, useRef } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
@@ -37,13 +37,7 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      useErrorBoundary: true,
-    },
-  },
-});
+const queryClient = new QueryClient();
 
 // 지도 관련 설정
 declare global {
@@ -53,8 +47,18 @@ declare global {
 }
 
 function App() {
-  const { isLogin, setIsLoginTrue, setIsLoginFalse } = useIsLoginStore();
+  const queryClientRef = useRef<QueryClient>();
+  if (!queryClientRef.current) {
+    queryClientRef.current = new QueryClient({
+      defaultOptions: {
+        queries: {
+          useErrorBoundary: true,
+        },
+      },
+    });
+  }
 
+  const { isLogin, setIsLoginTrue, setIsLoginFalse } = useIsLoginStore();
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {

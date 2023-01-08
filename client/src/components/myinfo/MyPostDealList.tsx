@@ -28,6 +28,7 @@ export default function MyPostDealList({
     {
       refetchOnWindowFocus: false,
       staleTime: 60 * 1000 * 5,
+      useErrorBoundary: true,
       suspense: true,
     },
   );
