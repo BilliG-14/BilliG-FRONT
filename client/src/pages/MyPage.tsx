@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 // components
 import MyInfoHeader from 'components/myinfo/MyInfoHeader';
 import MyInfoSideBar from '../components/myinfo/MyinfoSideBar';
@@ -10,13 +10,14 @@ const EditMyinfoPage = lazy(() => import('components/myinfo/EditMyinfoPage'));
 const MyPostDealList = lazy(() => import('components/myinfo/MyPostDealList'));
 
 export default function MyPage() {
+  const { pathname } = useLocation();
   return (
     <div className="h-full w-screen max-w-screen-lg m-auto">
       <MyInfoHeader />
       <section className="max-w-screen-lg h-full">
         <div className="flex h-full">
           <MyInfoSideBar />
-          <ErrorBoundary>
+          <ErrorBoundary key={pathname}>
             <Suspense fallback={<Loading />}>
               <Routes>
                 <Route path="/" element={<MyinfoPage />} />

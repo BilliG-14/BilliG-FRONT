@@ -13,6 +13,7 @@ import Loading from 'components/Loading';
 import TrueNav from './components/nav/TrueNav';
 import Nav from './components/nav/Nav';
 import Chat from './components/chat/Chat';
+import ErrorBoundary from 'components/ErrorBoundary';
 
 // pages
 const Main = lazy(() => import('./pages/Main'));
@@ -36,7 +37,13 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      useErrorBoundary: true,
+    },
+  },
+});
 
 // 지도 관련 설정
 declare global {
@@ -78,38 +85,40 @@ function App() {
         <GlobalStyle />
         <div className="App h-screen w-screen">
           <BrowserRouter>
-            <div className="w-screen max-w-screen-lg m-auto">
-              {isLogin ? <TrueNav /> : <Nav />}
-            </div>
-            {/* ScrollToTop : navigate했을 때, 스크롤 위치가 그대로 적용되는 문제 방지*/}
-            <ScrollToTop />
-            <Suspense fallback={<Loading />}>
-              <Routes>
-                <Route path="/" element={<Main />} />
-                <Route path="/submain/*" element={<SubmainPage />} />
-                <Route path="/mypage/*" element={<MyPage />} />
-                <Route path="/login" element={<LoginJoin />} />
-                <Route path="/admin" element={<AdminMain />} />
-                <Route path="/write" element={<Writing />} />
-                <Route path="/search" element={<SearchPage />} />
-                <Route path="/read/:id" element={<PostDetail />} />
-                <Route path="/update/:id" element={<PostUpdate />} />
-                <Route path="/notices" element={<Notices />} />
-                <Route path="/notices/:id" element={<ReadNotice />} />
-                <Route path="/user/:id" element={<UserInformation />} />
-                <Route
-                  path="/products/lend/:categoryId"
-                  element={<ProductsList postType="lend" />}
-                />
-                <Route
-                  path="/products/borrow/:categoryId"
-                  element={<ProductsList postType="borrow" />}
-                />
-                <Route path="/chat" element={<Chat />} />
-                <Route path="/chat/:roomId" element={<Chat />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </Suspense>
+            <ErrorBoundary>
+              <Suspense fallback={<Loading />}>
+                <div className="w-screen max-w-screen-lg m-auto">
+                  {isLogin ? <TrueNav /> : <Nav />}
+                </div>
+                {/* ScrollToTop : navigate했을 때, 스크롤 위치가 그대로 적용되는 문제 방지*/}
+                <ScrollToTop />
+                <Routes>
+                  <Route path="/" element={<Main />} />
+                  <Route path="/submain/*" element={<SubmainPage />} />
+                  <Route path="/mypage/*" element={<MyPage />} />
+                  <Route path="/login" element={<LoginJoin />} />
+                  <Route path="/admin" element={<AdminMain />} />
+                  <Route path="/write" element={<Writing />} />
+                  <Route path="/search" element={<SearchPage />} />
+                  <Route path="/read/:id" element={<PostDetail />} />
+                  <Route path="/update/:id" element={<PostUpdate />} />
+                  <Route path="/notices" element={<Notices />} />
+                  <Route path="/notices/:id" element={<ReadNotice />} />
+                  <Route path="/user/:id" element={<UserInformation />} />
+                  <Route
+                    path="/products/lend/:categoryId"
+                    element={<ProductsList postType="lend" />}
+                  />
+                  <Route
+                    path="/products/borrow/:categoryId"
+                    element={<ProductsList postType="borrow" />}
+                  />
+                  <Route path="/chat" element={<Chat />} />
+                  <Route path="/chat/:roomId" element={<Chat />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </Suspense>
+            </ErrorBoundary>
           </BrowserRouter>
         </div>
         <ReactQueryDevtools initialIsOpen={false} />

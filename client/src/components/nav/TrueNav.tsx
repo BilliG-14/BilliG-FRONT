@@ -11,8 +11,7 @@ import { FiSearch } from 'react-icons/fi';
 import { FaRegSmileWink, FaClipboardList } from 'react-icons/fa';
 import { BsFilePersonFill } from 'react-icons/bs';
 import { RiLogoutCircleFill } from 'react-icons/ri';
-import Loading from 'components/Loading';
-import { getUserInfoByuserId } from 'api/user-api';
+import { getMyInfo } from 'api/user-api';
 
 function TrueNav() {
   const navigate = useNavigate();
@@ -29,15 +28,13 @@ function TrueNav() {
     navigate('/submain');
   };
 
-  const { isLoading, data: userInfo } = useQuery(
-    ['userInfo', `${localStorage.getItem('userId')}`],
-    async () => getUserInfoByuserId(),
+  const { data: userInfo } = useQuery(
+    ['myInfo', `${localStorage.getItem('userId')}`],
+    async () => getMyInfo(),
     {
       refetchOnWindowFocus: false,
     },
   );
-
-  if (isLoading) return <Loading />;
 
   return (
     <div className="flex justify-between pr-5 h-40 mt-1 select-none">
