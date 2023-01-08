@@ -4,7 +4,6 @@ import MainThirdSection from 'components/main/MainThirdSection';
 import MainButton from 'components/main/MainButton';
 import ScrollTopButton from 'components/ScrollTopButton';
 import Footer from 'components/footer/Footer';
-import DarkToggle from 'components/DarkToggle';
 
 export default function Main() {
   return (
@@ -18,7 +17,6 @@ export default function Main() {
       </div>
       <Footer />
       <ScrollTopButton />
-      <DarkToggle />
     </div>
   );
 }

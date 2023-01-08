@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import api from '../../api/customAxios';
 import { useNavigate } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
@@ -6,18 +5,15 @@ import { useIsLoginStore } from 'store/LoginJoinStore';
 import { usePasswordEditStore } from 'store/MypageStore';
 // components
 import GoWriteBtn from './GoWriteBtn';
-import WriteBtns from './WriteBtns';
 import MenuButton from 'components/MenuButton/MenuButton';
 // react icons
 import { FiSearch } from 'react-icons/fi';
 import { FaRegSmileWink, FaClipboardList } from 'react-icons/fa';
 import { BsFilePersonFill } from 'react-icons/bs';
 import { RiLogoutCircleFill } from 'react-icons/ri';
-import Loading from 'components/Loading';
-import { getUserInfoByuserId } from 'api/user-api';
+import { getMyInfo } from 'api/user-api';
 
 function TrueNav() {
-  const [onWriteBtn, setOnWriteBtn] = useState(false);
   const navigate = useNavigate();
   const { setIsLoginFalse } = useIsLoginStore();
   const { togglePwfalse } = usePasswordEditStore();
@@ -32,15 +28,14 @@ function TrueNav() {
     navigate('/submain');
   };
 
-  const { isLoading, data: userInfo } = useQuery(
-    ['userInfo', `${localStorage.getItem('userId')}`],
-    async () => getUserInfoByuserId(),
+  const { data: userInfo } = useQuery(
+    ['myInfo', `${localStorage.getItem('userId')}`],
+    async () => getMyInfo(),
     {
       refetchOnWindowFocus: false,
+      useErrorBoundary: true,
     },
   );
-
-  if (isLoading) return <Loading />;
 
   return (
     <div className="flex justify-between pr-5 h-40 mt-1 select-none">
@@ -105,11 +100,7 @@ function TrueNav() {
           </div>
         </div>
         <div className="flex justify-end text-3xl mt-5">
-          {onWriteBtn ? (
-            <WriteBtns setOnWriteBtn={setOnWriteBtn} />
-          ) : (
-            <GoWriteBtn setOnWriteBtn={setOnWriteBtn} />
-          )}
+          <GoWriteBtn />
           <button
             type="button"
             className="search hover:text-b-yellow hover: ease-in-out duration-300"

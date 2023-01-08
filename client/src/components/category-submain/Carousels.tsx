@@ -3,7 +3,7 @@ import Slide from './Slide';
 
 const TOTAL_SLIDES = 3;
 
-export default function CarouselS() {
+export default function Carousels() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const slideRef = useRef<HTMLDivElement | null>(null);
 
@@ -31,7 +31,7 @@ export default function CarouselS() {
   }, [currentSlide]);
 
   return (
-    <div className="w-[1535px] h-[435px] m-auto overflow-hidden bg-gray-400">
+    <div className="h-[435px] 2xl:w-[1535px] xl:w-[1280px] lg:w-[1024px] md:w-[768px] sm:w-[640px] m-auto overflow-hidden">
       <div ref={slideRef} className="flex">
         {url.map((card, idx) => (
           <Slide

@@ -21,7 +21,7 @@ export default function DarkToggle() {
   return (
     <div className="flex items-center justify-center fixed right-10 top-2">
       <label htmlFor="toggle" className="flex items-center cursor-pointer">
-        <div className="relative">
+        <div className="relative bg-transparent">
           <input
             type="checkbox"
             id="toggle"

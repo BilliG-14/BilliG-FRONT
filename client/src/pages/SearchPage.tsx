@@ -1,10 +1,7 @@
-import { useState } from 'react';
+import { lazy, Suspense, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import api from '../api/customAxios';
-// components
-import SearchItemCard from '../components/searchPage/SearchItemCard';
-import HashTag from 'components/tag/HashTag';
-import SearchItemCardSeleton from 'components/searchPage/SearchItemCard-skeleton';
+
 // icon
 import { FiSearch } from 'react-icons/fi';
 import { Pagination } from '../components/Pagination';
@@ -12,6 +9,11 @@ import Loading from 'components/Loading';
 // type
 import { PostDataType } from 'types/productType';
 import { HashtagType } from 'types/hashtagType';
+
+// components
+import SearchItemCard from '../components/searchPage/SearchItemCard';
+import SearchItemCardSeleton from 'components/searchPage/SearchItemCard-skeleton';
+const HashTag = lazy(() => import('components/tag/HashTag'));
 
 export default function SearchPage() {
   const [page, setPage] = useState(1);
@@ -47,7 +49,7 @@ export default function SearchPage() {
     }
   };
 
-  const { isLoading, data: hashtags } = useQuery(
+  const { isError, data: hashtags } = useQuery(
     ['hashtags'],
     async () => {
       return api.get(`/hashtag/popular?products=50&hashtags=10`);
@@ -55,9 +57,10 @@ export default function SearchPage() {
     {
       refetchOnWindowFocus: false,
       staleTime: 1000 * 60 * 5,
+      suspense: true,
     },
   );
-  if (isLoading) return <Loading />;
+
   return (
     <div className="w-screen max-w-screen-lg relative m-auto">
       {/* radio btn */}
@@ -119,13 +122,15 @@ export default function SearchPage() {
           <span>추천 검색어</span>
         </div>
         <div className="w-3/4 h-20 m-auto border">
-          <ul className="flex">
-            {hashtags?.data.map((tag: HashtagType) => (
-              <li key={tag._id}>
-                <HashTag name={tag.name} />
-              </li>
-            ))}
-          </ul>
+          <Suspense fallback={<Loading />}>
+            <ul className="flex">
+              {hashtags?.data.map((tag: HashtagType) => (
+                <li key={tag._id}>
+                  <HashTag name={tag.name} />
+                </li>
+              ))}
+            </ul>
+          </Suspense>
         </div>
       </section>
       {/* ItemCard section*/}

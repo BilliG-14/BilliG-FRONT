@@ -4,6 +4,15 @@ export type PwType = {
   confirmPassword: string;
 };
 
+export type UpdateInfo = {
+  nickName: string | undefined;
+  intro: string | undefined;
+  image: string | undefined;
+  phoneNumber: string | undefined;
+  address1: string | undefined;
+  address2: string | undefined;
+};
+
 export type UserType = {
   _id: string;
   name: string;

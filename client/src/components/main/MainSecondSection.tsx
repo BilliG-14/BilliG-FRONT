@@ -8,12 +8,14 @@ type WrapItemProps = {
 function WrapItem(props: WrapItemProps) {
   const { content, imgsrc, detail } = props;
   return (
-    <div className="w-[318px] h-[400px] bg-b-text-brightgray rounded-3xl overflow-hidden break-keep">
+    <div className="w-[318px] h-[400px] bg-b-text-brightgray rounded-3xl overflow-hidden break-keep dark:bg-slate-600">
       <img src={imgsrc} alt="" className="object-cover w-full h-1/2" />
-      <p className="text-xl h-14 text-black mx-5 mt-5 mb-3 font-bold flex items-center">
+      <p className="text-xl h-14 text-black mx-5 mt-5 mb-3 font-bold flex items-center dark:text-white">
         {content}
       </p>
-      <p className="text-b-text-darkgray mx-5 leading-6">{detail}</p>
+      <p className="text-b-text-darkgray mx-5 leading-6 dark:text-slate-300">
+        {detail}
+      </p>
     </div>
   );
 }
@@ -54,7 +56,7 @@ function WrapList() {
 export default function MainSecondSection() {
   const fadeInDiv = useScrollFadeIn();
   return (
-    <section className="w-screen h-[850px] bg-amber-500 mx-auto text-b-text-gray">
+    <section className="w-screen h-[850px] bg-amber-500 mx-auto text-b-text-gray dark:bg-b-dark-yellow">
       <div className="max-w-screen-lg mx-auto pt-40">
         <p className="text-black text-4xl font-extrabold text-left">
           아껴쓰고 나눠쓰고 바꿔쓰고 다시쓰고
