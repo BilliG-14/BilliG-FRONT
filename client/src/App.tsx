@@ -80,9 +80,20 @@ function App() {
     getUserInfo();
     setIsLoadingTrue();
   }, [isLogin]);
-
+  /*dark mode */
+  useEffect(() => {
+    if (
+      localStorage.theme === 'dark' ||
+      (!('theme' in localStorage) &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches)
+    ) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, []);
   if ((!isLoading && !isLogin) || (!isLoading && isLogin)) return <Loading />;
-
+  console.log(window.matchMedia('(prefers-color-scheme: dark)').matches);
   return (
     <React.Fragment>
       <QueryClientProvider client={queryClient}>
