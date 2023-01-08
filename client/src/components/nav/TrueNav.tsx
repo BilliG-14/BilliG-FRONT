@@ -12,6 +12,7 @@ import { FaRegSmileWink, FaClipboardList } from 'react-icons/fa';
 import { BsFilePersonFill } from 'react-icons/bs';
 import { RiLogoutCircleFill } from 'react-icons/ri';
 import { getMyInfo } from 'api/user-api';
+import DarkToggle from 'components/DarkToggle';
 
 function TrueNav() {
   const navigate = useNavigate();
@@ -41,11 +42,12 @@ function TrueNav() {
     <div className="flex justify-between pr-5 h-40 mt-1 select-none">
       <MenuButton />
       <div className="flex flex-col justify-center">
-        <div className="flex justify-between items-center w-96 text-lg font-semibold">
+        <div className="flex justify-between items-center gap-3 text-lg font-semibold">
+          <DarkToggle />
           <div>
             <button
               type="button"
-              className="nickname flex text-blue-700 font-bold ease-in-out duration-300"
+              className="nickname flex text-blue-700 font-bold ease-in-out duration-300 dark:text-b-yellow"
             >
               <span>
                 <FaRegSmileWink className="text-xl mr-1" />

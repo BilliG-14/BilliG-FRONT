@@ -37,7 +37,7 @@ export default function Notices() {
         </div>
         <div className="ml-10 mt-16 border-y border-solid border-b-text-gray">
           <table className="w-full">
-            <tbody className="text-b-text-black">
+            <tbody className="text-b-text-black dark:text-white">
               {noticesPaginate &&
                 noticesPaginate.docs.map((notice) => (
                   <tr key={notice._id}>

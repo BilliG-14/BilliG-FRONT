@@ -10,7 +10,7 @@ const MenuButton = () => {
   const client = useQueryClient();
 
   return (
-    <div className="mt-4">
+    <div className="mt-4 text-black">
       <div className="section mt-5 relative z-0">
         <Link
           to="/submain"
