@@ -14,7 +14,6 @@ import TrueNav from './components/nav/TrueNav';
 import Nav from './components/nav/Nav';
 import Chat from './components/chat/Chat';
 import ErrorBoundary from './components/ErrorBoundary';
-import DarkToggle from 'components/DarkToggle';
 
 // pages
 const Main = lazy(() => import('./pages/Main'));
@@ -126,7 +125,6 @@ function App() {
               </Suspense>
             </ErrorBoundary>
           </BrowserRouter>
-          <DarkToggle />
         </div>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>

@@ -12,10 +12,10 @@ const MyPostDealList = lazy(() => import('components/myinfo/MyPostDealList'));
 export default function MyPage() {
   const { pathname } = useLocation();
   return (
-    <div className="h-full w-screen max-w-screen-lg m-auto">
+    <div className="h-full w-screen max-w-screen-lg m-auto dark:bg-b-bg-dark">
       <MyInfoHeader />
-      <section className="max-w-screen-lg h-full">
-        <div className="flex h-full">
+      <section className="max-w-screen-lg h-full dark:bg-b-bg-dark">
+        <div className="flex h-full dark:bg-b-bg-dark">
           <MyInfoSideBar />
           <ErrorBoundary key={pathname}>
             <Suspense fallback={<Loading />}>

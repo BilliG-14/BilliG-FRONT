@@ -19,7 +19,7 @@ export default function DarkToggle() {
     setDark(localStorage.getItem('theme') === 'dark');
   }, []);
   return (
-    <div className="flex items-center justify-center fixed right-10 top-2">
+    <div className="flex items-center justify-center">
       <label htmlFor="toggle" className="flex items-center cursor-pointer">
         <div className="relative bg-transparent">
           <input
