@@ -3,8 +3,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { createGlobalStyle } from 'styled-components';
-import reset from 'styled-reset';
 import { useIsLoginStore } from 'store/LoginJoinStore';
+import reset from 'styled-reset';
 import api from './api/customAxios';
 // componets
 import ScrollToTop from 'components/ScrollToTop';
@@ -13,7 +13,7 @@ import Loading from 'components/Loading';
 import TrueNav from './components/nav/TrueNav';
 import Nav from './components/nav/Nav';
 import Chat from './components/chat/Chat';
-import ErrorBoundary from 'components/ErrorBoundary';
+import ErrorBoundary from './components/ErrorBoundary';
 
 // pages
 const Main = lazy(() => import('./pages/Main'));
@@ -47,17 +47,6 @@ declare global {
 }
 
 function App() {
-  const queryClientRef = useRef<QueryClient>();
-  if (!queryClientRef.current) {
-    queryClientRef.current = new QueryClient({
-      defaultOptions: {
-        queries: {
-          useErrorBoundary: true,
-        },
-      },
-    });
-  }
-
   const { isLogin, setIsLoginTrue, setIsLoginFalse } = useIsLoginStore();
   useEffect(() => {
     const token = localStorage.getItem('token');

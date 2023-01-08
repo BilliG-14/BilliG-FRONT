@@ -1,10 +1,10 @@
 import { lazy, Suspense } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 // components
+import Loading from 'components/Loading';
 import MyInfoHeader from 'components/myinfo/MyInfoHeader';
 import MyInfoSideBar from '../components/myinfo/MyinfoSideBar';
-import Loading from 'components/Loading';
-import ErrorBoundary from 'components/ErrorBoundary';
+import ErrorBoundary from '../components/ErrorBoundary';
 const MyinfoPage = lazy(() => import('components/myinfo/MyinfoPage'));
 const EditMyinfoPage = lazy(() => import('components/myinfo/EditMyinfoPage'));
 const MyPostDealList = lazy(() => import('components/myinfo/MyPostDealList'));
@@ -51,6 +51,7 @@ export default function MyPage() {
                       param="lendDealList"
                       target="lender"
                       stateOfTransaction="1,2"
+                      postType=""
                     />
                   }
                 />
@@ -61,6 +62,7 @@ export default function MyPage() {
                       param="borrowDealList"
                       target="borrower"
                       stateOfTransaction="1,2"
+                      postType=""
                     />
                   }
                 />
@@ -71,6 +73,7 @@ export default function MyPage() {
                       param="lendDoneList"
                       target="lender"
                       stateOfTransaction="3"
+                      postType=""
                     />
                   }
                 />
@@ -81,6 +84,7 @@ export default function MyPage() {
                       param="borrowDoneList"
                       target="borrower"
                       stateOfTransaction="3"
+                      postType=""
                     />
                   }
                 />

@@ -11,7 +11,7 @@ interface MyPostDealListProps {
   param: string;
   target: string;
   stateOfTransaction: string;
-  postType?: string;
+  postType: string;
 }
 
 export default function MyPostDealList({
@@ -37,7 +37,7 @@ export default function MyPostDealList({
     <div className="w-4/5 p-12">
       {data?.docs.length > 0 ? (
         data?.docs.map((item: PostDataType) => (
-          <ItemCard key={item._id} type="borrow" item={item} />
+          <ItemCard key={item._id} type={postType} item={item} />
         ))
       ) : (
         <div className="flex items-center justify-center h-1/2 text-xl font-bold">
