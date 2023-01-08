@@ -93,12 +93,11 @@ function App() {
     }
   }, []);
   if ((!isLoading && !isLogin) || (!isLoading && isLogin)) return <Loading />;
-  console.log(window.matchMedia('(prefers-color-scheme: dark)').matches);
   return (
     <React.Fragment>
       <QueryClientProvider client={queryClient}>
         <GlobalStyle />
-        <div className="App h-screen w-screen">
+        <div className="App h-screen w-screen  dark:bg-b-bg-dark dark:text-white [&>*]:dark:bg-b-bg-dark">
           <BrowserRouter>
             <div className="w-screen max-w-screen-lg m-auto">
               {isLogin ? <TrueNav /> : <Nav />}

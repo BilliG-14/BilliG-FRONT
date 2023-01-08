@@ -8,7 +8,7 @@ import DarkToggle from 'components/DarkToggle';
 
 export default function Main() {
   return (
-    <div className="w-screen h-screen mx-auto">
+    <div className="w-screen mx-auto">
       <MainFirstSection />
       <MainSecondSection />
       <MainThirdSection />
