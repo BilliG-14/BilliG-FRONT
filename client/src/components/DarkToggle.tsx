@@ -31,7 +31,7 @@ export default function DarkToggle() {
             onClick={() => {
               toggleDarkMode();
             }}
-            checked={localStorage.getItem('theme') === 'dark'}
+            defaultChecked={localStorage.getItem('theme') === 'dark'}
           />
           <div className="block bg-gray-200 w-14 h-8 rounded-full"></div>
           <div

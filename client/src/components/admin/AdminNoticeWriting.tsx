@@ -30,15 +30,15 @@ export default function AdminNoticeWriting() {
     },
   });
   return (
-    <div className="w-full">
+    <div className="w-full dark:text-b-text-brightgray">
       <form className="mt-6 flex flex-col w-3/4 mx-auto font-bold">
         <div>
           <label htmlFor="title" className="text-lg">
             제목
           </label>
           <input
-            className="w-full h-10 border-solid border-2 rounded-lg px-4
-        focus:outline-none focus:border-4"
+            className="w-full h-10 border-solid border rounded-lg px-4
+        focus:outline-none focus:border-2"
             id="title"
             ref={titleRef}
             type="text"
@@ -52,8 +52,8 @@ export default function AdminNoticeWriting() {
           <textarea
             id="content"
             ref={contentRef}
-            className="block w-full h-56 border-solid border-2 rounded-lg  p-4
-        focus:outline-none focus:border-4"
+            className="block w-full h-56 border-solid border rounded-lg  p-4
+        focus:outline-none focus:border-2"
             placeholder="내용을 입력해주세요"
           ></textarea>
         </div>
