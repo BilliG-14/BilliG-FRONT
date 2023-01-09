@@ -140,7 +140,7 @@ export default function PostUpdate() {
   return (
     <div className="w-screen m-auto relative pb-[70px] min-h-[85vh]">
       <div className="max-w-screen-lg mx-auto">
-        <div className="flex flex-col justify-center mx-auto text-b-text-black">
+        <div className="flex flex-col justify-center mx-auto text-b-text-black dark:text-b-dark-text">
           <div className="mt-8 mb-6 text-3xl font-bold">
             {postData?.postType === 'lend' ? '빌려주기' : '빌리기'}
           </div>
@@ -165,7 +165,7 @@ export default function PostUpdate() {
             {postData?.postType === 'lend' ? null : <ReservationDate />}
 
             {/* 상품 상세내용 section */}
-            <section className="mb-4">
+            <section className="mb-4 dark:text-b-text-black dark:[&_input]:bg-slate-300">
               <PostEditor />
             </section>
 
