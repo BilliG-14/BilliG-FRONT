@@ -33,7 +33,7 @@ export default function AdminReportSection() {
     return <p>데이터를 불러오지 못했습니다.</p>;
   }
   return (
-    <section className="w-full text-b-text-black p-2">
+    <section className="w-full text-b-text-black dark:text-b-dark-text p-2">
       <table className="table-auto border-separate border-spacing-4 w-full">
         <thead className=" font-extrabold">
           <tr>

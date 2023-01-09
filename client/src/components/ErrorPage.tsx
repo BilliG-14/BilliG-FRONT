@@ -10,7 +10,7 @@ export default function ErrorPage() {
               className="w-[25%] mx-auto opacity-60"
             />
 
-            <div className="absolute text-3xl font-black text-b-text-black top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+            <div className="absolute text-3xl font-black text-b-text-black top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 dark:text-white">
               Sorry, Something's wrong!
             </div>
           </div>

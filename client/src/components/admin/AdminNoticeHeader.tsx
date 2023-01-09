@@ -11,7 +11,7 @@ export default function AdminNoticeHeader() {
   const applyActiveStyle = (isActive: boolean) =>
     isActive ? ' text-b-yellow font-extrabold' : '';
   return (
-    <header className="flex w-full py-2 h-14 border-b-4 border-solid text-b-text-darkgray border-b-text-gray items-center font-bold text-lg ">
+    <header className="flex w-full py-2 h-14 border-b-4 border-solid text-b-text-darkgray dark:text-b-text-brightgray border-b-text-gray dark:border-b-dark-side items-center font-bold text-lg ">
       <a href="#!" onClick={handleClickWriting}>
         <p
           className={`w-36 text-center hover:scale-110  transition
