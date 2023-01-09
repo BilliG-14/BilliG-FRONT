@@ -109,7 +109,7 @@ export default function PostDetail() {
           </div>
           {!postData ? (
             <div className="h-[500px] text-center text-sm mt-10">
-              <div className="mb-5">
+              <div className="mb-5 dark:text-b-dark-text">
                 잘못된 페이지이거나 삭제된 게시글입니다.
               </div>
               <Link

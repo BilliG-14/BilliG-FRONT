@@ -57,7 +57,7 @@ export default function HashTagSection() {
               className="p-3 mr-4 w-[200px] h-10 border-solid border border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 transition duration-100"
             />
           </div>
-          <p className="group/edit invisible group-focus-within/item:visible w-[200px] mt-2 text-[6px] text-b-text-darkgray leading-4 border-solid border border-gray-300 p-2 rounded-lg">
+          <p className="group/edit invisible group-focus-within/item:visible w-[200px] mt-2 text-[6px] text-b-text-darkgray leading-4 border-solid border border-gray-300 p-2 rounded-lg dark:bg-b-dark-text">
             엔터를 입력하면 태그를 등록 할 수 있습니다. <br />
             등록된 태그를 클릭하면 삭제됩니다. <br />
             태그는 5개까지 등록이 가능합니다.
