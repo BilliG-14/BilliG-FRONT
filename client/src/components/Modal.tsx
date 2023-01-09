@@ -35,6 +35,12 @@ export default function ConfirmModal(props: ConfirmModalProps) {
     }
     props.onClickToggleModal();
   };
+  const handleEnter = (e: React.KeyboardEvent) => {
+    console.log(e.key);
+    if (e.key === 'Enter') {
+      handleClickYes();
+    }
+  };
   return (
     <div className="w-screen h-screen flex justify-center items-center fixed top-0 left-0 text-b-text-black break-keep">
       <div className="w-[400px] flex flex-col bg-white fixed rounded-xl shadow-2xl z-50 animate-fade-in-150ms">
@@ -58,6 +64,7 @@ export default function ConfirmModal(props: ConfirmModalProps) {
           <button
             className={`w-20 h-8 font-bold border-2 rounded-lg ${buttonColor}`}
             onClick={handleClickYes}
+            autoFocus
           >
             {props.yesText ? props.yesText : '확인'}
           </button>

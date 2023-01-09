@@ -238,7 +238,7 @@ export default function Writing() {
             {postType === 'borrow' ? <ReservationDate /> : null}
 
             {/* 상품 상세내용 section */}
-            <section className="mb-4">
+            <section className="mb-4 dark:text-b-text-black dark:[&_input]:bg-slate-300">
               <PostEditor />
             </section>
 

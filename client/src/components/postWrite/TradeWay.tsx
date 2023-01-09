@@ -19,7 +19,7 @@ export default function TradeWay() {
         ref={direct}
         onChange={changeCheckBoxHandle}
         type="checkbox"
-        className="mr-2 appearance-none h-4 w-4 border rounded-md border-gray-300  bg-white checked:bg-b-yellow checked:border-b-yellow focus:outline-none transition duration-100 align-top cursor-pointer"
+        className="mr-2 appearance-none h-4 w-4 border rounded-md border-gray-300  bg-white checked:bg-b-yellow checked:border-b-yellow focus:outline-none transition duration-100 align-top cursor-pointer dark:checked:bg-b-yellow"
       />
       <span className="mr-7">직거래</span>
       <input
@@ -27,7 +27,7 @@ export default function TradeWay() {
         ref={delivery}
         onChange={changeCheckBoxHandle}
         type="checkbox"
-        className="mr-2 appearance-none h-4 w-4 border rounded-md border-gray-300  bg-white checked:bg-b-yellow checked:border-b-yellow focus:outline-none transition duration-100 align-top cursor-pointer"
+        className="mr-2 appearance-none h-4 w-4 border rounded-md border-gray-300  bg-white checked:bg-b-yellow checked:border-b-yellow focus:outline-none transition duration-100 align-top cursor-pointer dark:checked:bg-b-yellow"
       />
       <span>택배거래</span>
     </section>
