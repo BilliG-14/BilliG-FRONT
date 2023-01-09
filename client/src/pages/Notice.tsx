@@ -31,7 +31,7 @@ export default function ReadNotice() {
         <div className="text-xl font-extrabold ml-10 mt-10">
           <p>공지사항</p>
         </div>
-        <div className="ml-10 mt-6 text-b-text-black">
+        <div className="ml-10 mt-6 text-b-text-black dark:text-white">
           {isError && (
             <div className="flex justify-center items-center">
               <p className="text-4xl">데이터를 불러올 수 없습니다.</p>
@@ -51,7 +51,7 @@ export default function ReadNotice() {
         </div>
         <div className="flex justify-center pb-20">
           <button
-            className="px-2 py-1 text-lg rounded-md border-2 border-solid text-b-text-black font-semibold
+            className="px-2 py-1 text-lg rounded-md border-2 border-solid font-semibold
             hover:bg-b-yellow hover:text-white transition-colors hover:border-b-yellow"
             onClick={() => navigate('/notices')}
           >

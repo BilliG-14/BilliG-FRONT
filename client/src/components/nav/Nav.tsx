@@ -7,6 +7,7 @@ import { FiSearch } from 'react-icons/fi';
 import { FaClipboardList } from 'react-icons/fa';
 import { RiLoginCircleFill } from 'react-icons/ri';
 import { BsFillPersonPlusFill, BsFilePersonFill } from 'react-icons/bs';
+import DarkToggle from 'components/DarkToggle';
 function Nav() {
   const [setSelectedJoin, setSelectedLogin] = useLoginJoinStore((state) => [
     state.setSelectedJoin,
@@ -33,7 +34,8 @@ function Nav() {
     <div className="flex justify-between pr-5 h-40 mt-1 select-none">
       <MenuButton />
       <div className="flex flex-col justify-center">
-        <div className="flex justify-between items-center w-96 text-lg font-semibold">
+        <div className="flex justify-between items-center gap-3 text-lg font-semibold">
+          <DarkToggle />
           <div>
             <button
               type="button"

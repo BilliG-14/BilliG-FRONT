@@ -71,12 +71,24 @@ function App() {
 
     getUserInfo();
   }, [isLogin]);
+  /*dark mode */
+  useEffect(() => {
+    if (
+      localStorage.theme === 'dark' ||
+      (!('theme' in localStorage) &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches)
+    ) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, []);
 
   return (
     <React.Fragment>
       <QueryClientProvider client={queryClient}>
         <GlobalStyle />
-        <div className="App h-screen w-screen">
+        <div className="App h-screen w-screen dark:bg-b-bg-dark dark:text-white [&>*]:dark:bg-b-bg-dark">
           <BrowserRouter>
             <ErrorBoundary>
               <Suspense fallback={<Loading />}>
