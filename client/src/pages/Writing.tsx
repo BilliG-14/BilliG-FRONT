@@ -179,7 +179,7 @@ export default function Writing() {
   return (
     <div className="w-screen m-auto relative pb-[70px] min-h-[85vh]">
       <div className="max-w-screen-lg mx-auto">
-        <div className="flex flex-col justify-center mx-auto text-b-text-black">
+        <div className="flex flex-col justify-center mx-auto text-b-text-black dark:text-b-dark-text [&_select]:dark:bg-b-dark-input">
           <div className="mt-8 mb-6 text-3xl font-bold">글 작성하기</div>
           <form className="w-[800px] mx-auto">
             <div className="flex my-4">

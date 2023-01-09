@@ -29,7 +29,7 @@ export default function AdminUserListSection() {
   }
   console.log(users);
   return (
-    <section className="w-full text-b-text-black p-2  h-[85vh] overflow-y-auto">
+    <section className="w-full text-b-text-black dark:text-b-dark-text p-2  h-[85vh] overflow-y-auto">
       <div className="w-full font-bold py-1 ml-8">
         <label htmlFor="showSuspended">정지계정만 보기</label>
         <input

@@ -44,7 +44,7 @@ export default function ItemCard({ item, type }: BorrowPostProps) {
                   <span>{`${period?.end}`}</span>
                 </li>
               ) : null}
-              <li className="text-b-text-darkgray mt-3 mb-3">
+              <li className="text-b-text-darkgray mt-3 mb-3 dark:text-b-text-brightgray">
                 <span>거래지역 : </span>
                 <span>{`📍 ${address}`}</span>
               </li>

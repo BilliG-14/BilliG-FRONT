@@ -42,7 +42,9 @@ module.exports = {
         'b-bg-dark': '#3E476A',
         'b-card-dark': '#5E678A',
         'b-dark-yellow': '#EDA240',
-        'b-dark-side': '#181818'
+        'b-dark-side': '#181818',
+        'b-dark-input': '#1F1F1F',
+        'b-dark-text': '#EFEFEF'
       },
       keyframes: {
         fadeIn: {
