@@ -47,7 +47,6 @@ export default function PostUpdate() {
   const { id } = useParams();
 
   // 상품 가져오기
-  // const [price, setPrice] = useState(0);
   const [postData, setPostData] = useState<PostDataType>();
 
   /* 서버에서 해시태그가 object 형태로 들어와서 해시태그 이름만 배열로 담아야함  */
@@ -82,10 +81,6 @@ export default function PostUpdate() {
       },
     },
   );
-
-  function changePriceDay(e: ChangeEvent<HTMLInputElement>) {
-    setPrice(Number(e.currentTarget?.value));
-  }
 
   const editData = {
     category: filteredCategory,
