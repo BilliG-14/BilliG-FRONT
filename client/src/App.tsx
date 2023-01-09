@@ -76,7 +76,7 @@ function App() {
     <React.Fragment>
       <QueryClientProvider client={queryClient}>
         <GlobalStyle />
-        <div className="App h-screen w-screen dark:bg-b-bg-dark dark:text-b-dark-text [&>*]:dark:bg-b-bg-dark [&_input]:dark:bg-b-dark-input">
+        <div className="App h-screen w-screen dark:bg-b-bg-dark dark:text-b-dark-text [&_input]:dark:bg-b-dark-input [&_input]:dark:text-b-dark-text">
           <BrowserRouter>
             <ErrorBoundary>
               <Suspense fallback={<Loading />}>
