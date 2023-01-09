@@ -3,7 +3,7 @@
   <defs>
     <style>
       .all {
-        fill: #191919;
+        fill: #ffffff;
         transition: all 0.2s;
       }
       .all:hover {

@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
 import { BsFillSunFill, BsMoonFill } from 'react-icons/bs';
+import { darkStore } from 'store/NavStore';
+
 export default function DarkToggle() {
-  const [dark, setDark] = useState<boolean>(false);
+  const { dark, setDark } = darkStore();
   const toggleDarkMode = useCallback(() => {
     if (localStorage.getItem('theme') === 'dark') {
       // 다크모드 -> 기본모드
