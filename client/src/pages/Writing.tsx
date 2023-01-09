@@ -192,7 +192,7 @@ export default function Writing() {
                   type="radio"
                   name="postType"
                   id="lend"
-                  className="w-4 h-4 mr-2"
+                  className="w-4 h-4 mr-2 appearance-none border rounded-md border-gray-300 bg-white checked:bg-b-yellow checked:border-b-yellow focus:outline-none transition duration-100 align-top cursor-pointer"
                 />
                 <label htmlFor="lend" className="mr-7 checked:font-bold">
                   빌려주기
@@ -202,7 +202,7 @@ export default function Writing() {
                   type="radio"
                   name="postType"
                   id="borrow"
-                  className="w-4 h-4 mr-2"
+                  className="w-4 h-4 mr-2 appearance-none border rounded-md border-gray-300  bg-white checked:bg-b-yellow checked:border-b-yellow focus:outline-none transition duration-100 align-top cursor-pointer"
                 />
                 <span className="mr-2">빌리기</span>
               </label>
@@ -249,7 +249,7 @@ export default function Writing() {
               <button
                 type="button"
                 onClick={handleButtonClick}
-                className="w-1/6 h-10 hover:text-white border border-b-yellow hover:bg-b-yellow  font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mt-3 mb-16 transition duration-100"
+                className="w-1/6 h-10 hover:text-white border border-b-yellow hover:bg-b-yellow  dark:font-bold font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mt-3 mb-16 transition duration-100"
               >
                 등록하기
               </button>
