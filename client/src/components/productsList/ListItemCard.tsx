@@ -26,7 +26,7 @@ export default function ListItemCard({ item }: ItemProps) {
         navigate(`/read/${item._id}`);
       }}
     >
-      <div className="pic w-full h-40 mb-2 p-2 flex items-center justify-center">
+      <div className="pic w-full h-40 mt-1 mb-1 p-2 flex items-center justify-center bg-white rounded-lg">
         <img
           className=" w-full h-full object-contain"
           src={

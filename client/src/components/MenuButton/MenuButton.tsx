@@ -1,6 +1,7 @@
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './MenuButton.css';
 import { useQueryClient } from '@tanstack/react-query';
+import { darkStore } from 'store/NavStore';
 
 const MenuButton = () => {
   const navigate = useNavigate();
@@ -8,6 +9,8 @@ const MenuButton = () => {
     navigate('/');
   };
   const client = useQueryClient();
+
+  const { dark } = darkStore();
 
   return (
     <div className="mt-4 text-black">
@@ -72,7 +75,9 @@ const MenuButton = () => {
           className="home absolute ml-16 w-[49%] top-[-5px] z-10 transition ease-in-out hover:-translate-y--1 hover:scale-[1.1] duration-200"
           onClick={goHome}
         >
-          <object data="/img/billig_black.svg" type="">
+          <object
+            data={dark ? `/img/billig_white.svg` : `/img/billig_black.svg`}
+          >
             {' '}
           </object>
         </button>

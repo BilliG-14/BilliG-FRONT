@@ -80,7 +80,7 @@ export default function AdminCategorySection() {
       <div className="py-32 font-extrabold text-3xl">에러가 발생하였습니다</div>
     );
   return (
-    <section className="w-full text-b-text-black p-2">
+    <section className="w-full text-b-text-black dark:text-b-text-brightgray p-2">
       <div className="w-2/3 mx-auto mt-12">
         <div>
           <input

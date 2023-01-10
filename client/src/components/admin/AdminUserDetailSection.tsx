@@ -43,7 +43,7 @@ export default function AdminUserDetailSection() {
     return <p>데이터를 불러오지 못했습니다</p>;
   }
   return (
-    <section className="w-full text-b-text-black">
+    <section className="w-full text-b-text-black dark:text-b-dark-text">
       <p className="font-bold w-4/5 mx-auto text-center mt-5 text-2xl">
         사용자 상세 정보
       </p>
