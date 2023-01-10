@@ -20,7 +20,7 @@ export default function CategorySection({
 }: ItemListProps) {
   const navigate = useNavigate();
 
-  const { isError, data } = useQuery(
+  const { data } = useQuery(
     [`category${type}Items/${category._id}`],
     async () => {
       const res = await api.get(
@@ -31,6 +31,8 @@ export default function CategorySection({
     {
       refetchOnWindowFocus: false,
       staleTime: 60 * 1000 * 60,
+      suspense: true,
+      useErrorBoundary: true,
     },
   );
 
@@ -57,7 +59,7 @@ export default function CategorySection({
           </button>
         </header>
         <div className="flex justify-center">
-          {data?.docs.map((item: PostDataType) => (
+          {data.docs.map((item: PostDataType) => (
             <SubmainItemCard
               key={item._id}
               item={item}

@@ -28,14 +28,12 @@ export default function SubmainCategory({ type }: { type: string }) {
     };
   }, []);
 
-  const { isError, data: categories } = useQuery(
-    ['categories'],
-    getCategories,
-    {
-      refetchOnWindowFocus: false,
-      staleTime: 60 * 1000 * 60,
-    },
-  );
+  const { data: categories } = useQuery(['categories'], getCategories, {
+    refetchOnWindowFocus: false,
+    staleTime: 60 * 1000 * 60,
+    useErrorBoundary: true,
+    suspense: true,
+  });
 
   return (
     <div className="relative">
@@ -45,7 +43,7 @@ export default function SubmainCategory({ type }: { type: string }) {
       >
         <ul className="flex space-x-10 text-center items-center m-auto text-xl font-extrabold">
           {/* category nav */}
-          {categories?.map(
+          {categories.map(
             (category: { _id: string; name: string }, idx: number) => {
               return (
                 <li
@@ -80,7 +78,7 @@ export default function SubmainCategory({ type }: { type: string }) {
           )}
         </div>
         {/* category section */}
-        {categories?.map(
+        {categories.map(
           (category: { _id: string; name: string }, idx: number) => {
             return (
               <CategorySection

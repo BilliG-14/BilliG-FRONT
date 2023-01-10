@@ -1,11 +1,10 @@
-import { lazy, Suspense, useState } from 'react';
+import { lazy, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import api from '../api/customAxios';
 
 // icon
 import { FiSearch } from 'react-icons/fi';
 import { Pagination } from '../components/Pagination';
-import Loading from 'components/Loading';
 // type
 import { PostDataType } from 'types/productType';
 import { HashtagType } from 'types/hashtagType';
@@ -49,7 +48,7 @@ export default function SearchPage() {
     }
   };
 
-  const { isError, data: hashtags } = useQuery(
+  const { data: hashtags } = useQuery(
     ['hashtags'],
     async () => {
       return api.get(`/hashtag/popular?products=50&hashtags=10`);
@@ -57,6 +56,7 @@ export default function SearchPage() {
     {
       refetchOnWindowFocus: false,
       staleTime: 1000 * 60 * 5,
+      useErrorBoundary: true,
       suspense: true,
     },
   );
@@ -122,15 +122,13 @@ export default function SearchPage() {
           <span>추천 검색어</span>
         </div>
         <div className="w-3/4 h-20 m-auto border">
-          <Suspense fallback={<Loading />}>
-            <ul className="flex">
-              {hashtags?.data.map((tag: HashtagType) => (
-                <li key={tag._id}>
-                  <HashTag name={tag.name} />
-                </li>
-              ))}
-            </ul>
-          </Suspense>
+          <ul className="flex">
+            {hashtags?.data.map((tag: HashtagType) => (
+              <li key={tag._id}>
+                <HashTag name={tag.name} />
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
       {/* ItemCard section*/}

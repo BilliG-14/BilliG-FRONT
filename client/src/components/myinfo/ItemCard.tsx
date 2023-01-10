@@ -32,7 +32,7 @@ export default function ItemCard({ item, type }: BorrowPostProps) {
           <img
             src={imgUrl[0]}
             alt={title}
-            className="w-24 h-24 object-contain"
+            className="w-24 h-24 object-contain rounded-md"
           />
           <div className="w-4/5 pl-10">
             <p className="text-lg font-semibold mt-1">{title}</p>
