@@ -9,6 +9,11 @@ function MainPanel({ user, socket }: { user: UserType; socket: Socket }) {
   const inputOpenImageRef = useRef<HTMLInputElement>(null);
   const [messages, setMessages] = useState<MessageType[]>([]);
   const [currentRoom, setCurrentRoom] = useState('');
+  // * image state
+  const [imgSrc, setImgSrc] = useState(
+    `${process.env.PUBLIC_URL}/img/default_user.png`,
+  );
+  const [imagePath, setImagePath] = useState('');
   const formRef = useRef<HTMLFormElement | null>(null);
   const textRef = useRef<HTMLTextAreaElement | null>(null);
   /** 줄 수를 계산해서 저장할 변수*/
@@ -92,14 +97,15 @@ function MainPanel({ user, socket }: { user: UserType; socket: Socket }) {
     }
   };
 
-  /**이미지 업로드 */
-  const handleOpenImageRef = () => {
-    inputOpenImageRef?.current?.click();
-  };
-  const handleUploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // const file = e.target.files[0];
-    // console.log(e.target.files[0]);
-  };
+  // /**이미지 업로드 */
+  // const handleOpenImageRef = () => {
+  //   inputOpenImageRef?.current?.click();
+  // };
+  // const handleUploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (!e.target.files) return;
+  //   const file = e.target.files[0];
+
+  // };
 
   return (
     <div className="h-full w-full outline outline-1 outline-gray-200 relative rounded-r-lg">
@@ -151,7 +157,7 @@ function MainPanel({ user, socket }: { user: UserType; socket: Socket }) {
                 >
                   전송
                 </button>
-                <button
+                {/* <button
                   onClick={handleOpenImageRef}
                   className="message-form-button"
                   style={{ width: '100%' }}
@@ -164,7 +170,7 @@ function MainPanel({ user, socket }: { user: UserType; socket: Socket }) {
                   type="file"
                   ref={inputOpenImageRef}
                   onChange={handleUploadImage}
-                />
+                /> */}
               </div>
             </form>
           </div>
