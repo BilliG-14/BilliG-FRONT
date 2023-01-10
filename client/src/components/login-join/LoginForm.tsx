@@ -1,6 +1,6 @@
 import ConfirmModal from 'components/Modal';
 import { FormEvent, useCallback, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useIsLoginStore } from 'store/LoginJoinStore';
 import api from '../../api/customAxios';
 
@@ -60,12 +60,12 @@ export function LoginForm() {
         ></input>
       </div>
       <div className="w-full mb-5 flex justify-center">
-        <a
-          className="w-1/2 underline text-center font-bold text-b-chat-text italic"
-          href="#!"
+        <Link
+          className="w-1/2 underline text-center font-bold text-b-chat-text italic dark:text-b-dark-yellow"
+          to="#!"
         >
           Forgot password?
-        </a>
+        </Link>
       </div>
       <LoginButton />
       {isOpenSuccessModal && (
