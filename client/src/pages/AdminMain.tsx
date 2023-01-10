@@ -18,7 +18,7 @@ export default function AdminMain() {
   return (
     <div className="w-screen m-auto relative pb-[70px] min-h-[85vh]">
       <div className="h-full w-screen max-w-screen-lg m-auto">
-        {userInfo && userInfo.data.role === 'admin' ? (
+        {userInfo && userInfo.role === 'admin' ? (
           <div>
             <AdminHeader />
             <section className="max-w-screen-lg h-full">

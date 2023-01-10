@@ -6,7 +6,7 @@ export default function MyInfoSideBar() {
   const client = useQueryClient();
   const { togglePwfalse } = usePasswordEditStore();
   return (
-    <div className="w-1/5 h-full p-4 bg-b-bg-gray">
+    <div className="w-1/5 h-full p-4 bg-b-bg-gray dark:bg-b-dark-side">
       <div className="menu_box mb-7">
         <p className="items-center justify-center text-2xl font-extrabold mb-1">
           내 정보

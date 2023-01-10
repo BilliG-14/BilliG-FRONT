@@ -32,7 +32,7 @@ export default function ItemCard({ item, type }: BorrowPostProps) {
           <img
             src={imgUrl[0]}
             alt={title}
-            className="w-24 h-24 object-contain"
+            className="w-24 h-24 object-contain rounded-md"
           />
           <div className="w-4/5 pl-10">
             <p className="text-lg font-semibold mt-1">{title}</p>
@@ -44,7 +44,7 @@ export default function ItemCard({ item, type }: BorrowPostProps) {
                   <span>{`${period?.end}`}</span>
                 </li>
               ) : null}
-              <li className="text-b-text-darkgray mt-3 mb-3">
+              <li className="text-b-text-darkgray mt-3 mb-3 dark:text-b-text-brightgray">
                 <span>거래지역 : </span>
                 <span>{`📍 ${address}`}</span>
               </li>

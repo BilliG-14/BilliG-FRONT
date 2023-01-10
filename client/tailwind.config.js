@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
+  darkMode: 'class',
   theme: {
     screens: {
       sm: '640px',
@@ -38,6 +39,12 @@ module.exports = {
         'b-bg-sec6': '#FDAE84',
         'b-bg-sec7': '#E9DCCD',
         'b-bg-sec8': '#D1A827',
+        'b-bg-dark': '#3E476A',
+        'b-card-dark': '#5E678A',
+        'b-dark-yellow': '#EDA240',
+        'b-dark-side': '#181818',
+        'b-dark-input': '#1F1F1F',
+        'b-dark-text': '#EFEFEF'
       },
       keyframes: {
         fadeIn: {

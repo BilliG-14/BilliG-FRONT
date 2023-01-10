@@ -18,12 +18,12 @@ export default function SubmainItemCard({
 
   return (
     <div
-      className="w-1/4 inline-block my-5 px-2.5 mx-4 rounded-lg bg-white cursor-pointer hover:scale-110  hover:ease-in transition-all duration-300"
+      className="w-1/4 inline-block my-5 py-2 px-2.5 mx-4 rounded-lg bg-white cursor-pointer hover:scale-110  hover:ease-in transition-all duration-300 dark:bg-b-card-dark"
       onClick={() => {
         navigate(`/read/${item._id}`);
       }}
     >
-      <div className="pic w-full h-40 mb-2 p-2 flex items-center justify-center object-contain">
+      <div className="pic w-full h-40 mb-2 p-2 flex items-center justify-center object-contain rounded-md dark:bg-white">
         <img
           className=" w-full h-full object-contain"
           src={
@@ -44,10 +44,10 @@ export default function SubmainItemCard({
               {`${period?.start} ~ ${period?.end}`}
             </p>
           ) : null}
-          <p className="category mb-1 text-b-text-darkgray text-sm">
+          <p className="category mb-1 text-b-text-darkgray text-sm dark:text-b-text-brightgray">
             {categoryName}
           </p>
-          <p className="adress h-8 text-b-text-darkgray text-sm mb-1">
+          <p className="adress h-8 text-b-text-darkgray text-sm mb-1 dark:text-b-text-brightgray">
             {`📍 ${address}`}
           </p>
         </div>

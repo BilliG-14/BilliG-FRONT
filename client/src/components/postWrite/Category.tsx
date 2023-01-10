@@ -36,7 +36,7 @@ export default function Category(props: CategoryType) {
     <select
       onChange={changecategory}
       ref={categoryRef}
-      className="flex-none pl-3 w-1/6 h-10 border-solid border  border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2"
+      className="flex-none pl-3 w-1/6 h-10 border-solid border  border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 dark:bg-b-dark-input dark:text-b-dark-text"
     >
       <option>카테고리 설정</option>
       {categories.map((category: { _id: string; name: string }) => (

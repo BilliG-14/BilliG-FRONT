@@ -1,7 +1,9 @@
 export default function Caution() {
   return (
     <>
-      <div className="mt-[50px] font-semibold text-lg">주의사항</div>
+      <div className="mt-[50px] font-semibold text-lg dark:text-b-dark-text">
+        주의사항
+      </div>
       <div className="mt-3 p-3 w-full h-84 border bg-gray-200 text-b-b-text-black rounded-lg text-xs">
         <div className="font-extrabold">[시간 엄수]</div>
         <p>

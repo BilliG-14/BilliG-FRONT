@@ -1,11 +1,9 @@
-import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import api from '../../api/customAxios';
 import { PostDataType } from 'types/productType';
-import Loading from '../Loading';
-import SubmainItemCard from './SubmainItemCard';
 import { HiArrowRight } from 'react-icons/hi';
+import SubmainItemCard from './SubmainItemCard';
 
 type ItemListProps = {
   type: string;
@@ -21,7 +19,8 @@ export default function CategorySection({
   sectionRef,
 }: ItemListProps) {
   const navigate = useNavigate();
-  const { isLoading, isError, data } = useQuery(
+
+  const { data } = useQuery(
     [`category${type}Items/${category._id}`],
     async () => {
       const res = await api.get(
@@ -32,10 +31,10 @@ export default function CategorySection({
     {
       refetchOnWindowFocus: false,
       staleTime: 60 * 1000 * 60,
+      suspense: true,
+      useErrorBoundary: true,
     },
   );
-
-  if (isLoading) return <Loading />;
 
   return (
     <section

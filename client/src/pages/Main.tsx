@@ -7,7 +7,7 @@ import Footer from 'components/footer/Footer';
 
 export default function Main() {
   return (
-    <div className="w-screen h-screen mx-auto">
+    <div className="w-screen mx-auto">
       <MainFirstSection />
       <MainSecondSection />
       <MainThirdSection />

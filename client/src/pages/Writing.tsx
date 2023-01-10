@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import api from './../api/customAxios';
+import api from '../api/customAxios';
 
 import {
   imageUploadStore,
@@ -11,8 +11,9 @@ import {
   descriptionStore,
   titleStore,
   priceStore,
-} from './../store/PostWriteStore';
-import { getMyInfo } from './../api/user-api';
+  reservationStore,
+} from '../store/PostWriteStore';
+import { getMyInfo } from '../api/user-api';
 import { getCategories } from 'api/category-api';
 
 import HashTagSection from '../components/postWrite/HashTag';
@@ -21,12 +22,16 @@ import TradeWay from '../components/postWrite/TradeWay';
 import Loading from 'components/Loading';
 import Footer from 'components/footer/Footer';
 import PostEditor from 'components/postWrite/PostEditor';
-import ChatIcon from './../components/chat-icon/ChatIcon';
+import ChatIcon from '../components/chat-icon/ChatIcon';
 import Title from 'components/postWrite/Title';
 import Price from 'components/postWrite/Price';
+import ReservationDate from '../components/postWrite/ReservationDate';
+import { UserType, WriteDataType } from 'types/productType';
 
-export default function LendWriting() {
-  // 빌려드립니다 글쓰기
+export default function Writing() {
+  const navigate = useNavigate();
+
+  // 글쓰기
   // store에서 가져오는 state들
   const { hashTags } = hashTagStore();
   const { imgFiles } = imageUploadStore();
@@ -34,21 +39,39 @@ export default function LendWriting() {
   const { description } = descriptionStore();
   const { title } = titleStore();
   const { price } = priceStore();
+  const { reservationDate } = reservationStore();
 
   // Ref
   const categoryRef = useRef<HTMLSelectElement>(null);
 
-  const navigate = useNavigate();
+  const [postType, setPostType] = useState('');
+
+  const checkedLend = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.currentTarget.checked) {
+      setPostType('lend');
+    }
+  };
+
+  const checkedBorrow = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.currentTarget.checked) {
+      setPostType('borrow');
+    }
+  };
+
   // 사용자 가져오기
-  const { data, isLoading } = useQuery(['userData'], () => getMyInfo(), {
-    onError: () => {
-      alert('사용자를 찾을 수 없습니다. \n로그인 화면으로 이동합니다.');
-      navigate('/login');
+  const { data, isLoading } = useQuery<UserType>(
+    ['userData'],
+    () => getMyInfo(),
+    {
+      onError: () => {
+        alert('사용자를 찾을 수 없습니다. \n로그인 화면으로 이동합니다.');
+        navigate('/login');
+      },
+      refetchOnMount: 'always',
+      refetchOnWindowFocus: false,
+      staleTime: 60 * 1000 * 60,
     },
-    refetchOnMount: 'always',
-    refetchOnWindowFocus: false,
-    staleTime: 60 * 1000 * 60,
-  });
+  );
 
   // 카테고리 가져오기
   const [filteredCategory, setFilteredCategory] = useState<CategoryType[]>([]);
@@ -98,11 +121,10 @@ export default function LendWriting() {
   imgFiles.forEach((imgFile) => formData.append('images', imgFile));
 
   // 이미지 파일 제외한 나머지 data json 형식으로 넣기
-  const writeData = {
-    postType: 'lend',
+  const writeData: WriteDataType = {
+    postType,
     category: filteredCategory[0]?._id,
     author: data?._id,
-    lender: data?._id,
     title: title,
     description: description,
     stateOfTransaction: 0,
@@ -112,24 +134,36 @@ export default function LendWriting() {
     },
     tradeWay: tradeWay,
     hashtag: hashTags,
-    period: {
-      start: '',
-      end: '',
-    },
+    period: reservationDate,
   };
+
+  if (postType === 'lend') {
+    writeData.lender = data?._id;
+  } else if (postType === 'borrow') {
+    writeData.borrower = data?._id;
+  }
+
   formData.append('data', JSON.stringify(writeData));
 
   // 등록하기 클릭 시 event
   function handleButtonClick(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    if (filteredCategory.length === 0 || title === '') {
+    if (postType === '') {
+      alert('글 타입을 체크해주세요.');
+    } else if (filteredCategory.length === 0 || title === '') {
       alert('카테고리와 이름을 입력해주세요.');
       return;
-    } else if (imgFiles.length === 0) {
+    } else if (postType === 'lend' && imgFiles.length === 0) {
       alert('상품 사진을 등록해주세요. 3장까지 등록가능합니다.');
       return;
     } else if (!price || price === 0) {
       alert('요금을 입력해주세요.');
+      return;
+    } else if (
+      postType === 'borrow' &&
+      (reservationDate.start === '' || reservationDate.end === '')
+    ) {
+      alert('예약기간을 입력해주세요.');
       return;
     } else if (description === '') {
       alert('상세설명을 입력해주세요.');
@@ -145,9 +179,34 @@ export default function LendWriting() {
   return (
     <div className="w-screen m-auto relative pb-[70px] min-h-[85vh]">
       <div className="max-w-screen-lg mx-auto">
-        <div className="flex flex-col justify-center mx-auto text-b-text-black">
-          <div className="mt-8 mb-6 text-3xl font-bold">빌려주기</div>
+        <div className="flex flex-col justify-center mx-auto text-b-text-black dark:text-b-dark-text [&_select]:dark:bg-b-dark-input">
+          <div className="mt-8 mb-6 text-3xl font-bold">글 작성하기</div>
           <form className="w-[800px] mx-auto">
+            <div className="flex my-4">
+              <label className="flex p-3 border-solid border border-gray-300 rounded-md ">
+                <label className="mr-7 w-[100px] text-center font-bold">
+                  글 타입
+                </label>
+                <input
+                  onChange={checkedLend}
+                  type="radio"
+                  name="postType"
+                  id="lend"
+                  className="w-4 h-4 mr-2 appearance-none border rounded-md border-gray-300 bg-white checked:bg-b-yellow checked:border-b-yellow focus:outline-none transition duration-100 align-top cursor-pointer"
+                />
+                <label htmlFor="lend" className="mr-7 checked:font-bold">
+                  빌려주기
+                </label>
+                <input
+                  onChange={checkedBorrow}
+                  type="radio"
+                  name="postType"
+                  id="borrow"
+                  className="w-4 h-4 mr-2 appearance-none border rounded-md border-gray-300  bg-white checked:bg-b-yellow checked:border-b-yellow focus:outline-none transition duration-100 align-top cursor-pointer"
+                />
+                <span className="mr-2">빌리기</span>
+              </label>
+            </div>
             {/* 상품명/카테고리 section */}
             <section className="flex mb-4">
               <select
@@ -175,8 +234,11 @@ export default function LendWriting() {
               <TradeWay />
             </section>
 
+            {/* 빌리는 기간 section */}
+            {postType === 'borrow' ? <ReservationDate /> : null}
+
             {/* 상품 상세내용 section */}
-            <section className="mb-4">
+            <section className="mb-4 dark:text-b-text-black dark:[&_input]:bg-slate-300">
               <PostEditor />
             </section>
 
@@ -187,7 +249,7 @@ export default function LendWriting() {
               <button
                 type="button"
                 onClick={handleButtonClick}
-                className="w-1/6 h-10 hover:text-white border border-b-yellow hover:bg-b-yellow  font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mt-3 mb-16 transition duration-100"
+                className="w-1/6 h-10 hover:text-white border border-b-yellow hover:bg-b-yellow  dark:font-bold font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mt-3 mb-16 transition duration-100"
               >
                 등록하기
               </button>

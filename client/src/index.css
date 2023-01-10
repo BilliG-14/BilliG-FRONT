@@ -21,7 +21,9 @@ body {
   justify-content: center;
   align-items: center;
 }
-
+.dark > body {
+  background-color: #3e476a;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

@@ -27,7 +27,7 @@ export default function SearchItemCard({ item }: SearchItemCardProp) {
         <div className="w-4/5 p-3 pl-10">
           <p className="text-lg font-semibold mt-1">{title}</p>
           <ul>
-            <li className="text-b-text-darkgray mt-3">
+            <li className="text-b-text-darkgray mt-3 dark:text-b-text-brightgray">
               <span>거래지역 : </span>
               <span>{`📍 ${address}`}</span>
             </li>

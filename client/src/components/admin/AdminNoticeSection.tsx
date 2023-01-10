@@ -67,7 +67,7 @@ function AdminNoticeList() {
   });
   if (isLoading) return <Loading />;
   return (
-    <section className="w-full text-b-text-black p-2">
+    <section className="w-full text-b-text-black dark:text-b-text-brightgray p-2">
       {isError && <p>데이터를 불러오는 데 실패하였습니다.</p>}
       <table className="table-auto border-separate border-spacing-4 w-full">
         <thead className=" font-extrabold">
@@ -96,7 +96,7 @@ function AdminNoticeList() {
                 <td className="w-36 py-2">{notice.writer?.nickName}</td>
                 <td className="w-14 py-2">
                   <button
-                    className="border-red-400 border-solid border-2 w-12 rounded-lg h-7 leading-7 text-red-400 after:content-['삭제'] hover:bg-red-400 hover:text-white"
+                    className="border-red-400 border-solid border-2 w-12 rounded-lg py-1 text-red-400 after:content-['삭제'] hover:bg-red-400 hover:text-white"
                     onClick={() => setTargetNotice(notice)}
                   ></button>
                 </td>

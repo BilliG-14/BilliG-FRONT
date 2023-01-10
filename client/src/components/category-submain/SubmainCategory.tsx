@@ -3,7 +3,6 @@ import { useQuery } from '@tanstack/react-query';
 import { getCategories } from 'api/category-api';
 import './category.css';
 import CategorySection from './CategorySection';
-import Loading from '../Loading';
 
 export default function SubmainCategory({ type }: { type: string }) {
   const [scrollEvent, setScrollEvent] = useState(false);
@@ -29,16 +28,13 @@ export default function SubmainCategory({ type }: { type: string }) {
     };
   }, []);
 
-  const {
-    isLoading,
-    isError,
-    data: categories,
-  } = useQuery(['categories'], getCategories, {
+  const { data: categories } = useQuery(['categories'], getCategories, {
     refetchOnWindowFocus: false,
     staleTime: 60 * 1000 * 60,
+    useErrorBoundary: true,
+    suspense: true,
   });
 
-  if (isLoading) return <Loading />;
   return (
     <div className="relative">
       <nav
