@@ -1,16 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { FaRegSmileWink } from 'react-icons/fa';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ChatRoomType, NotificationType } from 'types/chatType';
+import { UserType } from 'types/userType';
 import { Socket } from 'socket.io-client';
 import { getChatRoom } from 'api/chat-api';
 import api from 'api/customAxios';
 function ChatRoomList({
   chatRoomList,
   socket,
+  user,
 }: {
   chatRoomList: ChatRoomType[];
   socket: Socket;
+  user: UserType;
 }) {
   // url id 받기
   const { roomId } = useParams() as { roomId: string };
@@ -20,6 +23,16 @@ function ChatRoomList({
   const [count, setCount] = useState(0);
   const [newChats, setNewChats] = useState([]);
   const [oldChats, setOldChats] = useState([]);
+  const addOldMessage = useCallback(
+    (message: [], sentRoom: string) => {
+      console.log('message, sentRoom : ', message, sentRoom);
+      if (message && user?.nickName) {
+        console.log('통과! leave되었어용');
+        socket.emit('leave', sentRoom, message);
+      }
+    },
+    [user.nickName],
+  );
   // const [notifications, setNotifications] = useState<NotificationType[]>([]);
   /** 채팅방 변경 */
   const changeChatRoom = async (room: ChatRoomType) => {
@@ -30,9 +43,9 @@ function ChatRoomList({
       if (beforeRoomId) {
         await api.patch(`chat/${beforeRoomId}`, oldChats);
       }
-      console.log('room', room);
+      addOldMessage(room.chats, room._id);
+
       /** 채팅방 이동 전 소켓 이벤트 삭제 */
-      socket.emit('leave', room._id);
       socket.removeAllListeners(`message${beforeRoomId}`);
     } catch (error) {
       alert('소켓 통신이 정상적으로 이루어지지 않았습니다.');

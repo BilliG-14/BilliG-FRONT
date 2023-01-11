@@ -6,14 +6,14 @@ import { UserType } from 'types/userType';
 import { Socket } from 'socket.io-client';
 function MainPanel({ user, socket }: { user: UserType; socket: Socket }) {
   const scrollRef = useRef<HTMLInputElement>(null);
-  const inputOpenImageRef = useRef<HTMLInputElement>(null);
+  // const inputOpenImageRef = useRef<HTMLInputElement>(null);
   const [messages, setMessages] = useState<MessageType[]>([]);
   const [currentRoom, setCurrentRoom] = useState('');
   // * image state
-  const [imgSrc, setImgSrc] = useState(
-    `${process.env.PUBLIC_URL}/img/default_user.png`,
-  );
-  const [imagePath, setImagePath] = useState('');
+  // const [imgSrc, setImgSrc] = useState(
+  //   `${process.env.PUBLIC_URL}/img/default_user.png`,
+  // );
+  // const [imagePath, setImagePath] = useState('');
   const formRef = useRef<HTMLFormElement | null>(null);
   const textRef = useRef<HTMLTextAreaElement | null>(null);
   /** 줄 수를 계산해서 저장할 변수*/
