@@ -3,7 +3,6 @@ import api from 'api/customAxios';
 import { AxiosError } from 'axios';
 import Loading from 'components/Loading';
 import ConfirmModal from 'components/Modal';
-import { NoticesPaginateType } from 'pages/Notices';
 import { useState } from 'react';
 import { useNoticePageStore } from 'store/AdminPageStore';
 import AdminNoticeHeader from './AdminNoticeHeader';
@@ -12,7 +11,8 @@ import {
   NoticeType,
   CreatedNoticeType,
   UpdatedNoticeType,
-} from '../../types/noticeType';
+  NoticesPaginateType,
+} from 'types/noticeType';
 const endPoint = 'notice';
 export const apiNotice = {
   GETALL: async () => {
