@@ -9,7 +9,7 @@ export default function LoginJoin() {
   return (
     <div className="w-screen relative pb-[70px] min-h-[85vh]">
       <div className="max-w-screen-lg mx-auto">
-        <div className="max-w-screen-sm mx-auto mt-4  max-h-[1000px]">
+        <div className="max-w-screen-sm mx-auto mt-4">
           <LoginJoinHeader />
           <div className="w-full">
             {selectedLogin ? <LoginForm /> : <JoinForm />}

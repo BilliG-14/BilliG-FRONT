@@ -272,7 +272,7 @@ export default function PostDetail() {
                     <div className="flex flex-row gap-2 items-end mt-6">
                       <Link
                         to={`/user/${postData?.author?._id}`}
-                        className="w-1/2 p-2 text-left bg-white border border-solid border-gray-300 rounded-lg"
+                        className="w-1/2 p-2 text-left bg-white border dark:bg-b-card-dark border-solid border-gray-300 rounded-lg"
                       >
                         <div className="flex items-center">
                           <img
@@ -286,10 +286,10 @@ export default function PostDetail() {
                           />
 
                           <div className="flex-1 min-w-0">
-                            <p className="text-[12px] font-[600] text-gray-900 mb-1">
+                            <p className="text-[12px] font-[600] text-gray-900 mb-1 dark:text-b-dark-text">
                               {postData?.author.nickName}
                             </p>
-                            <p className="text-[8px] font-medium text-gray-400 ">
+                            <p className="text-[8px] font-medium text-gray-400 dark:text-b-dark-text">
                               {postData?.author.address1.length > 23
                                 ? `${postData?.author.address1.slice(0, 22)}...`
                                 : postData?.author.address1}

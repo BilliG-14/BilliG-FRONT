@@ -64,21 +64,23 @@ export default function UserInformation() {
             <div className="flex flex-col ml-4 ">
               <div className="mb-1">
                 <span className="font-bold text-xl">{user.nickName}</span>
-                <button
-                  className="text-xl text-red-500 hover:text-2xl"
-                  onClick={() => {
-                    setOpenReport(true);
-                  }}
-                >
-                  <RiAlarmWarningFill className="" />
-                </button>
+                {localStorage.getItem('userId') !== id && (
+                  <button
+                    className="text-xl text-red-500 hover:text-2xl"
+                    onClick={() => {
+                      setOpenReport(true);
+                    }}
+                  >
+                    <RiAlarmWarningFill className="" />
+                  </button>
+                )}
               </div>
-              <p className=" text-sm text-gray-500">
+              <p className=" text-sm text-gray-500 dark:text-b-dark-text">
                 신고 당한 횟수 : {user.reports.length}
               </p>
             </div>
           </div>
-          <p className="px-4 py-2 text-b-text-black text-base">
+          <p className="px-4 py-2 text-b-text-black text-base dark:text-b-dark-text">
             {user.intro ? user.intro : '아직 자기소개를 작성하지 않았습니다.'}
           </p>
         </div>
