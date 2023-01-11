@@ -89,6 +89,14 @@ function MainPanel({ user, socket }: { user: UserType; socket: any }) {
       setTextareaHeight(arrayLength - 1);
     }
   };
+  const leftBubbleStyle = `rounded-bl-none after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-0
+  after:border-[6px] after:border-solid after:border-transparent
+  after:border-l-0 after:border-b-0
+  after:border-r-amber-200 after:-ml-1`;
+  const rightBubbleStyle = `rounded-br-none after:content-[''] after:absolute after:right-0 after:bottom-0 after:w-0 after:h-0
+  after:border-[6px] after:border-solid after:border-transparent
+  after:border-r-0 after:border-b-0
+  after:border-l-amber-200 after:-mr-1`;
   return (
     <div className="h-full w-full outline outline-1 outline-gray-200 relative rounded-r-lg">
       {currentRoom ? (
@@ -105,7 +113,14 @@ function MainPanel({ user, socket }: { user: UserType; socket: any }) {
                   }
                 >
                   {name}
-                  <div className="my-2 text-sm text-black bg-amber-200 p-2 chat-bubble break-all whitespace-pre-line">
+                  <div
+                    className={`my-2 text-sm text-black bg-amber-200 p-2 break-all whitespace-pre-line rounded-md relative
+                    ${
+                      user?.nickName === name
+                        ? rightBubbleStyle
+                        : leftBubbleStyle
+                    }`}
+                  >
                     {message}
                     {/**  스크롤이 내려갈 자리*/}
                     <div ref={scrollRef} />
@@ -124,7 +139,7 @@ function MainPanel({ user, socket }: { user: UserType; socket: any }) {
               <div className="flex items-center">
                 <textarea
                   ref={textRef}
-                  className="w-11/12 h-[30px] textInput outline outline-1 outline-slate-200 rounded-3xl p-2 pl-5 resize-none"
+                  className="w-11/12 h-[30px] textInput outline outline-1 outline-slate-200 rounded-3xl p-2 pl-5 resize-none dark:text-b-text-black"
                   // type="text"
                   onKeyDown={pressEnter}
                   onChange={checkItemChangeHandler}
