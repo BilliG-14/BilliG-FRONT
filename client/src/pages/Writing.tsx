@@ -192,7 +192,7 @@ export default function Writing() {
                   type="radio"
                   name="postType"
                   id="lend"
-                  className="w-4 h-4 mr-2 appearance-none border rounded-md border-gray-300 bg-white checked:bg-b-yellow checked:border-b-yellow focus:outline-none transition duration-100 align-top cursor-pointer"
+                  className="w-4 h-4 mr-2 appearance-none border rounded-md border-gray-300 bg-white checked:bg-b-yellow checked:border-b-yellow focus:outline-none transition duration-100 align-top cursor-pointer dark:checked:bg-b-yellow"
                 />
                 <label htmlFor="lend" className="mr-7 checked:font-bold">
                   빌려주기
@@ -202,7 +202,7 @@ export default function Writing() {
                   type="radio"
                   name="postType"
                   id="borrow"
-                  className="w-4 h-4 mr-2 appearance-none border rounded-md border-gray-300  bg-white checked:bg-b-yellow checked:border-b-yellow focus:outline-none transition duration-100 align-top cursor-pointer"
+                  className="w-4 h-4 mr-2 appearance-none border rounded-md border-gray-300  bg-white checked:bg-b-yellow checked:border-b-yellow focus:outline-none transition duration-100 align-top cursor-pointer dark:checked:bg-b-yellow"
                 />
                 <span className="mr-2">빌리기</span>
               </label>
