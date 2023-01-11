@@ -45,6 +45,8 @@ module.exports = {
         'b-dark-side': '#181818',
         'b-dark-input': '#1F1F1F',
         'b-dark-text': '#EFEFEF',
+        'b-chat-main': '#75BC89',
+        'b-dark-chat-main':'#61876E'
       },
       keyframes: {
         fadeIn: {

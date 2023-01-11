@@ -93,7 +93,7 @@ function MainPanel({ user, socket }: { user: UserType; socket: any }) {
     <div className="h-full w-full outline outline-1 outline-gray-200 relative rounded-r-lg">
       {currentRoom ? (
         <div className="h-full w-full ">
-          <div className="bg-[#75BC89] w-full h-[800px] p-4 overflow-y-scroll">
+          <div className="bg-b-chat-main w-full h-[800px] p-4 overflow-y-scroll dark:bg-b-dark-chat-main">
             {messages.map(({ name, message }, idx) => {
               return (
                 <div

@@ -39,7 +39,7 @@ function ChatRoomList({
         key={room._id}
         className={
           room._id === activeChatRoomId
-            ? 'w-full h-14 pl-1 flex items-center cursor-pointer mb-5 bg-amber-300 rounded'
+            ? 'w-full h-14 pl-1 flex items-center cursor-pointer mb-5 bg-amber-300 rounded dark:bg-b-dark-yellow'
             : 'w-full h-14 pl-1 flex items-center cursor-pointer mb-5'
         }
         onClick={() => changeChatRoom(room)}
