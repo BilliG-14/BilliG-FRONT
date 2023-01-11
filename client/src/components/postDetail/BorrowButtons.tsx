@@ -62,7 +62,7 @@ export default function BorrowButtons(props: PostIdType) {
         </button>
       ) : (
         <button
-          className="w-1/2 h-[50px] focus:outline-none bg-b-bg-gray hover:bg-b-yellow hover:text-white font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300"
+          className="w-1/2 h-[50px] focus:outline-none bg-b-bg-gray hover:bg-b-yellow hover:text-white font-medium rounded-lg text-sm px-5 py-2.5 transition duration-300 dark:bg-b-card-dark dark:hover:bg-b-yellow"
           onClick={handleOnclick}
         >
           채팅하기

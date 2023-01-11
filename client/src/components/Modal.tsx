@@ -1,19 +1,3 @@
-/*
-title : 작성할 내용
-onClickToggleModal : 모달창 여부를 토글하기 위한  setState 함수
-
-onClickYes : 확인 버튼을 누르면 실행할 함수 (디폴트 : 모달창 닫기)
-content: 모달 중간에 표시할 텍스트 (디폴트 :없음);
-yesText: 확인 버튼에 들어갈 텍스트 (디폴트 : 확인);
-yesColor: 확인 버튼에 들어갈 색상 (tailwind처럼 red-400 이런 식으로 넣음) (디폴트 : blue-400)
-onlyYes : true로 할 경우, 취소버튼이 보이지 않음
-
-모달창을 여는 컴포넌트에 다음 코드를 추가하고 onClickToggleModal 속성에 넣어주세요
-  const [isOpenModal, setOpenModal] = useState<boolean>(false);
-  const onClickToggleModal = useCallback(() => {
-    setOpenModal(!isOpenModal);
-  }, [isOpenModal]);
-*/
 interface ConfirmModalProps {
   title: string;
   onClickToggleModal: () => void;
@@ -34,12 +18,6 @@ export default function ConfirmModal(props: ConfirmModalProps) {
       props.onClickYes();
     }
     props.onClickToggleModal();
-  };
-  const handleEnter = (e: React.KeyboardEvent) => {
-    console.log(e.key);
-    if (e.key === 'Enter') {
-      handleClickYes();
-    }
   };
   return (
     <div className="w-screen h-screen flex justify-center items-center fixed top-0 left-0 text-b-text-black break-keep">
