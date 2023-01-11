@@ -20,3 +20,15 @@ export type CreatedNoticeType = {
   title: string;
   content: string;
 };
+export type NoticesPaginateType = {
+  docs: [NoticeType];
+  totalPages: number;
+  hasNextPage: boolean;
+  hasPrevPage: boolean;
+  limit: number;
+  nextPage: number;
+  page: number;
+  pagingCounter: number;
+  prevPage: number;
+  totalDocs: number;
+};
