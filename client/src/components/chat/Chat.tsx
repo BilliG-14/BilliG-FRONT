@@ -6,10 +6,13 @@ import { getChatRooms } from 'api/chat-api';
 import { io, Socket } from 'socket.io-client';
 import { UserType } from 'types/userType';
 import { ChatRoomType } from 'types/chatType';
-const socket: Socket = io('http://34.64.44.34:3003/chat', {
+import { useParams } from 'react-router-dom';
+const socket: Socket = io('https://billigbackend.click/chat', {
   transports: ['websocket'],
 });
 function Chat() {
+  // url id 받기
+  const { roomId } = useParams() as { roomId: string };
   /** user 정보 가져오기 */
   const [userInfo, setUserInfo] = useState<UserType>({
     _id: '',
@@ -35,6 +38,7 @@ function Chat() {
   };
   useEffect(() => {
     setUserInfoData();
+    setChatRoomsInfoData();
   }, []);
 
   /** 채팅방 목록 정보 가져오기 */
@@ -43,9 +47,6 @@ function Chat() {
     const chatRooms: ChatRoomType[] = await getChatRooms();
     setChatRoomsInfo(chatRooms);
   };
-  useEffect(() => {
-    setChatRoomsInfoData();
-  }, []);
 
   return (
     <>
