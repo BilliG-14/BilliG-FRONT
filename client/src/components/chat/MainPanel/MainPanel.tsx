@@ -3,10 +3,17 @@ import { useParams } from 'react-router-dom';
 import { getChatRoom } from 'api/chat-api';
 import { MessageType } from 'types/chatType';
 import { UserType } from 'types/userType';
-function MainPanel({ user, socket }: { user: UserType; socket: any }) {
+import { Socket } from 'socket.io-client';
+function MainPanel({ user, socket }: { user: UserType; socket: Socket }) {
   const scrollRef = useRef<HTMLInputElement>(null);
+  // const inputOpenImageRef = useRef<HTMLInputElement>(null);
   const [messages, setMessages] = useState<MessageType[]>([]);
   const [currentRoom, setCurrentRoom] = useState('');
+  // * image state
+  // const [imgSrc, setImgSrc] = useState(
+  //   `${process.env.PUBLIC_URL}/img/default_user.png`,
+  // );
+  // const [imagePath, setImagePath] = useState('');
   const formRef = useRef<HTMLFormElement | null>(null);
   const textRef = useRef<HTMLTextAreaElement | null>(null);
   /** 줄 수를 계산해서 저장할 변수*/
@@ -97,6 +104,17 @@ function MainPanel({ user, socket }: { user: UserType; socket: any }) {
   after:border-[6px] after:border-solid after:border-transparent
   after:border-r-0 after:border-b-0
   after:border-l-amber-200 after:-mr-1`;
+
+  // /**이미지 업로드 */
+  // const handleOpenImageRef = () => {
+  //   inputOpenImageRef?.current?.click();
+  // };
+  // const handleUploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (!e.target.files) return;
+  //   const file = e.target.files[0];
+
+  // };
+
   return (
     <div className="h-full w-full outline outline-1 outline-gray-200 relative rounded-r-lg">
       {currentRoom ? (
@@ -154,6 +172,20 @@ function MainPanel({ user, socket }: { user: UserType; socket: any }) {
                 >
                   전송
                 </button>
+                {/* <button
+                  onClick={handleOpenImageRef}
+                  className="message-form-button"
+                  style={{ width: '100%' }}
+                >
+                  UPLOAD
+                </button>
+                <input
+                  accept="image/jpeg, image/png"
+                  style={{ display: 'none' }}
+                  type="file"
+                  ref={inputOpenImageRef}
+                  onChange={handleUploadImage}
+                /> */}
               </div>
             </form>
           </div>

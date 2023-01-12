@@ -9,6 +9,15 @@ export const getChatRoom = async (id: string) => {
   }
 };
 
+// export const patchChatRoom = async (id: string) => {
+//   try {
+//     await api.patch(`/chat/${id}`);
+//     return chats;
+//   } catch (error) {
+//     alert('채팅방 불러오기 실패하였습니다.');
+//   }
+// };
+
 export const getChatRooms = async () => {
   try {
     const chatInformation = await api.get('/chat');

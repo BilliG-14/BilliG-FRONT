@@ -16,7 +16,7 @@ function SidePanel({
   return (
     <div className="bg-amber-400 text-white min-h-[920px] max-h-[1000px] pb-4 rounded-l-xl dark:bg-b-dark-yellow">
       <UserPanel user={user} />
-      <ChatRoomList chatRoomList={chatRoomList} socket={socket} />
+      <ChatRoomList chatRoomList={chatRoomList} socket={socket} user={user} />
     </div>
   );
 }
