@@ -8,7 +8,7 @@ type StepProps = {
 function StepDiscription(props: StepProps) {
   const { num, content } = props;
   return (
-    <div className="text-xl w-96 h-96 mx-1 break-keep flex flex-col items-center rounded-lg shadow-lg shadow-gray-300">
+    <div className="text-xl w-96 h-96 mx-1 break-keep flex flex-col items-center rounded-lg shadow-lg shadow-gray-300 dark:bg-b-card-dark dark:shadow-none">
       <p className="bg-b-yellow text-white rounded-lg px-2 font-bold self-start ml-6 mt-4 mb-7">
         step {num}
       </p>

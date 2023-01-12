@@ -1,48 +1,26 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import api from 'api/customAxios';
+import { apiReports, getReports } from 'api/report-api';
 import { AxiosError } from 'axios';
 import Loading from 'components/Loading';
 import ConfirmModal from 'components/Modal';
 import { useState } from 'react';
+import { ReportType } from 'types/reportType';
 
-export type Report = {
-  createdAt: string;
-  details: string;
-  reporter: {
-    name: string;
-    _id: string;
-  };
-  target: {
-    name: string;
-    _id: string;
-  };
-  updatedAt: string;
-  _id: string;
-};
-/*Report CRUD */
-const endPoint = 'report';
-const apiReports = {
-  GET: async () => {
-    const { data } = await api.get(`/${endPoint}`);
-    return data;
-  },
-  DELETE: async (_id: string) => {
-    await api.delete(`/${endPoint}/${_id}`);
-  },
-};
 export default function AdminReportSection() {
   const queryClient = useQueryClient();
   //신고내역 선택
-  const [targetReport, setTargetReport] = useState<Report>();
-  const { isLoading, data, isError } = useQuery<Report[], AxiosError>(
+  const [targetReport, setTargetReport] = useState<ReportType>();
+  /*신고내역 받아오기*/
+  const { isLoading, data, isError } = useQuery<ReportType[], AxiosError>(
     ['reports'],
-    apiReports.GET,
+    getReports,
     {
       refetchOnWindowFocus: false,
       retry: 0, // 실패시 재호출 몇번 할지
       staleTime: 60 * 1000 * 60,
     },
   );
+  /*신고내역 삭제*/
   const deleteMutation = useMutation(apiReports.DELETE, {
     onSuccess: (_data) => {
       queryClient.invalidateQueries(['reports']);
@@ -55,7 +33,7 @@ export default function AdminReportSection() {
     return <p>데이터를 불러오지 못했습니다.</p>;
   }
   return (
-    <section className="w-full text-b-text-black p-2">
+    <section className="w-full text-b-text-black dark:text-b-dark-text p-2">
       <table className="table-auto border-separate border-spacing-4 w-full">
         <thead className=" font-extrabold">
           <tr>
@@ -81,7 +59,7 @@ export default function AdminReportSection() {
               <td>{report.details}</td>
               <td className="w-14">
                 <button
-                  className="border-red-400 border-solid border-2 w-12 rounded-lg h-7 leading-7 text-red-400 after:content-['삭제'] shadow-lg hover:bg-red-400 hover:text-white"
+                  className="border-red-400 border-solid border-2 w-12 rounded-lg text-red-400 after:content-['삭제'] hover:bg-red-400 hover:text-white py-1"
                   onClick={() => setTargetReport(report)}
                 ></button>
               </td>

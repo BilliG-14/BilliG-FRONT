@@ -5,7 +5,6 @@ import {
   AdminNoticeSection,
   AdminPostSection,
   AdminRentalSection,
-  AdminHashTagSection,
 } from 'components/admin';
 import useAdminPageStore, { AdminSection } from 'store/AdminPageStore';
 import AdminCategorySection from './AdminCategorySection';
@@ -26,8 +25,6 @@ export default function AdminMainSection() {
         return <AdminPostSection />;
       case AdminSection.RENTAL:
         return <AdminRentalSection />;
-      case AdminSection.HASHTAG:
-        return <AdminHashTagSection />;
       case AdminSection.CATEGORY:
         return <AdminCategorySection />;
       default:
@@ -35,5 +32,9 @@ export default function AdminMainSection() {
     }
   })(section);
 
-  return <section className="w-full">{showSection}</section>;
+  return (
+    <section className="w-full min-w-[836px] [&_input]:dark:bg-b-dark-input [&_textarea]:dark:bg-b-dark-input dark:text-b-dark-text">
+      {showSection}
+    </section>
+  );
 }

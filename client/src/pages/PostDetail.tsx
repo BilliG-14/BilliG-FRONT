@@ -4,7 +4,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import styled from 'styled-components';
 
 import Caution from '../components/postDetail/Caution';
-import { PostDataType } from '../store/PostReadStore';
+import { PostDataType } from '../types/productType';
 // import TradeWayTag from '../components/tag/TradeWayTag';
 import { FaPeopleArrows } from 'react-icons/fa';
 import { GoPackage } from 'react-icons/go';
@@ -18,6 +18,7 @@ import { AxiosError } from 'axios';
 import NotFound from 'components/NotFound';
 import Footer from 'components/footer/Footer';
 import ChatIcon from 'components/chat-icon/ChatIcon';
+import { getPostDetail } from 'api/product-api';
 
 export default function PostDetail() {
   const navigate = useNavigate();
@@ -38,14 +39,8 @@ export default function PostDetail() {
     isError,
   } = useQuery<PostDataType[], AxiosError>(
     ['postData', id],
-    async () => {
-      const res = await api.get(`/product/${id}`);
-      return res.data;
-    },
+    () => getPostDetail(id),
     {
-      onError: (err) => {
-        alert(`데이터를 불러올 수 없습니다. \n에러내용 : ${err}`);
-      },
       refetchOnMount: true,
       refetchOnWindowFocus: true,
       staleTime: 1000 * 60 * 5,
@@ -105,7 +100,7 @@ export default function PostDetail() {
     <div className="w-screen m-auto relative pb-[70px] min-h-[85vh]">
       <div className="max-w-screen-lg mx-auto">
         <div className="flex flex-col justify-center mx-auto text-b-text-black">
-          <div className="mt-8 mb-6 text-3xl font-bold">
+          <div className="mt-8 mb-6 text-3xl font-bold dark:text-b-dark-text">
             {postData?.postType === 'lend' ? (
               <Link to="/submain">빌려주기</Link>
             ) : (
@@ -114,17 +109,21 @@ export default function PostDetail() {
           </div>
           {!postData ? (
             <div className="h-[500px] text-center text-sm mt-10">
-              잘못된 페이지이거나 삭제된 게시글입니다.
-              <br />
-              <button className="mt-6 py-1.5 px-3 font-bold bg-slate-300 hover:bg-slate-400 rounded transition duration-100">
+              <div className="mb-5 dark:text-b-dark-text">
+                잘못된 페이지이거나 삭제된 게시글입니다.
+              </div>
+              <Link
+                to="/"
+                className="py-1.5 px-3 font-bold bg-slate-300 hover:bg-slate-400 rounded transition duration-100"
+              >
                 메인 페이지로 이동
-              </button>
+              </Link>
             </div>
           ) : (
             <>
               {/* 상단 정보(카테고리, 작성일) */}
               <section className="max-w-screen-lg flex justify-between mb-4">
-                <div className="text-sm text-b-text-darkgray ml-4">
+                <div className="text-sm text-b-text-darkgray ml-4 dark:text-b-dark-text">
                   {postData?.postType === 'lend' ? (
                     <Link to="/submain">빌려주기</Link>
                   ) : (
@@ -141,7 +140,7 @@ export default function PostDetail() {
                     </Link>
                   )}
                 </div>
-                <div className="text-xs text-b-text-darkgray mr-4">
+                <div className="text-xs text-b-text-darkgray mr-4 dark:text-b-dark-text">
                   작성시간{' '}
                   {postData?.createdAt.split('T')[0] +
                     ' ' +
@@ -184,7 +183,9 @@ export default function PostDetail() {
                 {/* 상품 기본정보 */}
                 <div className="flex flex-col justify-between w-[450px] h-[410px] pt-3 mr-4">
                   <div className="text-left">
-                    <div className="text-3xl font-bold">{postData?.title}</div>
+                    <div className="text-3xl font-bold dark:text-b-dark-text">
+                      {postData?.title}
+                    </div>
                     <div className="flex">
                       {postData?.hashtag.map((tag, idx) => {
                         return (
@@ -199,9 +200,9 @@ export default function PostDetail() {
                     </div>
                   </div>
 
-                  <div className="text-right">
+                  <div className="text-right dark:text-b-dark-text">
                     <div className="flex justify-between mb-2">
-                      <div className="text-sm text-b-text-darkgray w-24 text-left">
+                      <div className="text-sm text-b-text-darkgray dark:text-b-dark-text w-24 text-left">
                         요금
                       </div>
                       <div className="flex items-end align-bottom">
@@ -214,7 +215,7 @@ export default function PostDetail() {
                     <hr className="hr-1 my-4"></hr>
                     {postData?.postType === 'lend' ? null : (
                       <div className="flex justify-between mb-2">
-                        <div className="text-sm text-b-text-darkgray w-24 mb-2 text-left my-auto">
+                        <div className="text-sm text-b-text-darkgray dark:text-b-dark-text w-24 mb-2 text-left my-auto">
                           대여시간
                         </div>
                         <div>
@@ -227,7 +228,7 @@ export default function PostDetail() {
 
                     {/* 대여방법 */}
                     <div className="flex justify-between mb-2">
-                      <div className="text-sm text-b-text-darkgray w-24 mb-2 text-left my-auto">
+                      <div className="text-sm text-b-text-darkgray dark:text-b-dark-text w-24 mb-2 text-left my-auto">
                         대여방법
                       </div>
                       <div>
@@ -271,7 +272,7 @@ export default function PostDetail() {
                     <div className="flex flex-row gap-2 items-end mt-6">
                       <Link
                         to={`/user/${postData?.author?._id}`}
-                        className="w-1/2 p-2 text-left bg-white border border-solid border-gray-300 rounded-lg"
+                        className="w-1/2 p-2 text-left bg-white border dark:bg-b-card-dark border-solid border-gray-300 rounded-lg"
                       >
                         <div className="flex items-center">
                           <img
@@ -285,10 +286,10 @@ export default function PostDetail() {
                           />
 
                           <div className="flex-1 min-w-0">
-                            <p className="text-[12px] font-[600] text-gray-900 mb-1">
+                            <p className="text-[12px] font-[600] text-gray-900 mb-1 dark:text-b-dark-text">
                               {postData?.author.nickName}
                             </p>
-                            <p className="text-[8px] font-medium text-gray-400 ">
+                            <p className="text-[8px] font-medium text-gray-400 dark:text-b-dark-text">
                               {postData?.author.address1.length > 23
                                 ? `${postData?.author.address1.slice(0, 22)}...`
                                 : postData?.author.address1}
@@ -325,14 +326,18 @@ export default function PostDetail() {
               {/* 게시글 main - 상세 정보들 */}
               <br />
               <section>
-                <div className="font-semibold text-lg">상세정보</div>
+                <div className="font-semibold text-lg dark:text-b-dark-text">
+                  상세정보
+                </div>
                 <DetailDiv
-                  className="w-full min-h-[300px] h-auto mt-3 mb-12 p-3 rounded-lg"
+                  className="w-full min-h-[300px] h-auto mt-3 mb-12 p-3 rounded-lg dark:text-b-dark-text"
                   dangerouslySetInnerHTML={{ __html: postData?.description }}
                 />
                 <div className="flex items-end gap-7">
-                  <div className="font-semibold text-lg leading-none">위치</div>
-                  <div className="flex text-sm leading-none items-end">
+                  <div className="font-semibold text-lg leading-none dark:text-b-dark-text">
+                    위치
+                  </div>
+                  <div className="flex text-sm leading-none items-end dark:text-b-dark-text">
                     <MdLocationOn className="w-5 h-5 mr-1 text-b-yellow" />
                     {postData?.author.address1}
                   </div>

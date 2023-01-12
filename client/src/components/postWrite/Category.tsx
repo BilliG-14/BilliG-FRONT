@@ -4,6 +4,7 @@ import api from '../../api/customAxios';
 
 import { categoryStore, CategoryType } from './../../store/PostWriteStore';
 import Loading from 'components/Loading';
+import { getCategories } from 'api/category-api';
 
 export default function Category(props: CategoryType) {
   const { categoryId } = props;
@@ -14,10 +15,7 @@ export default function Category(props: CategoryType) {
   // 카테고리 받아오기
   const { isLoading, data: categories } = useQuery(
     ['categories'],
-    async () => {
-      const result = await api.get('/category');
-      return result.data;
-    },
+    getCategories,
     {
       refetchOnMount: 'always',
       refetchOnWindowFocus: false,
@@ -38,7 +36,7 @@ export default function Category(props: CategoryType) {
     <select
       onChange={changecategory}
       ref={categoryRef}
-      className="flex-none pl-3 w-1/6 h-10 border-solid border  border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2"
+      className="flex-none pl-3 w-1/6 h-10 border-solid border  border-gray-300 rounded-md outline-none focus:border-b-yellow focus:border-2 dark:bg-b-dark-input dark:text-b-dark-text"
     >
       <option>카테고리 설정</option>
       {categories.map((category: { _id: string; name: string }) => (

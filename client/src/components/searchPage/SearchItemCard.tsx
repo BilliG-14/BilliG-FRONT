@@ -1,15 +1,12 @@
-import React from 'react';
 import DealTag from 'components/tag/DealTag';
-import { Item } from 'components/myinfo/MyLendPostList';
-import { useNavigate } from 'react-router-dom';
+import { PostDataType } from 'types/productType';
 
 interface SearchItemCardProp {
-  item: Item;
+  item: PostDataType;
 }
 
 export default function SearchItemCard({ item }: SearchItemCardProp) {
   const { title, address, imgUrl, hashtag, tradeWay, price } = item;
-  const navigate = useNavigate();
   return (
     <li
       className="h-36 flex w-full justify-center py-3 cursor-pointer hover:opacity-70"
@@ -24,13 +21,13 @@ export default function SearchItemCard({ item }: SearchItemCardProp) {
               ? imgUrl[0]
               : `${process.env.PUBLIC_URL}/product_default.png`
           }
-          alt={hashtag[0] ? hashtag[0] : 'item'}
+          alt={hashtag[0] ? hashtag[0].name : 'item'}
           className="w-24 h-24 m-auto"
         />
         <div className="w-4/5 p-3 pl-10">
           <p className="text-lg font-semibold mt-1">{title}</p>
           <ul>
-            <li className="text-b-text-darkgray mt-3">
+            <li className="text-b-text-darkgray mt-3 dark:text-b-text-brightgray">
               <span>거래지역 : </span>
               <span>{`📍 ${address}`}</span>
             </li>
@@ -43,10 +40,6 @@ export default function SearchItemCard({ item }: SearchItemCardProp) {
           {tradeWay.delivery ? <DealTag deal="택배거래" /> : null}
         </div>
         <div className="price text-right mt-1">
-          {/* <p className="per_time mb-2">
-            <span className="font-semibold"> {`5,000 원`}</span>
-            <span className="text-xs"> / 시간</span>
-          </p> */}
           <p className="per_day">
             <span className="font-semibold">
               {`${price.priceDay.toLocaleString('ko-KR')} 원`}

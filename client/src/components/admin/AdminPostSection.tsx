@@ -5,7 +5,7 @@ import Loading from 'components/Loading';
 import ConfirmModal from 'components/Modal';
 import { Pagination } from 'components/Pagination';
 import { useState } from 'react';
-import { PostDataType } from 'store/PostReadStore';
+import { PostDataType } from '../../types/productType';
 
 //페이지네이션을 위한 타입
 export type PostsPaginateType = {
@@ -73,7 +73,7 @@ export default function AdminPostSection() {
     return <p>데이터를 불러오지 못했습니다.</p>;
   }
   return (
-    <section className="w-full text-b-text-black p-2">
+    <section className="w-full text-b-text-black p-2 dark:text-b-dark-text">
       <table className="table-auto border-separate border-spacing-4 w-full">
         <thead className=" font-extrabold">
           <tr>
@@ -96,7 +96,7 @@ export default function AdminPostSection() {
                 </td>
                 <td className="w-14">
                   <button
-                    className="border-red-400 border-solid border-2 w-12 rounded-lg h-7 leading-7 text-red-400 after:content-['삭제'] shadow-lg hover:bg-red-400 hover:text-white"
+                    className="border-red-400 border-solid border-2 w-12 rounded-lg py-1 text-red-400 after:content-['삭제'] hover:bg-red-400 hover:text-white"
                     onClick={() => setTargetPost(post)}
                   ></button>
                 </td>

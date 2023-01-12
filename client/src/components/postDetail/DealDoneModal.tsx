@@ -1,7 +1,7 @@
 import { useState, useRef, ChangeEvent } from 'react';
 import api from '../../api/customAxios';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { UserInformationPostType, PostIdType } from 'store/PostReadStore';
+import { UserInformationPostType, PostIdType } from 'types/productType';
 import { reservationStore } from 'store/PostWriteStore';
 
 export default function DealDoneModal(props: PostIdType) {
@@ -165,7 +165,7 @@ export default function DealDoneModal(props: PostIdType) {
       </button>
       {showModal ? (
         <>
-          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none dark:text-b-text-black dark:[&_input]:bg-white dark:[&_input]:text-b-text-black">
             <div className="relative w-auto my-6 mx-auto max-w-3xl">
               {/*content*/}
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">

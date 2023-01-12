@@ -3,36 +3,18 @@ import api from 'api/customAxios';
 import { AxiosError } from 'axios';
 import Loading from 'components/Loading';
 import ConfirmModal from 'components/Modal';
-import { NoticesPaginateType } from 'pages/Notices';
 import { useState } from 'react';
 import { useNoticePageStore } from 'store/AdminPageStore';
 import AdminNoticeHeader from './AdminNoticeHeader';
 import AdminNoticeWriting from './AdminNoticeWriting';
-
-export interface Notice {
-  _id: string;
-  title: string;
-  writer: {
-    _id: string;
-    nickName: string;
-    name: string;
-  };
-  content: string;
-  createdAt: string;
-}
-export interface UpdatedNotice {
-  updated: {
-    title: string;
-    content: string;
-  };
-  _id: string;
-}
-export interface CreatedNotice {
-  title: string;
-  content: string;
-}
+import {
+  NoticeType,
+  CreatedNoticeType,
+  UpdatedNoticeType,
+  NoticesPaginateType,
+} from 'types/noticeType';
 const endPoint = 'notice';
-export const apiReports = {
+export const apiNotice = {
   GETALL: async () => {
     const { data } = await api.get('notice?per=1000&page=1');
     return data;
@@ -42,11 +24,11 @@ export const apiReports = {
     return data;
   },
 
-  CREATE: async (newNotice: CreatedNotice) => {
+  CREATE: async (newNotice: CreatedNoticeType) => {
     const { data } = await api.post(`/${endPoint}`, newNotice);
     return data;
   },
-  UPDATE: async ({ updated, _id }: UpdatedNotice) => {
+  UPDATE: async ({ updated, _id }: UpdatedNoticeType) => {
     const { data } = await api({
       url: `/${endPoint}/${_id}`,
       method: 'patch',
@@ -62,34 +44,30 @@ function AdminNoticeList() {
   /*react-query */
   const queryClient = useQueryClient();
   /*삭제할 공지 */
-  const [targetNotice, setTargetNotice] = useState<Notice>();
+  const [targetNotice, setTargetNotice] = useState<NoticeType>();
   //공지글 읽어오기
   const {
     isLoading,
     data: paginatedNotices,
     isError,
-  } = useQuery<NoticesPaginateType, AxiosError>(
-    ['notices'],
-    apiReports.GETALL,
-    {
-      refetchOnWindowFocus: false,
-      retry: 0,
-      staleTime: 60 * 1000 * 60,
-    },
-  );
-  const updateMutation = useMutation(apiReports.UPDATE, {
+  } = useQuery<NoticesPaginateType, AxiosError>(['notices'], apiNotice.GETALL, {
+    refetchOnWindowFocus: false,
+    retry: 0,
+    staleTime: 60 * 1000 * 60,
+  });
+  const updateMutation = useMutation(apiNotice.UPDATE, {
     onSuccess: (_data) => {
       queryClient.invalidateQueries(['notices']);
     },
   });
-  const deleteMutation = useMutation(apiReports.DELETE, {
+  const deleteMutation = useMutation(apiNotice.DELETE, {
     onSuccess: (_data) => {
       queryClient.invalidateQueries(['notices']);
     },
   });
   if (isLoading) return <Loading />;
   return (
-    <section className="w-full text-b-text-black p-2">
+    <section className="w-full text-b-text-black dark:text-b-text-brightgray p-2">
       {isError && <p>데이터를 불러오는 데 실패하였습니다.</p>}
       <table className="table-auto border-separate border-spacing-4 w-full">
         <thead className=" font-extrabold">
@@ -118,7 +96,7 @@ function AdminNoticeList() {
                 <td className="w-36 py-2">{notice.writer?.nickName}</td>
                 <td className="w-14 py-2">
                   <button
-                    className="border-red-400 border-solid border-2 w-12 rounded-lg h-7 leading-7 text-red-400 after:content-['삭제'] shadow-lg hover:bg-red-400 hover:text-white"
+                    className="border-red-400 border-solid border-2 w-12 rounded-lg py-1 text-red-400 after:content-['삭제'] hover:bg-red-400 hover:text-white"
                     onClick={() => setTargetNotice(notice)}
                   ></button>
                 </td>

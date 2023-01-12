@@ -6,7 +6,7 @@ export default function MyInfoSideBar() {
   const client = useQueryClient();
   const { togglePwfalse } = usePasswordEditStore();
   return (
-    <div className="w-1/5 h-full p-4 bg-b-bg-gray">
+    <div className="w-1/5 h-full p-4 bg-b-bg-gray dark:bg-b-dark-side">
       <div className="menu_box mb-7">
         <p className="items-center justify-center text-2xl font-extrabold mb-1">
           내 정보
@@ -26,7 +26,7 @@ export default function MyInfoSideBar() {
             className="h-10 flex items-center justify-start hover:scale-105 hover:ease-in duration-300 hover:text-b-yellow"
             onClick={() => {
               client.invalidateQueries([
-                `giveList/1`,
+                `lendList/1`,
                 `${localStorage.getItem('userId')}`,
               ]);
               togglePwfalse();

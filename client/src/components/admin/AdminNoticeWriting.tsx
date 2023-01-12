@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import ConfirmModal from 'components/Modal';
 import { useRef, useState } from 'react';
-import { apiReports } from './AdminNoticeSection';
+import { apiNotice } from './AdminNoticeSection';
 export default function AdminNoticeWriting() {
   const titleRef = useRef<HTMLInputElement>(null);
   const contentRef = useRef<HTMLTextAreaElement>(null);
@@ -24,22 +24,21 @@ export default function AdminNoticeWriting() {
     titleRef.current.value = '';
     contentRef.current.value = '';
   };
-  const createMutation = useMutation(apiReports.CREATE, {
+  const createMutation = useMutation(apiNotice.CREATE, {
     onSuccess: () => {
-      // post요청 성공 시 category 맵핑된 useQuery api 함수를 실행
       queryClient.invalidateQueries(['notices']);
     },
   });
   return (
-    <div className="w-full">
+    <div className="w-full dark:text-b-text-brightgray">
       <form className="mt-6 flex flex-col w-3/4 mx-auto font-bold">
         <div>
           <label htmlFor="title" className="text-lg">
             제목
           </label>
           <input
-            className="w-full h-10 border-solid border-2 rounded-lg px-4
-        focus:outline-none focus:border-4"
+            className="w-full h-10 border-solid border rounded-lg px-4
+        focus:outline-none focus:border-2"
             id="title"
             ref={titleRef}
             type="text"
@@ -53,8 +52,8 @@ export default function AdminNoticeWriting() {
           <textarea
             id="content"
             ref={contentRef}
-            className="block w-full h-56 border-solid border-2 rounded-lg  p-4
-        focus:outline-none focus:border-4"
+            className="block w-full h-56 border-solid border rounded-lg  p-4
+        focus:outline-none focus:border-2"
             placeholder="내용을 입력해주세요"
           ></textarea>
         </div>

@@ -1,6 +1,4 @@
-interface PropsType {
-  bringImgUrlList: string[];
-}
+import { PropsType } from '../../types/productType';
 
 export default function UpdatedImageUpload(props: PropsType) {
   const { bringImgUrlList } = props;

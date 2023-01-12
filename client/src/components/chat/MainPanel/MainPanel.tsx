@@ -1,19 +1,21 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { getChatRoom } from '../getChatRoom';
-interface MessageInterface {
-  name: string;
-  message: string;
-}
-
-function MainPanel({ user, chatRoomList, socket }: any) {
+import { useParams } from 'react-router-dom';
+import { getChatRoom } from 'api/chat-api';
+import { MessageType } from 'types/chatType';
+import { UserType } from 'types/userType';
+import { Socket } from 'socket.io-client';
+function MainPanel({ user, socket }: { user: UserType; socket: Socket }) {
   const scrollRef = useRef<HTMLInputElement>(null);
-  const [messages, setMessages] = useState<MessageInterface[]>([]);
+  // const inputOpenImageRef = useRef<HTMLInputElement>(null);
+  const [messages, setMessages] = useState<MessageType[]>([]);
   const [currentRoom, setCurrentRoom] = useState('');
+  // * image state
+  // const [imgSrc, setImgSrc] = useState(
+  //   `${process.env.PUBLIC_URL}/img/default_user.png`,
+  // );
+  // const [imagePath, setImagePath] = useState('');
   const formRef = useRef<HTMLFormElement | null>(null);
   const textRef = useRef<HTMLTextAreaElement | null>(null);
-  /**  유저 입력 값을 넣을 변수*/
-  const [checkItemContent, setCheckItemContent] = useState('');
   /** 줄 수를 계산해서 저장할 변수*/
   const [textareaHeight, setTextareaHeight] = useState(0);
   const [isSubmit, setIsSubmit] = useState(false);
@@ -86,18 +88,30 @@ function MainPanel({ user, chatRoomList, socket }: any) {
   /** 줄바꿈에 따른 textArea 높이 자동 조절
    사용자 입력 값이 변경될 때마다 checkItemContent에 저장하고
    엔터('\n') 개수를 세서 textareaHeight에 저장*/
-  const checkItemChangeHandler = (e: any) => {
+  const checkItemChangeHandler = (
+    e: React.ChangeEvent<HTMLTextAreaElement>,
+  ) => {
     const arrayLength = e.target.value.split('\n').length;
     if (arrayLength < 4) {
       setTextareaHeight(arrayLength - 1);
-      setCheckItemContent(e.target.value);
     }
   };
+
+  // /**이미지 업로드 */
+  // const handleOpenImageRef = () => {
+  //   inputOpenImageRef?.current?.click();
+  // };
+  // const handleUploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (!e.target.files) return;
+  //   const file = e.target.files[0];
+
+  // };
+
   return (
     <div className="h-full w-full outline outline-1 outline-gray-200 relative rounded-r-lg">
       {currentRoom ? (
         <div className="h-full w-full ">
-          <div className="bg-[#75BC89] w-full h-[800px] p-4 overflow-y-scroll">
+          <div className="bg-b-chat-main w-full h-[800px] p-4 overflow-y-scroll dark:bg-b-dark-chat-main">
             {messages.map(({ name, message }, idx) => {
               return (
                 <div
@@ -128,7 +142,7 @@ function MainPanel({ user, chatRoomList, socket }: any) {
               <div className="flex items-center">
                 <textarea
                   ref={textRef}
-                  className="w-11/12 h-[30px] textInput outline outline-1 outline-slate-200 rounded-3xl p-2 pl-5 resize-none"
+                  className="w-11/12 h-[30px] textInput outline outline-1 outline-slate-200 rounded-3xl p-2 pl-5 resize-none dark:text-b-text-black"
                   // type="text"
                   onKeyDown={pressEnter}
                   onChange={checkItemChangeHandler}
@@ -143,6 +157,20 @@ function MainPanel({ user, chatRoomList, socket }: any) {
                 >
                   전송
                 </button>
+                {/* <button
+                  onClick={handleOpenImageRef}
+                  className="message-form-button"
+                  style={{ width: '100%' }}
+                >
+                  UPLOAD
+                </button>
+                <input
+                  accept="image/jpeg, image/png"
+                  style={{ display: 'none' }}
+                  type="file"
+                  ref={inputOpenImageRef}
+                  onChange={handleUploadImage}
+                /> */}
               </div>
             </form>
           </div>

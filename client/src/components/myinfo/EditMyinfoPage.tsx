@@ -4,6 +4,8 @@ import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import api from '../../api/customAxios';
 import { useNavigate } from 'react-router-dom';
 import Loading from '../Loading';
+import { getUserInfoByuserId } from 'api/user-api';
+import { UpdateInfo } from 'types/userType';
 
 export default function EditMyinfoPage() {
   // * image state
@@ -11,15 +13,6 @@ export default function EditMyinfoPage() {
     `${process.env.PUBLIC_URL}/img/default_user.png`,
   );
   const [imagePath, setImagePath] = useState('');
-
-  type UpdateInfo = {
-    nickName: string | undefined;
-    intro: string | undefined;
-    image: string | undefined;
-    phoneNumber: string | undefined;
-    address1: string | undefined;
-    address2: string | undefined;
-  };
 
   // * Ref
   const imgRef = useRef<HTMLInputElement | null>(null);
@@ -33,18 +26,14 @@ export default function EditMyinfoPage() {
   const navigate = useNavigate();
 
   // * useQuery
-  const {
-    isLoading,
-    isError,
-    data: userInfo,
-  } = useQuery(
+  const { data: userInfo } = useQuery(
     ['userInfo', `${localStorage.getItem('userId')}`],
-    async () => {
-      return api.get(`/user/${localStorage.getItem('userId')}`);
-    },
+    () => getUserInfoByuserId(),
     {
       refetchOnWindowFocus: false,
       staleTime: 60 * 1000 * 5,
+      useErrorBoundary: true,
+      suspense: true,
     },
   );
   // * useMutation
@@ -95,7 +84,6 @@ export default function EditMyinfoPage() {
     imgRef.current?.click();
   };
 
-  if (isLoading) return <Loading />;
   const {
     name,
     email,
@@ -105,7 +93,7 @@ export default function EditMyinfoPage() {
     phoneNumber,
     address1,
     address2,
-  } = userInfo?.data;
+  } = userInfo;
 
   return (
     <div className="w-4/5 p-12">

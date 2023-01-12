@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
+  darkMode: 'class',
   theme: {
     screens: {
       sm: '640px',
@@ -38,6 +39,14 @@ module.exports = {
         'b-bg-sec6': '#FDAE84',
         'b-bg-sec7': '#E9DCCD',
         'b-bg-sec8': '#D1A827',
+        'b-bg-dark': '#3E476A',
+        'b-card-dark': '#5E678A',
+        'b-dark-yellow': '#EDA240',
+        'b-dark-side': '#181818',
+        'b-dark-input': '#1F1F1F',
+        'b-dark-text': '#EFEFEF',
+        'b-chat-main': '#75BC89',
+        'b-dark-chat-main':'#61876E'
       },
       keyframes: {
         fadeIn: {
@@ -117,6 +126,15 @@ module.exports = {
             transform: 'translateX(-100%)',
           },
         },
+        FadeInDown: {
+          '0%': {
+            opacity: 0,
+            transform: 'translateY(-50%)',
+          },
+          '100%': {
+            opacity: 1,
+          },
+        }
       },
       animation: {
         'fade-in-150ms': 'fadeIn 150ms linear',
@@ -128,9 +146,10 @@ module.exports = {
         'center-to-lb': 'CenterToLeftBottom 500ms linear 1.2s both',
         'center-to-rb': 'CenterToRightBottom 500ms linear 1.4s both',
         'center-to-rt': 'CenterToRightTop 500ms linear 1.6s both',
-        'marquee': 'Marquee 55s linear infinite',
+        marquee: 'Marquee 55s linear infinite',
+        'fade-in-down': 'FadeInDown 500ms ease-in-out',
       },
     },
   },
-  plugins: [require('daisyui')],
+  plugins: [],
 };

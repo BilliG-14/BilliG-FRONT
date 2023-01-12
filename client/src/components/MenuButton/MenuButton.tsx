@@ -1,6 +1,7 @@
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './MenuButton.css';
 import { useQueryClient } from '@tanstack/react-query';
+import { darkStore } from 'store/NavStore';
 
 const MenuButton = () => {
   const navigate = useNavigate();
@@ -9,8 +10,10 @@ const MenuButton = () => {
   };
   const client = useQueryClient();
 
+  const { dark } = darkStore();
+
   return (
-    <div className="mt-4">
+    <div className="mt-4 text-black">
       <div className="section mt-5 relative z-0">
         <Link
           to="/submain"
@@ -39,7 +42,7 @@ const MenuButton = () => {
         >
           빌려주기
         </Link>
-        <img className="house1" src="/img/h1.png" alt="house1" />
+        <img className="house1" src="/img/h1.webp" alt="house1" />
         <Link
           to="/submain/borrow"
           className="renter"
@@ -67,17 +70,19 @@ const MenuButton = () => {
         >
           빌리기
         </Link>
-        <img className="house2" src="/img/h2.png" alt="house2" />
+        <img className="house2" src="/img/h2.webp" alt="house2" />
         <button
           className="home absolute ml-16 w-[49%] top-[-5px] z-10 transition ease-in-out hover:-translate-y--1 hover:scale-[1.1] duration-200"
           onClick={goHome}
         >
-          <object data="/img/billig_black.svg" type="">
+          <object
+            data={dark ? `/img/billig_white.svg` : `/img/billig_black.svg`}
+          >
             {' '}
           </object>
         </button>
-        <img className="front" src="/img/front1.png" alt="" />
-        <img className="houses" src="/img/house.png" alt="vilage" />
+        <img className="front" src="/img/front1.webp" alt="" />
+        <img className="houses" src="/img/house.webp" alt="vilage" />
       </div>
     </div>
   );

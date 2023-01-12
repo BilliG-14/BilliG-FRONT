@@ -1,22 +1,18 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useIsLoginStore, useLoginJoinStore } from 'store/LoginJoinStore';
+import { useLoginJoinStore } from 'store/LoginJoinStore';
 // components
 import MenuButton from 'components/MenuButton/MenuButton';
-import WriteBtns from './WriteBtns';
-import GoWriteBtn from './GoWriteBtn';
 // react icons
 import { FiSearch } from 'react-icons/fi';
 import { FaClipboardList } from 'react-icons/fa';
 import { RiLoginCircleFill } from 'react-icons/ri';
 import { BsFillPersonPlusFill, BsFilePersonFill } from 'react-icons/bs';
+import DarkToggle from 'components/DarkToggle';
 function Nav() {
-  const [onWriteBtn, setOnWriteBtn] = useState(false);
   const [setSelectedJoin, setSelectedLogin] = useLoginJoinStore((state) => [
     state.setSelectedJoin,
     state.setSelectedLogin,
   ]);
-  const { isLogin } = useIsLoginStore();
   const navigate = useNavigate();
   const goLogin = () => {
     setSelectedLogin();
@@ -38,7 +34,8 @@ function Nav() {
     <div className="flex justify-between pr-5 h-40 mt-1 select-none">
       <MenuButton />
       <div className="flex flex-col justify-center">
-        <div className="flex justify-between items-center w-96 text-lg font-semibold">
+        <div className="flex justify-between items-center gap-3 text-lg font-semibold">
+          <DarkToggle />
           <div>
             <button
               type="button"
@@ -91,12 +88,6 @@ function Nav() {
           </div>
         </div>
         <div className="flex justify-end text-3xl mt-5">
-          {/* {onWriteBtn ? (
-            <WriteBtns setOnWriteBtn={setOnWriteBtn} />
-          ) : (
-            <GoWriteBtn setOnWriteBtn={setOnWriteBtn} />
-          )} */}
-
           <button
             type="button"
             className="search hover:text-b-yellow hover: ease-in-out duration-300"

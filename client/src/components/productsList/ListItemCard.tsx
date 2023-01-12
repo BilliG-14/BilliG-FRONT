@@ -1,12 +1,12 @@
 import DealTag from 'components/tag/DealTag';
 import { useNavigate } from 'react-router-dom';
-import { PostDataType } from '../../store/PostReadStore';
+import { PostDataType } from 'types/productType';
 
 type ItemProps = {
   item: PostDataType;
 };
 
-export default function ListBorrowItemCard({ item }: ItemProps) {
+export default function ListItemCard({ item }: ItemProps) {
   const {
     title,
     imgUrl,
@@ -21,12 +21,12 @@ export default function ListBorrowItemCard({ item }: ItemProps) {
 
   return (
     <div
-      className="w-[234px] inline-block my-5 px-2.5 mx-4 rounded-lg bg-white cursor-pointer hover:scale-110  hover:ease-in transition-all duration-300 shadow-md"
+      className="w-[234px] inline-block my-5 px-2.5 py-1 mx-4 rounded-lg bg-white dark:bg-b-card-dark cursor-pointer hover:scale-110  hover:ease-in transition-all duration-300 shadow-md"
       onClick={() => {
         navigate(`/read/${item._id}`);
       }}
     >
-      <div className="pic w-full h-40 mb-2 p-2 flex items-center justify-center">
+      <div className="pic w-full h-40 mt-1 mb-1 p-2 flex items-center justify-center bg-white rounded-lg">
         <img
           className=" w-full h-full object-contain"
           src={
@@ -38,33 +38,27 @@ export default function ListBorrowItemCard({ item }: ItemProps) {
         />
       </div>
       <div className="item_info my-2 text-left">
-        <div className="title ">
-          <p className="name h-12 mb-1 font-bold leading-6 underline underline-offset-4">
+        <div className="title dark:text-b-text-gray">
+          <p className="name h-12 mb-1 font-bold leading-6 underline underline-offset-4 dark:text-white">
             {title}
           </p>
-          {period && postType === 'borrow' && (
-            <p className="category mb-1 font-semibold text-sm">
-              {`${period.start} ~ ${period.end}`}
-            </p>
-          )}
-          <p className="category mb-1 text-b-text-darkgray text-sm">
-            {category.name}
+          <p
+            className={`category font-semibold text-sm h-4 ${
+              postType !== 'borrow' && 'invisible'
+            }`}
+          >
+            {period &&
+              postType === 'borrow' &&
+              `${period.start} ~ ${period.end}`}
           </p>
-          <p className="adress h-8 text-b-text-darkgray text-sm mb-1">
-            {`📍 ${address}`}
-          </p>
+          <p className="category my-1 text-sm">{category.name}</p>
+          <p className="adress h-8 text-sm mb-1">{`📍 ${address}`}</p>
         </div>
         <div className="flex justify-end mb-1">
           {tradeWay.direct ? <DealTag deal="직거래" /> : null}
           {tradeWay.delivery ? <DealTag deal="택배거래" /> : null}
         </div>
         <div className="price text-right">
-          {/* <p className="per_time mb-2">
-            <span className="font-semibold">
-              {`${price.priceTime.toLocaleString('ko-KR')}원`}
-            </span>
-            <span className="text-xs"> / 시간</span>
-          </p> */}
           <p className="per_day">
             <span className="font-semibold">{`${price.priceDay.toLocaleString(
               'ko-KR',

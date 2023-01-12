@@ -4,35 +4,12 @@ import { AxiosError } from 'axios';
 import Loading from 'components/Loading';
 import ConfirmModal from 'components/Modal';
 import { useCallback, useRef, useState } from 'react';
-import { message } from '../../../node_modules/@toast-ui/chart/dist/esm/message';
-
-type Category = {
-  _id: string;
-  name: string;
-};
-
-/*Category CRUD */
-const endPoint = 'category';
-const apiCategory = {
-  GET: async () => {
-    const { data } = await api.get(`${endPoint}`);
-    return data;
-  },
-  CREATE: async (catogoryName: string) => {
-    const { data } = await api.post(`/${endPoint}`, { name: catogoryName });
-    return data;
-  },
-  UPDATE: async ({ _id, name }: Category) => {
-    await api.patch(`${endPoint}/${_id}`, { name: name });
-  },
-  DELETE: async (_id: string) => {
-    await api.delete(`${endPoint}/${_id}`);
-  },
-};
+import { CategoryType } from '../../types/categoryType';
+import { apiCategory } from 'api/category-api';
 
 export default function AdminCategorySection() {
   const queryClient = useQueryClient();
-  const selectedCategory = useRef<Category>({ _id: '', name: '' });
+  const selectedCategory = useRef<CategoryType>({ _id: '', name: '' });
   const selectedDiv = useRef<HTMLDivElement>(null);
   const elemCreateInput = useRef<HTMLInputElement>(null);
   const elemUpdateInput = useRef<HTMLInputElement>(null);
@@ -42,7 +19,7 @@ export default function AdminCategorySection() {
     setOpenModal(!isOpenModal);
   }, [isOpenModal]);
   /*get category */
-  const { isLoading, data, isError } = useQuery<Category[], AxiosError>(
+  const { isLoading, data, isError } = useQuery<CategoryType[], AxiosError>(
     ['categories'],
     apiCategory.GET,
     {
@@ -103,7 +80,7 @@ export default function AdminCategorySection() {
       <div className="py-32 font-extrabold text-3xl">에러가 발생하였습니다</div>
     );
   return (
-    <section className="w-full text-b-text-black p-2">
+    <section className="w-full text-b-text-black dark:text-b-text-brightgray p-2">
       <div className="w-2/3 mx-auto mt-12">
         <div>
           <input
@@ -113,7 +90,7 @@ export default function AdminCategorySection() {
             ref={elemCreateInput}
           />
           <button
-            className="w-1/6 h-10 hover:text-white border-2 text-b-text-black border-b-yellow hover:bg-b-yellow focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm"
+            className="w-1/6 h-10 hover:text-white border-2 text-b-yellow font-bold border-b-yellow hover:bg-b-yellow focus:outline-none focus:ring-4 focus:ring-blue-300 rounded-lg text-sm"
             onClick={() => {
               const newCategoryName = elemCreateInput.current?.value;
               if (!newCategoryName) {
@@ -136,8 +113,8 @@ export default function AdminCategorySection() {
                 {data?.map((category) => {
                   return (
                     <li key={category._id} className="hover:text-b-yellow mb-1">
-                      <a
-                        href="#!"
+                      <p
+                        className="cursor-pointer"
                         onClick={() => {
                           selectedCategory.current = {
                             _id: category._id,
@@ -153,7 +130,7 @@ export default function AdminCategorySection() {
                         }}
                       >
                         {category.name}
-                      </a>
+                      </p>
                     </li>
                   );
                 })}

@@ -3,6 +3,7 @@ import { FormEvent, useCallback, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useIsLoginStore } from 'store/LoginJoinStore';
 import api from '../../api/customAxios';
+import ForgotPasswordContainer from './ForgotPasswordContainer';
 
 export function LoginForm() {
   const navigate = useNavigate();
@@ -59,14 +60,7 @@ export function LoginForm() {
           ref={(el) => (inputRef.current[1] = el)}
         ></input>
       </div>
-      <div className="w-full mb-5 flex justify-center">
-        <a
-          className="w-1/2 underline text-center font-bold text-b-chat-text italic"
-          href="#!"
-        >
-          Forgot password?
-        </a>
-      </div>
+      <ForgotPasswordContainer />
       <LoginButton />
       {isOpenSuccessModal && (
         <ConfirmModal

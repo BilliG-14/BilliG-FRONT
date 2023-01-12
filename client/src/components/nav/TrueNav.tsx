@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import api from '../../api/customAxios';
 import { useNavigate } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
@@ -6,17 +5,16 @@ import { useIsLoginStore } from 'store/LoginJoinStore';
 import { usePasswordEditStore } from 'store/MypageStore';
 // components
 import GoWriteBtn from './GoWriteBtn';
-import WriteBtns from './WriteBtns';
 import MenuButton from 'components/MenuButton/MenuButton';
 // react icons
 import { FiSearch } from 'react-icons/fi';
 import { FaRegSmileWink, FaClipboardList } from 'react-icons/fa';
 import { BsFilePersonFill } from 'react-icons/bs';
 import { RiLogoutCircleFill } from 'react-icons/ri';
-import Loading from 'components/Loading';
+import { getMyInfo } from 'api/user-api';
+import DarkToggle from 'components/DarkToggle';
 
 function TrueNav() {
-  const [onWriteBtn, setOnWriteBtn] = useState(false);
   const navigate = useNavigate();
   const { setIsLoginFalse } = useIsLoginStore();
   const { togglePwfalse } = usePasswordEditStore();
@@ -31,32 +29,30 @@ function TrueNav() {
     navigate('/submain');
   };
 
-  const { isLoading, data: userInfo } = useQuery(
-    ['userInfo', `${localStorage.getItem('userId')}`],
-    async () => {
-      return api.get(`/user/${localStorage.getItem('userId')}`);
-    },
+  const { data: userInfo } = useQuery(
+    ['myInfo', `${localStorage.getItem('userId')}`],
+    async () => getMyInfo(),
     {
       refetchOnWindowFocus: false,
+      useErrorBoundary: true,
     },
   );
-
-  if (isLoading) return <Loading />;
 
   return (
     <div className="flex justify-between pr-5 h-40 mt-1 select-none">
       <MenuButton />
       <div className="flex flex-col justify-center">
-        <div className="flex justify-between items-center w-96 text-lg font-semibold">
+        <div className="flex justify-between items-center gap-3 text-lg font-semibold">
+          <DarkToggle />
           <div>
             <button
               type="button"
-              className="nickname flex text-blue-700 font-bold ease-in-out duration-300"
+              className="nickname flex text-blue-700 font-bold ease-in-out duration-300 dark:text-b-yellow"
             >
               <span>
                 <FaRegSmileWink className="text-xl mr-1" />
               </span>
-              <span className="text-sm">{`${userInfo?.data.nickName} 님`}</span>
+              <span className="text-sm">{`${userInfo?.nickName} 님`}</span>
             </button>
           </div>
           <div>
@@ -106,11 +102,7 @@ function TrueNav() {
           </div>
         </div>
         <div className="flex justify-end text-3xl mt-5">
-          {onWriteBtn ? (
-            <WriteBtns setOnWriteBtn={setOnWriteBtn} />
-          ) : (
-            <GoWriteBtn setOnWriteBtn={setOnWriteBtn} />
-          )}
+          <GoWriteBtn />
           <button
             type="button"
             className="search hover:text-b-yellow hover: ease-in-out duration-300"

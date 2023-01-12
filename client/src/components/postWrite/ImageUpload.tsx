@@ -1,11 +1,8 @@
-import { imageUploadStore } from './../../store/PostWriteStore';
 import { useState } from 'react';
 import { AiFillCamera } from 'react-icons/ai';
 
-type PreviewImg = {
-  pictureName: string;
-  URL: string;
-};
+import { imageUploadStore } from './../../store/PostWriteStore';
+import { PreviewImg } from '../../types/productType';
 
 export default function ImageUpload() {
   const { imgFiles, setImgFile } = imageUploadStore();

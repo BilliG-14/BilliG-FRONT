@@ -1,10 +1,11 @@
-import { CategoryType } from 'store/PostWriteStore';
+import { CategoryType } from '../../types/categoryType';
 import { useNavigate } from 'react-router-dom';
 import { AxiosError } from 'axios';
 import api from 'api/customAxios';
 import { useQuery } from '@tanstack/react-query';
 import NotFound from 'components/NotFound';
 import Loading from 'components/Loading';
+import { getCategories } from 'api/category-api';
 
 type NavProps = {
   postType: string;
@@ -18,17 +19,10 @@ export default function ProductsListNav(props: NavProps) {
     isLoading,
     data: categories,
     isError,
-  } = useQuery<CategoryType[], AxiosError>(
-    ['categories'],
-    async () => {
-      const res = await api.get('/category');
-      return res.data;
-    },
-    {
-      refetchOnWindowFocus: false,
-      staleTime: 60 * 1000 * 5,
-    },
-  );
+  } = useQuery<CategoryType[], AxiosError>(['categories'], getCategories, {
+    refetchOnWindowFocus: false,
+    staleTime: 60 * 1000 * 5,
+  });
   if (isLoading) return <Loading />;
   if (isError) return <NotFound />;
 
