@@ -96,6 +96,14 @@ function MainPanel({ user, socket }: { user: UserType; socket: Socket }) {
       setTextareaHeight(arrayLength - 1);
     }
   };
+  const leftBubbleStyle = `rounded-bl-none after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-0
+  after:border-[6px] after:border-solid after:border-transparent
+  after:border-l-0 after:border-b-0
+  after:border-r-amber-200 after:-ml-1`;
+  const rightBubbleStyle = `rounded-br-none after:content-[''] after:absolute after:right-0 after:bottom-0 after:w-0 after:h-0
+  after:border-[6px] after:border-solid after:border-transparent
+  after:border-r-0 after:border-b-0
+  after:border-l-amber-200 after:-mr-1`;
 
   // /**이미지 업로드 */
   // const handleOpenImageRef = () => {
@@ -123,7 +131,14 @@ function MainPanel({ user, socket }: { user: UserType; socket: Socket }) {
                   }
                 >
                   {name}
-                  <div className="my-2 text-sm text-black bg-amber-200 p-2 chat-bubble break-all whitespace-pre-line">
+                  <div
+                    className={`my-2 text-sm text-black bg-amber-200 p-2 break-all whitespace-pre-line rounded-md relative
+                    ${
+                      user?.nickName === name
+                        ? rightBubbleStyle
+                        : leftBubbleStyle
+                    }`}
+                  >
                     {message}
                     {/**  스크롤이 내려갈 자리*/}
                     <div ref={scrollRef} />
