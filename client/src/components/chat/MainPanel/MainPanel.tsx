@@ -142,7 +142,7 @@ function MainPanel({ user, socket }: { user: UserType; socket: Socket }) {
               <div className="flex items-center">
                 <textarea
                   ref={textRef}
-                  className="w-11/12 h-[30px] textInput outline outline-1 outline-slate-200 rounded-3xl p-2 pl-5 resize-none"
+                  className="w-11/12 h-[30px] textInput outline outline-1 outline-slate-200 rounded-3xl p-2 pl-5 resize-none dark:text-b-text-black"
                   // type="text"
                   onKeyDown={pressEnter}
                   onChange={checkItemChangeHandler}
