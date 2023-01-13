@@ -302,7 +302,7 @@ const checkPassword = (password: string) => {
     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
   return PasswordPattern.test(password);
 };
-const autoHypen = (e: React.ChangeEvent<HTMLInputElement>) => {
+export const autoHypen = (e: React.ChangeEvent<HTMLInputElement>) => {
   e.currentTarget.value = e.currentTarget.value
     .replace(/[^0-9]/g, '')
     .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
