@@ -29,6 +29,10 @@ code {
     monospace;
 }
 
+.login-input {
+@apply block w-full h-10 text-xl border-b-yellow border-solid border-2 rounded-xl px-4 text-yellow-900 font-bold focus:outline-none focus:ring-2 focus:ring-amber-500 mb-7
+}
+
 @layer base {
   input[type='number']::-webkit-inner-spin-button,
   input[type='number']::-webkit-outer-spin-button {

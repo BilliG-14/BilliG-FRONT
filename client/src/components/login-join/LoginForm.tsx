@@ -4,20 +4,23 @@ import { useNavigate } from 'react-router-dom';
 import { useIsLoginStore } from 'store/LoginJoinStore';
 import api from '../../api/customAxios';
 import ForgotPasswordContainer from './ForgotPasswordContainer';
+import { AxiosError } from 'axios';
 
 export function LoginForm() {
   const navigate = useNavigate();
   const [isOpenSuccessModal, setOpenSuccessModal] = useState<boolean>(false);
-  const [isOpenFailModal, setOpenFailModal] = useState<boolean>(false);
+  const [failMessage, setFailMessage] = useState<string>('');
   const onSuccessToggleModal = useCallback(() => {
     setOpenSuccessModal(!isOpenSuccessModal);
   }, [isOpenSuccessModal]);
-  const onFailToggleModal = useCallback(() => {
-    setOpenFailModal(!isOpenFailModal);
-  }, [isOpenFailModal]);
+  const onFailToggleModal = useCallback(
+    (message: string | void) => {
+      if (failMessage) setFailMessage('');
+      else if (message) setFailMessage(message);
+    },
+    [failMessage],
+  );
   const inputRef = useRef<HTMLInputElement[] | null[]>([]);
-  const inputClassName =
-    'block w-full h-10 text-xl border-b-yellow border-solid border-2 rounded-xl px-4 text-yellow-900 font-bold focus:outline-none focus:ring-2 focus:ring-amber-500 mb-7';
   const { setIsLoginTrue } = useIsLoginStore();
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -33,8 +36,10 @@ export function LoginForm() {
       onSuccessToggleModal();
       setIsLoginTrue();
     } catch (error) {
-      console.error(error);
-      onFailToggleModal();
+      const axiosErr = error as AxiosError;
+      if (axiosErr.response?.status === 499)
+        onFailToggleModal('이용 정지된 사용자입니다.');
+      else onFailToggleModal('이메일과 비밀번호를 다시 확인해주세요');
     }
   };
   return (
@@ -46,19 +51,19 @@ export function LoginForm() {
         <input
           id="email"
           name="email"
-          className={inputClassName}
+          className="login-input"
           type="email"
           placeholder="Email"
           ref={(el) => (inputRef.current[0] = el)}
-        ></input>
+        />
         <input
           id="password"
           name="password"
-          className={inputClassName}
+          className="login-input"
           type="password"
           placeholder="Password"
           ref={(el) => (inputRef.current[1] = el)}
-        ></input>
+        />
       </div>
       <ForgotPasswordContainer />
       <LoginButton />
@@ -72,9 +77,11 @@ export function LoginForm() {
           onlyYes={true}
         />
       )}
-      {isOpenFailModal && (
+      {failMessage && (
         <ConfirmModal
-          title="이메일과 비밀번호를 다시 확인해주세요"
+          title={
+            failMessage ? failMessage : '이메일과 비밀번호를 다시 확인해주세요'
+          }
           onClickToggleModal={onFailToggleModal}
           onlyYes={true}
           yesColor={'red-400'}
@@ -89,7 +96,7 @@ function LoginButton() {
     <div className="w-full mb-5 flex justify-center">
       <button
         className="bg-b-yellow text-b-chat-text w-48 h-12 rounded-3xl text-xl font-bold
-      transition-all hover:text-white hover:font-extrabold hover:bg-gradient-to-r from-[#e65c00] to-b-yellow"
+      transition-all hover:text-white hover:font-extrabold hover:bg-[#e65c00]"
       >
         Log in
       </button>
