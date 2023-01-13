@@ -7,8 +7,8 @@ import { io, Socket } from 'socket.io-client';
 import { UserType } from 'types/userType';
 import { ChatRoomType } from 'types/chatType';
 import { useParams } from 'react-router-dom';
-const socket: Socket = io('https://billigbackend.click/chat', {
-  transports: ['websocket'],
+const socket: Socket = io('http://billigbackend.click/chat', {
+  //transports: ['websocket'],
 });
 function Chat() {
   // url id 받기
