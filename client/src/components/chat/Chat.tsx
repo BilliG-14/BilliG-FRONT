@@ -41,7 +41,7 @@ function Chat() {
     setChatRoomsInfoData();
   }, []);
 
-  /** 채팅방 목록 정보 가져오기 */
+  /** 채팅방 목록 정보 가져오기  ****/
   const [chatRoomsInfo, setChatRoomsInfo] = useState<ChatRoomType[]>([]);
   const setChatRoomsInfoData = async () => {
     const chatRooms: ChatRoomType[] = await getChatRooms();
