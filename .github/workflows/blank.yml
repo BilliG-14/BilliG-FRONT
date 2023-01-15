@@ -20,4 +20,4 @@ jobs:
           # Branch to merge into downstream
           downstream_branch: master
           # GitHub Bot token
-          token: ${{secrets.BILLIG_TOKEN}}
+          token: ${{secrets.NEW_GITHUB_TOKEN}}
