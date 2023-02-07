@@ -10,7 +10,8 @@
 
 **서비스 도메인**
 
-https://billig-v3.vercel.app/
+https://billig-front.vercel.app/
+
 
 <br/><br />
 
